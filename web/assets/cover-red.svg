@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-label="Crimson sun over a rainlit city rooftop">
+<defs>
+ <linearGradient id="sky" x2=".18" y2="1"><stop stop-color="#100c1c"/><stop offset=".4" stop-color="#59142e"/><stop offset=".76" stop-color="#cd2e3c"/><stop offset="1" stop-color="#190e1d"/></linearGradient>
+ <radialGradient id="halo"><stop stop-color="#ff7457" stop-opacity=".9"/><stop offset=".45" stop-color="#ef3e45" stop-opacity=".5"/><stop offset="1" stop-color="#f03e50" stop-opacity="0"/></radialGradient>
+ <linearGradient id="sun" x2="0" y2="1"><stop stop-color="#ffe6ae"/><stop offset=".55" stop-color="#ff9b66"/><stop offset="1" stop-color="#ff4a4f"/></linearGradient>
+ <linearGradient id="wet" x2=".8" y2="1"><stop stop-color="#5e2236"/><stop offset=".36" stop-color="#211320"/><stop offset="1" stop-color="#070b17"/></linearGradient>
+ <linearGradient id="beam" x2="0" y2="1"><stop stop-color="#ff7d63" stop-opacity=".72"/><stop offset="1" stop-color="#f14657" stop-opacity="0"/></linearGradient>
+ <filter id="haze"><feGaussianBlur stdDeviation="8"/></filter>
+ <pattern id="grain" width="9" height="13" patternUnits="userSpaceOnUse"><path d="M1 1h1M6 9h1" stroke="#ffe3c8" stroke-opacity=".09" stroke-width=".7"/></pattern>
+ <pattern id="windows" width="20" height="25" patternUnits="userSpaceOnUse"><rect x="6" y="8" width="5" height="10" fill="#e65355" opacity=".42"/><rect x="14" y="8" width="2" height="10" fill="#ffc991" opacity=".25"/></pattern>
+ <radialGradient id="vignette"><stop offset=".35" stop-color="#080813" stop-opacity="0"/><stop offset="1" stop-color="#050812" stop-opacity=".7"/></radialGradient>
+</defs>
+<path fill="url(#sky)" d="M0 0h600v600H0z"/>
+<ellipse cx="330" cy="250" rx="280" ry="265" fill="url(#halo)"/>
+<circle cx="323" cy="238" r="121" fill="url(#sun)"/>
+<g fill="#7d2439" opacity=".45"><path d="M202 250h242v3H202zM208 273h230v5H208zM224 298h198v7H224zM245 324h154v9H245zM272 346h98v9h-98z"/></g>
+<path d="M0 263h24v-42h35v20h22v-74h22v-12h12v12h30v92h17v-40h26v68h22v-27h20v55h36v-28h43v38h24v-65h26v-40h12v-22h8v22h12v40h19v65h21v-46h35v24h22v-87h38v-34h12v34h30v93h25v-43h24v22h31v45h20V400H0z" fill="#40152b" opacity=".66"/>
+<path d="M0 308h42v-67h64v134h27v-44h50v-81h54v125h21v-38h61v38h23v-91h58v90h26v-47h47v46h22v-135h55v73h24v-26h26v119H0z" fill="#191122"/>
+<g fill="url(#windows)"><path d="M47 249h52v120H47zM188 258h42v112h-42zM347 292h46v75h-46zM502 247h41v121h-41z"/></g>
+<path d="M0 383 600 367v233H0z" fill="url(#wet)"/>
+<path d="m235 383 120-3 148 220H130z" fill="url(#beam)" opacity=".45"/>
+<path d="M0 441 600 408M0 501l600-63M0 584l600-108M43 600l171-221M352 600l-38-224M596 594 428 373" fill="none" stroke="#d85760" stroke-opacity=".17" stroke-width="2"/>
+<g fill="#ff866c" opacity=".44"><path d="m255 405 99-3 10 4-111 4zM237 423l139-7 7 5-155 10zM223 450l171-13 5 5-180 16zM245 471l121-11 13 6-141 17zM197 500l223-25 8 7-237 30zM183 539l133-21 9 9-149 23zM328 558l105-18 15 7-115 24z"/></g>
+<g stroke="#080d17" stroke-linecap="round"><path d="M37 312v288M55 311v289" stroke-width="9"/><path d="m0 332 159-12M0 367l145-12M0 402l128-14" stroke-width="6"/><path d="m47 319 125-66M170 286l-3 99" stroke-width="4"/></g>
+<path d="M0 149c180 84 373 110 600 88M0 171c194 86 409 98 600 85" fill="none" stroke="#120f20" stroke-width="3"/>
+<path d="M493 600V363h20v-18h68v18h19v237z" fill="#080c16"/>
+<path d="M491 365h109M515 367v183M582 367v183" stroke="#f95b62" stroke-opacity=".48" stroke-width="2"/>
+<path d="m488 361 112-2" stroke="#ff8a70" stroke-width="3"/>
+<g fill="#ffd3aa"><circle cx="167" cy="286" r="3"/><circle cx="372" cy="208" r="1.5"/><circle cx="527" cy="165" r="1.5"/></g>
+<path fill="url(#grain)" d="M0 0h600v600H0z"/><path fill="url(#vignette)" d="M0 0h600v600H0z"/>
+</svg>

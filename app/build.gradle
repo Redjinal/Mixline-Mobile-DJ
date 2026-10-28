@@ -1,0 +1,41 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.mixline.studio.testing'
+    compileSdk 36
+    buildToolsVersion '36.0.0'
+    defaultConfig {
+        applicationId 'com.mixline.studio.testing'
+        minSdk 29
+        targetSdk 36
+        versionCode 40002
+        versionName '4.0.0-test2'
+    }
+    buildFeatures { buildConfig true }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    sourceSets { main { assets.srcDirs = ['../web'] } }
+    signingConfigs {
+        testing {
+            storeFile rootProject.file('.signing/mixline-test.keystore')
+            storePassword 'android'
+            keyAlias 'mixline-test'
+            keyPassword 'android'
+        }
+    }
+    buildTypes {
+        debug {
+            debuggable true
+            signingConfig signingConfigs.testing
+        }
+        release { minifyEnabled false }
+    }
+    lint { abortOnError true }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.14.0'
+    implementation 'androidx.activity:activity:1.10.1'
+}
