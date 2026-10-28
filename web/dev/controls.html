@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-decks="red">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mixline controls bench</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    body { padding: 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 320px)); gap: 24px; }
+    .bench { display: flex; flex-direction: column; gap: 12px; }
+    #fader { height: 200px; }
+    #platter { width: 240px; }
+  </style>
+</head>
+<body>
+  <section class="bench panel"><h2>Knob</h2><div id="knob"></div><div id="knob-fine"></div></section>
+  <section class="bench panel"><h2>Fader</h2><div id="fader" class="fader v tone-1"></div><div id="hfader" class="fader h tone-v"></div></section>
+  <section class="bench panel"><h2>XY</h2><div id="xy"></div></section>
+  <section class="bench panel"><h2>Platter</h2><div id="platter"></div><div id="wave" class="wave h-detail"><canvas></canvas></div><div id="meter" class="meter" style="height:80px"><canvas></canvas></div></section>
+  <script type="module" src="controls.js"></script>
+</body>
+</html>
