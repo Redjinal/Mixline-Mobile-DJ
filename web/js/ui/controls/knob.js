@@ -15,7 +15,7 @@ export function createKnob(el, {label = '', min = 0, max = 1, step = 0, value = 
   const reset = defaultValue ?? (detent ?? min);
   el.classList.add('knob', `tone-${tone}`);
   if (size) el.classList.add(`knob-${size}`);
-  render(el, html`<div class="knob-value num" aria-hidden="true"></div><div class="knob-dial" tabindex="${disabled ? -1 : 0}" role="slider" aria-label="${ariaLabel || label}" aria-valuemin="${min}" aria-valuemax="${max}"><svg class="knob-arc" viewBox="0 0 100 100"><path class="arc-bg" d="${svgArc(46, -ANGLE, ANGLE)}" fill="none" stroke-width="4" stroke-linecap="round"/><path class="arc-fg" d="" fill="none" stroke-width="4" stroke-linecap="round"/></svg><i class="knob-pointer"></i></div><div class="knob-label">${label}</div>`);
+  render(el, html`<div class="knob-dial" tabindex="${disabled ? -1 : 0}" role="slider" aria-label="${ariaLabel || label}" aria-valuemin="${min}" aria-valuemax="${max}"><svg class="knob-arc" viewBox="0 0 100 100"><path class="arc-bg" d="${svgArc(46, -ANGLE, ANGLE)}" fill="none" stroke-width="4" stroke-linecap="round"/><path class="arc-fg" d="" fill="none" stroke-width="4" stroke-linecap="round"/></svg><i class="knob-pointer"></i></div><div class="knob-label">${label}</div><div class="knob-value num" aria-hidden="true"></div>`);
   const dial = el.querySelector('.knob-dial'), pointer = el.querySelector('.knob-pointer'), arc = el.querySelector('.arc-fg'), valueEl = el.querySelector('.knob-value');
 
   function clamp(v) { v = Math.min(max, Math.max(min, Number(v) || 0)); if (step > 0) v = Math.round(v / step) * step; return v; }

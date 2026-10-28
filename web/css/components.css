@@ -318,7 +318,8 @@
 .knob.tone-1 { --tone: var(--deck1); --tone-rgb: var(--deck1-rgb); }
 .knob.tone-2 { --tone: var(--deck2); --tone-rgb: var(--deck2-rgb); }
 .knob.tone-v { --tone: var(--violet); --tone-rgb: var(--violet-rgb); }
-.knob.is-dragging .knob-value { color: var(--tone, var(--violet)); font-size: var(--fs-body); }
+.knob.is-dragging .knob-value { color: var(--tone, var(--violet)); }
+.knob-value { margin-top: -2px; }
 .knob.is-killed .knob-dial { opacity: 0.45; }
 .knob.knob-lg .knob-dial { width: 84px; height: 84px; }
 .knob.knob-lg .knob-pointer { height: 26px; margin-top: -34px; transform-origin: 50% 34px; }
