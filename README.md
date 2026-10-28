@@ -4,6 +4,12 @@ Mixline **4.0.0-test2** is a standalone Android test edition of the Mixline perf
 
 This repository contains a bundled web interface and Web Audio engine inside a Java Android WebView shell. The native bridge supplies Android file selection/export, audio-focus interruption handling, screen-awake behavior, and haptic feedback. It is not a native low-latency DJ DSP engine.
 
+## Download the APK
+
+**[Download Mixline 4.0.0-test2 for Android](https://github.com/Redjinal/Mixline-Mobile-DJ/raw/refs/heads/main/downloads/Mixline-4.0.0-test2.apk)** (about 5.6 MB).
+
+Use this GitHub download link on your phone. If the repository is private, sign in to GitHub first. The [downloads folder](downloads/) also contains the APK, checksum and installation notes.
+
 ## Build and run
 
 The prepared cloud environment provides JDK 21, Android SDK 36, Build Tools 36.0.0 and Gradle 8.13. The project wrapper pins Gradle 8.13 with checksum verification; Android Gradle Plugin is 8.13.2.
