@@ -273,6 +273,8 @@ export class VideoMixer extends EventTarget {
       this.getPosition(index);
       const duration = this._call(index, 'getDuration');
       if (Number.isFinite(duration)) deck.duration = duration;
+      const data = this._call(index, 'getVideoData');
+      if (data?.title && deck.track.title === deck.track.videoId) { deck.track.title = String(data.title).slice(0, 120); this._emit(); }
       if (deck.playing && deck.repeat.enabled && deck.repeat.end != null && deck.position >= deck.repeat.end && (!deck._lastRepeat || performance.now() - deck._lastRepeat > 800)) {
         deck._lastRepeat = performance.now();
         this._call(index, 'seekTo', deck.repeat.start, true);

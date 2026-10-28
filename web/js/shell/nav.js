@@ -11,7 +11,7 @@ export const WORKSPACES = [
   {name: 'challenge', label: 'Challenge', icon: 'challenge'},
 ];
 
-export function createNav(el, router, {onSelect} = {}) {
+export function createNav(el, router, {onSelect, guard} = {}) {
   render(el, WORKSPACES.map(w => html`<button class="tab" data-route="${w.name}" aria-label="${w.label}">${icon(w.icon, {size: 22})}<span>${w.label}</span></button>`));
   const update = () => {
     for (const button of el.querySelectorAll('[data-route]')) {
@@ -19,7 +19,7 @@ export function createNav(el, router, {onSelect} = {}) {
       if (active) button.setAttribute('aria-current', 'page'); else button.removeAttribute('aria-current');
     }
   };
-  delegate(el, 'click', '[data-route]', (event, button) => { onSelect?.(button.dataset.route); router.navigate(button.dataset.route); });
+  delegate(el, 'click', '[data-route]', (event, button) => { onSelect?.(button.dataset.route); if (guard) guard(button.dataset.route); else router.navigate(button.dataset.route); });
   router.subscribe(update);
   update();
   return {update};

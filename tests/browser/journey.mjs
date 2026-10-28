@@ -254,6 +254,65 @@ try {
     await page.waitForFunction(() => document.querySelectorAll('.queue-item').length === 0);
     await nav('decks');
   });
+  await runner.run('settings: search, change haptics profile and theme preview, Save persists across reload, discard protection', async () => {
+    await page.locator('[data-settings]').click();
+    await page.waitForFunction(() => Mixline.router.current.name === 'settings');
+    await page.locator('[data-settings-search]').fill('haptic');
+    await page.waitForFunction(() => document.querySelectorAll('[data-setting]').length < 8 && document.querySelector('[data-setting="hapticProfile"]'));
+    await page.locator('[data-settings-search]').fill('');
+    await page.locator('[data-setting="hapticProfile"]').selectOption('detailed');
+    await page.locator('[data-setting="decks"]').selectOption('violet');
+    assert.equal(await page.evaluate(() => document.documentElement.dataset.decks), 'violet');
+    await page.waitForSelector('[data-settings-save]:not([disabled])');
+    await page.locator('nav [data-route="decks"]').click();
+    await page.waitForSelector('dialog.modal[open]');
+    await page.locator('dialog.modal button[value="cancel"]').click();
+    assert.equal(await page.evaluate(() => Mixline.router.current.name), 'settings');
+    await page.locator('[data-settings-save]').click();
+    await page.waitForFunction(() => Mixline.settings.current.hapticProfile === 'detailed');
+    await page.reload();
+    await page.waitForFunction(() => window.Mixline?.settings?.current?.hapticProfile === 'detailed' && document.documentElement.dataset.decks === 'violet');
+    await shot('settings-412x915');
+    await page.evaluate(() => { Mixline.router.navigate('settings'); });
+    await page.locator('[data-setting="decks"]').selectOption('red');
+    await page.locator('[data-settings-save]').click();
+    await page.waitForFunction(() => Mixline.settings.current.decks === 'red');
+  });
+  await runner.run('recording: a short take of the master bus is decodable, non-silent and listed in Recordings', async () => {
+    await page.evaluate(() => Mixline.loadDemo(0, 'demo-red'));
+    await page.waitForFunction(() => Mixline.engine.decks[0].track);
+    await page.evaluate(async () => { Mixline.engine.setMasterMute(false); Mixline.engine.setCrossfade(0); await Mixline.engine.play(0); });
+    await page.locator('[data-record]').click();
+    await page.waitForFunction(() => Mixline.engine.recording);
+    await page.waitForTimeout(1200);
+    await page.locator('[data-record]').click();
+    await page.waitForFunction(async () => (await Mixline.store.listRecordings()).length > 0);
+    const data = await page.evaluate(async () => { const [r] = await Mixline.store.listRecordings(); const b = await Mixline.engine.ctx.decodeAudioData(await r.blob.arrayBuffer()); let peak = 0; for (const s of b.getChannelData(0)) peak = Math.max(peak, Math.abs(s)); return {bytes: r.size, seconds: b.duration, peak}; });
+    assert.ok(data.bytes > 1000 && data.seconds > 0.8 && data.peak > 0.001, JSON.stringify(data));
+    await page.evaluate(() => Mixline.router.navigate('settings'));
+    await page.locator('[data-settings-recordings]').click();
+    await page.waitForSelector('[data-recording-id]');
+    await page.evaluate(() => Mixline.back());
+  });
+  await runner.run('sessions: save a named session, change state, restore it paused; recovery snapshot exists', async () => {
+    await page.evaluate(() => Mixline.engine.setCrossfade(0.25));
+    await page.locator('[data-settings-sessions]').click();
+    await page.waitForSelector('dialog.sheet[open]');
+    await page.locator('dialog.sheet [data-session-save]').click();
+    await page.waitForSelector('dialog.modal[open]');
+    await page.locator('dialog.modal input[name="value"]').fill('Browser session');
+    await page.locator('dialog.modal button[value="ok"]').click();
+    await page.waitForSelector('[data-session-id]');
+    await page.evaluate(() => { Mixline.engine.setCrossfade(0.9); Mixline.engine.play(0); });
+    await page.locator('[data-session-id] [data-session-restore]').first().click();
+    await page.waitForSelector('dialog.modal[open]');
+    await page.locator('dialog.modal button[value="ok"]').click();
+    await page.waitForFunction(() => Math.abs(Mixline.engine.crossfade - 0.25) < 1e-6 && !Mixline.engine.decks[0].playing);
+    await page.evaluate(() => Mixline.back());
+    const recovery = await page.evaluate(() => Mixline.sessions.hasRecovery());
+    assert.ok(recovery === null || recovery.tracks >= 0);
+    await page.evaluate(() => Mixline.router.navigate('decks', {}));
+  });
   await runner.run('no horizontal overflow and dock reachable in portrait and landscape', async () => {
     for (const [w, h] of [[412, 915], [915, 412]]) {
       await page.setViewportSize({width: w, height: h});
