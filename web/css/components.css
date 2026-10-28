@@ -479,3 +479,5 @@ dialog[open].sheet { animation: sheet-in var(--t-slow) var(--ease); }
 .kv { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; font-size: var(--fs-label); }
 .kv dt { color: var(--text-muted); }
 .kv dd { margin: 0; text-align: right; font-weight: 600; }
+
+kbd { display: inline-block; min-width: 22px; padding: 2px 7px; border-radius: 6px; border: 1px solid var(--line-strong); background: rgba(var(--white-rgb), 0.05); font: 600 11px/1.4 var(--font); color: var(--text); text-align: center; box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.6); }

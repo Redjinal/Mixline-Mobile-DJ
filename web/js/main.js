@@ -25,6 +25,8 @@ import {createFXScreen} from './screens/fx.js';
 import {createLibraryScreen} from './screens/library.js';
 import {createChallengeScreen} from './screens/challenge.js';
 import {createSettingsScreen} from './screens/settings.js';
+import {createKeyboard} from './shell/keyboard.js';
+import {installNativeBridge} from './shell/native.js';
 
 const ROUTES = [...WORKSPACES.map(w => w.name), 'settings'];
 const router = createRouter({routes: ROUTES, initial: 'decks'});
@@ -188,9 +190,13 @@ async function startup() {
 startup();
 document.addEventListener('visibilitychange', () => { if (document.hidden) sessions.snapshotNow().catch(() => {}); });
 
+/* ---------- keyboard and native bridge ---------- */
+const back = () => closeTopDialog() || router.back();
+const keyboard = createKeyboard({engine, router, workspaces: WORKSPACES.map(w => w.name), toast, sheet, onRecord: toggleRecording, onBack: back});
+const native = installNativeBridge({engine, video, sessions, toast, back});
+
 window.Mixline = {
   engine, store, router, loader, sources, haptics, toast, settings, sessions, screens, demos: DEMO_TRACKS, video, queue, go,
   loadDemo: (deck, id) => loader.load(deck, DEMO_TRACKS.find(t => t.id === id || t.demo === id)),
-  back: () => closeTopDialog() || router.back()
+  keyboard, native, back
 };
-window.mixlineBack = () => window.Mixline.back();

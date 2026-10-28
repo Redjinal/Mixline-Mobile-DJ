@@ -137,6 +137,7 @@ export function createLibraryScreen(ctx) {
     </section>`;
   }
   function refresh(force) {
+    if (!container) return;
     const k = JSON.stringify([state, engine.decks.map(d => d.track?.id), tracks.length, collections]);
     if (!force && k === key) return;
     key = k;

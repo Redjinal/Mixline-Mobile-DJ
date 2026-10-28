@@ -313,6 +313,58 @@ try {
     assert.ok(recovery === null || recovery.tracks >= 0);
     await page.evaluate(() => Mixline.router.navigate('decks', {}));
   });
+  await runner.run('keyboard: q toggles Deck 1, typing in a field is ignored, slash centres the crossfader, ? opens the shortcut sheet', async () => {
+    await nav('decks');
+    await page.evaluate(() => { Mixline.engine.pauseAll(); Mixline.engine.setCrossfade(0.1); });
+    await page.locator('body').click({position: {x: 5, y: 300}});
+    await page.keyboard.press('q');
+    await page.waitForFunction(() => Mixline.engine.decks[0].playing);
+    await page.keyboard.press('q');
+    await page.waitForFunction(() => !Mixline.engine.decks[0].playing);
+    await page.keyboard.press('/');
+    assert.equal(await page.evaluate(() => Mixline.engine.crossfade), 0.5);
+    await page.keyboard.down('w');
+    await page.waitForFunction(() => Mixline.engine.decks[0].playing);
+    await page.keyboard.up('w');
+    await page.waitForFunction(() => !Mixline.engine.decks[0].playing);
+    await nav('library');
+    await page.locator('[data-lib-search]').fill('');
+    await page.locator('[data-lib-search]').focus();
+    await page.keyboard.press('q');
+    assert.equal(await page.evaluate(() => Mixline.engine.decks[0].playing), false);
+    assert.equal(await page.evaluate(() => document.querySelector('[data-lib-search]').value), 'q');
+    await page.locator('[data-lib-search]').fill('');
+    await nav('decks');
+    await page.locator('body').click({position: {x: 5, y: 300}});
+    await page.keyboard.press('?');
+    await page.waitForSelector('dialog.sheet[open]');
+    assert.match(await page.locator('dialog.sheet').textContent(), /Deck 1/);
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => !document.querySelector('dialog[open]'));
+  });
+  await runner.run('native bridge: playback focus messages, lifecycle pause stops everything, back closes a sheet then navigates', async () => {
+    await page.evaluate(() => { window.__msgs = []; window.MixlineAndroid = {postMessage: m => window.__msgs.push(JSON.parse(m))}; });
+    await page.evaluate(() => Mixline.engine.play(0));
+    await page.waitForFunction(() => window.__msgs.some(m => m.type === 'playback' && m.playing === true));
+    await page.evaluate(() => Mixline.loadDemo(1, 'demo-blue'));
+    await page.waitForFunction(() => Mixline.engine.decks[1].track);
+    await page.evaluate(() => Mixline.engine.play(1));
+    await page.evaluate(() => window.mixlineLifecycle('pause'));
+    await page.waitForFunction(() => Mixline.engine.decks.every(d => !d.playing));
+    await page.waitForFunction(() => window.__msgs.some(m => m.type === 'playback' && m.playing === false));
+    await page.evaluate(() => window.mixlineNativeResult({type: 'export', status: 'saved', message: 'Saved successfully.', name: 'take.webm'}));
+    await page.waitForSelector('.toast.is-success');
+    await nav('mixer');
+    await page.evaluate(() => Mixline.router.navigate('settings'));
+    await page.locator('[data-settings-sessions]').click();
+    await page.waitForSelector('dialog.sheet[open]');
+    assert.equal(await page.evaluate(() => window.mixlineBack()), true);
+    await page.waitForFunction(() => !document.querySelector('dialog[open]'));
+    assert.equal(await page.evaluate(() => window.mixlineBack()), true);
+    await page.waitForFunction(() => Mixline.router.current.name === 'mixer');
+    await page.evaluate(() => { delete window.MixlineAndroid; });
+    await nav('decks');
+  });
   await runner.run('no horizontal overflow and dock reachable in portrait and landscape', async () => {
     for (const [w, h] of [[412, 915], [915, 412]]) {
       await page.setViewportSize({width: w, height: h});

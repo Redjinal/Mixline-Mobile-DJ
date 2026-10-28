@@ -59,7 +59,7 @@ export function paintPlay(button, deck) {
 export function deckStatus(engine, i) {
   const d = engine.decks[i];
   if (d.loading) return {text: 'Loading…', cls: 'is-buffering'};
-  if (!d.track) return {text: 'Load music', cls: 'is-idle'};
+  if (!d.track) return {text: 'Empty', cls: 'is-idle'};
   if (d.scratching) return {text: 'Scratch', cls: `tone-${i + 1}`};
   if (d.cueHeld === 'audition') return {text: 'Cue', cls: `tone-${i + 1}`};
   if (d.playing) return engine.audible(i) ? {text: 'Playing', cls: 'is-playing'} : {text: 'Playing · silent', cls: 'is-silent'};
