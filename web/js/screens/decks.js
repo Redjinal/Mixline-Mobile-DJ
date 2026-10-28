@@ -18,6 +18,8 @@ export function createDecksScreen(ctx) {
   const {engine, router, toast, loader, confirm, prompt} = ctx;
   const state = {platterMode: ['vinyl', 'vinyl'], waveMode: ['seek', 'seek'], quickLoop: [4, 4]};
   let container = null, params = {}, controls = [], cueBindings = [], timer = 0, key = '', waves = {};
+  const offs = [];
+  const on = (el, type, selector, handler) => offs.push(delegate(el, type, selector, handler));
   const onError = e => toast(e.message, {kind: 'error'});
   const bpmText = d => d.bpm ? `${d.bpmSource === 'estimated' ? '≈' : ''}${d.bpm.toFixed(1)} BPM` : '— BPM';
   const tempoText = d => `${d.rate >= 1 ? '+' : ''}${((d.rate - 1) * 100).toFixed(1)}%`;
@@ -192,27 +194,27 @@ export function createDecksScreen(ctx) {
 
   /* ---------- delegated actions ---------- */
   function bindActions(el) {
-    delegate(el, 'click', '[data-focus]', (e, b) => router.navigate('decks', {focus: Number(b.dataset.focus)}));
-    delegate(el, 'click', '[data-focus-back]', () => router.navigate('decks', {}));
-    delegate(el, 'click', '[data-load-from-library]', (e, b) => ctx.openLibrary(Number(b.dataset.loadFromLibrary)));
-    delegate(el, 'click', '[data-cancel-load]', (e, b) => { loader.cancel(Number(b.dataset.cancelLoad)); toast('Load cancelled. The deck is unchanged.'); });
-    delegate(el, 'click', '[data-tempo-reset]', (e, b) => { engine.setRate(Number(b.dataset.tempoReset), 1); haptics.play('detent'); });
-    delegate(el, 'click', '[data-slip]', (e, b) => { const i = Number(b.dataset.slip); engine.setSlip(i, !engine.decks[i].slip); haptics.play('toggle'); });
-    delegate(el, 'click', '[data-platter-mode]', (e, b) => { const i = Number(b.dataset.platterMode); state.platterMode[i] = state.platterMode[i] === 'vinyl' ? 'nudge' : 'vinyl'; haptics.play('toggle'); refresh(true); });
-    delegate(el, 'click', '[data-loop-quick]', (e, b) => { const i = Number(b.dataset.loopQuick); try { engine.loop(i, engine.decks[i].loop ? 0 : state.quickLoop[i]); haptics.play('toggle'); } catch (err) { onError(err); } });
-    delegate(el, 'click', '[data-loop-beats]', (e, b) => { const i = params.focus; const n = Number(b.dataset.loopBeats); try { const d = engine.decks[i]; if (d.loop && Math.abs((d.loop.beats || 0) - n) < 0.01) engine.loop(i, 0); else { engine.loop(i, n); state.quickLoop[i] = n; } haptics.play('toggle'); } catch (err) { onError(err); } });
-    delegate(el, 'click', '[data-loop-exit]', () => { engine.loop(params.focus, 0); });
-    delegate(el, 'click', '[data-hotcue]', (e, b) => { const i = params.focus, n = Number(b.dataset.hotcue); const d = engine.decks[i]; if (!d.track) return; if (d.cues[n] === null) { engine.setCue(i, n); toast(`Hot cue ${n + 1} set at ${formatTime(d.cues[n])}`, {kind: 'success'}); } else engine.goCue(i, n); haptics.play('press'); });
-    delegate(el, 'click', '[data-wave-mode]', (e, b) => { state.waveMode[params.focus] = b.dataset.waveMode; $$('[data-wave-mode]', el).forEach(x => x.setAttribute('aria-selected', String(x === b))); });
-    delegate(el, 'click', '[data-wave-zoom]', (e, b) => waves.detail?.zoom(b.dataset.waveZoom === 'in' ? 0.5 : 2));
-    delegate(el, 'click', '[data-wave-fit]', () => waves.detail?.fit());
-    delegate(el, 'click', '[data-wave-follow]', (e, b) => { waves.detail?.setFollow(!waves.detail.follow); b.setAttribute('aria-pressed', String(waves.detail.follow)); });
+    on(el, 'click', '[data-focus]', (e, b) => router.navigate('decks', {focus: Number(b.dataset.focus)}));
+    on(el, 'click', '[data-focus-back]', () => router.navigate('decks', {}));
+    on(el, 'click', '[data-load-from-library]', (e, b) => ctx.openLibrary(Number(b.dataset.loadFromLibrary)));
+    on(el, 'click', '[data-cancel-load]', (e, b) => { loader.cancel(Number(b.dataset.cancelLoad)); toast('Load cancelled. The deck is unchanged.'); });
+    on(el, 'click', '[data-tempo-reset]', (e, b) => { engine.setRate(Number(b.dataset.tempoReset), 1); haptics.play('detent'); });
+    on(el, 'click', '[data-slip]', (e, b) => { const i = Number(b.dataset.slip); engine.setSlip(i, !engine.decks[i].slip); haptics.play('toggle'); });
+    on(el, 'click', '[data-platter-mode]', (e, b) => { const i = Number(b.dataset.platterMode); state.platterMode[i] = state.platterMode[i] === 'vinyl' ? 'nudge' : 'vinyl'; haptics.play('toggle'); refresh(true); });
+    on(el, 'click', '[data-loop-quick]', (e, b) => { const i = Number(b.dataset.loopQuick); try { engine.loop(i, engine.decks[i].loop ? 0 : state.quickLoop[i]); haptics.play('toggle'); } catch (err) { onError(err); } });
+    on(el, 'click', '[data-loop-beats]', (e, b) => { const i = params.focus; const n = Number(b.dataset.loopBeats); try { const d = engine.decks[i]; if (d.loop && Math.abs((d.loop.beats || 0) - n) < 0.01) engine.loop(i, 0); else { engine.loop(i, n); state.quickLoop[i] = n; } haptics.play('toggle'); } catch (err) { onError(err); } });
+    on(el, 'click', '[data-loop-exit]', () => { engine.loop(params.focus, 0); });
+    on(el, 'click', '[data-hotcue]', (e, b) => { const i = params.focus, n = Number(b.dataset.hotcue); const d = engine.decks[i]; if (!d.track) return; if (d.cues[n] === null) { engine.setCue(i, n); toast(`Hot cue ${n + 1} set at ${formatTime(d.cues[n])}`, {kind: 'success'}); } else engine.goCue(i, n); haptics.play('press'); });
+    on(el, 'click', '[data-wave-mode]', (e, b) => { state.waveMode[params.focus] = b.dataset.waveMode; $$('[data-wave-mode]', el).forEach(x => x.setAttribute('aria-selected', String(x === b))); });
+    on(el, 'click', '[data-wave-zoom]', (e, b) => waves.detail?.zoom(b.dataset.waveZoom === 'in' ? 0.5 : 2));
+    on(el, 'click', '[data-wave-fit]', () => waves.detail?.fit());
+    on(el, 'click', '[data-wave-follow]', (e, b) => { waves.detail?.setFollow(!waves.detail.follow); b.setAttribute('aria-pressed', String(waves.detail.follow)); });
   }
 
   return {
     name: 'decks',
     mount(el, p = {}) { container = el; params = p; key = ''; bindActions(el); refresh(true); timer = setInterval(tick, 100); tick(); },
-    unmount() { clearInterval(timer); teardown(); container = null; },
+    unmount() { clearInterval(timer); teardown(); offs.forEach(off => off()); offs.length = 0; container = null; },
     update() { if (container) refresh(false); },
     get state() { return state; }
   };

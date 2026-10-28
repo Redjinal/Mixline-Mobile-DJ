@@ -14,6 +14,9 @@ import {store} from './core/store.js';
 import {createSources} from './core/sources.js';
 import {createLoader} from './core/loader.js';
 import {createDecksScreen} from './screens/decks.js';
+import {createMixerScreen} from './screens/mixer.js';
+import {createPadsScreen} from './screens/pads.js';
+import {createFXScreen} from './screens/fx.js';
 
 const ROUTES = [...WORKSPACES.map(w => w.name), 'settings'];
 const router = createRouter({routes: ROUTES, initial: 'decks'});
@@ -55,7 +58,7 @@ function placeholder(name, label) {
 }
 const screens = {
   decks: createDecksScreen(ctx),
-  mixer: placeholder('mixer', 'Mixer'), pads: placeholder('pads', 'Pads'), fx: placeholder('fx', 'FX'),
+  mixer: createMixerScreen(ctx), pads: createPadsScreen(ctx), fx: createFXScreen(ctx),
   library: placeholder('library', 'Library'), challenge: placeholder('challenge', 'Challenge'), settings: placeholder('settings', 'Studio settings')
 };
 createNav($('#nav'), router);

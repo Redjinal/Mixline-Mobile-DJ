@@ -16,7 +16,7 @@ try {
   await runner.run('decks: both originals load from the library helper and the deck panels show their identity', async () => {
     await page.evaluate(() => Mixline.loadDemo(0, 'demo-red'));
     await page.evaluate(() => Mixline.loadDemo(1, 'demo-blue'));
-    await page.waitForFunction(() => Mixline.engine.decks.every(d => d.track));
+    await page.waitForFunction(() => Mixline.engine.decks.every(d => d.track) && document.querySelector('[data-deck-title="1"]')?.textContent.includes('Midnight'));
     const titles = await page.evaluate(() => [...document.querySelectorAll('[data-deck-title]')].map(e => e.textContent.trim()));
     assert.deepEqual(titles.slice(0, 2), ['Afterhours Circuit', 'Midnight Voltage']);
     assert.equal(await page.locator('[data-platter="0"] .platter-art img, [data-platter="0"] .platter-art svg').count(), 1);
@@ -90,6 +90,77 @@ try {
     assert.equal(await pending, false);
     assert.equal(await page.evaluate(() => Mixline.engine.decks[1].track.id), 'demo-blue');
     assert.equal(await page.evaluate(() => Mixline.engine.decks[1].playing), true);
+  });
+  await runner.run('mixer: EQ kill, master mute, curve and channel fader act on the engine; meters present', async () => {
+    await nav('mixer');
+    await page.locator('[data-kill="0:low"]').click();
+    assert.equal(await page.evaluate(() => Mixline.engine.decks[0].eqKills.low), true);
+    await page.locator('[data-kill="0:low"]').click();
+    assert.equal(await page.evaluate(() => Mixline.engine.decks[0].eqKills.low), false);
+    await page.locator('[data-master-mute]').click();
+    assert.equal(await page.evaluate(() => Mixline.engine.masterMuted), true);
+    await page.locator('[data-master-mute]').click();
+    await page.locator('[data-curve="cut"]').click();
+    assert.equal(await page.evaluate(() => Mixline.engine.curve), 'cut');
+    await page.locator('[data-curve="blend"]').click();
+    const f = await page.locator('[data-channel="1"]').boundingBox();
+    await page.mouse.move(f.x + f.width / 2, f.y + f.height * 0.3); await page.mouse.down();
+    await page.mouse.move(f.x + f.width / 2, f.y + f.height * 0.3 + 40, {steps: 5}); await page.mouse.up();
+    assert.ok(await page.evaluate(() => Mixline.engine.decks[1].gain) < 1);
+    await page.evaluate(() => Mixline.engine.setGain(1, 1));
+    assert.equal(await page.locator('[data-meter]').count(), 3);
+    await shot('mixer-412x915');
+  });
+  await runner.run('pads: cues set and jump, loops engage by beats, sampler fires, slip toggles', async () => {
+    await nav('pads');
+    await page.locator('[data-pad-deck="0"]').click();
+    await page.locator('[data-pad-mode="cues"]').click();
+    await page.evaluate(() => Mixline.engine.play(0));
+    await page.locator('[data-pad="1"]').click();
+    await page.waitForFunction(() => Mixline.engine.decks[0].cues[1] !== null);
+    const cueAt = await page.evaluate(() => Mixline.engine.decks[0].cues[1]);
+    await page.waitForTimeout(300);
+    await page.locator('[data-pad="1"]').click();
+    assert.ok(Math.abs(await page.evaluate(() => Mixline.engine.position(0)) - cueAt) < 0.25);
+    await page.locator('[data-pad-mode="loops"]').click();
+    await page.locator('[data-pad-loop="4"]').click();
+    await page.waitForFunction(() => Mixline.engine.decks[0].loop && Math.abs(Mixline.engine.decks[0].loop.beats - 4) < 0.01);
+    await shot('pads-412x915');
+    await page.locator('[data-pad-loop-exit]').click();
+    await page.waitForFunction(() => !Mixline.engine.decks[0].loop);
+    await page.locator('[data-pad-mode="sampler"]').click();
+    const fired = page.evaluate(() => new Promise(r => Mixline.engine.addEventListener('sampler', e => r(e.detail.index), {once: true})));
+    await page.locator('[data-pad="2"]').click();
+    assert.equal(await fired, 2);
+    await page.locator('[data-pad-mode="cues"]').click();
+    await page.locator('[data-pad-slip]').click();
+    assert.equal(await page.evaluate(() => Mixline.engine.decks[0].slip), true);
+    await page.locator('[data-pad-slip]').click();
+  });
+  await runner.run('fx: XY latches through navigation; bypass keeps values; reset neutralises; manual move takes over a transition', async () => {
+    await nav('fx');
+    await page.locator('[data-fx-target="0"]').click();
+    const b = await page.locator('.xy').boundingBox();
+    await page.mouse.move(b.x + b.width * 0.55, b.y + b.height * 0.7); await page.mouse.down();
+    await page.mouse.move(b.x + b.width * 0.78, b.y + b.height * 0.42, {steps: 8}); await page.mouse.up();
+    const state = await page.evaluate(() => ({filter: Mixline.engine.decks[0].filter, echo: Mixline.engine.decks[0].fx.echo}));
+    assert.ok(state.filter > 0.1 && state.echo > 0.1, JSON.stringify(state));
+    await nav('mixer'); await nav('fx');
+    assert.deepEqual(await page.evaluate(() => ({filter: Mixline.engine.decks[0].filter, echo: Mixline.engine.decks[0].fx.echo})), state);
+    await page.locator('[data-fx-bypass]').click();
+    assert.equal(await page.evaluate(() => Mixline.engine.decks[0].fxBypass), true);
+    assert.deepEqual(await page.evaluate(() => ({filter: Mixline.engine.decks[0].filter, echo: Mixline.engine.decks[0].fx.echo})), state);
+    await page.locator('[data-fx-bypass]').click();
+    await shot('fx-412x915');
+    await page.locator('[data-fx-reset]').click();
+    assert.deepEqual(await page.evaluate(() => ({filter: Mixline.engine.decks[0].filter, echo: Mixline.engine.decks[0].fx.echo})), {filter: 0, echo: 0});
+    await page.evaluate(async () => { await Mixline.engine.play(0); await Mixline.engine.play(1); Mixline.engine.setCrossfade(0); });
+    await page.locator('[data-transition-style="bass"]').click();
+    await page.locator('[data-transition-go="1"]').click();
+    await page.waitForFunction(() => Mixline.engine.fade && Mixline.engine.fade.style === 'bass');
+    await page.evaluate(() => Mixline.engine.setCrossfade(0.37));
+    assert.equal(await page.evaluate(() => Mixline.engine.fade), null);
+    await nav('decks');
   });
   await runner.run('no horizontal overflow and dock reachable in portrait and landscape', async () => {
     for (const [w, h] of [[412, 915], [915, 412]]) {
