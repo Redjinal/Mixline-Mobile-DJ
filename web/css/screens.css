@@ -160,3 +160,36 @@
 .two-up { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .pill.is-live { color: var(--green); border-color: rgba(var(--green-rgb), 0.6); }
 @media (min-width: 640px) { .fx-head { flex-direction: row; align-items: center; justify-content: space-between; } }
+
+/* ===== Library ===== */
+.library { display: flex; flex-direction: column; gap: var(--space-3); }
+.library .tabs { margin-bottom: 0; }
+.lib-toolbar { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; align-items: center; }
+.lib-mode { width: 92px; min-height: var(--target-s); }
+.lib-chips { display: flex; flex-direction: column; gap: 8px; }
+.lib-chips .cluster { justify-content: space-between; }
+.lib-sort { width: auto; min-width: 150px; min-height: 36px; font-size: var(--fs-label); }
+.chips.applied .chip { min-height: 32px; font-size: var(--fs-caption); }
+.lib-count { padding: 0 4px; }
+.row-thumb { width: 90px; height: 22px; flex: none; }
+.row-art.crate-art { display: grid; place-items: center; color: var(--violet); }
+.inspector { display: flex; flex-direction: column; gap: 10px; border-color: rgba(var(--violet-rgb), 0.5); box-shadow: 0 0 24px rgba(var(--violet-rgb), calc(0.12 * var(--glow))); }
+.inspector-head { display: grid; grid-template-columns: 52px 1fr auto; gap: 10px; align-items: center; }
+.inspector-wave { position: relative; }
+.wave-prepare { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.inspector-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.inspector-actions .btn-sm { flex: 1 1 auto; min-width: 0; padding: 0 8px; }
+.inspector-prepare summary { cursor: pointer; font-size: var(--fs-label); font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 6px; padding: 6px 0; list-style: none; }
+.inspector-prepare summary::-webkit-details-marker { display: none; }
+.inspector-prepare[open] summary { color: var(--text); }
+.inspector-prepare form { padding-top: 8px; }
+.inspector-foot { justify-content: flex-start; }
+.online-bar { display: flex; flex-direction: column; gap: 8px; }
+.source-card { display: flex; flex-direction: column; gap: 6px; }
+.crate-head { display: flex; align-items: center; gap: 8px; margin-bottom: var(--space-3); }
+.crate-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+.crate-row .row + .row { margin-top: 0; }
+.crate-tools { display: flex; gap: 6px; justify-content: flex-end; align-items: center; }
+.notice.tone-1 { border-color: rgba(var(--deck1-rgb), 0.5); }
+.notice.tone-2 { border-color: rgba(var(--deck2-rgb), 0.5); }
+@media (min-width: 640px) { .lib-chips { flex-direction: row; align-items: center; justify-content: space-between; } }

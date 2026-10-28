@@ -162,6 +162,69 @@ try {
     assert.equal(await page.evaluate(() => Mixline.engine.fade), null);
     await nav('decks');
   });
+  await runner.run('library: search finds a track, selecting opens the inspector, Load to Deck 2 keeps Deck 1 playing', async () => {
+    await nav('library');
+    await page.evaluate(() => Mixline.engine.play(0));
+    await page.locator('[data-lib-search]').fill('Afterhours');
+    await page.waitForFunction(() => document.querySelectorAll('.row[data-track-id]').length === 1);
+    await page.locator('.row[data-track-id="demo-red"]').click();
+    await page.waitForSelector('[data-inspector]');
+    await page.locator('[data-lib-search]').fill('Harbour');
+    await page.waitForFunction(() => document.querySelectorAll('.row[data-track-id]').length === 1);
+    await page.locator('.row[data-track-id="demo-harbour"]').click();
+    await page.waitForFunction(() => document.querySelector('[data-inspector]')?.dataset.trackId === 'demo-harbour');
+    await page.evaluate(() => Mixline.engine.pause(1));
+    await page.locator('[data-load-deck="1"]').click();
+    await page.waitForFunction(() => Mixline.engine.decks[1].track?.id === 'demo-harbour');
+    assert.equal(await page.evaluate(() => Mixline.engine.decks[0].playing), true);
+    await page.waitForSelector('.row[data-track-id="demo-harbour"] .badge-deck2');
+    await shot('library-412x915');
+  });
+  await runner.run('library: favourite and crate persist; recents reflect loads; prepare saves BPM and start', async () => {
+    await page.locator('[data-lib-favorite]').click();
+    await page.waitForFunction(async () => (await Mixline.store.getCollections()).favorites.includes('demo-harbour'));
+    await page.locator('[data-lib-crate-add]').click();
+    await page.waitForSelector('dialog[open]');
+    await page.locator('dialog[open] input[name="value"]').fill('Browser practice set');
+    await page.locator('dialog[open] button[value="ok"]').click();
+    await page.waitForFunction(async () => (await Mixline.store.getCollections()).crates.some(c => c.name === 'Browser practice set' && c.ids.includes('demo-harbour')));
+    await page.locator('[data-lib-tab="recents"]').click();
+    await page.locator('[data-lib-search]').fill('');
+    await page.waitForFunction(() => document.querySelectorAll('.row[data-track-id]').length >= 2);
+    await page.locator('[data-lib-tab="library"]').click();
+    await page.locator('[data-lib-search]').fill('Harbour');
+    await page.waitForFunction(() => document.querySelectorAll('.row[data-track-id]').length === 1);
+    await page.locator('.row[data-track-id="demo-harbour"]').click();
+    await page.waitForFunction(() => document.querySelector('[data-inspector]')?.dataset.trackId === 'demo-harbour');
+    await page.locator('[data-lib-bpm]').fill('123.5');
+    await page.locator('[data-lib-start]').fill('00:02.500');
+    await page.locator('[data-lib-save]').click();
+    await page.waitForFunction(async () => (await Mixline.store.getTrack('demo-harbour')).track.bpm === 123.5);
+    assert.equal(await page.evaluate(async () => (await Mixline.store.getTrack('demo-harbour')).track.start), 2.5);
+  });
+  await runner.run('library: a long title truncates without overflow and the empty search state offers a reset', async () => {
+    await page.evaluate(() => Mixline.store.saveTrack({id: 'long-title-fixture', demo: 'warm', title: 'An Extraordinarily Long Track Title That Keeps Going And Going Without Any End In Sight', artist: 'Someone With A Very Long Artist Name Indeed', bpm: 0, source: 'original'}));
+    await page.evaluate(() => Mixline.screens.library.reload());
+    await page.locator('[data-lib-search]').fill('Extraordinarily');
+    await page.waitForFunction(() => document.querySelectorAll('.row[data-track-id]').length === 1);
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
+    await page.locator('[data-lib-search]').fill('zzzz-no-match');
+    await page.waitForSelector('[data-lib-clear]');
+    await page.locator('[data-lib-clear]').click();
+    await page.waitForFunction(() => document.querySelectorAll('.row[data-track-id]').length >= 6);
+    await page.evaluate(() => Mixline.store.deleteTrack('long-title-fixture'));
+  });
+  await runner.run('library: sources sheet saves a public Jamendo Client ID without claiming a connection', async () => {
+    await page.locator('[data-lib-sources]').click();
+    await page.waitForSelector('dialog.sheet[open]');
+    await page.locator('dialog.sheet [data-source-setup="jamendo"] input[name="clientId"]').fill('test-public-client-id');
+    await page.locator('dialog.sheet [data-source-setup="jamendo"] button[type="submit"]').click();
+    await page.waitForFunction(() => Mixline.sources.getConfig().jamendo.clientId === 'test-public-client-id');
+    const text = await page.locator('dialog.sheet').textContent();
+    assert.match(text, /not verified|unverified|Not checked/i);
+    await page.evaluate(() => Mixline.back());
+    await nav('decks');
+  });
   await runner.run('no horizontal overflow and dock reachable in portrait and landscape', async () => {
     for (const [w, h] of [[412, 915], [915, 412]]) {
       await page.setViewportSize({width: w, height: h});

@@ -173,3 +173,27 @@ export function createWaveform(canvas, {engine, deck, kind = 'compact', getMode 
     destroy() { alive = false; cancelAnimationFrame(raf); this.cancel(); }
   };
 }
+
+/** Static peaks drawing for library rows and the inspector (no engine binding). */
+export function drawPeaks(canvas, peaks, {color = '#a855ff', position = null, duration = 0, loop = null, cue = null, background = 'transparent'} = {}) {
+  const ctx = canvas.getContext('2d');
+  const s = Math.min(2, window.devicePixelRatio || 1);
+  const w = Math.max(1, canvas.clientWidth), h = Math.max(1, canvas.clientHeight);
+  if (canvas.width !== Math.round(w * s) || canvas.height !== Math.round(h * s)) { canvas.width = Math.round(w * s); canvas.height = Math.round(h * s); }
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  if (background !== 'transparent') { ctx.fillStyle = background; ctx.fillRect(0, 0, W, H); }
+  if (!peaks?.length) { ctx.strokeStyle = 'rgba(255,255,255,0.12)'; ctx.lineWidth = s; ctx.beginPath(); ctx.moveTo(0, H / 2); ctx.lineTo(W, H / 2); ctx.stroke(); return; }
+  const count = peaks.length, barW = W / count, mid = H / 2;
+  const played = duration && position !== null ? (position / duration) * W : -1;
+  for (let i = 0; i < count; i++) {
+    const x = i * barW, bh = Math.max(1, (peaks[i] || 0) * H * 0.92);
+    ctx.fillStyle = color; ctx.globalAlpha = x < played ? 1 : 0.45;
+    ctx.fillRect(x, mid - bh / 2, Math.max(1, barW - (barW > 3 ? 1 : 0)), bh);
+  }
+  ctx.globalAlpha = 1;
+  const xOf = t => (t / duration) * W;
+  if (loop && duration) { ctx.fillStyle = '#39e58c'; ctx.globalAlpha = 0.2; ctx.fillRect(xOf(loop.start), 0, xOf(loop.end) - xOf(loop.start), H); ctx.globalAlpha = 1; ctx.fillRect(xOf(loop.start) - s, 0, 2 * s, H); ctx.fillRect(xOf(loop.end) - s, 0, 2 * s, H); }
+  if (cue !== null && duration) { ctx.fillStyle = '#ffffff'; ctx.fillRect(xOf(cue) - s, 0, 2 * s, H); ctx.beginPath(); ctx.moveTo(xOf(cue), 0); ctx.lineTo(xOf(cue) + 8 * s, 0); ctx.lineTo(xOf(cue), 8 * s); ctx.closePath(); ctx.fill(); }
+  if (played >= 0) { ctx.fillStyle = '#ffffff'; ctx.fillRect(played - s, 0, 2 * s, H); }
+}

@@ -17,6 +17,7 @@ import {createDecksScreen} from './screens/decks.js';
 import {createMixerScreen} from './screens/mixer.js';
 import {createPadsScreen} from './screens/pads.js';
 import {createFXScreen} from './screens/fx.js';
+import {createLibraryScreen} from './screens/library.js';
 
 const ROUTES = [...WORKSPACES.map(w => w.name), 'settings'];
 const router = createRouter({routes: ROUTES, initial: 'decks'});
@@ -59,7 +60,7 @@ function placeholder(name, label) {
 const screens = {
   decks: createDecksScreen(ctx),
   mixer: createMixerScreen(ctx), pads: createPadsScreen(ctx), fx: createFXScreen(ctx),
-  library: placeholder('library', 'Library'), challenge: placeholder('challenge', 'Challenge'), settings: placeholder('settings', 'Studio settings')
+  library: createLibraryScreen(ctx), challenge: placeholder('challenge', 'Challenge'), settings: placeholder('settings', 'Studio settings')
 };
 createNav($('#nav'), router);
 const dock = createDock($('#dock'), {engine, toast});
@@ -82,7 +83,28 @@ let frame = 0;
 const scheduleUpdate = detail => { if (frame) return; frame = requestAnimationFrame(() => { frame = 0; active?.update(detail); dock.update(); }); };
 engine.addEventListener('change', e => scheduleUpdate(e.detail));
 engine.addEventListener('error', e => toast(e.detail.message, {kind: 'error'}));
-engine.addEventListener('loaded', e => { const d = engine.decks[e.detail.deck]; toast(`${d.track.title} is ready on Deck ${e.detail.deck + 1}`, {kind: 'success'}); haptics.play('load'); });
+engine.addEventListener('loaded', e => {
+  const d = engine.decks[e.detail.deck];
+  toast(`${d.track.title} is ready on Deck ${e.detail.deck + 1}`, {kind: 'success'});
+  haptics.play('load');
+  // Remember the measured waveform and duration so library rows can show them without decoding again.
+  if (d.track.id && !d.track.transient) store.updateTrack(d.track.id, {peaks: Array.from(d.peaks), duration: d.duration, ...(d.bpm && d.track.bpm !== d.bpm ? {bpm: d.bpm, bpmSource: d.bpmSource} : {})}).then(() => screens.library.reload?.()).catch(() => {});
+});
+// Persist preparation edits (hot cues, markers, grid, loop, tempo) to the track record so they return on the next load.
+const prepTimers = [0, 0];
+engine.addEventListener('change', e => {
+  const detail = e.detail || {};
+  const i = detail.cues ?? detail.markers ?? detail.grid ?? detail.loop ?? detail.bpm;
+  if (i !== 0 && i !== 1) return;
+  const d = engine.decks[i];
+  if (!d.track?.id || d.track.transient) return;
+  clearTimeout(prepTimers[i]);
+  prepTimers[i] = setTimeout(() => {
+    const deck = engine.decks[i];
+    if (!deck.track?.id) return;
+    store.updateTrack(deck.track.id, {cues: [...deck.cues], cueMeta: deck.cueMeta.map(x => ({...x})), markers: deck.markers.map(x => ({...x})), grid: {...deck.grid}, quantize: deck.quantize, loop: deck.loop ? {start: deck.loop.start, end: deck.loop.end} : null, bpm: deck.bpm, bpmSource: deck.bpmSource}).catch(() => {});
+  }, 800);
+});
 engine.addEventListener('transitionend', e => { toast(`Transition complete: Deck ${e.detail.incoming + 1} is live`, {kind: 'success'}); if (settings.stopOutgoing) engine.pause(1 - e.detail.incoming); });
 
 /* ---------- startup ---------- */

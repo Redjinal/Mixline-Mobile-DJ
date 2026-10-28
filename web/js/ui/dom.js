@@ -13,7 +13,8 @@ class Raw {
 export const raw = text => new Raw(String(text));
 
 function stringify(value) {
-  if (value == null || value === false) return '';
+  if (value == null) return '';
+  if (typeof value === 'boolean') return String(value);
   if (value instanceof Raw) return value.text;
   if (Array.isArray(value)) return value.map(stringify).join('');
   return esc(value);
