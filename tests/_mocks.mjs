@@ -34,7 +34,7 @@ export class Context {
   createBiquadFilter() { return new Node(); }
   createDelay() { return new Node(); }
   createConvolver() { return new Node(); }
-  createBufferSource() { return new Node(); }
+  createBufferSource() { const node = new Node(); this.lastSource = node; return node; }
   createBuffer(c, n, s) { return new Buffer(c, n, s); }
   decodeAudioData(bytes) { return this.decode(bytes); }
   resume() { this.state = 'running'; }
