@@ -70,9 +70,10 @@ public final class MainActivity extends ComponentActivity {
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         FrameLayout root = new FrameLayout(this);
-        root.setBackgroundColor(Color.rgb(9, 11, 17));
+        root.setBackgroundColor(Color.rgb(11, 11, 13));
         webView = new WebView(this);
-        webView.setBackgroundColor(Color.rgb(9, 11, 17));
+        webView.setBackgroundColor(Color.rgb(11, 11, 13));
+        webView.setHapticFeedbackEnabled(true);
         root.addView(webView, new FrameLayout.LayoutParams(-1, -1));
         setContentView(root);
         root.setOnApplyWindowInsetsListener((view, insets) -> {
@@ -200,9 +201,25 @@ public final class MainActivity extends ComponentActivity {
                     else pausePlayback();
                 } else releaseFocus();
                 break;
-            case "haptic": webView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP); break;
+            case "haptic": webView.performHapticFeedback(hapticConstant(message.optString("kind", "press"))); break;
             case "export": beginExport(message); break;
             default: nativeResult("error", "Unsupported native request", null);
+        }
+    }
+
+    /** Map the web app's haptic vocabulary onto system feedback constants, degrading on older APIs. */
+    private static int hapticConstant(String kind) {
+        switch (kind) {
+            case "select": return HapticFeedbackConstants.CLOCK_TICK;
+            case "load": return Build.VERSION.SDK_INT >= 30 ? HapticFeedbackConstants.CONFIRM : HapticFeedbackConstants.LONG_PRESS;
+            case "step": return Build.VERSION.SDK_INT >= 34 ? HapticFeedbackConstants.SEGMENT_FREQUENT_TICK : HapticFeedbackConstants.CLOCK_TICK;
+            case "detent": return Build.VERSION.SDK_INT >= 34 ? HapticFeedbackConstants.SEGMENT_TICK : HapticFeedbackConstants.CONTEXT_CLICK;
+            case "center": return HapticFeedbackConstants.CONTEXT_CLICK;
+            case "edge": return Build.VERSION.SDK_INT >= 30 ? HapticFeedbackConstants.GESTURE_END : HapticFeedbackConstants.CLOCK_TICK;
+            case "contact": return HapticFeedbackConstants.VIRTUAL_KEY;
+            case "toggle": return Build.VERSION.SDK_INT >= 34 ? HapticFeedbackConstants.TOGGLE_ON : HapticFeedbackConstants.CONTEXT_CLICK;
+            case "warning": return Build.VERSION.SDK_INT >= 30 ? HapticFeedbackConstants.REJECT : HapticFeedbackConstants.LONG_PRESS;
+            default: return HapticFeedbackConstants.KEYBOARD_TAP;
         }
     }
 

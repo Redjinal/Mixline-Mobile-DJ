@@ -8,8 +8,8 @@ android {
         applicationId 'com.mixline.studio.testing'
         minSdk 29
         targetSdk 36
-        versionCode 50001
-        versionName '5.0.0-test1'
+        versionCode 60000
+        versionName '6.0.0'
     }
     buildFeatures { buildConfig true }
     compileOptions {
