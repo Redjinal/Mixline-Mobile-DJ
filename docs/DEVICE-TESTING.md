@@ -1,6 +1,8 @@
 # S26 Ultra test checklist
 
-Use this checklist for **Mixline 4.0.0-test2**, package `com.mixline.studio.testing`. These are acceptance tests to perform, not claimed passing results.
+Use this checklist for **Mixline 5.0.0-test1**, package `com.mixline.studio.testing`. These are acceptance tests to perform, not claimed passing results.
+
+The user reports that the S26 Ultra is on the latest Android/One UI versions. Exact OS build numbers have not been supplied or verified.
 
 ## Record the test setup
 
@@ -10,12 +12,12 @@ Use two ordinary audio files you can play locally and the bundled original demo 
 
 ## Install the standalone test build
 
-1. Build or obtain `artifacts/Mixline-4.0.0-test2.apk` and its `.sha256` file. Verify the file hash against the supplied value.
+1. Build or obtain `artifacts/Mixline-5.0.0-test1.apk` and its `.sha256` file. Verify the file hash against the supplied value.
 2. Transfer the APK to the phone and allow installation from that transfer/browser/file-manager app when Android requests it. Install the Mixline test edition.
-3. Confirm the displayed version is `4.0.0-test2` and the package is `com.mixline.studio.testing`. Existing Mixline installations with a different package should remain separate.
+3. Confirm the displayed version is `5.0.0-test1` and the package is `com.mixline.studio.testing`. Existing Mixline installations with a different package should remain separate.
 4. Launch without an account. Load the original demo pair. Confirm both decks are initially under your control rather than starting unexpectedly.
 
-For a developer with an authorized USB-debugging connection, `adb install artifacts/Mixline-4.0.0-test2.apk` installs the package. Use `adb install -r` only for an update signed with the same key. An APK rebuilt with a different debug key may require uninstalling; export important recordings first because uninstalling deletes app data.
+For a developer with an authorized USB-debugging connection, `adb install artifacts/Mixline-5.0.0-test1.apk` installs the package. Use `adb install -r` only for an update signed with the same key. An APK rebuilt with a different debug key may require uninstalling; export important recordings first because uninstalling deletes app data.
 
 ## Local mixing and touch
 
@@ -28,6 +30,16 @@ For a developer with an authorized USB-debugging connection, `adb install artifa
 - Browse the library and queue while playing. Confirm the persistent dock stays reachable and editing preparation does not move the playing deck.
 - Load another file into a playing deck; cancel the confirmation, then try a corrupt/unsupported file. The original track should survive cancellation or decode failure.
 - Test portrait and landscape, one-handed Challenge actions and two simultaneous touches. Check gesture-navigation edges, keyboard/inset overlap, clipped labels, and accidental neighboring controls.
+
+## Restored 5.0 controls and preparation
+
+- Hold and release main Cue while paused, and test temporary tempo nudge in both directions. Release, interrupted touch and view changes must not leave a held state active.
+- Open Waves. Test Seek, Pan and Scratch separately, pinch zoom, Fit/Follow, fine positioning, cue/marker edits and custom-loop boundaries. Confirm Pan changes the viewport without seeking and an abandoned Seek does not move playback.
+- Open FX and move the XY puck. Release and change views: its filter/echo position must remain latched. Bypass must retain the settings, and Reset must return the selected deck to neutral. Verify the audible effect agrees with the shown values.
+- Test separate trim/channel gain, EQ kill, master mute and visible channel/master levels. A pre-fader channel meter alone does not prove a deck is audible in the main mix.
+- Try bass-exchange transitions and interrupt with a relevant manual control. Check that cancel preserves current values rather than snapping back.
+- Prepare a track while the other deck plays. Independent preview must use its own position and explicitly identify its current output. Confirm live deck positions are not moved by preview edits.
+- Check Favorites, Recents, Crates and source filters; relaunch to verify saved organization and preparation. Test source errors/setup without treating a visible source tile as a successful connection.
 
 ## Challenge queue and recovery
 

@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+const baseURL=process.env.MIXLINE_BASE_URL||'http://127.0.0.1:8080';
 import { createRequire } from 'node:module';
 const require=createRequire(import.meta.url);
 const {chromium}=require('/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
@@ -22,7 +24,7 @@ await context.addInitScript(()=>{
 const page=await context.newPage();page.setDefaultTimeout(7000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
 const results=[];
 async function check(name,fn){try{await fn();results.push({name,status:'PASS'});}catch(e){results.push({name,status:'FAIL',message:e.message});}finally{await page.evaluate(()=>{const d=document.querySelector('dialog[open]');d?.close();});}}
-await page.goto('http://127.0.0.1:8080');await page.waitForFunction(()=>window.Mixline?.store);
+await page.goto(baseURL);await page.waitForFunction(()=>window.Mixline?.store);
 await check('video queue can be authored without remote media',async()=>{
  await page.click('#video-mode');await page.waitForFunction(()=>window.Mixline.video.decks.every(d=>d.ready));
  await page.locator('[data-add-video]').first().click();await page.fill('#video-url','https://youtu.be/dQw4w9WgXcQ');await page.fill('#video-label','Mock beat one');await page.fill('#video-start','15');await page.locator('#video-form button').click();
@@ -91,7 +93,7 @@ const offlineContext=await browser.newContext({viewport:{width:412,height:915}})
 await offlineContext.route('**/*',route=>new URL(route.request().url()).hostname==='127.0.0.1'?route.continue():route.abort());
 const offlinePage=await offlineContext.newPage();offlinePage.setDefaultTimeout(7000);
 try {
- await offlinePage.goto('http://127.0.0.1:8080');await offlinePage.waitForFunction(()=>window.Mixline?.store);
+ await offlinePage.goto(baseURL);await offlinePage.waitForFunction(()=>window.Mixline?.store);
  await offlinePage.click('#video-mode');await offlinePage.locator('[data-add-video]').first().click();
  await offlinePage.fill('#video-url','https://youtu.be/dQw4w9WgXcQ');await offlinePage.fill('#video-label','Offline preparation');await offlinePage.locator('#video-form button').click();
  assert.equal(await offlinePage.evaluate(()=>Mixline.state.queue[0].title),'Offline preparation');
@@ -99,6 +101,8 @@ try {
  results.push({name:'queue-only preparation remains usable when iframe API is blocked',status:'PASS'});
 } catch(e) {results.push({name:'queue-only preparation remains usable when iframe API is blocked',status:'FAIL',message:e.message});}
 await offlineContext.close();
+await mkdir('artifacts/v5-verification',{recursive:true});
+await writeFile('artifacts/v5-verification/video-results.json',JSON.stringify({scope:'Mocked official player events; not live YouTube',results},null,2));
 console.log(JSON.stringify({scope:'Mocked official player events and blocked-network queue preparation; NOT live YouTube playback',results},null,2));
 await browser.close();
 if(results.some(r=>r.status==='FAIL'))process.exitCode=1;

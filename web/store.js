@@ -1,7 +1,7 @@
 /** Durable local library. Audio blobs remain on the device in IndexedDB. */
 const DB_NAME='mixline-studio-4',VERSION=1;
 export class Store {
-  constructor(){this.db=null;this.persistent=false;this._opening=null;}
+  constructor(){this.db=null;this.persistent=false;this._opening=null;this.transientTracks=new Map();}
   async init(){
     if(this.db)return this;
     if(this._opening)return this._opening;
@@ -27,7 +27,8 @@ export class Store {
     });
   }
   async listTracks(){const rows=await this.transaction('tracks','readonly',s=>s.getAll());return rows.map(({blob,...track})=>track).sort((a,b)=>(b.added||0)-(a.added||0));}
-  async getTrack(id){const row=await this.transaction('tracks','readonly',s=>s.get(id));if(!row)return null;const {blob,...track}=row;return {track,blob};}
+  async getTrack(id){if(this.transientTracks.has(id))return this.transientTracks.get(id);const row=await this.transaction('tracks','readonly',s=>s.get(id));if(!row)return null;const {blob,...track}=row;return {track,blob};}
+  cacheTrack(track,blob){if(!track?.id||!blob)throw new Error('A prepared track needs audio and an identifier.');this.transientTracks.set(track.id,{track:{...track,transient:true},blob});while(this.transientTracks.size>6)this.transientTracks.delete(this.transientTracks.keys().next().value);return this.transientTracks.get(track.id).track;}
   async saveTrack(track,blob){
     const id=track.id||globalThis.crypto.randomUUID();
     const old=await this.transaction('tracks','readonly',s=>s.get(id));
@@ -35,8 +36,8 @@ export class Store {
     if(!row.blob&&!row.demo)throw new Error('Select an audio file before importing.');
     await this.transaction('tracks','readwrite',s=>s.put(row));const {blob:_,...meta}=row;return meta;
   }
-  async updateTrack(id,updates){const current=await this.getTrack(id);if(!current)throw new Error('This track is no longer in the library.');return this.saveTrack({...current.track,...updates,id},current.blob);}
-  async deleteTrack(id){return this.transaction('tracks','readwrite',s=>s.delete(id));}
+  async updateTrack(id,updates){const current=await this.getTrack(id);if(!current)throw new Error('This track is no longer in the library.');if(current.track.transient)return this.cacheTrack({...current.track,...updates,id},current.blob);return this.saveTrack({...current.track,...updates,id},current.blob);}
+  async deleteTrack(id){this.transientTracks.delete(id);return this.transaction('tracks','readwrite',s=>s.delete(id));}
   async saveSession(name,data,id){const record={id:id||globalThis.crypto.randomUUID(),name:String(name||'Untitled session').trim().slice(0,100),data,updated:Date.now()};await this.transaction('sessions','readwrite',s=>s.put(record));return record;}
   async listSessions(){return (await this.transaction('sessions','readonly',s=>s.getAll())).sort((a,b)=>b.updated-a.updated);}
   async getSession(id){return this.transaction('sessions','readonly',s=>s.get(id));}

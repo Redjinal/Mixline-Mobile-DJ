@@ -20,6 +20,7 @@ import android.view.WindowInsets;
 import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.webkit.ValueCallback;
+import android.webkit.MimeTypeMap;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -40,6 +41,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.LinkedHashSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -144,8 +147,24 @@ public final class MainActivity extends ComponentActivity {
                 pendingChooser = callback;
                 Intent picker = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 picker.addCategory(Intent.CATEGORY_OPENABLE);
-                picker.setType("*/*");
-                picker.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"audio/*", "video/*"});
+                // Match the initiating input: recipes request JSON; music import requests audio.
+                LinkedHashSet<String> accepted = new LinkedHashSet<>();
+                for (String group : params.getAcceptTypes()) {
+                    if (group == null) continue;
+                    for (String entry : group.split(",")) {
+                        String type = entry.trim().toLowerCase(Locale.ROOT);
+                        if (type.startsWith(".")) {
+                            type = ".json".equals(type) ? "application/json"
+                                    : MimeTypeMap.getSingleton().getMimeTypeFromExtension(type.substring(1));
+                        }
+                        if (type != null && (type.startsWith("audio/") || type.startsWith("video/")
+                                || "application/json".equals(type))) accepted.add(type);
+                    }
+                }
+                if (accepted.isEmpty()) { accepted.add("audio/*"); accepted.add("video/*"); }
+                String[] mimeTypes = accepted.toArray(new String[0]);
+                picker.setType(mimeTypes.length == 1 ? mimeTypes[0] : "*/*");
+                if (mimeTypes.length > 1) picker.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
                 picker.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, params.getMode() == FileChooserParams.MODE_OPEN_MULTIPLE);
                 picker.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
                 openPicker(picker, PICK_MEDIA);

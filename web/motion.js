@@ -9,6 +9,28 @@ export function setMotion(value = 'system') {
 systemMotion.addEventListener('change', () => setMotion(preference));
 setMotion();
 const running = new WeakMap();
+let fineControl = false;
+export function setFineControl(enabled) {
+  fineControl = !!enabled;
+  document.body.dataset.fine = String(fineControl);
+  document.querySelectorAll('[data-fine-control]').forEach(button => button.setAttribute('aria-pressed', String(fineControl)));
+}
+function editExactValue(input) {
+  const knob=input.closest('.rotary'), title=knob.querySelector('.rotary-title')?.textContent||input.getAttribute('aria-label')||'Value';
+  const dialog=document.createElement('dialog');dialog.className='exact-value-dialog';
+  const heading=document.createElement('h2');heading.textContent=`Set ${title.toLowerCase()}`;
+  const form=document.createElement('form');form.method='dialog';
+  const label=document.createElement('label');label.textContent=`${title}${input.dataset.unit?` (${input.dataset.unit.trim()})`:''}`;
+  const field=document.createElement('input');field.type='number';field.min=input.min;field.max=input.max;field.step=input.step||'any';field.value=input.value;field.required=true;field.setAttribute('aria-label',title);label.append(field);
+  const help=document.createElement('p');help.className='exact-help';help.textContent=`Range ${input.min} to ${input.max}. Fine drag reduces knob sensitivity.`;
+  const fineLabel=document.createElement('label');const fine=document.createElement('input');fine.type='checkbox';fine.checked=fineControl;fineLabel.append(fine,document.createTextNode(' Fine drag'));
+  const actions=document.createElement('div');actions.className='exact-actions';
+  for(const text of ['Cancel','Reset','Apply']){const button=document.createElement('button');button.textContent=text;button.type=text==='Apply'?'submit':'button';if(text==='Apply')button.className='primary';if(text==='Cancel')button.onclick=()=>dialog.close();if(text==='Reset')button.onclick=()=>{field.value=input.dataset.default??'0';field.focus();};actions.append(button);}
+  form.append(label,help,fineLabel,actions);dialog.append(heading,form);document.body.append(dialog);
+  const close=()=>{dialog.remove();if(input.isConnected)input.focus({preventScroll:true});};dialog.addEventListener('close',close,{once:true});
+  form.addEventListener('submit',e=>{e.preventDefault();if(!field.reportValidity())return;input.value=field.value;setFineControl(fine.checked);input.dispatchEvent(new Event('input',{bubbles:true}));dialog.close();});
+  dialog.showModal();field.focus();field.select();
+}
 export function reveal(element, kind = 'page') {
   if (!element) return;
   running.get(element)?.cancel();
@@ -41,25 +63,30 @@ export function syncRange(input) {
 export function initializeControls(root=document) {
   root.querySelectorAll('input[type=range]').forEach(syncRange);
   root.querySelectorAll('.rotary input').forEach(input=>{
+    if(input.dataset.motionBound==='true')return;
+    input.dataset.motionBound='true';
     let drag;
     input.addEventListener('pointerdown',e=>{
-      if(e.button!==0)return;
+      if(e.button!==0||drag)return;
       e.preventDefault();input.focus({preventScroll:true});input.setPointerCapture(e.pointerId);
-      drag={y:e.clientY,x:e.clientX,value:Number(input.value)};
+      drag={id:e.pointerId,y:e.clientY,x:e.clientX,value:Number(input.value)};
       input.closest('.rotary').classList.add('adjusting');
     });
     input.addEventListener('pointermove',e=>{
-      if(!drag)return;e.preventDefault();
+      if(!drag||drag.id!==e.pointerId)return;e.preventDefault();
       const min=Number(input.min),max=Number(input.max),step=Number(input.step)||.01;
-      const delta=(drag.y-e.clientY+(e.clientX-drag.x)*.3)/(e.shiftKey?900:180);
+      const delta=(drag.y-e.clientY+(e.clientX-drag.x)*.3)/(e.shiftKey||fineControl?900:180);
       input.value=String(Math.max(min,Math.min(max,Math.round((drag.value+delta*(max-min))/step)*step)));
       input.dispatchEvent(new Event('input',{bubbles:true}));
     });
-    const end=()=>{drag=null;input.closest('.rotary').classList.remove('adjusting');};
-    input.addEventListener('pointerup',end);input.addEventListener('pointercancel',end);
+    const end=e=>{if(e?.pointerId!==undefined&&drag?.id!==e.pointerId)return;drag=null;input.closest('.rotary').classList.remove('adjusting');};
+    input.addEventListener('pointerup',end);input.addEventListener('pointercancel',end);input.addEventListener('lostpointercapture',end);input.addEventListener('blur',()=>end());
     input.addEventListener('dblclick',()=>{input.value=input.dataset.default;input.dispatchEvent(new Event('input',{bubbles:true}));});
+    const output=input.closest('.rotary').querySelector('output');
+    if(output){output.tabIndex=0;output.setAttribute('role','button');output.setAttribute('aria-label',`Enter exact ${input.getAttribute('aria-label')||'value'}`);output.title='Tap to enter an exact value or enable Fine drag';output.addEventListener('click',e=>{e.preventDefault();editExactValue(input);});output.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();editExactValue(input);}});}
   });
 }
+document.addEventListener('click',event=>{if(event.target.closest('[data-fine-control]'))setFineControl(!fineControl);});
 document.addEventListener('input',event=>{if(event.target.matches('input[type=range]'))syncRange(event.target);});
 document.addEventListener('pointerdown',event=>{
   const button=event.target.closest('button');if(!button||button.disabled)return;

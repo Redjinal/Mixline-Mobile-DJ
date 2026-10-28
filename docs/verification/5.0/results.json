@@ -1,0 +1,156 @@
+{
+  "scope": "Real desktop Chromium audio and UI; not physical S26 validation or live provider validation",
+  "checks": [
+    {
+      "name": "Six original demos are durable and both decks load",
+      "evidence": [
+        {
+          "title": "Afterhours Circuit",
+          "duration": 32
+        },
+        {
+          "title": "Midnight Voltage",
+          "duration": 30.476190476190474
+        }
+      ]
+    },
+    {
+      "name": "Direct six-workspace navigation preserves live playback",
+      "evidence": {
+        "routes": [
+          "perform",
+          "waves",
+          "mixer",
+          "pads",
+          "fx",
+          "library"
+        ]
+      }
+    },
+    {
+      "name": "Real audio Cue hold and temporary bend return safely",
+      "evidence": {
+        "cue": 3,
+        "rate": 1.02
+      }
+    },
+    {
+      "name": "Held Cue and platter release safely across navigation",
+      "evidence": {
+        "heldCueReleased": true,
+        "rapidCueNoLatePlay": true,
+        "scratchReleased": true
+      }
+    },
+    {
+      "name": "XY gesture stays latched through navigation",
+      "evidence": {
+        "filter": 0.5600000841864223,
+        "echo": 0.5800000420932112
+      }
+    },
+    {
+      "name": "FX bypass remembers position and reset neutralizes real parameters",
+      "evidence": {
+        "filter": 0.5600000841864223,
+        "echo": 0.5800000420932112
+      }
+    },
+    {
+      "name": "Wave pan and cancelled seek preserve playhead; exact seek and cue edit apply",
+      "evidence": {
+        "panPreserved": 4,
+        "exactSeek": 2.125,
+        "cue": "Browser cue"
+      }
+    },
+    {
+      "name": "Master mute leaves deck clocks running",
+      "evidence": {
+        "before": 2.136842176870748,
+        "after": 2.216776870748299
+      }
+    },
+    {
+      "name": "Library preparation, preview and collections preserve live deck state",
+      "evidence": {
+        "preparedStart": 2.5,
+        "crate": "Browser practice set",
+        "independentPreview": true
+      }
+    },
+    {
+      "name": "Source setup persists public configuration without claiming connection",
+      "evidence": {
+        "publicSetupSaved": true,
+        "liveServiceVerified": false
+      }
+    },
+    {
+      "name": "Bass transition is interrupted by manual crossfader",
+      "evidence": {
+        "crossfade": 0.37
+      }
+    },
+    {
+      "name": "Named cues, markers, grid and latched FX survive a paused engine restore",
+      "evidence": {
+        "cue": {
+          "name": "Drop",
+          "color": "#ff4358"
+        },
+        "markers": 1
+      }
+    },
+    {
+      "name": "Local master recording produces decodable non-silent audio",
+      "evidence": {
+        "bytes": 26205,
+        "seconds": 1.0799773242630386,
+        "channels": 2,
+        "peak": 0.43141594529151917
+      }
+    },
+    {
+      "name": "All workspaces fit phone and landscape with reachable dock",
+      "evidence": {
+        "inspected": [
+          "perform/412",
+          "waves/412",
+          "mixer/412",
+          "pads/412",
+          "fx/412",
+          "library/412",
+          "challenge/412",
+          "record/412",
+          "sessions/412",
+          "settings/412",
+          "perform/915",
+          "waves/915",
+          "mixer/915",
+          "pads/915",
+          "fx/915",
+          "library/915",
+          "challenge/915",
+          "record/915",
+          "sessions/915",
+          "settings/915"
+        ]
+      }
+    },
+    {
+      "name": "Reduced-motion preference persists and keeps controls active",
+      "evidence": {
+        "persisted": true
+      }
+    },
+    {
+      "name": "No uncaught browser errors",
+      "evidence": {
+        "exceptions": []
+      }
+    }
+  ],
+  "failures": [],
+  "exceptions": []
+}

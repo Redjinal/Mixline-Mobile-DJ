@@ -1,18 +1,27 @@
 # Mixline Mobile DJ
 
-Mixline **4.0.0-test2** is a standalone Android test edition of the Mixline performance studio. It redesigns local two-deck mixing and the visible-video Challenge workflow for a Samsung S26 Ultra, with red Deck 1, blue/cyan Deck 2, and large performance controls.
+Mixline **5.0.0-test1** restores the audio-first Touch/Wave Studio workflow for Android: balanced waveforms and medium platters, direct Decks/Waves/Mixer/Pads/FX/Library workspaces, and a persistent two-deck transport dock.
 
-This repository contains a bundled web interface and Web Audio engine inside a Java Android WebView shell. The native bridge supplies Android file selection/export, audio-focus interruption handling, screen-awake behavior, and haptic feedback. It is not a native low-latency DJ DSP engine.
+## Download
 
-## Download the APK
+**[Download Mixline 5.0.0-test1 APK](https://github.com/Redjinal/Mixline-Mobile-DJ/raw/refs/heads/main/downloads/Mixline-5.0.0-test1.apk)**
 
-**[Download Mixline 4.0.0-test2 for Android](https://github.com/Redjinal/Mixline-Mobile-DJ/raw/refs/heads/main/downloads/Mixline-4.0.0-test2.apk)** (about 5.6 MB).
+Open the link on your phone; sign in to GitHub if this repository is private. The [downloads folder](downloads/) contains checksums and installation notes. The package and testing signing identity match 4.0 test2 so an ordinary update preserves its local library. Do not uninstall first if you want to retain that data.
 
-Use this GitHub download link on your phone. If the repository is private, sign in to GitHub first. The [downloads folder](downloads/) also contains the APK, checksum and installation notes.
+## What's in 5.0
 
-## Build and run
+- Balanced decks, actual audio waveforms, platter scratching, Cue hold/audition, temporary nudge, slip, exact/fine knob controls and keyboard transport shortcuts.
+- Expanded Wave workspace: overview/detail, seek/pan/scratch, pinch zoom, fine seeking, Fit/Follow, named/colorable hot cues, manual markers, draggable custom loops, grid/downbeat, quantize and approximate BPM estimation.
+- Latched filter/echo XY pad with separate Bypass and Reset, echo timing/feedback, reverb, eight synthesized sampler sounds, blend/bass-swap/echo-out transitions and manual takeover.
+- Trim, channel levels, three-band EQ/cuts, filter, master mute and measured meters. Tempo changes still change pitch; there is no key-lock or continuous-sync claim.
+- Library selection/inspection, title/artist/BPM filters, Favorites/Recents/Crates, independent preparation/preview, saved starts/cues/markers/loops/grid, set recipes and adjacent-pair transition rehearsal. Preview uses the current output and is audible to anyone listening there.
+- Six original synthesized practice tracks, persistent local imports, protected deck replacement, cancellation/ejection, queue rename/start/reorder/skip/restore, session recovery and local-master recording/export.
+- Audius and Jamendo library adapters; experimental Internet Archive and Wikimedia discovery. Track capabilities and credits are explicit. **Live provider access remains unverified in this environment.** Free To Use remains a research entry because a current supported API and applicable terms could not be established; Spotify DJ access is not connected.
+- Existing visible YouTube/Challenge, repeat/retry and local accompaniment paths are retained. Live YouTube overlap still requires device and provider validation; video audio does not enter the local DSP or recording.
 
-The prepared cloud environment provides JDK 21, Android SDK 36, Build Tools 36.0.0 and Gradle 8.13. The project wrapper pins Gradle 8.13 with checksum verification; Android Gradle Plugin is 8.13.2.
+See [5.0 release scope](docs/RELEASE-5.md), [verification](docs/VERIFICATION-5.md), [restoration audit](docs/design/MIXLINE-5-PARITY.md), and [S26 Ultra test checklist](docs/DEVICE-TESTING.md). Historical concept images are design references, not screenshots of the APK.
+
+## Build and verify
 
 ```bash
 cd /workspace/Mixline-Mobile-DJ
@@ -21,41 +30,19 @@ npm test
 bash scripts/build-apk.sh
 ```
 
-The build script runs `assembleDebug` and `lintDebug`, verifies APK signing and ZIP alignment, and writes:
+The prepared environment supplies JDK 21, SDK 36, Build Tools 36.0.0 and Gradle 8.13. Elsewhere install corresponding tools and set `JAVA_HOME` and `ANDROID_HOME`. The build script runs assembly/lint, validates signing/alignment and writes `artifacts/Mixline-5.0.0-test1.apk` plus SHA256.
 
-- `artifacts/Mixline-4.0.0-test2.apk`
-- `artifacts/Mixline-4.0.0-test2.apk.sha256`
-
-On a different development machine, install the corresponding Android SDK/JDK tools and set `ANDROID_HOME` and `JAVA_HOME`; the `/workspace/.mixline-tools` activation step is specific to this cloud environment. Preserve the environment's proxy and certificate trust when downloading dependencies.
-
-For browser development, run `npm run serve`. This serves `web/` on port 8080; Android file export and interruption behavior require the APK. The app and unit tests have no npm package dependencies.
-
-With that server running, the browser suites can be run in a second shell:
+For browser development, run `npm run serve`, then:
 
 ```bash
-node tests/app-browser.mjs
+node tests/v5-browser.mjs
 node tests/video-browser.mjs
 ```
 
-The browser suites require Playwright and Chromium. `app-browser.mjs` accepts `PLAYWRIGHT_MODULE`, `CHROMIUM_EXECUTABLE`, `MIXLINE_BASE_URL` and `MIXLINE_TEST_OUTPUT`; it also attempts standard package/Python-Playwright discovery. `video-browser.mjs` currently uses this cloud environment's Playwright installation path and `/usr/bin/chromium`, so adapt those paths when running elsewhere. Its YouTube players are mocks: passing it does not prove live YouTube playback.
+Browser checks require Chromium and Playwright; scripts support the prepared cloud tooling. Video checks use controlled players and do not establish live YouTube playback. The older app/motion browser scripts document 4.0 and use its retired navigation selectors.
 
-## Test edition behavior
+## Test edition
 
-- Local audio imports are copied into the app's IndexedDB library. Two original synthesized demo beats make the first mix possible without an account or network access.
-- Local decks include playback, cue return, eight hot cues, waveform seek, forward/reverse granular platter scratching, manual BPM/tap tempo, one-time sync, beat loops/jumps, channel EQ/filter, echo/reverb, sampler, and manual/timed transitions.
-- Challenge provides a prepared-next-track workflow, separate **Load next** and **Cut now** actions, editable queue order, removal undo, and a persistent cue/play/crossfader dock.
-- Official visible YouTube players accept pasted video links and prepared start points. Two-player overlap is experimental and requires real-device verification. Video audio is not decoded, processed by the local DSP, or recorded.
-- Video Challenge exposes repeat/retry controls and a **Local instrumental layer**. Load local Deck 1 from Library, then deliberately play/pause that accompaniment and adjust its separate level while videos remain visible. Only the local audio enters recordings; live YouTube accompaniment still needs phone testing.
-- Sessions, recovery snapshots, preferences and local-master recordings are stored on the device. Video-only sessions retain video positions and repeat preferences and restore paused. Recording exports use Android's document-save picker.
+Package `com.mixline.studio.testing`; version `5.0.0-test1` / `50001`; minimum API 29, target API 36. The app uses bundled Web UI/Web Audio inside a Java Android shell with scoped native file import/export, interruption handling and haptics. It does not contain native low-latency DJ DSP.
 
-These statements describe the implemented source paths. Build, browser and physical-device evidence must be reported separately; the historical chat's test counts do not validate this build. See [the verification record](docs/VERIFICATION.md) for observed results, [the design and capability record](docs/DESIGN.md) for remaining scope, and [the device test checklist](docs/DEVICE-TESTING.md) for phone acceptance checks.
-
-## Installation and distribution
-
-Application ID: `com.mixline.studio.testing`. Version: `4.0.0-test2` / `40002`. Minimum Android API: 29; target API: 36. This standalone package can coexist with an older Mixline application using a different package ID. It does not migrate that application's library or sessions.
-
-The build script produces a debug-signed sideloading APK for testing, not a Play Store or production release. Future updates must use the same package and signing key to retain this test installation's data. Uninstalling or clearing app data removes its local library, sessions and unexported recordings; export important takes first.
-
-Audio routing and latency still require testing on the S26 Ultra using its speaker and USB-C headphones. Background playback, microphone capture, commercial streaming catalogs, private cue output and native key-lock DSP are not provided in this test edition.
-
-The test 2 visual/motion pass is documented in docs/DESIGN.md. Screen captures and a sampled interaction preview are in artifacts/refinement; the motion acceptance command is `node tests/motion-browser.mjs` with the local server running.
+This signed sideloading build is for testing. Physical S26 Ultra latency, haptics, thermal behavior, interruptions, USB-C routing, source playback and native export still require device checks. Recording captures supported local/eligible master audio, effects and sampler, with no microphone. MediaRecorder format depends on WebView; the recording safety threshold is 48 MB and native export ceiling 64 MB. Uninstalling/clearing app data removes local imports, sessions and unexported takes.

@@ -134,3 +134,104 @@ test('cancelling from the final fader update does not emit a stale transitionend
  e.addEventListener('change',()=>{if(e.crossfade===1)e.cancelFade();});
  e.fadeTo(1,1);ctx.currentTime=1;t.mock.timers.tick(20);assert.equal(completed,0);assert.equal(e.fade,null);await e.destroy();
 });
+
+test('main cue auditions a paused position, returns on release and cancels a rapid release',async()=>{
+ const {ctx,e}=make();await e.load(0,{id:'cue',bpm:120},file);e.seek(0,2);
+ await e.cueDown(0);ctx.currentTime=1;assert.equal(e.position(0),3);assert.equal(e.decks[0].playing,true);
+ e.cueUp(0);assert.equal(e.position(0),2);assert.equal(e.decks[0].playing,false);
+ const pending=e.cueDown(0);e.cueUp(0);await pending;assert.equal(e.decks[0].playing,false);
+ await e.play(0);ctx.currentTime=2;await e.cueDown(0);e.cueUp(0);assert.equal(e.position(0),2);assert.equal(e.decks[0].playing,false);
+ await e.destroy();
+});
+test('temporary nudge changes clock speed then returns to selected tempo without jumping',async()=>{
+ const {ctx,e}=make();await e.load(0,{id:'nudge',bpm:120},file);e.setRate(0,1.05);await e.play(0);
+ ctx.currentTime=2;e.bend(0,.04);assert.equal(e.position(0),2.1);assert.equal(e.decks[0].rate,1.05);
+ ctx.currentTime=3;assert.ok(Math.abs(e.position(0)-3.19)<1e-9);e.endBend(0);
+ ctx.currentTime=4;assert.ok(Math.abs(e.position(0)-4.24)<1e-9);assert.equal(e.decks[0].source.playbackRate.value,1.05);
+ e.bend(0,-.04);e.pauseAll();assert.equal(e.decks[0].bend,0);await e.destroy();
+});
+test('manual downbeat quantizes independent cue placement and preserves the live playhead',async()=>{
+ const {ctx,e}=make();await e.load(0,{id:'grid',bpm:120},file);e.setGrid(0,{downbeat:.1});e.setQuantize(0,true);await e.play(0);ctx.currentTime=1.25;
+ e.setCue(0,2,2.32);assert.equal(e.decks[0].cues[2],2.1);assert.equal(e.position(0),1.25);
+ e.renameCue(0,2,'Drop','#ff4455');assert.deepEqual(e.decks[0].cueMeta[2],{name:'Drop',color:'#ff4455'});
+ const marker=e.addMarker(0,{name:'Vocal',position:4.8});e.updateMarker(0,marker.id,{name:'Chorus',position:5});assert.equal(e.decks[0].markers[0].name,'Chorus');
+ e.setLoopPoints(0,2.21,4.24);assert.deepEqual(e.decks[0].loop,{start:2.1,end:4.1,beats:3.999999999999999});
+ e.seek(0,7);assert.equal(e.decks[0].loop,null);assert.equal(e.decks[0].playing,true);
+ e.removeMarker(0,marker.id);assert.equal(e.decks[0].markers.length,0);await e.destroy();
+});
+test('XY retains position across bypass; reset clears effect state without changing track',async()=>{
+ const {e}=make();await e.load(0,{id:'xy',bpm:120},file);e.setXY(0,.3,.6);e.setEcho(0,{beats:1,feedback:.55});
+ assert.equal(e.decks[0].nodes.echo.gain.value,.39);assert.equal(e.decks[0].nodes.delay.delayTime.value,.5);
+ e.setFXBypass(0,true);assert.equal(e.decks[0].fx.echo,.6);assert.equal(e.decks[0].filter,.3);assert.equal(e.decks[0].nodes.echo.gain.value,0);
+ e.setFXBypass(0,false);assert.equal(e.decks[0].nodes.echo.gain.value,.39);assert.equal(e.decks[0].nodes.filter.type,'highpass');
+ e.resetFX(0);assert.equal(e.decks[0].filter,0);assert.equal(e.decks[0].fx.echo,0);assert.equal(e.decks[0].track.id,'xy');await e.destroy();
+});
+test('EQ kill and master mute preserve their chosen levels for restoration',async()=>{
+ const {e}=make();await e.init();e.setEQ(0,'low',-3);e.setEQKill(0,'low',true);assert.equal(e.decks[0].eq.low,-3);assert.equal(e.decks[0].nodes.low.gain.value,-90);
+ e.setEQKill(0,'low',false);assert.equal(e.decks[0].nodes.low.gain.value,-3);
+ e.setMaster(.7);e.setMasterMute(true);assert.equal(e.master,.7);assert.equal(e.masterNode.gain.value,0);e.setMasterMute(false);assert.equal(e.masterNode.gain.value,.7);await e.destroy();
+});
+test('new session fields round trip paused; original v1 sessions still migrate',async()=>{
+ const {e}=make();await e.load(0,{id:'saved',bpm:120},file);e.setCue(0,0,2);e.renameCue(0,0,'Intro','#ffc000');e.addMarker(0,{name:'Drop',position:4});
+ e.setGrid(0,{downbeat:.1});e.setQuantize(0,true);e.setXY(0,-.4,.5);e.setFXBypass(0,true);e.setEQKill(0,'high',true);e.setEcho(0,{beats:1,feedback:.6});e.setMasterMute(true);
+ const saved=e.snapshot();e.resetFX(0);e.clearCue(0,0);await e.restore(saved,async id=>({track:{id},blob:file}));
+ assert.equal(e.decks[0].playing,false);assert.equal(e.decks[0].cueMeta[0].name,'Intro');assert.equal(e.decks[0].markers[0].name,'Drop');assert.equal(e.decks[0].grid.downbeat,.1);
+ assert.equal(e.decks[0].quantize,true);assert.equal(e.decks[0].fxBypass,true);assert.equal(e.decks[0].eqKills.high,true);assert.equal(e.decks[0].echoFeedback,.6);assert.equal(e.masterMuted,true);
+ await e.restore({version:1,decks:[{track:{id:'old'},cue:0,cues:[null]},{track:null}]},async id=>({track:{id},blob:file}));
+ assert.equal(e.decks[0].fxBypass,false);assert.equal(e.decks[0].quantize,false);assert.equal(e.masterMuted,false);await e.destroy();
+});
+test('bass exchange follows the audio clock; manual channel changes stop automation at current state',async t=>{
+ t.mock.timers.enable({apis:['setInterval']});const {ctx,e}=make();await e.load(0,{id:'a',bpm:120},file);await e.load(1,{id:'b',bpm:120},file);
+ await e.play(0);await e.play(1);e.setCrossfade(0);e.transitionTo(1,2,'bass');ctx.currentTime=1;t.mock.timers.tick(20);
+ assert.equal(e.decks[0].eq.low,-15);assert.equal(e.decks[1].eq.low,-15);assert.equal(e.crossfade,.5);
+ e.setGain(0,.7);assert.equal(e.fade,null);ctx.currentTime=2;t.mock.timers.tick(100);assert.equal(e.decks[0].eq.low,-15);assert.equal(e.crossfade,.5);await e.destroy();
+});
+test('prepared metadata loads independently using both legacy and new field names',async()=>{
+ const {e}=make();const track={id:'prepared',bpm:124,start:1,downbeat:.2,quantize:true,cues:[1,3],cueNames:['Intro','Drop'],cueColors:['#ffaa00','#ff3355'],markers:[{id:'m',name:'Vocal',time:4}],loop:{start:1,end:3}};
+ await e.load(0,track,file);assert.equal(e.decks[0].grid.downbeat,.2);assert.equal(e.decks[0].cueMeta[1].name,'Drop');assert.equal(e.decks[0].markers[0].position,4);
+ track.cues[0]=9;track.markers[0].time=8;assert.equal(e.decks[0].cues[0],1);assert.equal(e.decks[0].markers[0].position,4);await e.destroy();
+});
+test('source capability restrictions protect recording and an existing deck',async()=>{
+ const {e}=make();await e.load(0,{id:'local'},file);
+ await assert.rejects(e.load(0,{id:'restricted',capabilities:{load:false}},file),/does not currently allow/);assert.equal(e.decks[0].track.id,'local');
+ await e.load(1,{id:'stream',capabilities:{load:true,record:false}},file);await assert.rejects(e.startRecording(),/cannot be recorded/);
+ e.eject(1);e._recorder={state:'recording'};
+ await assert.rejects(e.load(1,{id:'stream',capabilities:{load:true,record:false}},file),/Stop recording/);assert.equal(e.decks[1].track,null);
+ e._recorder=null;await e.destroy();
+});
+test('six distinct original demo records remain playable self-contained WAV files',async()=>{
+ const {DEMO_TRACKS}=await import('../web/engine.js');assert.equal(DEMO_TRACKS.length,6);const ids=new Set(),sizes=new Set();
+ for(const track of DEMO_TRACKS){const generated=await makeDemo(track.id);ids.add(generated.track.id);sizes.add(generated.blob.size);assert.equal(generated.blob.type,'audio/wav');assert.ok(generated.blob.size>100000);}
+ assert.equal(ids.size,6);assert.equal(sizes.size,6);
+});
+test('tempo estimation recognizes steady audio onsets and refuses silence',async()=>{
+ const {estimateBpm}=await import('../web/engine.js');const b=new Buffer(1,160000,8000),a=b.getChannelData(0);
+ for(let start=0;start<a.length;start+=4000)for(let n=0;n<300;n++)a[start+n]=Math.sin(n*.3)*Math.exp(-n/40);
+ const result=estimateBpm(b);assert.ok(Math.abs(result.bpm-120)<1);assert.ok(result.confidence>.5);assert.equal(estimateBpm(new Buffer(1,160000,8000)),null);
+});
+
+test('interrupting a cue audition releases it at the cue without restarting',async()=>{
+ const {ctx,e}=make();await e.load(0,{id:'cue-interruption'},file);e.seek(0,2);await e.cueDown(0);ctx.currentTime=1;e.pauseAll();e.cueUp(0);
+ assert.equal(e.position(0),2);assert.equal(e.decks[0].cueHeld,null);assert.equal(e.decks[0].playing,false);await e.destroy();
+});
+test('restoring old source metadata cannot relax fresh recording restrictions',async()=>{
+ const {e}=make();await e.load(0,{id:'stream',capabilities:{load:true,record:true}},file);const snapshot=e.snapshot();
+ await e.restore(snapshot,async id=>({track:{id,capabilities:{load:true,record:false}},blob:file}));
+ assert.equal(e.decks[0].track.capabilities.record,false);await assert.rejects(e.startRecording(),/cannot be recorded/);await e.destroy();
+});
+
+test('starting a recording while a restricted replacement decodes cannot commit that replacement',async()=>{
+ const {ctx,e}=make();await e.load(0,{id:'local'},file);let finish;ctx.decode=()=>new Promise(resolve=>finish=resolve);
+ const pending=e.load(0,{id:'stream',capabilities:{load:true,record:false}},file);await new Promise(r=>setImmediate(r));
+ e._recorder={state:'recording'};finish(new Buffer());await assert.rejects(pending,/Recording started/);assert.equal(e.decks[0].track.id,'local');
+ e._recorder=null;await e.destroy();
+});
+test('long bar transitions and slow-tempo echo time retain requested duration',async()=>{
+ const {e}=make();await e.load(0,{id:'slow',bpm:30},file);await e.load(1,{id:'other',bpm:30},file);await e.play(1);
+ e.transitionTo(1,128,'blend');assert.equal(e.fade.duration,128);e.cancelFade();e.setEcho(0,{beats:4});assert.equal(e.decks[0].nodes.delay.delayTime.value,8);await e.destroy();
+});
+
+test('restoration preserves custom short loop exactly even when quantize was later enabled',async()=>{
+ const {e}=make();await e.load(0,{id:'custom',bpm:120},file);e.setLoopPoints(0,2.1,2.2);e.setQuantize(0,true);const snapshot=e.snapshot();
+ await e.restore(snapshot,async id=>({track:{id},blob:file}));assert.equal(e.decks[0].loop.start,2.1);assert.equal(e.decks[0].loop.end,2.2);await e.destroy();
+});

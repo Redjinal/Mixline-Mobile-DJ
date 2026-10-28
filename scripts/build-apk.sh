@@ -19,9 +19,9 @@ if [ ! -f .signing/mixline-test.keystore ]; then
 fi
 ./gradlew --no-daemon --console=plain :app:assembleDebug :app:lintDebug
 mkdir -p artifacts
-cp app/build/outputs/apk/debug/app-debug.apk artifacts/Mixline-4.0.0-test2.apk
-"${ANDROID_HOME:?}/build-tools/36.0.0/apksigner" verify --verbose artifacts/Mixline-4.0.0-test2.apk
-"$ANDROID_HOME/build-tools/36.0.0/zipalign" -c -P 16 4 artifacts/Mixline-4.0.0-test2.apk
-"$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --print-certs artifacts/Mixline-4.0.0-test2.apk > artifacts/signing-certificate.txt
-sha256sum artifacts/Mixline-4.0.0-test2.apk > artifacts/Mixline-4.0.0-test2.apk.sha256
-printf '%s\n' "APK: $repo_dir/artifacts/Mixline-4.0.0-test2.apk"
+cp app/build/outputs/apk/debug/app-debug.apk artifacts/Mixline-5.0.0-test1.apk
+"${ANDROID_HOME:?}/build-tools/36.0.0/apksigner" verify --verbose artifacts/Mixline-5.0.0-test1.apk
+"$ANDROID_HOME/build-tools/36.0.0/zipalign" -c -P 16 4 artifacts/Mixline-5.0.0-test1.apk
+"$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --print-certs artifacts/Mixline-5.0.0-test1.apk > artifacts/signing-certificate.txt
+sha256sum artifacts/Mixline-5.0.0-test1.apk > artifacts/Mixline-5.0.0-test1.apk.sha256
+printf '%s\n' "APK: $repo_dir/artifacts/Mixline-5.0.0-test1.apk"
