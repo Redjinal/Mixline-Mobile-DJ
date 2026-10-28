@@ -170,6 +170,8 @@ export class VideoMixer extends EventTarget {
     deck.position = value; this._emit();
   }
   getPosition(index) { const deck = this._deck(index); const position = this._call(index, 'getCurrentTime'); if (Number.isFinite(position)) deck.position = position; return deck.position; }
+  /** Surface a load/connection failure on a deck card so it can be retried in place. */
+  markError(index, message) { this._deck(index); this._error(index, message); }
   getURL(index) { const id = this._deck(index).track?.videoId; return id ? `https://www.youtube.com/watch?v=${id}` : null; }
   async retry(index) { const deck = this._deck(index); const track = deck.track; if (!track) return this.init(); if (!deck.ready) this._initPromise = null; return this.load(index, track); }
   setRepeat(index, {enabled = true, start = 0, end = null} = {}) {

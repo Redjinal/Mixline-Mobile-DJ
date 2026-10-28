@@ -18,6 +18,9 @@ import {createMixerScreen} from './screens/mixer.js';
 import {createPadsScreen} from './screens/pads.js';
 import {createFXScreen} from './screens/fx.js';
 import {createLibraryScreen} from './screens/library.js';
+import {createChallengeScreen} from './screens/challenge.js';
+import {VideoMixer} from './core/video.js';
+import {createQueue} from './core/queue.js';
 
 const ROUTES = [...WORKSPACES.map(w => w.name), 'settings'];
 const router = createRouter({routes: ROUTES, initial: 'decks'});
@@ -26,9 +29,11 @@ const sources = createSources({store});
 const state = {locked: false};
 const settings = {haptics: true, hapticProfile: 'essential', theme: 'dark', decks: 'red', motion: 'system', glow: 1, curve: 'blend', stopOutgoing: true, safeLevel: true};
 const loader = createLoader({engine, store, sources, confirm: confirmDialog, isLocked: () => state.locked});
+const video = new VideoMixer();
+const queue = createQueue({store});
 
 const ctx = {
-  engine, store, sources, loader, router, toast, haptics, artwork, settings, demos: DEMO_TRACKS,
+  engine, store, sources, loader, router, toast, haptics, artwork, settings, demos: DEMO_TRACKS, video, queue,
   confirm: confirmDialog, prompt: promptDialog, sheet,
   get locked() { return state.locked; },
   openLibrary(deck) { router.navigate('library', deck === undefined ? {} : {forDeck: deck}); }
@@ -60,7 +65,7 @@ function placeholder(name, label) {
 const screens = {
   decks: createDecksScreen(ctx),
   mixer: createMixerScreen(ctx), pads: createPadsScreen(ctx), fx: createFXScreen(ctx),
-  library: createLibraryScreen(ctx), challenge: placeholder('challenge', 'Challenge'), settings: placeholder('settings', 'Studio settings')
+  library: createLibraryScreen(ctx), challenge: createChallengeScreen(ctx), settings: placeholder('settings', 'Studio settings')
 };
 createNav($('#nav'), router);
 const dock = createDock($('#dock'), {engine, toast});
@@ -117,9 +122,10 @@ async function ensureDemos() {
 }
 ensureDemos();
 sources.init().catch(() => {});
+queue.init().catch(() => {});
 
 window.Mixline = {
-  engine, store, router, loader, sources, haptics, toast, settings, screens, demos: DEMO_TRACKS,
+  engine, store, router, loader, sources, haptics, toast, settings, screens, demos: DEMO_TRACKS, video, queue,
   loadDemo: (deck, id) => loader.load(deck, DEMO_TRACKS.find(t => t.id === id || t.demo === id)),
   back: () => closeTopDialog() || router.back()
 };

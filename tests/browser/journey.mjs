@@ -225,6 +225,35 @@ try {
     await page.evaluate(() => Mixline.back());
     await nav('decks');
   });
+  await runner.run('challenge: queue links, refuse bad ones, reorder, remove with undo, and surface an honest offline player state', async () => {
+    await nav('challenge');
+    await page.locator('[data-ch-add-link]').fill('https://youtu.be/dQw4w9WgXcQ?t=12');
+    await page.locator('[data-ch-add]').click();
+    await page.waitForSelector('.queue-item[data-queue-id]');
+    await page.locator('[data-ch-add-link]').fill('https://www.youtube.com/watch?v=9bZkp7q19f0');
+    await page.locator('[data-ch-add]').click();
+    await page.waitForFunction(() => document.querySelectorAll('.queue-item').length === 2);
+    await page.locator('[data-ch-add-link]').fill('https://evil.test/?v=dQw4w9WgXcQ');
+    await page.locator('[data-ch-add]').click();
+    await page.waitForSelector('.toast.is-error');
+    assert.equal(await page.locator('.queue-item').count(), 2);
+    const firstId = await page.evaluate(() => document.querySelector('.queue-item').dataset.queueId);
+    await page.locator('.queue-item').nth(1).locator('[data-queue-move="-1"]').click();
+    await page.waitForFunction(id => document.querySelector('.queue-item').dataset.queueId !== id, firstId);
+    await page.locator('.queue-item').first().locator('[data-queue-remove]').click();
+    await page.waitForFunction(() => document.querySelectorAll('.queue-item').length === 1);
+    await page.locator('.toasts .toast button').first().click();
+    await page.waitForFunction(() => document.querySelectorAll('.queue-item').length === 2);
+    await page.locator('[data-ch-next="0"]').click();
+    await page.waitForFunction(() => /could not|unavailable|retry|connect/i.test(document.querySelector('[data-video-status="0"]')?.textContent || ''), null, {timeout: 25000});
+    assert.equal(await page.locator('[data-video-retry="0"]').count(), 1);
+    await shot('challenge-412x915');
+    await page.locator('[data-ch-clear]').click();
+    await page.waitForSelector('dialog.modal[open]');
+    await page.locator('dialog.modal button[value="ok"]').click();
+    await page.waitForFunction(() => document.querySelectorAll('.queue-item').length === 0);
+    await nav('decks');
+  });
   await runner.run('no horizontal overflow and dock reachable in portrait and landscape', async () => {
     for (const [w, h] of [[412, 915], [915, 412]]) {
       await page.setViewportSize({width: w, height: h});

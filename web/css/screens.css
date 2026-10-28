@@ -193,3 +193,45 @@
 .notice.tone-1 { border-color: rgba(var(--deck1-rgb), 0.5); }
 .notice.tone-2 { border-color: rgba(var(--deck2-rgb), 0.5); }
 @media (min-width: 640px) { .lib-chips { flex-direction: row; align-items: center; justify-content: space-between; } }
+
+/* ===== Challenge ===== */
+.challenge { display: flex; flex-direction: column; gap: var(--space-3); }
+.ch-decks { display: grid; grid-template-columns: 1fr; gap: var(--space-3); }
+.video-card { border-radius: var(--radius-l); border: 1.5px solid var(--tone, var(--deck1)); background: #08090c; overflow: hidden; --tone: var(--deck1); --tone-rgb: var(--deck1-rgb); box-shadow: 0 0 24px rgba(var(--tone-rgb), calc(0.18 * var(--glow))); }
+.video-card.tone-2 { --tone: var(--deck2); --tone-rgb: var(--deck2-rgb); }
+.video-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; }
+.video-head .status { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1 1 auto; }
+.video-tag { background: var(--tone); color: #fff; border-color: transparent; font-weight: 800; letter-spacing: 0.08em; }
+.video-card.tone-2 .video-tag { color: var(--on-accent); }
+.video-frame-wrap { position: relative; aspect-ratio: 16 / 9; background: #000; }
+.video-host, .video-host iframe, .video-frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-empty, .video-error { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 16px; color: var(--text-muted); font-size: var(--fs-label); background: radial-gradient(circle at 50% 50%, rgba(var(--tone-rgb), 0.12), transparent 70%); }
+.video-error { background: rgba(8, 9, 12, 0.92); color: var(--text); }
+.video-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; }
+.video-foot strong { font-size: var(--fs-label); min-width: 0; }
+.ch-mix { display: flex; flex-direction: column; gap: 12px; }
+.ch-ids { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; }
+.ch-id { min-width: 0; display: flex; flex-direction: column; }
+.ch-id strong { font-size: var(--fs-label); }
+.ch-id.tone-1 strong { color: var(--deck1); }
+.ch-id.tone-2 strong { color: var(--deck2); }
+.ch-id.is-right { text-align: right; }
+.ch-mix .xfader .fader.h { height: 56px; }
+.ch-actions { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 8px; }
+.ch-actions .btn { padding: 0 8px; min-height: 60px; font-size: var(--fs-body); letter-spacing: 0.12em; text-transform: uppercase; }
+.ch-actions .btn span { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
+.ch-actions .btn small { font-size: 9px; letter-spacing: 0.14em; opacity: 0.8; }
+.ch-actions .btn-violet { background: linear-gradient(180deg, rgba(var(--violet-rgb), 0.35), rgba(var(--violet-rgb), 0.15)); color: #fff; box-shadow: 0 0 20px rgba(var(--violet-rgb), calc(0.35 * var(--glow))); }
+.ch-options { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ch-options .segmented { flex: 1 1 200px; }
+.queue-panel { display: flex; flex-direction: column; gap: 10px; }
+.queue-panel .count { color: var(--text-dim); font-weight: 600; }
+.ch-add { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+.queue-item { display: grid; grid-template-columns: 18px 52px 1fr auto; grid-template-rows: auto auto; gap: 6px 10px; align-items: center; padding: 10px; border-radius: var(--radius-m); background: rgba(var(--white-rgb), 0.02); border: 1px solid var(--line); }
+.queue-handle { color: var(--text-dim); grid-row: 1 / span 2; }
+.queue-item .row-art { grid-row: 1 / span 2; }
+.queue-side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.queue-loop .label { font-size: 9px; }
+.queue-tools { grid-column: 3 / span 2; display: flex; justify-content: flex-end; gap: 4px; }
+.skipped summary { cursor: pointer; color: var(--text-muted); font-size: var(--fs-label); padding: 6px 0; }
+@media (min-width: 700px) { .ch-decks { grid-template-columns: 1fr 1fr; } }

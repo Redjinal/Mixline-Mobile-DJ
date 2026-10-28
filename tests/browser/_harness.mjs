@@ -34,7 +34,8 @@ export async function launch({viewport = {width: 412, height: 915}, reducedMotio
   page.setDefaultTimeout(15000);
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
-  page.on('console', m => { if (m.type() === 'error') errors.push('console: ' + m.text()); });
+  // Blocked network resources (YouTube, thumbnails) are environment conditions, not application errors.
+  page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource|ERR_TUNNEL|ERR_NAME_NOT_RESOLVED|net::/.test(m.text())) errors.push('console: ' + m.text()); });
   return {browser, context, page, errors, close: () => browser.close()};
 }
 
