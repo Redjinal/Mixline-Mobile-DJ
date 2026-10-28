@@ -1,7 +1,28 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b0d11"><title>Mixline 5 — Touch Studio</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="wave5.css"><link rel="stylesheet" href="library5.css"></head><body>
-<header><button class="brand" data-route="perform" aria-label="Mixline performance"><svg width="28" height="26" viewBox="0 0 28 26" aria-hidden="true"><path d="M2 22V4l7 10 5-10v18M18 4v18h8" fill="none" stroke="currentColor" stroke-width="3"/></svg><span>MIXLINE<small>PERFORMANCE STUDIO</small></span></button><div class="header-actions"><span class="build">5.0</span><button data-route="challenge" aria-label="Live queue">Queue</button><button data-route="record" aria-label="Recordings">●</button><button id="lock" aria-pressed="false" title="Performance lock">◇ <span>Lock</span></button><button data-route="settings" aria-label="Settings">⚙</button></div></header>
-<div class="workspace-bar"><div class="segmented" aria-label="Playback source"><button id="audio-mode" class="selected" data-mode="audio">◉ Audio studio</button><button id="video-mode" data-mode="video">▣ Video decks</button></div><span id="connection" class="status">● OFFLINE READY</span></div>
-<div id="layout"><section id="video-stage" hidden aria-label="Visible YouTube decks"><div class="video-card deck-0"><div class="video-heading"><span class="deck-tag">01</span><div><strong id="video-title-0">Load your first video</strong><small id="video-status-0">No video selected</small></div></div><div id="video-player-0" class="video-player"></div><div class="video-actions"><button data-video-play="0">Play / pause 1</button><button data-video-seek="0">Start point</button><button data-video-retry="0">Retry</button><a id="video-open-0" href="https://www.youtube.com/" target="_blank" rel="noopener">Open ↗</a></div></div><div class="video-card deck-1"><div class="video-heading"><span class="deck-tag">02</span><div><strong id="video-title-1">Prepare the next beat</strong><small id="video-status-1">No video selected</small></div></div><div id="video-player-1" class="video-player"></div><div class="video-actions"><button data-video-play="1">Play / pause 2</button><button data-video-seek="1">Start point</button><button data-video-retry="1">Retry</button><a id="video-open-1" href="https://www.youtube.com/" target="_blank" rel="noopener">Open ↗</a></div></div><p class="video-note">Official YouTube players · experimental overlap · video audio is excluded from recordings.</p></section><main id="main" tabindex="-1"></main></div>
-<footer id="dock"><div class="dock-titles"><div class="dock-track deck-0"><strong id="dock-title-0">Deck 1 · Empty</strong><small id="dock-status-0">Load music</small></div><div class="dock-track deck-1"><strong id="dock-title-1">Deck 2 · Empty</strong><small id="dock-status-1">Load music</small></div></div><div class="mini-transport"><div class="dock-side deck-0"><button data-main-cue="0" aria-label="Cue deck 1">CUE</button><button data-play="0" class="deck-0" id="dock-play-0" aria-label="Play deck 1">Play 1</button></div><span id="dock-state">Load a track to begin</span><div class="dock-side deck-1"><button data-play="1" class="deck-1" id="dock-play-1" aria-label="Play deck 2">Play 2</button><button data-main-cue="1" aria-label="Cue deck 2">CUE</button></div></div><div class="crossfade"><button data-cut="0" class="deck-0" aria-label="Cut to deck 1">1</button><div><div class="fader-label"><span>DECK 1</span><span id="blend-label">BLEND · CENTER</span><span>DECK 2</span></div><input id="crossfader" aria-label="Crossfader" type="range" min="0" max="1" step="0.005" value="0.5"></div><button data-cut="1" class="deck-1" aria-label="Cut to deck 2">2</button></div></footer>
-<nav class="v5-workspaces" aria-label="Workspaces"><button aria-label="Decks" data-route="perform"><span></span>Decks</button><button aria-label="Waves" data-route="waves"><span></span>Waves</button><button aria-label="Mixer" data-route="mixer"><span></span>Mixer</button><button aria-label="Pads" data-route="pads"><span></span>Pads</button><button aria-label="FX" data-route="fx"><span></span>FX</button><button aria-label="Library" data-route="library"><span></span>Library</button></nav>
-<dialog id="dialog"><form method="dialog"><button class="dialog-close" aria-label="Close">×</button></form><div id="dialog-body"></div></dialog><div id="toast" role="status" aria-live="polite"></div><input id="files" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac" multiple hidden><script type="module" src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en" data-theme="dark" data-decks="red">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+  <meta name="theme-color" content="#0b0b0d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Mixline</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/screens.css">
+</head>
+<body>
+  <div id="app">
+    <header class="header" id="header"></header>
+    <main class="workspace" id="main" tabindex="-1"></main>
+    <footer class="dock" id="dock"></footer>
+    <nav class="tabbar" id="nav" aria-label="Workspaces"></nav>
+  </div>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

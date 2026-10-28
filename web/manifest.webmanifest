@@ -1,0 +1,11 @@
+{
+  "name": "Mixline",
+  "short_name": "Mixline",
+  "description": "Mobile DJ instrument: two decks, mixer, pads, effects and a challenge mode.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0b0b0d",
+  "theme_color": "#0b0b0d",
+  "icons": [{"src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}]
+}
