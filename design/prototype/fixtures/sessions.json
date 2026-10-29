@@ -1,0 +1,161 @@
+{
+  "_fixture": "Session scenarios are hand-authored fixtures. Positions, levels and meter values are invented; the shell and screens read the same scenario so they agree.",
+  "deckDefaults": { "trackId": null, "state": "empty", "positionSec": 0, "pitchPct": 0.0, "sync": false, "keylock": true, "loop": null, "slip": false, "reverse": false, "quantize": "1/4", "gainDb": 0, "eq": { "hi": 0, "mid": 0, "lo": 0 }, "filter": 0, "fader": 1.0, "cueSelected": false, "levelL": 0, "levelR": 0 },
+  "scenarios": {
+    "fresh": {
+      "label": "Fresh install, empty library",
+      "library": "empty", "session": null, "focus": ["A", "B"], "decks": {},
+      "crossfader": 0.5, "master": { "levelL": 0, "levelR": 0, "peakHold": null, "clip": false },
+      "cue": { "deck": null, "mix": 0.5, "gainDb": 0 }, "route": "speaker",
+      "recording": { "state": "idle" }, "parday": { "state": "ready" }, "thermal": "normal",
+      "storage": { "freeBytes": 48300000000, "totalBytes": 512000000000 }, "network": "online"
+    },
+    "set-ready": {
+      "label": "Two decks loaded, nothing playing",
+      "library": "full", "session": "sess-1", "focus": ["A", "B"],
+      "decks": {
+        "A": { "trackId": "aurora", "state": "paused", "positionSec": 0, "cueSelected": true },
+        "B": { "trackId": "copper", "state": "paused", "positionSec": 0 }
+      },
+      "crossfader": 0.5, "master": { "levelL": 0, "levelR": 0, "peakHold": null, "clip": false },
+      "cue": { "deck": "A", "mix": 0.5, "gainDb": 0 }, "route": "speaker",
+      "recording": { "state": "idle" }, "parday": { "state": "ready" }, "thermal": "normal",
+      "storage": { "freeBytes": 48300000000, "totalBytes": 512000000000 }, "network": "online"
+    },
+    "a-playing": {
+      "label": "A playing, B cued",
+      "library": "full", "session": "sess-1", "focus": ["A", "B"],
+      "decks": {
+        "A": { "trackId": "aurora", "state": "playing", "positionSec": 92.0, "levelL": 0.62, "levelR": 0.58, "cueSelected": false },
+        "B": { "trackId": "copper", "state": "paused", "positionSec": 15.48, "cueSelected": true, "sync": true }
+      },
+      "crossfader": 0.08, "master": { "levelL": 0.60, "levelR": 0.57, "peakHold": 0.71, "clip": false },
+      "cue": { "deck": "B", "mix": 0.4, "gainDb": -3 }, "route": "speaker",
+      "recording": { "state": "idle" }, "parday": { "state": "ready" }, "thermal": "normal",
+      "storage": { "freeBytes": 48300000000, "totalBytes": 512000000000 }, "network": "online"
+    },
+    "transition": {
+      "label": "Both playing, mid-transition",
+      "library": "full", "session": "sess-1", "focus": ["A", "B"],
+      "decks": {
+        "A": { "trackId": "aurora", "state": "playing", "positionSec": 318.0, "levelL": 0.48, "levelR": 0.46, "fader": 0.8 },
+        "B": { "trackId": "copper", "state": "playing", "positionSec": 48.0, "levelL": 0.66, "levelR": 0.63, "sync": true }
+      },
+      "crossfader": 0.58, "master": { "levelL": 0.74, "levelR": 0.71, "peakHold": 0.86, "clip": false },
+      "cue": { "deck": "B", "mix": 0.5, "gainDb": -3 }, "route": "speaker",
+      "recording": { "state": "idle" }, "parday": { "state": "ready" }, "thermal": "normal",
+      "storage": { "freeBytes": 48300000000, "totalBytes": 512000000000 }, "network": "online"
+    },
+    "clipping": {
+      "label": "Master clipping, limiter active",
+      "library": "full", "session": "sess-1", "focus": ["A", "B"],
+      "decks": {
+        "A": { "trackId": "calypso", "state": "playing", "positionSec": 60.0, "levelL": 0.98, "levelR": 0.97, "gainDb": 6 },
+        "B": { "trackId": "copper", "state": "playing", "positionSec": 154.8, "levelL": 0.88, "levelR": 0.86 }
+      },
+      "crossfader": 0.5, "master": { "levelL": 1.0, "levelR": 1.0, "peakHold": 1.0, "clip": true, "limiterGrDb": -4.2 },
+      "cue": { "deck": "A", "mix": 0.5, "gainDb": 0 }, "route": "usbc-stereo",
+      "recording": { "state": "idle" }, "parday": { "state": "ready" }, "thermal": "normal",
+      "storage": { "freeBytes": 48300000000, "totalBytes": 512000000000 }, "network": "online"
+    },
+    "four-deck": {
+      "label": "Four decks, C and D in use",
+      "library": "full", "session": "sess-2", "focus": ["A", "B"],
+      "decks": {
+        "A": { "trackId": "drift", "state": "playing", "positionSec": 200.0, "levelL": 0.55, "levelR": 0.52 },
+        "B": { "trackId": "copper", "state": "paused", "positionSec": 15.48, "cueSelected": true },
+        "C": { "trackId": "calypso", "state": "playing", "positionSec": 56.5, "levelL": 0.40, "levelR": 0.42, "loop": { "bars": 8, "active": true } },
+        "D": { "trackId": "glasswork", "state": "loading", "positionSec": 0 }
+      },
+      "crossfader": 0.5, "master": { "levelL": 0.70, "levelR": 0.68, "peakHold": 0.80, "clip": false },
+      "cue": { "deck": "B", "mix": 0.5, "gainDb": -3 }, "route": "usb-4ch",
+      "recording": { "state": "idle" }, "parday": { "state": "ready" }, "thermal": "warm",
+      "storage": { "freeBytes": 48300000000, "totalBytes": 512000000000 }, "network": "online"
+    },
+    "route-lost": {
+      "label": "Output route lost mid-set",
+      "library": "full", "session": "sess-1", "focus": ["A", "B"],
+      "decks": {
+        "A": { "trackId": "aurora", "state": "paused", "positionSec": 201.3, "interrupted": true },
+        "B": { "trackId": "copper", "state": "paused", "positionSec": 48.0, "interrupted": true }
+      },
+      "crossfader": 0.58, "master": { "levelL": 0, "levelR": 0, "peakHold": null, "clip": false, "muted": true },
+      "cue": { "deck": null, "mix": 0.5, "gainDb": 0 }, "route": "disconnected",
+      "recording": { "state": "idle" }, "parday": { "state": "ready" }, "thermal": "normal",
+      "storage": { "freeBytes": 48300000000, "totalBytes": 512000000000 }, "network": "online"
+    },
+    "recording": {
+      "label": "Recording the mix",
+      "library": "full", "session": "sess-1", "focus": ["A", "B"],
+      "decks": {
+        "A": { "trackId": "aurora", "state": "playing", "positionSec": 140.0, "levelL": 0.6, "levelR": 0.58 },
+        "B": { "trackId": "copper", "state": "paused", "positionSec": 15.48, "cueSelected": true }
+      },
+      "crossfader": 0.1, "master": { "levelL": 0.6, "levelR": 0.58, "peakHold": 0.7, "clip": false },
+      "cue": { "deck": "B", "mix": 0.5, "gainDb": -3 }, "route": "speaker",
+      "recording": { "state": "recording", "elapsedSec": 754, "bytes": 125829120, "format": "FLAC 44.1 kHz", "estimateRemainingSec": 21600, "markers": 2 },
+      "parday": { "state": "ready" }, "thermal": "normal",
+      "storage": { "freeBytes": 48300000000, "totalBytes": 512000000000 }, "network": "online"
+    },
+    "missing-media": {
+      "label": "Saved session with a missing file",
+      "library": "full", "session": "sess-3", "focus": ["A", "B"],
+      "decks": {
+        "A": { "trackId": "brass", "state": "missing", "positionSec": 24.5 },
+        "B": { "trackId": "drift", "state": "paused", "positionSec": 0 }
+      },
+      "crossfader": 0.5, "master": { "levelL": 0, "levelR": 0, "peakHold": null, "clip": false },
+      "cue": { "deck": null, "mix": 0.5, "gainDb": 0 }, "route": "speaker",
+      "recording": { "state": "idle" }, "parday": { "state": "ready" }, "thermal": "normal",
+      "storage": { "freeBytes": 48300000000, "totalBytes": 512000000000 }, "network": "online"
+    },
+    "low-storage": {
+      "label": "Low storage during a set",
+      "library": "full", "session": "sess-1", "focus": ["A", "B"],
+      "decks": {
+        "A": { "trackId": "aurora", "state": "playing", "positionSec": 140.0, "levelL": 0.6, "levelR": 0.58 },
+        "B": { "trackId": "copper", "state": "paused", "positionSec": 15.48 }
+      },
+      "crossfader": 0.1, "master": { "levelL": 0.6, "levelR": 0.58, "peakHold": 0.7, "clip": false },
+      "cue": { "deck": "B", "mix": 0.5, "gainDb": -3 }, "route": "speaker",
+      "recording": { "state": "stopped-storage", "elapsedSec": 2310, "bytes": 380000000, "format": "FLAC 44.1 kHz", "recoveredSegments": 3 },
+      "parday": { "state": "ready" }, "thermal": "normal",
+      "storage": { "freeBytes": 210000000, "totalBytes": 512000000000 }, "network": "online"
+    },
+    "offline": {
+      "label": "No network; ParDay local only",
+      "library": "full", "session": "sess-1", "focus": ["A", "B"],
+      "decks": {
+        "A": { "trackId": "aurora", "state": "paused", "positionSec": 0, "cueSelected": true },
+        "B": { "trackId": "copper", "state": "paused", "positionSec": 0 }
+      },
+      "crossfader": 0.5, "master": { "levelL": 0, "levelR": 0, "peakHold": null, "clip": false },
+      "cue": { "deck": "A", "mix": 0.5, "gainDb": 0 }, "route": "speaker",
+      "recording": { "state": "idle" }, "parday": { "state": "local_only" }, "thermal": "normal",
+      "storage": { "freeBytes": 48300000000, "totalBytes": 512000000000 }, "network": "offline"
+    },
+    "hot": {
+      "label": "Thermal pressure; optional work paused",
+      "library": "full", "session": "sess-2", "focus": ["A", "B"],
+      "decks": {
+        "A": { "trackId": "drift", "state": "playing", "positionSec": 200.0, "levelL": 0.55, "levelR": 0.52 },
+        "B": { "trackId": "copper", "state": "playing", "positionSec": 100.0, "levelL": 0.5, "levelR": 0.5 },
+        "C": { "trackId": "calypso", "state": "paused", "positionSec": 56.5 },
+        "D": { "trackId": "glasswork", "state": "paused", "positionSec": 0 }
+      },
+      "crossfader": 0.5, "master": { "levelL": 0.7, "levelR": 0.68, "peakHold": 0.8, "clip": false },
+      "cue": { "deck": "B", "mix": 0.5, "gainDb": -3 }, "route": "usb-4ch",
+      "recording": { "state": "idle" }, "parday": { "state": "unavailable", "reason": "Paused under thermal pressure" }, "thermal": "hot",
+      "storage": { "freeBytes": 48300000000, "totalBytes": 512000000000 }, "network": "online"
+    }
+  },
+  "sessions": {
+    "sess-1": { "id": "sess-1", "name": "Saturday practice", "savedAt": "2026-10-24T21:12:00", "decks": ["aurora", "copper"], "queue": ["drift", "glasswork", "calypso"], "route": "speaker", "durationSec": 3120, "recording": null },
+    "sess-2": { "id": "sess-2", "name": "Four-deck test", "savedAt": "2026-10-26T19:40:00", "decks": ["drift", "copper", "calypso", "glasswork"], "queue": [], "route": "usb-4ch", "durationSec": 1480, "recording": "rec-2" },
+    "sess-3": { "id": "sess-3", "name": "Rooftop warm-up", "savedAt": "2026-10-18T17:05:00", "decks": ["brass", "drift"], "queue": ["tide"], "route": "speaker", "durationSec": 2650, "recording": "rec-1", "missing": ["brass"] }
+  },
+  "recordings": {
+    "rec-1": { "id": "rec-1", "name": "Rooftop warm-up", "createdAt": "2026-10-18T17:05:00", "durationSec": 2650, "format": "FLAC 44.1 kHz", "bytes": 745000000, "state": "complete", "markers": 4 },
+    "rec-2": { "id": "rec-2", "name": "Four-deck test", "createdAt": "2026-10-26T19:40:00", "durationSec": 1480, "format": "FLAC 44.1 kHz", "bytes": 410000000, "state": "incomplete", "note": "Writer stopped at 24:40 when storage ran low; 3 recoverable segments.", "markers": 1 }
+  }
+}

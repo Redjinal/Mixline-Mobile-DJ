@@ -11,3 +11,6 @@ __pycache__/
 
 # Renderer scratch (see docs/planning/v1_0/RENDERING.md)
 docs/planning/v1_0/tmp/
+
+# Smoke renders are scratch; curated previews live in design/previews/<family>/
+design/previews/_smoke/

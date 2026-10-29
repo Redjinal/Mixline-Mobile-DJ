@@ -1,0 +1,127 @@
+{
+  "_fixture": "All tracks are fictional prototype fixtures. Titles, artists, analysis values, cues and availability are invented to exercise states; nothing here is measured audio.",
+  "tracks": [
+    {
+      "id": "aurora", "title": "AURORA DRIVE", "artist": "Nyx Meridian", "album": "Meridian Lines", "bpm": 124.0, "key": "8A",
+      "durationSec": 372, "source": "local", "availability": "ready", "analysis": "complete", "gridConfidence": "high",
+      "explicit": false, "rating": 4, "color": "cyan", "tags": ["house", "warm-up"], "playedCount": 3,
+      "cues": [
+        { "n": 1, "name": "Intro", "sec": 0.0, "color": "cyan" },
+        { "n": 2, "name": "Bass in", "sec": 30.97, "color": "green" },
+        { "n": 3, "name": "Break", "sec": 185.8, "color": "purple" },
+        { "n": 4, "name": "Exit", "sec": 309.7, "color": "orange" }
+      ],
+      "loops": [ { "name": "Intro 8", "inSec": 0.0, "bars": 8 } ],
+      "phrases": [ { "sec": 0, "label": "Intro" }, { "sec": 61.9, "label": "Verse" }, { "sec": 123.9, "label": "Build" }, { "sec": 185.8, "label": "Break" }, { "sec": 247.7, "label": "Drop" }, { "sec": 309.7, "label": "Outro" } ],
+      "loudnessLufs": -9.8, "gainDb": -1.5, "fileFormat": "FLAC 44.1 kHz 16-bit", "sizeBytes": 42127360
+    },
+    {
+      "id": "copper", "title": "COPPER SKY", "artist": "Halden Vale", "album": "Smelter", "bpm": 124.0, "key": "8A",
+      "durationSec": 348, "source": "local", "availability": "ready", "analysis": "complete", "gridConfidence": "high",
+      "explicit": false, "rating": 5, "color": "orange", "tags": ["house", "peak"], "playedCount": 7,
+      "cues": [
+        { "n": 1, "name": "Intro", "sec": 0.0, "color": "orange" },
+        { "n": 2, "name": "Drums", "sec": 15.48, "color": "green" },
+        { "n": 3, "name": "Vocal", "sec": 92.9, "color": "purple" },
+        { "n": 4, "name": "Drop", "sec": 154.8, "color": "red" },
+        { "n": 5, "name": "Exit", "sec": 294.2, "color": "orange" }
+      ],
+      "loops": [ { "name": "Drums 4", "inSec": 15.48, "bars": 4 } ],
+      "phrases": [ { "sec": 0, "label": "Intro" }, { "sec": 61.9, "label": "Verse" }, { "sec": 154.8, "label": "Drop" }, { "sec": 232.3, "label": "Break" }, { "sec": 294.2, "label": "Outro" } ],
+      "loudnessLufs": -8.9, "gainDb": -2.2, "fileFormat": "MP3 320 kbps 44.1 kHz", "sizeBytes": 13926400
+    },
+    {
+      "id": "glasswork", "title": "GLASSWORK (Extended Mix)", "artist": "Isla Ferrant", "album": "Kiln", "bpm": 126.0, "key": "9A",
+      "durationSec": 450, "source": "local", "availability": "ready", "analysis": "pending", "gridConfidence": null,
+      "explicit": false, "rating": 0, "color": null, "tags": ["techno"], "playedCount": 0,
+      "cues": [], "loops": [], "phrases": [], "loudnessLufs": null, "gainDb": null, "fileFormat": "WAV 48 kHz 24-bit", "sizeBytes": 129600000
+    },
+    {
+      "id": "tide", "title": "TIDE SIGNAL", "artist": "Mireille Okafor", "album": "Live at the Quay", "bpm": 122.0, "key": "7A",
+      "durationSec": 302, "source": "local", "availability": "ready", "analysis": "complete", "gridConfidence": "low",
+      "gridNote": "Live drums; tempo drifts between 120.4 and 123.6 BPM. Downbeat uncertain after the bridge.",
+      "explicit": false, "rating": 3, "color": "green", "tags": ["live", "afro-house"], "playedCount": 1,
+      "cues": [ { "n": 1, "name": "Intro", "sec": 0.0, "color": "green" }, { "n": 2, "name": "Bridge", "sec": 141.0, "color": "purple" } ],
+      "loops": [], "phrases": [ { "sec": 0, "label": "Intro" }, { "sec": 141.0, "label": "Bridge" } ],
+      "loudnessLufs": -12.1, "gainDb": 0.8, "fileFormat": "AAC 256 kbps 44.1 kHz", "sizeBytes": 9676800
+    },
+    {
+      "id": "brass", "title": "BRASS CANYON", "artist": "The Lantern Co.", "album": "Lantern", "bpm": 98.0, "key": "3B",
+      "durationSec": 260, "source": "local", "availability": "missing", "missingNote": "File moved or deleted since last session. Cues and crate entries are preserved.",
+      "analysis": "complete", "gridConfidence": "high", "explicit": false, "rating": 4, "color": "yellow", "tags": ["downtempo"], "playedCount": 2,
+      "cues": [ { "n": 1, "name": "Horns", "sec": 24.5, "color": "yellow" } ], "loops": [], "phrases": [],
+      "loudnessLufs": -11.0, "gainDb": 0.0, "fileFormat": "MP3 256 kbps 44.1 kHz", "sizeBytes": 8320000
+    },
+    {
+      "id": "north", "title": "NORTH OF NINE", "artist": "Kettle & Vane", "album": "Compass", "bpm": 128.0, "key": "10A",
+      "durationSec": 400, "source": "local", "availability": "ready", "analysis": "complete", "gridConfidence": "high",
+      "duplicateOf": "north-dup", "explicit": false, "rating": 3, "color": null, "tags": ["tech-house"], "playedCount": 0,
+      "cues": [], "loops": [], "phrases": [], "loudnessLufs": -9.4, "gainDb": -1.9, "fileFormat": "FLAC 44.1 kHz 16-bit", "sizeBytes": 45800000
+    },
+    {
+      "id": "north-dup", "title": "NORTH OF NINE", "artist": "Kettle & Vane", "album": "Compass", "bpm": 128.0, "key": "10A",
+      "durationSec": 400, "source": "local", "availability": "ready", "analysis": "complete", "gridConfidence": "high",
+      "duplicateOf": "north", "duplicateNote": "Same content hash as the copy in Downloads/old.", "explicit": false, "rating": 0, "color": null, "tags": [], "playedCount": 0,
+      "cues": [], "loops": [], "phrases": [], "loudnessLufs": -9.4, "gainDb": -1.9, "fileFormat": "FLAC 44.1 kHz 16-bit", "sizeBytes": 45800000
+    },
+    {
+      "id": "soda-radio", "title": "SODA LIGHTS (Radio Edit)", "artist": "Pell Avenue", "album": "Soda Lights", "bpm": 118.0, "key": "5A",
+      "durationSec": 201, "source": "download", "actualSource": "YouTube (fixture)", "requestedSource": "Spotify link (fixture)", "availability": "ready", "analysis": "complete", "gridConfidence": "high",
+      "explicit": false, "rating": 0, "color": null, "tags": ["pop"], "playedCount": 0,
+      "cues": [], "loops": [], "phrases": [], "loudnessLufs": -7.9, "gainDb": -3.1, "fileFormat": "Opus 160 kbps 48 kHz (source preserved)", "sizeBytes": 4020000
+    },
+    {
+      "id": "soda-ext", "title": "SODA LIGHTS (Extended)", "artist": "Pell Avenue", "album": "Soda Lights", "bpm": 118.0, "key": "5A",
+      "durationSec": 365, "source": "download-candidate", "actualSource": "YouTube (fixture)", "requestedSource": "Spotify link (fixture)", "availability": "discovered", "analysis": "none", "gridConfidence": null,
+      "explicit": false, "rating": 0, "color": null, "tags": [], "playedCount": 0,
+      "cues": [], "loops": [], "phrases": [], "loudnessLufs": null, "gainDb": null, "fileFormat": "unknown until resolved", "sizeBytes": null
+    },
+    {
+      "id": "velvet", "title": "VELVET ROTOR", "artist": "Ode Marrow", "album": "Rotor", "bpm": 110.0, "key": "11B",
+      "durationSec": 355, "source": "local", "availability": "permission-missing", "missingNote": "Folder access was revoked. Grant access again to restore this track.",
+      "analysis": "complete", "gridConfidence": "high", "explicit": true, "rating": 2, "color": null, "tags": ["broken-beat"], "playedCount": 1,
+      "cues": [ { "n": 1, "name": "Start", "sec": 0.0, "color": "cyan" } ], "loops": [], "phrases": [], "loudnessLufs": -10.3, "gainDb": -0.9, "fileFormat": "MP3 320 kbps 44.1 kHz", "sizeBytes": 14200000
+    },
+    {
+      "id": "zinc", "title": "ZINC HARBOUR", "artist": "Sable Quint", "album": "Harbour", "bpm": 174.0, "key": "2A",
+      "durationSec": 284, "source": "local", "availability": "unsupported", "missingNote": "Protected format (DRM). This file cannot be decoded by the app.",
+      "analysis": "none", "gridConfidence": null, "explicit": false, "rating": 0, "color": null, "tags": ["dnb"], "playedCount": 0,
+      "cues": [], "loops": [], "phrases": [], "loudnessLufs": null, "gainDb": null, "fileFormat": "M4P (protected)", "sizeBytes": 11100000
+    },
+    {
+      "id": "longtitle", "title": "EVERYTHING WE SAID ON THE WAY BACK FROM THE HARBOUR (Rooftop Dub Reprise, 2026 Remaster)", "artist": "Long Title Test Orchestra featuring The Very Long Artist Name Collective", "album": "Edge Cases", "bpm": 121.0, "key": "6A",
+      "durationSec": 492, "source": "local", "availability": "ready", "analysis": "complete", "gridConfidence": "high",
+      "explicit": false, "rating": 3, "color": "purple", "tags": ["dub", "edge-case"], "playedCount": 0,
+      "cues": [ { "n": 1, "name": "Intro", "sec": 0.0, "color": "purple" }, { "n": 2, "name": "Dub out", "sec": 243.0, "color": "cyan" } ], "loops": [], "phrases": [],
+      "loudnessLufs": -13.5, "gainDb": 1.2, "fileFormat": "FLAC 96 kHz 24-bit", "sizeBytes": 198000000
+    },
+    {
+      "id": "calypso", "title": "CALYPSO WIRE", "artist": "Dionne Ferrier", "album": "Wire", "bpm": 136.0, "key": "4B",
+      "durationSec": 238, "source": "local", "availability": "ready", "analysis": "complete", "gridConfidence": "medium",
+      "gridNote": "Half/double ambiguity: detected 68 BPM, corrected to 136 BPM by the user and locked.", "gridLocked": true,
+      "explicit": true, "rating": 5, "color": "red", "tags": ["soca", "carnival"], "playedCount": 12,
+      "cues": [ { "n": 1, "name": "Horn hit", "sec": 7.06, "color": "red" }, { "n": 2, "name": "Chorus", "sec": 56.5, "color": "orange" }, { "n": 3, "name": "Breakdown", "sec": 141.2, "color": "purple" } ],
+      "loops": [ { "name": "Chorus 8", "inSec": 56.5, "bars": 8 } ], "phrases": [],
+      "loudnessLufs": -7.2, "gainDb": -3.8, "fileFormat": "MP3 320 kbps 44.1 kHz", "sizeBytes": 9520000
+    },
+    {
+      "id": "drift", "title": "DRIFT HOUR", "artist": "Ninefold", "album": "Hours", "bpm": 120.0, "key": "8A",
+      "durationSec": 390, "source": "local", "availability": "ready", "analysis": "complete", "gridConfidence": "high",
+      "explicit": false, "rating": 4, "color": "cyan", "tags": ["deep-house", "warm-up"], "playedCount": 4,
+      "cues": [ { "n": 1, "name": "Intro", "sec": 0.0, "color": "cyan" }, { "n": 2, "name": "Pad", "sec": 64.0, "color": "green" } ], "loops": [], "phrases": [],
+      "loudnessLufs": -11.6, "gainDb": 0.3, "fileFormat": "AAC 256 kbps 44.1 kHz", "sizeBytes": 12480000
+    },
+    {
+      "id": "demo-1", "title": "DEMO — FIRST LIGHT", "artist": "Mobile DJ demo (fixture)", "album": "Demo crate", "bpm": 122.0, "key": "8A",
+      "durationSec": 150, "source": "demo", "availability": "ready", "analysis": "complete", "gridConfidence": "high",
+      "explicit": false, "rating": 0, "color": null, "tags": ["demo"], "playedCount": 0,
+      "cues": [ { "n": 1, "name": "Start", "sec": 0.0, "color": "cyan" } ], "loops": [], "phrases": [], "loudnessLufs": -10.0, "gainDb": -1.0, "fileFormat": "FLAC 44.1 kHz 16-bit", "sizeBytes": 16800000
+    },
+    {
+      "id": "demo-2", "title": "DEMO — SECOND WIND", "artist": "Mobile DJ demo (fixture)", "album": "Demo crate", "bpm": 122.0, "key": "9A",
+      "durationSec": 146, "source": "demo", "availability": "ready", "analysis": "complete", "gridConfidence": "high",
+      "explicit": false, "rating": 0, "color": null, "tags": ["demo"], "playedCount": 0,
+      "cues": [ { "n": 1, "name": "Start", "sec": 0.0, "color": "orange" } ], "loops": [], "phrases": [], "loudnessLufs": -10.2, "gainDb": -0.8, "fileFormat": "FLAC 44.1 kHz 16-bit", "sizeBytes": 16400000
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" data-theme="daylight" data-tier="balanced" data-motion="full" data-fontscale="100" data-orientation="portrait" data-viewport="default" data-hitbounds="off" data-insets="on" data-frame="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mobile DJ prototype</title>
+  <meta name="description" content="Crystal Current design prototype for the Mobile DJ app (working label). Design evidence only: no audio engine, no device measurement, every waveform and meter is a labelled fixture.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="tokens/tokens.css">
+  <link rel="stylesheet" href="components/materials.css">
+  <link rel="stylesheet" href="app/app.css">
+  <link rel="stylesheet" href="components/families/controls.css">
+  <link rel="stylesheet" href="components/families/transport-pads.css">
+  <link rel="stylesheet" href="components/families/waveform.css">
+  <link rel="stylesheet" href="components/families/data.css">
+  <link rel="stylesheet" href="components/families/parday.css">
+  <link rel="stylesheet" href="components/families/routing-av.css">
+  <link rel="stylesheet" href="screens/launch/launch.css">
+  <link rel="stylesheet" href="screens/preparation/preparation.css">
+  <link rel="stylesheet" href="screens/routing/routing.css">
+  <link rel="stylesheet" href="screens/performance/performance.css">
+  <link rel="stylesheet" href="screens/pads/pads.css">
+  <link rel="stylesheet" href="screens/sampler/sampler.css">
+  <link rel="stylesheet" href="screens/queue/queue.css">
+  <link rel="stylesheet" href="screens/recording/recording.css">
+  <link rel="stylesheet" href="screens/sources/sources.css">
+  <link rel="stylesheet" href="screens/parday/parday.css">
+  <link rel="stylesheet" href="screens/av/av.css">
+  <link rel="stylesheet" href="screens/system/system.css">
+  <link rel="stylesheet" href="screens/foundation/foundation.css">
+</head>
+<body>
+  <a class="skip" href="#outlet">Skip to the prototype</a>
+  <aside id="switcher" aria-label="Prototype controls"></aside>
+  <main class="stagearea">
+    <div class="device-wrap">
+      <div class="device" id="device">
+        <div class="device__status-guide" aria-hidden="true"><span>status bar · 24 dp assumed</span><span>FIXTURE</span></div>
+        <div id="outlet" class="device__outlet" aria-live="polite"></div>
+        <div class="device__gesture-guide" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div id="walkbar"></div>
+  </main>
+  <button id="switcher-toggle" class="btn btn--primary" type="button" data-hit="48" aria-controls="switcher" aria-expanded="false">Prototype controls</button>
+  <script type="module" src="app/main.js"></script>
+</body>
+</html>

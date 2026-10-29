@@ -1,0 +1,61 @@
+{
+  "_fixture": "Route descriptors are fixtures. No route is certified; the 'verified' flag describes what the app would show after a real channel-map check, not a measurement.",
+  "routes": {
+    "speaker": {
+      "id": "speaker", "name": "Phone speaker", "kind": "builtin", "channels": 2, "sampleRate": 48000, "bufferFrames": 192,
+      "master": "stereo", "cue": "none", "status": "ok", "verified": true,
+      "summary": "Master only. No cue route.",
+      "detail": "Headphone cue needs a second output. The phone speaker plays the master mix only; Cue buttons select but do not monitor.",
+      "tradeoffs": ["No pre-listening", "Not a performance route; fine for preparation"],
+      "nextActions": ["Connect USB-C headphones for a stereo master", "Use a DJ splitter for mono master + mono cue", "Use a 4-output USB interface for stereo master + stereo cue"]
+    },
+    "bluetooth": {
+      "id": "bluetooth", "name": "Bluetooth — Studio Cans (fixture)", "kind": "bluetooth", "channels": 2, "sampleRate": 48000, "bufferFrames": null,
+      "master": "stereo", "cue": "none", "status": "ok", "verified": true,
+      "summary": "Master only over Bluetooth. Delay unknown.",
+      "detail": "Bluetooth adds delay that the app cannot measure here. Preparation and tolerant playback only; not a scratch or cue route.",
+      "tradeoffs": ["Added delay (unmeasured)", "No cue route", "Not certified for scratch"],
+      "nextActions": ["Use a wired route for performance"]
+    },
+    "usbc-stereo": {
+      "id": "usbc-stereo", "name": "USB-C headphones / DAC", "kind": "usb", "channels": 2, "sampleRate": 48000, "bufferFrames": 96,
+      "master": "stereo", "cue": "none", "status": "ok", "verified": true,
+      "summary": "Stereo master. No independent cue.",
+      "detail": "Two channels only. The master mix goes to both ears; there is no separate headphone cue.",
+      "tradeoffs": ["No pre-listening"],
+      "nextActions": ["Use a DJ splitter for mono master + mono cue", "Use a 4-output USB interface"]
+    },
+    "splitter": {
+      "id": "splitter", "name": "DJ splitter on USB-C", "kind": "usb", "channels": 2, "sampleRate": 48000, "bufferFrames": 96,
+      "master": "mono-left", "cue": "mono-right", "status": "ok", "verified": true,
+      "summary": "Mono master (left) + mono cue (right).",
+      "detail": "The stereo pair is split: left carries the master in mono, right carries the cue in mono. Stereo is given up for independent cueing.",
+      "tradeoffs": ["Master is mono", "Cue is mono", "Channel assignment must match the splitter's wiring"],
+      "nextActions": ["Swap master/cue sides", "Use a 4-output USB interface for stereo on both"]
+    },
+    "usb-4ch": {
+      "id": "usb-4ch", "name": "USB interface — Quadra 4 (fixture)", "kind": "usb", "channels": 4, "sampleRate": 48000, "bufferFrames": 96,
+      "master": "stereo 1–2", "cue": "stereo 3–4", "status": "ok", "verified": true,
+      "summary": "Stereo master on 1–2, stereo cue on 3–4.",
+      "detail": "Four outputs negotiated. Master and cue are independent stereo pairs on one device clock.",
+      "tradeoffs": [],
+      "nextActions": ["Swap pairs", "Run a cue-isolation check"]
+    },
+    "unsupported": {
+      "id": "unsupported", "name": "USB device — unknown channel map", "kind": "usb", "channels": 6, "sampleRate": 44100, "bufferFrames": null,
+      "master": "unknown", "cue": "unknown", "status": "unsupported", "verified": false,
+      "summary": "Channel mapping could not be verified.",
+      "detail": "The device reports six outputs but the app could not confirm which carry master and cue. Playback is blocked on this route until the mapping is verified.",
+      "tradeoffs": ["Blocked until verified"],
+      "nextActions": ["Choose master and cue pairs manually, then run the isolation check", "Use a different route"]
+    },
+    "disconnected": {
+      "id": "disconnected", "name": "Output lost", "kind": "none", "channels": 0, "sampleRate": null, "bufferFrames": null,
+      "master": "none", "cue": "none", "status": "lost", "verified": false,
+      "summary": "The output device disappeared. Decks are paused and muted.",
+      "detail": "The previous route is no longer available. Nothing was rerouted automatically: the cue mix was not sent to the speaker.",
+      "tradeoffs": [],
+      "nextActions": ["Reconnect the device, then Resume", "Choose another route, then Resume"]
+    }
+  }
+}

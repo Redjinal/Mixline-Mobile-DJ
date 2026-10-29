@@ -1,0 +1,50 @@
+{
+  "_fixture": "Library structure fixtures: crates, playlists, smart rules, history and import batches. Invented to exercise states.",
+  "crates": [
+    { "id": "crate-warmup", "name": "Warm-up", "color": "cyan", "trackIds": ["drift", "aurora", "tide", "longtitle"], "note": "Opening hour", "updatedAt": "2026-10-24T20:10:00" },
+    { "id": "crate-peak", "name": "Peak", "color": "orange", "trackIds": ["copper", "north", "calypso", "glasswork"], "note": null, "updatedAt": "2026-10-26T18:30:00" },
+    { "id": "crate-soca", "name": "Soca set", "color": "red", "trackIds": ["calypso", "velvet", "brass"], "note": "Needs 2 more", "updatedAt": "2026-10-12T15:00:00" },
+    { "id": "crate-requests", "name": "Requests", "color": null, "trackIds": ["soda-radio", "zinc"], "note": "From last gathering", "updatedAt": "2026-10-25T23:40:00" },
+    { "id": "crate-demo", "name": "Demo crate", "color": null, "trackIds": ["demo-1", "demo-2"], "note": "Bundled demo media (fixture)", "updatedAt": "2026-10-01T00:00:00", "demo": true }
+  ],
+  "playlists": [
+    { "id": "pl-saturday", "name": "Saturday order", "entries": [
+      { "id": "e1", "trackId": "drift", "note": null },
+      { "id": "e2", "trackId": "aurora", "note": "Long intro" },
+      { "id": "e3", "trackId": "copper", "note": null },
+      { "id": "e4", "trackId": "aurora", "note": "Intentional repeat as a reprise" },
+      { "id": "e5", "trackId": "calypso", "note": "Closer" }
+    ] }
+  ],
+  "smartRules": [
+    { "id": "sr-compatible", "name": "Compatible with A", "rules": [ { "field": "bpm", "op": "between", "value": [120, 128] }, { "field": "key", "op": "compatible", "value": "8A" }, { "field": "availability", "op": "is", "value": "ready" } ], "resultIds": ["drift", "aurora", "copper", "glasswork", "north", "longtitle"] }
+  ],
+  "history": [
+    { "trackId": "drift", "playedAt": "2026-10-24T20:12:00", "deck": "A", "sessionId": "sess-1" },
+    { "trackId": "aurora", "playedAt": "2026-10-24T20:19:00", "deck": "B", "sessionId": "sess-1" },
+    { "trackId": "copper", "playedAt": "2026-10-24T20:25:00", "deck": "A", "sessionId": "sess-1" },
+    { "trackId": "calypso", "playedAt": "2026-10-24T20:31:00", "deck": "B", "sessionId": "sess-1" }
+  ],
+  "importBatches": {
+    "partial": {
+      "id": "imp-7", "source": "Folder: Music/DJ 2026 (scoped access)", "startedAt": "2026-10-29T10:02:00", "state": "partial",
+      "items": [
+        { "name": "Aurora Drive.flac", "trackId": "aurora", "state": "ready", "note": "Indexed; analysis complete" },
+        { "name": "Copper Sky.mp3", "trackId": "copper", "state": "ready", "note": "Indexed; analysis complete" },
+        { "name": "Glasswork (Extended Mix).wav", "trackId": "glasswork", "state": "analysis-pending", "note": "Playable; analysis queued" },
+        { "name": "Tide Signal.m4a", "trackId": "tide", "state": "ready", "note": "Grid confidence low — review before use" },
+        { "name": "North of Nine.flac", "trackId": "north", "state": "duplicate", "note": "Same content as Downloads/old/North of Nine.flac" },
+        { "name": "Zinc Harbour.m4p", "trackId": "zinc", "state": "unsupported", "note": "Protected format — cannot be decoded" },
+        { "name": "setlist.txt", "trackId": null, "state": "skipped", "note": "Not an audio file" },
+        { "name": "Velvet Rotor.mp3", "trackId": "velvet", "state": "permission-missing", "note": "Folder access revoked after selection" }
+      ],
+      "counts": { "ready": 3, "pending": 1, "duplicate": 1, "unsupported": 1, "skipped": 1, "failed": 1 }
+    },
+    "denied": { "id": "imp-8", "source": "Folder access", "state": "denied", "items": [], "note": "Permission was not granted. Nothing was imported; your existing library is unchanged." },
+    "indexing": { "id": "imp-9", "source": "Folder: Music/Carnival", "state": "indexing", "progress": { "done": 14, "total": 52 }, "items": [] }
+  },
+  "filters": {
+    "available": ["Ready", "Missing", "Permission missing", "Unsupported", "Analysis pending", "Downloaded", "Demo"],
+    "keys": ["1A", "2A", "3A", "4A", "5A", "6A", "7A", "8A", "9A", "10A", "11A", "12A", "1B", "2B", "3B", "4B", "5B", "6B", "7B", "8B", "9B", "10B", "11B", "12B"]
+  }
+}
