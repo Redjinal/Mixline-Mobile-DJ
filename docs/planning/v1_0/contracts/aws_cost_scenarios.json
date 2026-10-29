@@ -1,0 +1,434 @@
+{
+  "version": "1.0",
+  "date": "2026-10-29",
+  "status": "final_planning_target_with_illustrative_scenarios_not_deployment_authorization_or_invoice",
+  "currency": "USD",
+  "pricing_reference_region": "us-east-1",
+  "region_selected_by_owner": false,
+  "confirmed_context": {
+    "existing_host_selected": false,
+    "aws_candidate_authorized_for_planning": true,
+    "runtime_winner_selected": false,
+    "account_inspected": false,
+    "resources_provisioned": false,
+    "budget_approved": null,
+    "credits_assumed": 0,
+    "commitment_purchase_proposed": false,
+    "local_version_first": true,
+    "monthly_target_selected": true,
+    "required_aws_resources_for_first_local_version": false
+  },
+  "recommended_experiment": "Deferred until local version exists and a concrete cloud benefit warrants evaluation. Consider a bounded single-owner On-Demand Linux x86 EC2 trial, with source feasibility before large workloads and a current region/SKU quote. The historical always-on M7i subtotal exceeds the USD 35 target. Consider the listed USD 24 Lightsail base for a later steady service only if measured workload and a complete current cost estimate fit.",
+  "cost_formula": "compute running time + retained storage + public IPv4 allocation time + billable transfer + selected optional services + taxes; independent AI provider charges added separately",
+  "ec2_trial_assumptions": {
+    "instance_candidate": "m7i.large",
+    "cpu_architecture": "x86_64",
+    "vcpu": 2,
+    "memory_gib": 8,
+    "purchase_option": "On-Demand, shared tenancy",
+    "operating_system": "Linux without paid OS/application marketplace licence",
+    "current_compute_price_verified": false,
+    "dated_compute_reference_usd_hour": 0.1008,
+    "dated_compute_reference_date": "2024-05-04",
+    "compute_quote_required_before_provisioning": true,
+    "storage_gib": 30,
+    "storage_type": "gp3",
+    "storage_retained_for_full_month": true,
+    "extra_iops_throughput": false,
+    "auto_assigned_public_ipv4": "running hours only; released on stop; endpoint discovery/reconnection required",
+    "retained_elastic_ip": false,
+    "assumed_region_for_arithmetic": "us-east-1",
+    "inference_gpu": "none",
+    "job_concurrency": 1,
+    "performance_certified": false
+  },
+  "ec2_scenarios": [
+    {
+      "id": "EC2-M7I-20H",
+      "status": "illustrative_arithmetic_not_quote_or_measured_usage",
+      "instance": "m7i.large",
+      "running_hours": 20,
+      "billing_month_reference_hours": 730,
+      "compute_rate_usd_per_hour": 0.1008,
+      "compute_rate_status": "dated_primary_reference_requires_current_quote",
+      "compute_usd_unrounded": 2.016,
+      "ebs_provisioned_gib": 30,
+      "ebs_retained_for_month": true,
+      "ebs_usd": 2.4,
+      "public_ipv4_hours": 20,
+      "public_ipv4_usd": 0.1,
+      "elastic_ip_retained_while_stopped": false,
+      "subtotal_before_transfer_and_extras_usd": 4.52,
+      "formula": "hours * 0.1008 + 30 * 0.08 + hours * 0.005",
+      "egress_examples": [
+        {
+          "outbound_gb": 50,
+          "remaining_shared_allowance_gb": 100,
+          "assumed_paid_rate_usd_per_gb": 0.09,
+          "egress_usd": 0,
+          "subtotal_with_egress_usd": 4.52,
+          "status": "conditional_allowance_not_confirmed"
+        },
+        {
+          "outbound_gb": 50,
+          "remaining_shared_allowance_gb": 0,
+          "assumed_paid_rate_usd_per_gb": 0.09,
+          "egress_usd": 4.5,
+          "subtotal_with_egress_usd": 9.02,
+          "status": "illustrative_paid_rate_requires_current_quote"
+        }
+      ],
+      "sources": [
+        "COST-04",
+        "COST-05",
+        "COST-06",
+        "COST-07",
+        "COST-08",
+        "COST-09",
+        "COST-13",
+        "COST-14"
+      ]
+    },
+    {
+      "id": "EC2-M7I-50H",
+      "status": "illustrative_arithmetic_not_quote_or_measured_usage",
+      "instance": "m7i.large",
+      "running_hours": 50,
+      "billing_month_reference_hours": 730,
+      "compute_rate_usd_per_hour": 0.1008,
+      "compute_rate_status": "dated_primary_reference_requires_current_quote",
+      "compute_usd_unrounded": 5.04,
+      "ebs_provisioned_gib": 30,
+      "ebs_retained_for_month": true,
+      "ebs_usd": 2.4,
+      "public_ipv4_hours": 50,
+      "public_ipv4_usd": 0.25,
+      "elastic_ip_retained_while_stopped": false,
+      "subtotal_before_transfer_and_extras_usd": 7.69,
+      "formula": "hours * 0.1008 + 30 * 0.08 + hours * 0.005",
+      "egress_examples": [
+        {
+          "outbound_gb": 50,
+          "remaining_shared_allowance_gb": 100,
+          "assumed_paid_rate_usd_per_gb": 0.09,
+          "egress_usd": 0,
+          "subtotal_with_egress_usd": 7.69,
+          "status": "conditional_allowance_not_confirmed"
+        },
+        {
+          "outbound_gb": 50,
+          "remaining_shared_allowance_gb": 0,
+          "assumed_paid_rate_usd_per_gb": 0.09,
+          "egress_usd": 4.5,
+          "subtotal_with_egress_usd": 12.19,
+          "status": "illustrative_paid_rate_requires_current_quote"
+        }
+      ],
+      "sources": [
+        "COST-04",
+        "COST-05",
+        "COST-06",
+        "COST-07",
+        "COST-08",
+        "COST-09",
+        "COST-13",
+        "COST-14"
+      ]
+    },
+    {
+      "id": "EC2-M7I-730H",
+      "status": "illustrative_arithmetic_not_quote_or_measured_usage",
+      "instance": "m7i.large",
+      "running_hours": 730,
+      "billing_month_reference_hours": 730,
+      "compute_rate_usd_per_hour": 0.1008,
+      "compute_rate_status": "dated_primary_reference_requires_current_quote",
+      "compute_usd_unrounded": 73.584,
+      "ebs_provisioned_gib": 30,
+      "ebs_retained_for_month": true,
+      "ebs_usd": 2.4,
+      "public_ipv4_hours": 730,
+      "public_ipv4_usd": 3.65,
+      "elastic_ip_retained_while_stopped": false,
+      "subtotal_before_transfer_and_extras_usd": 79.63,
+      "formula": "hours * 0.1008 + 30 * 0.08 + hours * 0.005",
+      "egress_examples": [
+        {
+          "outbound_gb": 50,
+          "remaining_shared_allowance_gb": 100,
+          "assumed_paid_rate_usd_per_gb": 0.09,
+          "egress_usd": 0,
+          "subtotal_with_egress_usd": 79.63,
+          "status": "conditional_allowance_not_confirmed"
+        },
+        {
+          "outbound_gb": 50,
+          "remaining_shared_allowance_gb": 0,
+          "assumed_paid_rate_usd_per_gb": 0.09,
+          "egress_usd": 4.5,
+          "subtotal_with_egress_usd": 84.13,
+          "status": "illustrative_paid_rate_requires_current_quote"
+        }
+      ],
+      "sources": [
+        "COST-04",
+        "COST-05",
+        "COST-06",
+        "COST-07",
+        "COST-08",
+        "COST-09",
+        "COST-13",
+        "COST-14"
+      ]
+    }
+  ],
+  "lightsail_monthly_alternatives": [
+    {
+      "id": "LS-2GB-IPV4",
+      "memory_gb": 2,
+      "vcpu": 2,
+      "storage_gb": 60,
+      "transfer_allowance_tb": 3,
+      "monthly_bundle_usd": 12,
+      "ip_mode": "public IPv4 included; optional dual-stack",
+      "status": "public_list_price_not_selected"
+    },
+    {
+      "id": "LS-4GB-IPV4",
+      "memory_gb": 4,
+      "vcpu": 2,
+      "storage_gb": 80,
+      "transfer_allowance_tb": 4,
+      "monthly_bundle_usd": 24,
+      "ip_mode": "public IPv4 included; optional dual-stack",
+      "status": "public_list_price_not_selected"
+    },
+    {
+      "id": "LS-2GB-IPV6",
+      "memory_gb": 2,
+      "vcpu": 2,
+      "storage_gb": 60,
+      "transfer_allowance_tb": 3,
+      "monthly_bundle_usd": 10,
+      "ip_mode": "IPv6 only",
+      "status": "network_reachability_unverified_not_selected"
+    },
+    {
+      "id": "LS-4GB-IPV6",
+      "memory_gb": 4,
+      "vcpu": 2,
+      "storage_gb": 80,
+      "transfer_allowance_tb": 4,
+      "monthly_bundle_usd": 20,
+      "ip_mode": "IPv6 only",
+      "status": "network_reachability_unverified_not_selected"
+    }
+  ],
+  "lightsail_rules": {
+    "stopped_instance_still_billed": true,
+    "instance_charge_ends_on_delete": true,
+    "residual_resources_must_be_accounted": true,
+    "transfer_allowance_counts_inbound_and_outbound": true,
+    "excess_charge_applies_to_outbound": true,
+    "us_east_1_overage_usd_gb": 0.09,
+    "allowance_not_reset_by_recreation": true,
+    "region_allowances_can_differ": true,
+    "ipv6_only_requires_all_required_client_source_dependency_paths_to_work": true,
+    "not_a_sustained_cpu_performance_guarantee": true,
+    "hourly_prorating": "Use the selected bundle current hourly quote; do not divide monthly price by730 and present it as provider hourly pricing.",
+    "sources": [
+      "COST-01",
+      "COST-02",
+      "COST-03"
+    ]
+  },
+  "burstable_reference": {
+    "instance": "t3a.medium",
+    "cpu_architecture": "x86_64",
+    "memory_gib": 4,
+    "vcpu": 2,
+    "reference_rate_usd_hour": 0.0376,
+    "region": "us-east-1",
+    "baseline_percent_per_vcpu": 20,
+    "role": "Cost context only; not the recommended sustained benchmark control.",
+    "notes": [
+      "Credit balance and mode alter performance and possible extra charges.",
+      "Record credits and performance mode if evaluated; short burst results are not sustained throughput.",
+      "Do not select ARM/Graviton only for lower price until all worker images and native dependencies support that architecture."
+    ],
+    "sources": [
+      "COST-09",
+      "COST-10"
+    ]
+  },
+  "budget_controls": {
+    "owner_trial_budget_usd": null,
+    "ordinary_budgets_alerts": "Delayed billing-based notifications/actions; not a synchronous request admission or guaranteed hard cap.",
+    "aws_settings_project_spend_limit": {
+      "exists_in_current_documentation": true,
+      "account_availability_verified": false,
+      "requires_paid_plan": true,
+      "project_scope": true,
+      "minimum_usd": "greater of 20 or provider calculated likely spend",
+      "pre_tax": true,
+      "credits_excluded": true,
+      "effect": "Project pause; preserve local DJ independence and reconcile interrupted acquisition.",
+      "inactivity_after_pause": "Documentation states permanent project-data deletion after 90 days without action; archive needed data independently.",
+      "not_configured": true
+    },
+    "application_controls": [
+      "one active worker",
+      "explicit maximum job bytes, duration and concurrent work",
+      "bounded transfer and storage retention",
+      "owner-controlled runtime window and shutdown",
+      "no uncontrolled autoscaling",
+      "resource inventory and residual-cost check after trial"
+    ],
+    "source_ids": [
+      "COST-11",
+      "COST-12"
+    ],
+    "owner_monthly_planning_target_usd": 35,
+    "planning_target_excludes": "ParDay_AI_provider_charges",
+    "planning_target_is_hard_cap": false,
+    "deployment_spend_authorized": false
+  },
+  "excluded_or_unpriced": [
+    "taxes and currency conversion",
+    "current SKU quote differences",
+    "AI provider usage",
+    "domain registration and DNS costs if chosen",
+    "VPN or tunnel provider if selected",
+    "snapshots/backups",
+    "container registry storage and downloads",
+    "extra volumes/IOPS/throughput",
+    "CloudWatch logs, metrics and alarms if enabled beyond included terms",
+    "S3 if later selected",
+    "internet transfer beyond applicable account allowance",
+    "NAT gateways, load balancers, Kubernetes, managed database and cross-AZ paths not in the minimum proposed topology",
+    "mobile/carrier data charges",
+    "operator setup and maintenance time"
+  ],
+  "measurement_and_quote_gates": [
+    "Current selected region/SKU quote captured before provisioning",
+    "Account allowance and spend-limit availability verified instead of assumed",
+    "Actual source access and dependency architecture validated",
+    "Actual bytes per transfer leg, runtime, CPU profile and retained resources measured",
+    "Observed invoice/reconciliation before claiming operating cost"
+  ],
+  "sources": [
+    {
+      "id": "COST-01",
+      "url": "https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-bundles.html",
+      "supports": "Current listed Linux bundle RAM, vCPU, storage, transfer and IPv4/IPv6 monthly price."
+    },
+    {
+      "id": "COST-02",
+      "url": "https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-frequently-asked-questions-faq-billing-and-account-management.html",
+      "supports": "Ordinary Lightsail stopped-instance billing, residual static IP/snapshot costs and no assumed credits."
+    },
+    {
+      "id": "COST-03",
+      "url": "https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-faq-data-transfer-allowance.html",
+      "supports": "Both directions consume allowance; excess outbound charging and us-east-1 overage price."
+    },
+    {
+      "id": "COST-04",
+      "url": "https://aws.amazon.com/ec2/instance-types/m7i/",
+      "supports": "m7i.large specifications and suitability of M7i for sustained CPU workloads; no extracted current price."
+    },
+    {
+      "id": "COST-05",
+      "url": "https://aws.amazon.com/blogs/migration-and-modernization/unleashing-the-power-of-the-cloud-with-the-aws-cloud-value-framework-cvf-cost-savings-2-7/",
+      "supports": "Dated AWS price example: m7i.large Linux shared-tenancy US East $0.1008/hour as of 4 May 2024. Not a current SKU quote."
+    },
+    {
+      "id": "COST-06",
+      "url": "https://aws.amazon.com/ebs/pricing/",
+      "supports": "gp3 GB-month billing example at $0.08; extra IOPS/throughput can cost more."
+    },
+    {
+      "id": "COST-07",
+      "url": "https://docs.aws.amazon.com/solutions/latest/cloud-migration-factory-on-aws/cost.html",
+      "supports": "AWS us-east-1 example uses gp3 $0.08/GB-month. Do not reuse its prorated storage example for a volume retained all month."
+    },
+    {
+      "id": "COST-08",
+      "url": "https://aws.amazon.com/vpc/pricing/",
+      "supports": "Public IPv4 in use and idle both cost $0.005/hour."
+    },
+    {
+      "id": "COST-09",
+      "url": "https://aws.amazon.com/ec2/pricing/on-demand/",
+      "supports": "Compute billing, shared 100GB monthly internet egress allowance, tax exclusions and burst-credit caveats."
+    },
+    {
+      "id": "COST-10",
+      "url": "https://aws.amazon.com/ec2/instance-types/t3/",
+      "supports": "t3a.medium Linux us-east-1 $0.0376/hour, 2vCPU/4GiB, 20% baseline/vCPU."
+    },
+    {
+      "id": "COST-11",
+      "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html",
+      "supports": "Ordinary cost/usage budgets use delayed billing information and optional alerts/actions."
+    },
+    {
+      "id": "COST-12",
+      "url": "https://docs.aws.amazon.com/accounts/latest/reference/create-spend-limit.html",
+      "supports": "New AWS Settings project spend limits: Paid Plan, project scope, pre-tax, minimum $20 or higher estimate, resource pause and 90-day data-deletion consequence. Account availability uninspected."
+    },
+    {
+      "id": "COST-13",
+      "url": "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_StartInstances.html",
+      "supports": "EBS-backed stopped instance storage remains billable."
+    },
+    {
+      "id": "COST-14",
+      "url": "https://aws.amazon.com/ec2/pricing/on-demand-backup/",
+      "supports": "AWS published first internet-egress tier example $0.09/GB; retain as a planning rate and refresh selected region/tier before deployment."
+    }
+  ],
+  "evidence": {
+    "account_quote": null,
+    "account_budget_configuration": null,
+    "deployment_results": [],
+    "runtime_measurements": [],
+    "invoices": []
+  },
+  "phase": "future_optional_AWS_extension_after_local_version",
+  "planning_target": {
+    "target_usd_per_month": 35,
+    "currency": "USD",
+    "period": "month",
+    "kind": "approximate_planning_target",
+    "excludes": [
+      "ParDay_AI_provider_charges"
+    ],
+    "phase": "future_optional_AWS_extension",
+    "is_hard_ceiling": false,
+    "deployment_or_spend_authorization": false,
+    "actual_bill_verified": false
+  },
+  "budget_fit_interpretation": {
+    "target_usd_per_month": 35,
+    "EC2_M7I_730H": {
+      "illustrative_subtotal_usd": 79.63,
+      "exceeds_target_before_extras": true,
+      "amount_over_target_usd": 44.63,
+      "recommendation": "Not an always-on option within this target; historical rate requires current quote."
+    },
+    "EC2_limited_hours": {
+      "candidate": true,
+      "current_quote_required": true,
+      "complete_bill_within_target_verified": false
+    },
+    "Lightsail_4GB_IPv4": {
+      "listed_base_usd": 24,
+      "nominal_headroom_before_other_costs_usd": 11,
+      "selected": false,
+      "performance_verified": false,
+      "complete_bill_within_target_verified": false
+    },
+    "initial_local_version": "No required AWS resources; optional external AI or source services can still have independent charges."
+  }
+}

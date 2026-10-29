@@ -1,0 +1,233 @@
+{
+  "version": "1.0",
+  "date": "2026-10-29",
+  "status": "final_planning_baseline_ready_for_design_implementation_unstarted",
+  "app_name": null,
+  "assistant_name": "ParDay",
+  "confirmed": {
+    "platform": "android_first",
+    "audience": {
+      "primary": "serious_mobile_live_djs",
+      "secondary": "casual_streaming_djs"
+    },
+    "initial_use": [
+      "personal_practice",
+      "private_gatherings"
+    ],
+    "desired_sources": "any_and_all_subject_to_admission",
+    "accessories": [
+      "usb_audio_interfaces",
+      "dedicated_dj_splitters"
+    ],
+    "selected_modules": [
+      "four_decks",
+      "prepared_stems",
+      "live_stems",
+      "sampler",
+      "sequencer",
+      "recording",
+      "automix",
+      "microphone",
+      "video_mixing",
+      "karaoke",
+      "broadcast",
+      "third_party_plugin_hosting"
+    ],
+    "excluded": [
+      "lighting",
+      "external_midi_hid_dj_controller_integration"
+    ],
+    "visual_family": "liquid_glass_and_steampunk",
+    "visual_candidates": [
+      "A_Precision_Atelier",
+      "C_Crystal_Current"
+    ],
+    "selected_visual": "C_Crystal_Current",
+    "dsp_licensing": {
+      "preference": "compatible_open_source",
+      "paid_alternative": "acceptable_if_justified_no_purchase_authorized"
+    },
+    "first_test_device": {
+      "manufacturer": "Samsung",
+      "model": "Galaxy S26 Ultra",
+      "software_currency": "up_to_date_user_report",
+      "variant": null,
+      "android_version": null,
+      "one_ui_version": null,
+      "build": null,
+      "security_patch": null,
+      "ram_storage": null,
+      "audio_route": null,
+      "certified": false
+    },
+    "parday_capability": "preparation_plus_explicitly_armed_assisted_performance",
+    "live_ai_authority": "read_propose_until_specific_bounded_plan_armed_with_immediate_manual_takeover",
+    "link_acquisition_requested": {
+      "capability": "in_app_spotify_youtube_link_to_file_including_unofficial_routes",
+      "examples_supplied": [
+        "https://spotdown.org/en2",
+        "https://en.y2mate.st"
+      ],
+      "mechanism_selected": false,
+      "reference_document": "16_Link_Acquisition_Implementation_and_Feasibility.md"
+    },
+    "delivery_objective": "personal_tool_only",
+    "acquisition_evaluation": {
+      "choice": "local_D_first_then_deferred_on_device_vs_AWS_comparison",
+      "selected_winner": null,
+      "protocol": "acquisition_comparison_protocol.json",
+      "primary_trial_arms": [
+        "D",
+        "AWS"
+      ],
+      "optional_portability_arms": [
+        "H-LAN",
+        "H-REMOTE"
+      ],
+      "prior_choice": "compare_on_device_and_self_hosted_before_selecting",
+      "phase": "deferred_AWS_expansion_after_local_version",
+      "initial_arm_ids": [
+        "D"
+      ],
+      "comparison_is_initial_design_or_local_release_gate": false,
+      "sequence_rationale": "Owner selected local delivery first; this prioritizes implementation without inventing a measured runtime winner."
+    },
+    "source_publication_direction": {
+      "intent": "open_to_future_github_open_source_for_community_home_labs",
+      "publication_selected": false,
+      "licence_selected": null,
+      "repository_name": null,
+      "repository_created": false,
+      "publication_authorized": false
+    },
+    "server_trial_direction": {
+      "local_host_selected": false,
+      "accepted_provider": "AWS",
+      "role": "future_optional_owner_operated_acquisition_extension_and_comparison_arm",
+      "selected_final_acquisition_runtime": null,
+      "account_selected": false,
+      "region": null,
+      "instance_or_service_selected": null,
+      "spending_envelope": {
+        "amount": 35,
+        "currency": "USD",
+        "period": "month",
+        "kind": "approximate_planning_target",
+        "excludes": [
+          "ParDay_AI_provider_charges"
+        ],
+        "applies_to": "future_AWS_setup",
+        "hard_cap": false,
+        "deployment_or_spending_authorization": false,
+        "current_invoice_or_quote": false
+      },
+      "deployment_authorized": false,
+      "resources_created": false,
+      "reference_document": "18_AWS_Deployment_and_Comparison_Plan.md",
+      "phase": "deferred_until_after_local_version",
+      "required_for_initial_local_version": false
+    },
+    "local_first_delivery": {
+      "owner_instruction": "We will do a local version first and expand to AWS later.",
+      "first_version": "phone_native_Android_app",
+      "required_application_server": false,
+      "required_home_lab": false,
+      "required_AWS": false,
+      "local_core": "audio_engine_user_library_preparation_and_manual_performance",
+      "initial_acquisition_execution": "on_device_D_first_subject_to_source_feasibility",
+      "future_extension": "optional_owner_operated_AWS_after_local_version",
+      "interpretation": "Local first means a phone-native app with no required server; external music lookups, downloading, broadcasts and optional cloud AI still require their applicable network connections.",
+      "full_selected_scope_retained": true
+    }
+  },
+  "proposed": {
+    "stack": "Kotlin_Compose_Cpp_Oboe",
+    "default_decks": 2,
+    "offline_local_core": true,
+    "ai_providers": [
+      "openai",
+      "anthropic"
+    ],
+    "acquisition_candidates": [
+      "on_device_extractor",
+      "owner_operated_AWS_extractor_trial",
+      "portable_home_lab_profile_optional",
+      "verified_third_party_integration"
+    ],
+    "public_commercial_release": "outside_current_scope_conditional_future_decision",
+    "initial_design_defaults": {
+      "working_app_label": "Mobile DJ",
+      "parDay_input": "typed_and_touch_first_voice_deferred",
+      "primary_performance_layout": "landscape_two_deck_focus_with_four_deck_capability",
+      "portrait": "required_adaptation_for_library_preparation_and_focused_performance",
+      "initial_theme": "selected_C_Crystal_Current_with_reduced_effects_fallback",
+      "server_settings": "defer_AWS_setup_to_later_optional_extension",
+      "scope_effect": "These defaults guide design, not owner-approved measurements or new feature exclusions."
+    }
+  },
+  "pending": [
+    "s26_ultra_variant_installed_build_and_audio_route",
+    "broader_supported_device_matrix",
+    "technical_provider_access_content_rights_distribution_status_per_adapter",
+    "ai_provider_cost_limit_and_voice",
+    "provider_release_blockers",
+    "team_budget_timing",
+    "genres_set_duration",
+    "app_name",
+    "dvs_interpretation_if_relevant",
+    "deferred_AWS_comparison_outcome_and_long_term_runtime",
+    "exact_source_licence_and_optional_publication_scope",
+    "AWS_account_availability_and_owner_selection",
+    "AWS_region_runtime_and_phone_access_configuration"
+  ],
+  "implementation_status": "not_started",
+  "provider_permissions_acquired": false,
+  "purchases_made": false,
+  "app_benchmarks_performed": false,
+  "additional_documents": [
+    "17_Open_Source_and_Home_Lab_Guide.md",
+    "18_AWS_Deployment_and_Comparison_Plan.md",
+    "19_Design_Start_and_Local_First_Handoff.md"
+  ],
+  "baseline_label": "Final planning and design handoff; not a production release or certification",
+  "design_readiness": {
+    "assessment": "ready_to_start_design",
+    "blocking_owner_questions": [],
+    "basis": "Confirmed scope, device target, selected C direction, ParDay authority and local-first sequence are sufficient; Document 19 supplies design defaults and required states.",
+    "not_claimed": [
+      "implemented_app",
+      "certified_device",
+      "working_source_adapter",
+      "production_assets_complete",
+      "deployment",
+      "publication",
+      "verified_full_feature_performance"
+    ]
+  },
+  "pending_decision_timing": {
+    "before_physical_audio_qualification": [
+      "actual_S26_variant_build_audio_route",
+      "declared_workload_and_test_duration"
+    ],
+    "before_real_paid_AI_use": [
+      "provider_model_cost_limit_data_egress_settings"
+    ],
+    "during_source_and_DSP_feasibility": [
+      "candidate_licences_formats_actual_source_paths_plugin_and_live_stem_evidence"
+    ],
+    "before_AWS_expansion": [
+      "account_region_live_quote_runtime_access_retention_reviewable_deployment"
+    ],
+    "before_optional_publication": [
+      "licence_repository_scope_name_rights_review_owner_publication_instruction"
+    ],
+    "design_nonblockers": [
+      "app_name",
+      "broader_device_matrix",
+      "genres_and_set_lengths",
+      "voice",
+      "team_calendar",
+      "DVS_if_requested"
+    ]
+  }
+}

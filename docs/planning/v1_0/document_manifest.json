@@ -1,0 +1,180 @@
+{
+  "version": "1.0",
+  "status": "final_planning_baseline_ready_for_design_local_first_aws_later",
+  "date": "2026-10-29",
+  "documents": [
+    {
+      "number": "01",
+      "title": "Product vision and Product Lens review",
+      "source": "sources/01_Product_Vision_and_Product_Lens.md",
+      "pdf": "output/pdf/v1_0/01_Product_Vision_and_Product_Lens.pdf",
+      "pages": 8,
+      "words": 2781,
+      "master_start_page": 5
+    },
+    {
+      "number": "02",
+      "title": "Professional product requirements",
+      "source": "sources/02_Professional_Requirements.md",
+      "pdf": "output/pdf/v1_0/02_Professional_Requirements.pdf",
+      "pages": 7,
+      "words": 2990,
+      "master_start_page": 13
+    },
+    {
+      "number": "03",
+      "title": "Mobile workflows and interaction contracts",
+      "source": "sources/03_Mobile_Workflows_and_Interactions.md",
+      "pdf": "output/pdf/v1_0/03_Mobile_Workflows_and_Interactions.pdf",
+      "pages": 7,
+      "words": 3033,
+      "master_start_page": 20
+    },
+    {
+      "number": "04",
+      "title": "Art direction and design system",
+      "source": "sources/04_Art_Direction_and_Design_System.md",
+      "pdf": "output/pdf/v1_0/04_Art_Direction_and_Design_System.pdf",
+      "pages": 8,
+      "words": 2617,
+      "master_start_page": 27
+    },
+    {
+      "number": "05",
+      "title": "Tech Stack and Architecture",
+      "source": "sources/05_Tech_Stack_and_Architecture.md",
+      "pdf": "output/pdf/v1_0/05_Tech_Stack_and_Architecture.pdf",
+      "pages": 8,
+      "words": 3018,
+      "master_start_page": 35
+    },
+    {
+      "number": "06",
+      "title": "Audio Engine and DSP",
+      "source": "sources/06_Audio_Engine_and_DSP.md",
+      "pdf": "output/pdf/v1_0/06_Audio_Engine_and_DSP.pdf",
+      "pages": 6,
+      "words": 2481,
+      "master_start_page": 43
+    },
+    {
+      "number": "07",
+      "title": "Library, data and music-source architecture",
+      "source": "sources/07_Library_Data_and_Music_Sources.md",
+      "pdf": "output/pdf/v1_0/07_Library_Data_and_Music_Sources.pdf",
+      "pages": 8,
+      "words": 2950,
+      "master_start_page": 49
+    },
+    {
+      "number": "08",
+      "title": "Asset creation, sourcing and provenance plan",
+      "source": "sources/08_Asset_Creation_and_Sourcing.md",
+      "pdf": "output/pdf/v1_0/08_Asset_Creation_and_Sourcing.pdf",
+      "pages": 8,
+      "words": 2910,
+      "master_start_page": 57
+    },
+    {
+      "number": "09",
+      "title": "Quality and Device Validation",
+      "source": "sources/09_Quality_and_Device_Validation.md",
+      "pdf": "output/pdf/v1_0/09_Quality_and_Device_Validation.pdf",
+      "pages": 9,
+      "words": 3393,
+      "master_start_page": 65
+    },
+    {
+      "number": "10",
+      "title": "Delivery roadmap and agent playbook",
+      "source": "sources/10_Delivery_Roadmap_and_Agent_Playbook.md",
+      "pdf": "output/pdf/v1_0/10_Delivery_Roadmap_and_Agent_Playbook.pdf",
+      "pages": 8,
+      "words": 2856,
+      "master_start_page": 74
+    },
+    {
+      "number": "11",
+      "title": "Release, security and personal operation",
+      "source": "sources/11_Release_Security_and_Commercial.md",
+      "pdf": "output/pdf/v1_0/11_Release_Security_and_Commercial.pdf",
+      "pages": 8,
+      "words": 3376,
+      "master_start_page": 82
+    },
+    {
+      "number": "12",
+      "title": "Council decisions and owner answers",
+      "source": "sources/12_Council_Decisions_and_Questions.md",
+      "pdf": "output/pdf/v1_0/12_Council_Decisions_and_Questions.pdf",
+      "pages": 13,
+      "words": 4105,
+      "master_start_page": 90
+    },
+    {
+      "number": "13",
+      "title": "ParDay AI Architecture and Requirements",
+      "source": "sources/13_ParDay_AI_Architecture_and_Requirements.md",
+      "pdf": "output/pdf/v1_0/13_ParDay_AI_Architecture_and_Requirements.pdf",
+      "pages": 11,
+      "words": 4316,
+      "master_start_page": 103
+    },
+    {
+      "number": "14",
+      "title": "Music discovery and acquisition",
+      "source": "sources/14_Music_Discovery_and_Acquisition.md",
+      "pdf": "output/pdf/v1_0/14_Music_Discovery_and_Acquisition.pdf",
+      "pages": 8,
+      "words": 3081,
+      "master_start_page": 114
+    },
+    {
+      "number": "15",
+      "title": "Video, karaoke, broadcast and Android plugin hosting",
+      "source": "sources/15_Advanced_Performance_Modules.md",
+      "pdf": "output/pdf/v1_0/15_Advanced_Performance_Modules.pdf",
+      "pages": 7,
+      "words": 2663,
+      "master_start_page": 122
+    },
+    {
+      "number": "16",
+      "title": "Link acquisition implementation and feasibility",
+      "source": "sources/16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "pdf": "output/pdf/v1_0/16_Link_Acquisition_Implementation_and_Feasibility.pdf",
+      "pages": 14,
+      "words": 6138,
+      "master_start_page": 129
+    },
+    {
+      "number": "17",
+      "title": "Open-source and home-lab guide",
+      "source": "sources/17_Open_Source_and_Home_Lab_Guide.md",
+      "pdf": "output/pdf/v1_0/17_Open_Source_and_Home_Lab_Guide.pdf",
+      "pages": 7,
+      "words": 2442,
+      "master_start_page": 143
+    },
+    {
+      "number": "18",
+      "title": "AWS deployment and comparison plan",
+      "source": "sources/18_AWS_Deployment_and_Comparison_Plan.md",
+      "pdf": "output/pdf/v1_0/18_AWS_Deployment_and_Comparison_Plan.pdf",
+      "pages": 9,
+      "words": 3781,
+      "master_start_page": 150
+    },
+    {
+      "number": "19",
+      "title": "Start design: local Android handoff",
+      "source": "sources/19_Design_Start_and_Local_First_Handoff.md",
+      "pdf": "output/pdf/v1_0/19_Design_Start_and_Local_First_Handoff.pdf",
+      "pages": 7,
+      "words": 1899,
+      "master_start_page": 159
+    }
+  ],
+  "master": "output/pdf/v1_0/Mobile_DJ_Planning_Dossier_v1_0.pdf",
+  "total_pages": 165
+}

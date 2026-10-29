@@ -1,0 +1,260 @@
+{
+  "version": "1.0",
+  "date": "2026-10-29",
+  "status": "final_planning_baseline_deferred_optional_cloud_extension_not_applied",
+  "confirmed": {
+    "delivery": "personal_tool",
+    "existing_local_host_selected": false,
+    "aws_accepted_as_server_trial_provider": true,
+    "initial_delivery_path": "phone_native_local_no_required_server",
+    "comparison_required_before_aws_extension_runtime_choice": true
+  },
+  "primary_comparison_arms": [
+    "D",
+    "AWS"
+  ],
+  "selected_runtime_winner": null,
+  "account": null,
+  "region": null,
+  "selected_service": null,
+  "selected_instance": null,
+  "approved_budget_usd": null,
+  "account_inspected": false,
+  "resource_creation_authorized": false,
+  "resources_created": false,
+  "source_access_verified": false,
+  "public_repository_created": false,
+  "source_document": "18_AWS_Deployment_and_Comparison_Plan.md",
+  "comparison_protocol": "acquisition_comparison_protocol.json",
+  "cost_scenarios": "aws_cost_scenarios.json",
+  "optional_local_profile": "home_lab_deployment_profile.json",
+  "proposed_trial": {
+    "host": "single_on_demand_linux_x86_64_ec2",
+    "instance_candidate": "m7i.large",
+    "candidate_vcpu": 2,
+    "candidate_memory_gib": 8,
+    "cpu_credit_mode": "non_burstable_candidate",
+    "instance_selection_confirmed": false,
+    "ami": null,
+    "availability_zone": null,
+    "encrypted_gp3_gib_cost_assumption": 30,
+    "effective_capacity_requires_validation": true,
+    "public_ipv4_model": "auto_assigned_while_running_not_retained_EIP",
+    "endpoint_identity_plan": null,
+    "active_jobs_proposed": 1,
+    "bounded_processing_jobs_proposed": 1,
+    "inference_gpu": false,
+    "prepared_local_audio_dependency": false,
+    "current_compute_quote_verified": false,
+    "availability_model": "limited_hours_experiment_after_current_quote_not_always_on_M7i_under_35_USD_target",
+    "promotion_condition": "Usable local version and evidence-based need for optional AWS evaluation; exact trial and cleanup reviewed before provisioning."
+  },
+  "first_checkpoint": "permitted_actual_source_path_from_declared_aws_environment_before_sustained_benchmark_or_more_service_architecture",
+  "control_plane": {
+    "application_transport": "verified_TLS",
+    "endpoint": "explicitly_paired_service_identity",
+    "authentication": "per_device_revocable_credentials",
+    "enrollment": "single_use_expiring_mechanism",
+    "rotation": "document_certificate_and_credential_rotation",
+    "aws_keys_in_apk": false,
+    "phone_receives_aws_administration_authority": false,
+    "administration_proposal": "SSM_Session_Manager_if_image_and_network_support",
+    "public_ssh_default": false,
+    "public_api_exposure": "only_required_HTTPS_port_with_request_and_job_admission_limits",
+    "private_overlay": "optional_separate_reviewed_transport_with_authenticated_encryption"
+  },
+  "worker_boundary": {
+    "privileged": false,
+    "host_network": false,
+    "docker_socket": false,
+    "broad_host_mounts": false,
+    "provider_ai_or_aws_credentials_in_job_payloads": false,
+    "instance_metadata_policy": "deny_worker_access_to_IMDS_private_loopback_link_local_and_rebinding_destinations_including_IPv6",
+    "host_metadata": "IMDSv2_if_enabled_not_sufficient_as_only_worker_isolation",
+    "resources": "explicit_CPU_memory_process_disk_bytes_time_retry_and_retention_limits",
+    "arguments": "structured_allowlisted_adapter_options_no_arbitrary_shell_executables_or_flags"
+  },
+  "data_path": {
+    "supported_transfer_modes": [
+      "device_direct_only_after_verified_handoff",
+      "controlled_relay",
+      "server_artifact"
+    ],
+    "count_bytes_separately": [
+      "source_to_phone_for_verified_direct_transfer",
+      "source_to_aws",
+      "aws_to_phone",
+      "optional_object_storage_transfers"
+    ],
+    "source_and_final_rendition_validation_required": true,
+    "phone_revalidates_received_artifact": true,
+    "phone_publication": "existing_atomic_request_revision_cancel_lease_idempotency_contract",
+    "server_artifact_ready_is_phone_publication": false,
+    "phone_library_authoritative": true,
+    "cloud_staging": "temporary_bounded_retention",
+    "server_journal": "persistent_consistent_recoverable_under_current_job_revision",
+    "backups": "configuration_and_job_state_by_default_exclude_staging_or_document_snapshot_retention"
+  },
+  "not_required_by_trial": [
+    "NAT_gateway",
+    "load_balancer",
+    "managed_relational_database",
+    "Kubernetes",
+    "GPU",
+    "multi_region",
+    "S3"
+  ],
+  "optional_s3": {
+    "selected": false,
+    "admission": "only_measured_delivery_or_recovery_benefit",
+    "public_access": false,
+    "credentials": "least_privilege",
+    "presigned_urls": "bearer_reusable_until_effective_expiry_not_automatically_single_use"
+  },
+  "independent_decisions": [
+    "acquisition_execution_location",
+    "ParDay_gateway_location",
+    "language_model_provider_and_inference_location"
+  ],
+  "lifecycle": {
+    "session_expiry": null,
+    "running_hours_budget": null,
+    "stop_authority": "owner_administration_initially",
+    "in_app_wake_path": "not_included_requires_separate_limited_control_design",
+    "stopped_server_unavailable_for_new_requests": true,
+    "restart": "reconcile_incomplete_jobs_without_replaying_committed_actions_or_autoplay",
+    "local_playback_independent": true,
+    "endpoint_change": "reconnect_only_with_verified_service_identity",
+    "teardown": "verify_exports_and_reconcile_jobs_then_delete_intended_resources_and_audit_retained_billable_items"
+  },
+  "cost_controls": {
+    "ordinary_budgets": "delayed_alerts_or_configured_actions_not_synchronous_hard_ceiling",
+    "project_spend_limits": "eligible_new_AWS_experience_Paid_Plan_project_scope_pre_tax_min_greater_of_20_USD_or_conservative_estimate; account_coverage_unverified",
+    "project_pause_recovery": "document_pause_and_90_day_inaction_deletion_behavior_if_feature_selected",
+    "local_limits": "admission_bytes_jobs_runtime_retries_retention_and_explicit_test_session_end",
+    "free_credits_or_unused_transfer_allowance_assumed": false,
+    "ai_budget": "independent",
+    "owner_monthly_planning_target_usd": 35,
+    "target_excludes": "ParDay_AI_provider_charges",
+    "target_is_hard_cap": false
+  },
+  "quality_gates": [
+    "QA-02",
+    "QA-04",
+    "QA-07",
+    "QA-10",
+    "QA-15",
+    "QA-17",
+    "QA-18",
+    "QA-19",
+    "QA-20",
+    "QA-21"
+  ],
+  "acceptance_cases": [
+    {
+      "id": "AWS-01",
+      "scenario": "Source-path feasibility",
+      "acceptance": "a permitted fixture and intended source path produce the correct verified local rendition from the actual AWS environment; failures and access conditions are recorded.",
+      "applicability": "conditional_on_later_evaluated_aws_profile_not_first_local_release",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AWS-02",
+      "scenario": "Reproducible deployment",
+      "acceptance": "the declared configuration can be rebuilt with pinned versions, valid endpoint identity, encrypted storage and no hidden owner-specific dependency.",
+      "applicability": "conditional_on_later_evaluated_aws_profile_not_first_local_release",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AWS-03",
+      "scenario": "Pairing and revocation",
+      "acceptance": "unauthenticated/revoked devices cannot submit work or retrieve artifacts; certificate/credential rotation is deliberate and does not erase local preparation.",
+      "applicability": "conditional_on_later_evaluated_aws_profile_not_first_local_release",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AWS-04",
+      "scenario": "Worker isolation",
+      "acceptance": "attempted private/metadata/loopback targets, hostile redirects, excessive resource use and arbitrary execution inputs fail within the documented boundaries.",
+      "applicability": "conditional_on_later_evaluated_aws_profile_not_first_local_release",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AWS-05",
+      "scenario": "Correct artifact publication",
+      "acceptance": "each applicable transfer leg, exact rendition/hash, cancellation revision, lease and idempotency are checked; server readiness cannot publish a stale or unreceived phone file.",
+      "applicability": "conditional_on_later_evaluated_aws_profile_not_first_local_release",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AWS-06",
+      "scenario": "Stop/start and outages",
+      "acceptance": "local mixing continues; interrupted cloud jobs reconcile without duplicate publication or autoplay; changed endpoint addressing preserves verified identity.",
+      "applicability": "conditional_on_later_evaluated_aws_profile_not_first_local_release",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AWS-07",
+      "scenario": "Workload and comparison",
+      "acceptance": "the declared S26 audio profile and paired acquisition experiment meet their gates, with cloud and phone measurements and failure denominators retained.",
+      "applicability": "conditional_on_later_evaluated_aws_profile_not_first_local_release",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AWS-08",
+      "scenario": "Cost and admission controls",
+      "acceptance": "finite trial hours, quotas, alerts and any applicable spend-limit feature are exercised; residual storage/address/transfer costs remain visible.",
+      "applicability": "conditional_on_later_evaluated_aws_profile_not_first_local_release",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AWS-09",
+      "scenario": "Update, backup and restore",
+      "acceptance": "protocol mismatch, adapter rollback and restoration preserve correct state while excluding or explicitly governing temporary-media backups.",
+      "applicability": "conditional_on_later_evaluated_aws_profile_not_first_local_release",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AWS-10",
+      "scenario": "Retention and teardown",
+      "acceptance": "delivered/expired/cancelled artifacts follow policy; required exports are verified and all intended chargeable resources are removed or explicitly retained.",
+      "applicability": "conditional_on_later_evaluated_aws_profile_not_first_local_release",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    }
+  ],
+  "evidence": {
+    "account_quotes": [],
+    "infrastructure_change_sets": [],
+    "deployments": [],
+    "source_trials": [],
+    "s26_measurements": [],
+    "billing_reconciliation": [],
+    "owner_runtime_decision": null
+  },
+  "phase": "future_optional_AWS_extension_after_local_version",
+  "required_for_local_design": false,
+  "required_for_first_local_release": false,
+  "planning_target": {
+    "target_usd_per_month": 35,
+    "currency": "USD",
+    "period": "month",
+    "kind": "approximate_planning_target",
+    "excludes": [
+      "ParDay_AI_provider_charges"
+    ],
+    "phase": "future_optional_AWS_extension",
+    "is_hard_ceiling": false,
+    "deployment_or_spend_authorization": false,
+    "actual_bill_verified": false
+  }
+}

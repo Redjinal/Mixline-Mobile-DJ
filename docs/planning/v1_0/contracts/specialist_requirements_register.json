@@ -1,0 +1,406 @@
+{
+  "version": "0.3",
+  "status": "planning_acceptance_proposed",
+  "requirements": [
+    {
+      "id": "AI-001",
+      "requirement_or_scenario": "Core DJ functions remain independent of ParDay",
+      "acceptance": "Complete QA-19 set with AI disabled, offline and unavailable",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-002",
+      "requirement_or_scenario": "Provider-neutral adapter",
+      "acceptance": "Contract tests include a second adapter fixture/stub; evaluate the allowed corpus on every real provider offered, with identical validation. Two production providers are required only if selected.",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-003",
+      "requirement_or_scenario": "Restricted context by provenance",
+      "acceptance": "Sentinel provider fields never reach prompts, embeddings, logs or fallback model",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-004",
+      "requirement_or_scenario": "No default raw-media upload",
+      "acceptance": "Network capture contains no audio/mic/artwork/library dump in ordinary requests",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-005",
+      "requirement_or_scenario": "Selected armed assistance; read/propose until armed",
+      "acceptance": "Adversarial requests and model calls cause zero unarmed audible changes",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-006",
+      "requirement_or_scenario": "Typed tools and local validation",
+      "acceptance": "Reject malformed, extra-field, unknown-ID and out-of-range proposals",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-007",
+      "requirement_or_scenario": "Stale-state protection",
+      "acceptance": "Reload deck, revise grid, change route or touch a bound deck/master control before and after scheduling; old proposal/event rejected, including missing or duplicate state bindings",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-008",
+      "requirement_or_scenario": "Bounded arming",
+      "acceptance": "Expired, widened or modified plans cannot execute under prior acceptance",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-009",
+      "requirement_or_scenario": "Manual takeover",
+      "acceptance": "Physical control and Stop Automation invalidate engine-owned revision; no affected event executes after the acknowledged cancellation frame, including under full-queue load",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-010",
+      "requirement_or_scenario": "At-most-once mutation",
+      "acceptance": "Duplicate deliveries/reconnects do not repeat writes or schedule twice; changed-payload ID reuse rejected; metadata/idempotency transaction and batch all-or-nothing behavior survive injected failure",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-011",
+      "requirement_or_scenario": "Accurate completion state",
+      "acceptance": "Inject failed engine/database acknowledgement; UI reports failure, not completion",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-012",
+      "requirement_or_scenario": "Preparation history",
+      "acceptance": "Accepted edit preserves locked cues and can restore the previous revision",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-013",
+      "requirement_or_scenario": "Analysis honesty",
+      "acceptance": "Missing or low-confidence beat/key/phrase data is labelled; no fabricated certainty",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-014",
+      "requirement_or_scenario": "Prompt-injection containment",
+      "acceptance": "Malicious tags, notes, playlists and web text cannot alter tools or export policy",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-015",
+      "requirement_or_scenario": "Credential protection",
+      "acceptance": "Secret scans and network/log tests find no provider key in APK, logs or diagnostics",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-016",
+      "requirement_or_scenario": "Resource isolation",
+      "acceptance": "AI requests, timeout/retry storms and local inference cannot fail certified audio profiles",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-017",
+      "requirement_or_scenario": "Cost and request bounds",
+      "acceptance": "Exhausted quota blocks new AI work without interrupting the mix; retry cap enforced",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-018",
+      "requirement_or_scenario": "Provider retention disclosure",
+      "acceptance": "Actual endpoint/configuration matches consent, deletion and stored-history behavior",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-019",
+      "requirement_or_scenario": "Approved fallback",
+      "acceptance": "Unknown/unqualified model disables affected action tools; no silent privilege expansion",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-020",
+      "requirement_or_scenario": "Rehearsal autonomy",
+      "acceptance": "Coach can be dismissed; no forced lessons, master speech or recording without choice",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-021",
+      "requirement_or_scenario": "Source permissions preserved",
+      "acceptance": "Prohibited download, stem, record or AI operation cannot be enabled by natural language",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-022",
+      "requirement_or_scenario": "Timely cancellation",
+      "acceptance": "Cancelled task cannot later save edits or arm playback; completion race covered",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-023",
+      "requirement_or_scenario": "Deterministic timing",
+      "acceptance": "Locally frame-scheduled plan passes QA-05/23; force failure at each batch-admission step and verify zero runnable partial events, then verify execution-time revision guards",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AI-024",
+      "requirement_or_scenario": "Useful product outcome",
+      "acceptance": "DJs complete agreed preparation tasks faster or with fewer errors than baseline, measured",
+      "source_document": "13_ParDay_AI_Architecture_and_Requirements.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "SRC-01",
+      "requirement_or_scenario": "Catalog result has no admitted media route.",
+      "acceptance": "Remains discovery-only; no decoder receives it as a local file.",
+      "source_document": "14_Music_Discovery_and_Acquisition.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "SRC-02",
+      "requirement_or_scenario": "Spotify link requests downloadable file",
+      "acceptance": "Resolve catalog identity plus actual-source candidate; explicitly confirm uncertain edition; retain both provenance chains; do not mislabel matched audio as a Spotify master; acquired-source capability remains independent.",
+      "source_document": "14_Music_Discovery_and_Acquisition.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "SRC-03",
+      "requirement_or_scenario": "YouTube link through enabled extractor",
+      "acceptance": "Eligible fixture follows resolve \u2192 format \u2192 download \u2192 validate \u2192 library; unavailable, broken or non-admitted adapter returns a specific status without silently replacing the link.",
+      "source_document": "14_Music_Discovery_and_Acquisition.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "SRC-04",
+      "requirement_or_scenario": "Eligible creator export is imported.",
+      "acceptance": "Validate, preserve original, create correct rendition timing and allow supported local processing.",
+      "source_document": "14_Music_Discovery_and_Acquisition.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "SRC-05",
+      "requirement_or_scenario": "Same title resolves to a radio edit and an extended mix.",
+      "acceptance": "Show ambiguity; no silent substitute or inherited sample cues.",
+      "source_document": "14_Music_Discovery_and_Acquisition.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "SRC-06",
+      "requirement_or_scenario": "Provider metadata is joined to a local track.",
+      "acceptance": "Provenance survives; prohibited fields are absent from model prompts, embeddings and logs.",
+      "source_document": "14_Music_Discovery_and_Acquisition.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "SRC-07",
+      "requirement_or_scenario": "Consent is enabled but provider AI grant is denied/unknown.",
+      "acceptance": "Consent does not override the provider restriction.",
+      "source_document": "14_Music_Discovery_and_Acquisition.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "SRC-08",
+      "requirement_or_scenario": "Provider license, token or cache authorization expires.",
+      "acceptance": "Revalidate affected operations; preserve unrelated local media and user preparation.",
+      "source_document": "14_Music_Discovery_and_Acquisition.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "SRC-09",
+      "requirement_or_scenario": "Transfer is cancelled, interrupted or serves an HTML error.",
+      "acceptance": "No ready media artifact; clean recoverable staging and clear retry path.",
+      "source_document": "14_Music_Discovery_and_Acquisition.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "SRC-10",
+      "requirement_or_scenario": "Download finishes after deck reassignment.",
+      "acceptance": "Add readiness to the library; never replace the audible deck automatically.",
+      "source_document": "14_Music_Discovery_and_Acquisition.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "SRC-11",
+      "requirement_or_scenario": "Recording/broadcast is active and next source is ineligible.",
+      "acceptance": "Resolve before transition; do not silently capture restricted audio.",
+      "source_document": "14_Music_Discovery_and_Acquisition.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "SRC-12",
+      "requirement_or_scenario": "Retrieved text contains malicious instructions.",
+      "acceptance": "No secret disclosure, purchase, permission change or playback action.",
+      "source_document": "14_Music_Discovery_and_Acquisition.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AV-001",
+      "requirement_or_scenario": "Video follows compensated audio media time.",
+      "acceptance": "Measured flash/click fixtures across tempo, seek and loop; no accumulating drift.",
+      "source_document": "15_Advanced_Performance_Modules.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AV-002",
+      "requirement_or_scenario": "Video sources and generations remain distinct.",
+      "acceptance": "Rapid load/cancel/seek never displays frames from an obsolete assignment.",
+      "source_document": "15_Advanced_Performance_Modules.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AV-003",
+      "requirement_or_scenario": "Deck video modes and program transitions work.",
+      "acceptance": "Linked/unlinked transitions, audio-only fallback and unsupported stream tests.",
+      "source_document": "15_Advanced_Performance_Modules.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AV-004",
+      "requirement_or_scenario": "External program output is separate and recoverable.",
+      "acceptance": "Wired display attach/remove/reconnect; no private UI or cue leakage.",
+      "source_document": "15_Advanced_Performance_Modules.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AV-005",
+      "requirement_or_scenario": "Karaoke queue and timed presentation remain coherent.",
+      "acceptance": "Singer reorder, skip, pause, transpose, tempo and session restore fixtures.",
+      "source_document": "15_Advanced_Performance_Modules.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AV-006",
+      "requirement_or_scenario": "Mic, ducking and bus assignment are deliberate.",
+      "acceptance": "Physical input/monitor test; route loss, clipping and consent checks.",
+      "source_document": "15_Advanced_Performance_Modules.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AV-007",
+      "requirement_or_scenario": "Broadcast starts/stops only by authorized action.",
+      "acceptance": "Correct endpoint/bus preview; cancellation and unauthorized action rejected.",
+      "source_document": "15_Advanced_Performance_Modules.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AV-008",
+      "requirement_or_scenario": "Network/encoder failures cannot block local audio.",
+      "acceptance": "Loss, congestion, reconnect, wrong key and worker crash during warm playback.",
+      "source_document": "15_Advanced_Performance_Modules.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AV-009",
+      "requirement_or_scenario": "Broadcast/recording enforce source restrictions.",
+      "acceptance": "Ineligible next track resolved before transmission; partial output labelled.",
+      "source_document": "15_Advanced_Performance_Modules.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AV-010",
+      "requirement_or_scenario": "A real independently authored plugin is hosted.",
+      "acceptance": "Compatible effect/instrument corpus loads, processes, automates and recalls state.",
+      "source_document": "15_Advanced_Performance_Modules.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AV-011",
+      "requirement_or_scenario": "Plugin faults and latency are bounded.",
+      "acceptance": "Timeout/crash/state corruption/latency-change tests preserve unaffected audio.",
+      "source_document": "15_Advanced_Performance_Modules.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AV-012",
+      "requirement_or_scenario": "Plugin distribution and isolation claims are accurate.",
+      "acceptance": "Package provenance, license, store-policy and process-boundary review.",
+      "source_document": "15_Advanced_Performance_Modules.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AV-013",
+      "requirement_or_scenario": "Concurrent module promises match measured profiles.",
+      "acceptance": "Two-hour repeated warm runs and actual receiver/display observations.",
+      "source_document": "15_Advanced_Performance_Modules.md",
+      "status": "proposed",
+      "verification_evidence": null
+    },
+    {
+      "id": "AV-014",
+      "requirement_or_scenario": "Advanced work never enters the device callback.",
+      "acceptance": "Instrumented allocation/block/I/O/IPC checks and deadline traces.",
+      "source_document": "15_Advanced_Performance_Modules.md",
+      "status": "proposed",
+      "verification_evidence": null
+    }
+  ]
+}

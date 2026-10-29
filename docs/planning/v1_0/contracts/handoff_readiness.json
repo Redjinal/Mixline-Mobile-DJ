@@ -1,0 +1,485 @@
+{
+  "version": "1.0",
+  "date": "2026-10-29",
+  "artifact_kind": "planning_and_design_handoff_readiness_not_app_certification",
+  "readiness": {
+    "design": "ready",
+    "blocking_owner_questions": [],
+    "application_implementation": "not_started",
+    "device_qualification": "not_performed",
+    "source_adapter_verification": "not_performed",
+    "AI_integration": "not_implemented",
+    "AWS_deployment": "deferred_not_provisioned",
+    "source_publication": "optional_not_selected_or_executed"
+  },
+  "latest_owner_decision": {
+    "local_version_first": true,
+    "AWS_expansion_later": true,
+    "future_AWS_target_usd_per_month": 35,
+    "excludes_ParDay_AI_charges": true,
+    "is_hard_cap": false,
+    "deployment_authorized": false
+  },
+  "design_start": {
+    "document": "sources/19_Design_Start_and_Local_First_Handoff.md",
+    "supporting_documents": [
+      "sources/04_Art_Direction_and_Design_System.md",
+      "sources/03_Mobile_Workflows_and_Interactions.md",
+      "sources/08_Asset_Creation_and_Sourcing.md",
+      "sources/12_Council_Decisions_and_Questions.md",
+      "sources/02_Professional_Requirements.md",
+      "sources/10_Delivery_Roadmap_and_Agent_Playbook.md"
+    ],
+    "first_journey": [
+      "local_import",
+      "prepare",
+      "route_check",
+      "load_two_decks",
+      "transition",
+      "record_save",
+      "resume_and_recover"
+    ],
+    "temporary_app_label": "Mobile DJ",
+    "assistant_name": "ParDay",
+    "selected_visual": "C_Crystal_Current",
+    "first_device": "Samsung_Galaxy_S26_Ultra_user_report_no_actual_build_recorded",
+    "proposed_initial_input": "typed_and_touch",
+    "required_orientations": [
+      "portrait",
+      "landscape"
+    ],
+    "full_professional_scope_retained": true,
+    "required_AWS_or_home_lab": false
+  },
+  "phase_gates": {
+    "design": [
+      "scope_and_C_material_consistency",
+      "native_screen_and_state_map",
+      "requirement_traceability",
+      "honest_fixture_and_asset_status"
+    ],
+    "local_implementation": [
+      "named_device_audio_route_workload_evidence",
+      "native_D_acquisition_feasibility_and_actual_file_correctness",
+      "local_continuity_recovery_isolation",
+      "applicable_AI_source_specialist_cases"
+    ],
+    "complete_personal_product": [
+      "all_selected_modules_or_explicit_owner_scope_revision",
+      "actual_installed_package_upgrade_backup_and_recovery_evidence"
+    ],
+    "later_optional_AWS": [
+      "current_region_service_quote_and_resource_plan",
+      "bounded_costed_trial",
+      "D_and_AWS_source_paths",
+      "applicable_AWS_and_service_specific_HL_cases"
+    ],
+    "optional_publication": [
+      "selected_compatible_project_licence",
+      "dependency_and_asset_provenance",
+      "no_personal_music_or_secrets",
+      "owner_publication_instruction"
+    ]
+  },
+  "deferred_choices": [
+    {
+      "choice": "actual_phone_build_variant_and_output_accessory",
+      "needed_before": "physical_device_qualification"
+    },
+    {
+      "choice": "first_paid_AI_provider_model_and_separate_cost_limit",
+      "needed_before": "real_paid_model_calls"
+    },
+    {
+      "choice": "DSP_codec_plugin_and_stem_dependency_versions_licences",
+      "needed_before": "qualified_module_implementation"
+    },
+    {
+      "choice": "actual_source_adapter_and_allowed_operations",
+      "needed_before": "source_feature_acceptance"
+    },
+    {
+      "choice": "AWS_account_region_runtime_current_quote",
+      "needed_before": "later_cloud_expansion"
+    },
+    {
+      "choice": "project_licence_repo_name_publication_scope",
+      "needed_before": "optional_public_source_release"
+    },
+    {
+      "choice": "app_name_voice_broader_devices_genres_team_and_schedule",
+      "needed_before": "relevant_brand_or_delivery_commitment_not_initial_design"
+    }
+  ],
+  "decision_crosswalk": [
+    {
+      "id": "D-001",
+      "decision": "New product; no Mixline reuse",
+      "status": "Confirmed",
+      "revisit_trigger": "New explicit owner instruction",
+      "documents": [
+        "sources/01_Product_Vision_and_Product_Lens.md",
+        "sources/10_Delivery_Roadmap_and_Agent_Playbook.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-002",
+      "decision": "No external MIDI/HID DJ controllers",
+      "status": "Confirmed",
+      "revisit_trigger": "New explicit owner instruction; DVS interpretation still open",
+      "documents": [
+        "sources/02_Professional_Requirements.md",
+        "sources/06_Audio_Engine_and_DSP.md",
+        "sources/15_Advanced_Performance_Modules.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-003",
+      "decision": "Android first",
+      "status": "Confirmed",
+      "revisit_trigger": "New platform requirement",
+      "documents": [
+        "sources/01_Product_Vision_and_Product_Lens.md",
+        "sources/05_Tech_Stack_and_Architecture.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-004",
+      "decision": "Kotlin/Compose + portable C++/Oboe",
+      "status": "Proposed",
+      "revisit_trigger": "Team or G1 evidence",
+      "documents": [
+        "sources/05_Tech_Stack_and_Architecture.md",
+        "sources/06_Audio_Engine_and_DSP.md",
+        "sources/10_Delivery_Roadmap_and_Agent_Playbook.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-005",
+      "decision": "Two-deck default, four-deck capability",
+      "status": "Capability selected; default layout proposed",
+      "revisit_trigger": "Native workflow/device tests",
+      "documents": [
+        "sources/02_Professional_Requirements.md",
+        "sources/03_Mobile_Workflows_and_Interactions.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-006",
+      "decision": "Prepared and live stems",
+      "status": "Selected; live device/source/model-gated",
+      "revisit_trigger": "Quality/licence/thermal results",
+      "documents": [
+        "sources/02_Professional_Requirements.md",
+        "sources/06_Audio_Engine_and_DSP.md",
+        "sources/09_Quality_and_Device_Validation.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-007",
+      "decision": "Liquid glass + steampunk; C Crystal Current",
+      "status": "Confirmed selection",
+      "revisit_trigger": "Native usability/contrast/performance evidence or explicit owner change",
+      "documents": [
+        "sources/03_Mobile_Workflows_and_Interactions.md",
+        "sources/04_Art_Direction_and_Design_System.md",
+        "sources/08_Asset_Creation_and_Sourcing.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-008",
+      "decision": "USB interfaces and DJ splitters",
+      "status": "Confirmed",
+      "revisit_trigger": "Actual compatibility evidence",
+      "documents": [
+        "sources/02_Professional_Requirements.md",
+        "sources/06_Audio_Engine_and_DSP.md",
+        "sources/09_Quality_and_Device_Validation.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-009",
+      "decision": "Offline prepared local core; no required app/server account",
+      "status": "Local independence confirmed; detailed persistence architecture proposed",
+      "revisit_trigger": "A future optional integration must not make local performance account-dependent",
+      "documents": [
+        "sources/05_Tech_Stack_and_Architecture.md",
+        "sources/07_Library_Data_and_Music_Sources.md",
+        "sources/11_Release_Security_and_Commercial.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-010",
+      "decision": "Video, karaoke, broadcasting, plugin hosting",
+      "status": "Selected",
+      "revisit_trigger": "Feasibility blockers reported for owner decision",
+      "documents": [
+        "sources/02_Professional_Requirements.md",
+        "sources/09_Quality_and_Device_Validation.md",
+        "sources/15_Advanced_Performance_Modules.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-011",
+      "decision": "Lighting",
+      "status": "Excluded",
+      "revisit_trigger": "New explicit owner instruction",
+      "documents": [
+        "sources/02_Professional_Requirements.md",
+        "sources/15_Advanced_Performance_Modules.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-012",
+      "decision": "Planning now; implementation later",
+      "status": "Current task boundary",
+      "revisit_trigger": "Explicit build instruction",
+      "documents": [
+        "sources/10_Delivery_Roadmap_and_Agent_Playbook.md",
+        "sources/12_Council_Decisions_and_Questions.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-013",
+      "decision": "Serious DJs primary; casual streaming secondary",
+      "status": "Confirmed",
+      "revisit_trigger": "User research or owner revision",
+      "documents": [
+        "sources/01_Product_Vision_and_Product_Lens.md",
+        "sources/03_Mobile_Workflows_and_Interactions.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-014",
+      "decision": "Personal practice/private gatherings",
+      "status": "Confirmed initial context",
+      "revisit_trigger": "Public/paid usage requested",
+      "documents": [
+        "sources/01_Product_Vision_and_Product_Lens.md",
+        "sources/11_Release_Security_and_Commercial.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-015",
+      "decision": "Any/all sources desired",
+      "status": "Confirmed ambition; per-provider admission unresolved",
+      "revisit_trigger": "Permissions/availability/owner priorities",
+      "documents": [
+        "sources/07_Library_Data_and_Music_Sources.md",
+        "sources/14_Music_Discovery_and_Acquisition.md",
+        "sources/16_Link_Acquisition_Implementation_and_Feasibility.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-016",
+      "decision": "Open source preferred; paid DSP acceptable",
+      "status": "Confirmed preference",
+      "revisit_trigger": "Comparison and budget cap",
+      "documents": [
+        "sources/05_Tech_Stack_and_Architecture.md",
+        "sources/06_Audio_Engine_and_DSP.md",
+        "sources/17_Open_Source_and_Home_Lab_Guide.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-017",
+      "decision": "ParDay assistant name and AI exploration",
+      "status": "Confirmed",
+      "revisit_trigger": "Owner revision",
+      "documents": [
+        "sources/04_Art_Direction_and_Design_System.md",
+        "sources/13_ParDay_AI_Architecture_and_Requirements.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-018",
+      "decision": "ParDay preparation plus bounded armed assisted performance",
+      "status": "Confirmed capability; unarmed live read/propose remains",
+      "revisit_trigger": "Authority/takeover/usability evidence or explicit owner change",
+      "documents": [
+        "sources/03_Mobile_Workflows_and_Interactions.md",
+        "sources/06_Audio_Engine_and_DSP.md",
+        "sources/13_ParDay_AI_Architecture_and_Requirements.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-019",
+      "decision": "OpenAI/Anthropic replaceable API adapters",
+      "status": "Proposed",
+      "revisit_trigger": "Provider evaluation and cost/privacy choice",
+      "documents": [
+        "sources/05_Tech_Stack_and_Architecture.md",
+        "sources/13_ParDay_AI_Architecture_and_Requirements.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-020",
+      "decision": "In-app link-to-file acquisition, including unofficial candidates",
+      "status": "Capability requested; mechanism and four admission statuses unresolved",
+      "revisit_trigger": "Document 16 technical and access/content/distribution evidence",
+      "documents": [
+        "sources/07_Library_Data_and_Music_Sources.md",
+        "sources/14_Music_Discovery_and_Acquisition.md",
+        "sources/16_Link_Acquisition_Implementation_and_Feasibility.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-021",
+      "decision": "Galaxy S26 Ultra first test device",
+      "status": "Confirmed; up-to-date software is user report",
+      "revisit_trigger": "Capture actual variant/build/route and measured workload results",
+      "documents": [
+        "sources/05_Tech_Stack_and_Architecture.md",
+        "sources/09_Quality_and_Device_Validation.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-022",
+      "decision": "Personal tool only",
+      "status": "Confirmed",
+      "revisit_trigger": "Explicit change of product objective",
+      "documents": [
+        "sources/01_Product_Vision_and_Product_Lens.md",
+        "sources/10_Delivery_Roadmap_and_Agent_Playbook.md",
+        "sources/11_Release_Security_and_Commercial.md",
+        "sources/17_Open_Source_and_Home_Lab_Guide.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-023",
+      "decision": "Possible open-source GitHub publication for community home labs",
+      "status": "Optional future direction; licence and publication not selected/executed",
+      "revisit_trigger": "Owner publication/licence decision and reproducibility/rights review",
+      "documents": [
+        "sources/11_Release_Security_and_Commercial.md",
+        "sources/17_Open_Source_and_Home_Lab_Guide.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-024",
+      "decision": "Comparative acquisition evaluation",
+      "status": "Retained for future expansion; D first under D-026; comparative winner unmeasured",
+      "revisit_trigger": "Later Document 16 comparison results; do not gate local release on AWS",
+      "documents": [
+        "sources/09_Quality_and_Device_Validation.md",
+        "sources/16_Link_Acquisition_Implementation_and_Feasibility.md",
+        "sources/18_AWS_Deployment_and_Comparison_Plan.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-025",
+      "decision": "No local host selected; AWS accepted for later optional extension",
+      "status": "Confirmed future direction; account/region/resources unset and deployment unexecuted",
+      "revisit_trigger": "Owner commissions expansion; Document 18 feasibility and cost proposal",
+      "documents": [
+        "sources/17_Open_Source_and_Home_Lab_Guide.md",
+        "sources/18_AWS_Deployment_and_Comparison_Plan.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-026",
+      "decision": "Local version first, phone-native Android with no required server",
+      "status": "Confirmed delivery order; D acquisition is first implementation/evaluation path",
+      "revisit_trigger": "Explicit owner change or a concrete capability blocker requiring a decision",
+      "documents": [
+        "sources/01_Product_Vision_and_Product_Lens.md",
+        "sources/05_Tech_Stack_and_Architecture.md",
+        "sources/09_Quality_and_Device_Validation.md",
+        "sources/10_Delivery_Roadmap_and_Agent_Playbook.md",
+        "sources/12_Council_Decisions_and_Questions.md",
+        "sources/16_Link_Acquisition_Implementation_and_Feasibility.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    },
+    {
+      "id": "D-027",
+      "decision": "Future AWS planning target about US$35/month, excluding ParDay AI charges",
+      "status": "Confirmed target; not a hard billing cap or spending/deployment authorization",
+      "revisit_trigger": "Current regional quote and measured workload before optional expansion",
+      "documents": [
+        "sources/11_Release_Security_and_Commercial.md",
+        "sources/12_Council_Decisions_and_Questions.md",
+        "sources/18_AWS_Deployment_and_Comparison_Plan.md",
+        "sources/19_Design_Start_and_Local_First_Handoff.md"
+      ],
+      "consistency_review": "reviewed_for_v1_0",
+      "implementation_evidence": null
+    }
+  ],
+  "asset_status": {
+    "asset_classes": 30,
+    "generated_concepts": 2,
+    "selected_concept": "C",
+    "concepts_are_production_UI": false,
+    "other_assets": "Proposed work orders unless the asset register explicitly records acquisition or creation evidence."
+  },
+  "contract_version_policy": "Pack version1.0 does not force a semantic version bump of unchanged engine, ParDay, acquisition job/state or token contracts.",
+  "review_scope": "Every numbered specification and its relevant contracts reviewed; independent crosschecks reconciled local-first sequence, budget, gates, full scope and claims of evidence.",
+  "validation_report": "document_validation.json"
+}

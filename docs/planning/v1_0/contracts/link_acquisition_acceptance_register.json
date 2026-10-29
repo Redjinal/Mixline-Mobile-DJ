@@ -1,0 +1,179 @@
+{
+  "version": "0.3",
+  "status": "planning_acceptance_proposed",
+  "parent_requirement": "FR-049",
+  "shared_quality_gates": [
+    "QA-02",
+    "QA-04",
+    "QA-07",
+    "QA-10",
+    "QA-15",
+    "QA-17",
+    "QA-18",
+    "QA-19",
+    "QA-20",
+    "QA-21"
+  ],
+  "cases": [
+    {
+      "id": "DLA-01",
+      "scenario": "Shared URL contains redirects, credentials, alternate host syntax or an unsupported source",
+      "acceptance": "Canonicalize safely; reject unsafe targets; select only an enabled adapter; no arbitrary backend fetch.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-02",
+      "scenario": "Spotify reference yields a probable YouTube recording with a different edit/duration",
+      "acceptance": "Show both identities and ambiguity; require recording choice; do not inherit old sample cues or label it a Spotify master.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-03",
+      "scenario": "Enabled extractor receives an eligible, known fixture",
+      "acceptance": "Complete resolve, format selection, transfer, validation and library publication; actual bytes/source match expected evidence.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-04",
+      "scenario": "Named website has a working form but no verified integration contract",
+      "acceptance": "Mark vendor integration unverified; do not advertise an embedded API or silently scrape the form as a production dependency.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-05",
+      "scenario": "Lossy source is converted to high-bitrate MP3, WAV or FLAC",
+      "acceptance": "Preserve original and processing history; show output format without claiming recovered fidelity or lossless source.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-06",
+      "scenario": "Server returns HTML, executable bytes, corrupt/truncated media or excessive size",
+      "acceptance": "Fail safely before playable publication; maintain bounded resource use and actionable diagnostics.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-07",
+      "scenario": "Transfer resumes after URL expiry or changed object",
+      "acceptance": "Re-resolve and validate identity/range; resume only the same object; otherwise restart or report change.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-08",
+      "scenario": "Cancellation races transfer, conversion or publication",
+      "acceptance": "Old revision cannot publish after cancellation wins; completed publication reports already completed; unrelated playback continues.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-09",
+      "scenario": "Process exits between file placement and database commit",
+      "acceptance": "Recovery reconciles the manifest once; no false-ready record, duplicate asset or deletion of referenced media.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-10",
+      "scenario": "Duplicate request or retry arrives",
+      "acceptance": "Same immutable request reuses the job; changed payload with reused key is rejected; one worker owns each revision.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-11",
+      "scenario": "Selected playlist contains duplicates, unavailable items and reordered completion",
+      "acceptance": "Preserve selected order and intentional duplicates; report per-item outcomes and partial completion honestly.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-12",
+      "scenario": "Acquisition and conversion compete with the selected live workload",
+      "acceptance": "Meet the relevant audio/thermal gate or defer acquisition work; no network/file/model work in the callback.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-13",
+      "scenario": "Adapter receives rate limit, login requirement, access denial or repeated failure",
+      "acceptance": "Use bounded retry/backoff or specific blocked state; no credential harvesting, control bypass or infinite retry.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-14",
+      "scenario": "Malicious URL, filename, metadata or media parser input reaches a worker",
+      "acceptance": "No shell/path injection, private-network fetch, secret access or unbounded decode; failures stay isolated.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-15",
+      "scenario": "Technical success conflicts with service, content-use or distribution evidence",
+      "acceptance": "Preserve independent statuses and specific reason; never present technical success as an authorization decision.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-16",
+      "scenario": "Extractor update breaks formats or matches",
+      "acceptance": "Pin and canary the update, disable/rollback the affected adapter, preserve downloaded library and live engine.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-17",
+      "scenario": "ParDay receives restricted metadata or sensitive delivery URL",
+      "acceptance": "Exclude restricted fields/secrets from prompts, embeddings and logs; permitted job state remains useful.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-18",
+      "scenario": "Download finishes after the user changes decks or takes manual control",
+      "acceptance": "Publish to library only; any subsequent load/armed plan needs current state and its own authority.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-19",
+      "scenario": "User cancels in-app versus presses Android Task Manager Stop",
+      "acceptance": "In-app cancellation targets acquisition; OS app termination is reported as interruption and recovery is tested without promising continuous audio.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "DLA-20",
+      "scenario": "S26 Ultra is tested across software build, storage/network and audio routes",
+      "acceptance": "Record exact profile and outcomes; no universal device/source certification from a model name alone.",
+      "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    }
+  ]
+}

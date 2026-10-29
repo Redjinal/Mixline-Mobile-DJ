@@ -1,0 +1,187 @@
+{
+  "version": "0.3",
+  "status": "direction_C_selected_token_values_and_native_render_unvalidated",
+  "units": {
+    "spacing": "dp",
+    "type": "sp"
+  },
+  "colors": {
+    "stage": "#DCE6EA",
+    "control_surface": "#F1F5F6",
+    "raised_surface": "#FFFFFF",
+    "text_primary": "#15252E",
+    "text_secondary": "#455C68",
+    "titanium": "#98A9B1",
+    "brass": "#8B6B39",
+    "deck_a_foreground": "#00697A",
+    "deck_b_foreground": "#A53E18",
+    "deck_c_foreground": "#6541A5",
+    "deck_d_foreground": "#246A45",
+    "deck_a_accent": "#53D7E8",
+    "deck_b_accent": "#FF955A",
+    "deck_c_accent": "#B6A0FF",
+    "deck_d_accent": "#82DEAB",
+    "warning": "#805600",
+    "critical": "#A01939"
+  },
+  "spacing": [
+    4,
+    8,
+    12,
+    16,
+    24
+  ],
+  "touch": {
+    "minimum_dp": 48,
+    "frequent_control_target_dp": 56
+  },
+  "typography": {
+    "ui_candidate": "Barlow",
+    "numeric_candidate": "IBM Plex Mono",
+    "fallback": "system sans with tabular numerals",
+    "sizes_sp": [
+      12,
+      14,
+      16,
+      20,
+      28
+    ],
+    "acquired": false
+  },
+  "motion_ms": {
+    "state": [
+      90,
+      160
+    ],
+    "workspace": [
+      140,
+      220
+    ]
+  },
+  "visual_tiers": [
+    "Essential",
+    "Balanced",
+    "Enhanced"
+  ],
+  "asset_budget_proposal": {
+    "visual_mib": 8,
+    "fonts_mib": [
+      1,
+      2
+    ]
+  },
+  "source_document": "04_Art_Direction_and_Design_System.md",
+  "selected_direction": "C",
+  "comparison_status": "A_and_C_concepts_reviewed_C_selected",
+  "confirmed_platform": "Android_first",
+  "confirmed_style": "liquid_glass_meets_steampunk",
+  "assistant_name": "ParDay",
+  "product_name": null,
+  "colors_role": "selected_C_proposed_role_values_native_contrast_unverified",
+  "directions": {
+    "A": {
+      "name": "Precision Atelier",
+      "status": "historical_comparison_not_selected",
+      "materials": [
+        "graphite",
+        "smoked liquid glass",
+        "champagne brass"
+      ],
+      "colors": {
+        "stage": "#0C1015",
+        "control_surface": "#171D26",
+        "raised_surface": "#222B36",
+        "text_primary": "#F3F5F6",
+        "text_secondary": "#BAC2CC",
+        "brass": "#B9955D",
+        "deck_a": "#53D7E8",
+        "deck_b": "#FF955A",
+        "deck_c": "#B6A0FF",
+        "deck_d": "#82DEAB",
+        "warning": "#FFD75E",
+        "critical": "#FF667A"
+      }
+    },
+    "C": {
+      "name": "Crystal Current",
+      "status": "selected_direction_values_proposed",
+      "materials": [
+        "pale frosted mineral glass",
+        "brushed titanium",
+        "restrained champagne brass"
+      ],
+      "colors": {
+        "stage": "#DCE6EA",
+        "control_surface": "#F1F5F6",
+        "raised_surface": "#FFFFFF",
+        "text_primary": "#15252E",
+        "text_secondary": "#455C68",
+        "titanium": "#98A9B1",
+        "brass": "#8B6B39",
+        "deck_a_foreground": "#00697A",
+        "deck_b_foreground": "#A53E18",
+        "deck_c_foreground": "#6541A5",
+        "deck_d_foreground": "#246A45",
+        "deck_a_accent": "#53D7E8",
+        "deck_b_accent": "#FF955A",
+        "deck_c_accent": "#B6A0FF",
+        "deck_d_accent": "#82DEAB",
+        "warning": "#805600",
+        "critical": "#A01939"
+      }
+    }
+  },
+  "assistant_ui": {
+    "identity": "ParDay",
+    "performance_presentation": "compact_labelled_access_button",
+    "performance_voice_reply_default": "off",
+    "states": [
+      "ready",
+      "local_only",
+      "thinking",
+      "proposal_ready",
+      "needs_review",
+      "applied",
+      "rejected",
+      "unavailable"
+    ],
+    "audible_actions_default": "read_and_propose_until_specific_bounded_plan_armed",
+    "status_truth": "saved_result_or_engine_acknowledgement",
+    "overlap_critical_controls": false,
+    "selected_capability": "preparation_plus_explicitly_armed_assisted_performance"
+  },
+  "render_comparison": {
+    "directions": [
+      "A",
+      "C"
+    ],
+    "layout": "same_landscape_two_deck_performance_geometry",
+    "fixture_tracks": [
+      {
+        "title": "AURORA DRIVE",
+        "deck": "A",
+        "bpm": 124.0,
+        "key": "8A"
+      },
+      {
+        "title": "COPPER SKY",
+        "deck": "B",
+        "bpm": 124.0,
+        "key": "8A"
+      }
+    ],
+    "visible_hot_cues_per_deck": 4,
+    "total_hot_cues_per_track_proposed": 8,
+    "render_is_production_screen": false,
+    "native_visual_validation": "not_verified",
+    "contrast_validation": "not_verified",
+    "generated_layout_match": "approximate_only_control_placement_differs",
+    "concept_visual_review": "completed_materials_only_native_layout_unverified"
+  },
+  "first_test_device": {
+    "model": "Samsung Galaxy S26 Ultra",
+    "software_currency": "up_to_date_user_report",
+    "actual_build": null,
+    "native_validation": "not_performed"
+  }
+}

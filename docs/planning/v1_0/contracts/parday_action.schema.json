@@ -1,0 +1,599 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:parday:proposal:0.2-draft",
+  "title": "ParDay bounded action proposal \u2014 planning contract",
+  "description": "Application-side proposal validation, not an execution authorization or native engine ABI. Provider adapters must translate and verify their supported schema subset. The trusted application supplies immutable IDs/revisions and separately records user acceptance. A model cannot grant permission by writing this object. No JSON parsing occurs in the audio callback.",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "proposalId",
+    "userIntentId",
+    "createdAt",
+    "expiresAt",
+    "stateBasis",
+    "rationale",
+    "assumptions",
+    "dataProvenanceIds",
+    "actions",
+    "commitPolicy"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "0.2-draft"
+    },
+    "proposalId": {
+      "$ref": "#/$defs/id"
+    },
+    "userIntentId": {
+      "$ref": "#/$defs/id"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "stateBasis": {
+      "$ref": "#/$defs/stateBasis"
+    },
+    "rationale": {
+      "type": "string",
+      "maxLength": 2400
+    },
+    "assumptions": {
+      "type": "array",
+      "maxItems": 12,
+      "items": {
+        "type": "string",
+        "maxLength": 400
+      }
+    },
+    "dataProvenanceIds": {
+      "type": "array",
+      "maxItems": 128,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/id"
+      }
+    },
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/createCrate"
+          },
+          {
+            "$ref": "#/$defs/preparationEdit"
+          },
+          {
+            "$ref": "#/$defs/loadInactiveDeck"
+          },
+          {
+            "$ref": "#/$defs/armTransition"
+          },
+          {
+            "$ref": "#/$defs/prepareStems"
+          }
+        ]
+      }
+    },
+    "commitPolicy": {
+      "enum": [
+        "ATOMIC_PREPARATION_EDITS",
+        "SINGLE_PREPARATION_JOB",
+        "SINGLE_PERFORMANCE_ACTION"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "uint64": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]{0,19})$",
+      "description": "Decimal representation; application additionally enforces uint64 maximum, monotonicity and current-state equality."
+    },
+    "deckId": {
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    "deckBasis": {
+      "type": "object",
+      "required": [
+        "deckId",
+        "deckGeneration",
+        "controlRevision",
+        "trackId",
+        "mediaRevision",
+        "analysisRevision",
+        "preparationRevision"
+      ],
+      "properties": {
+        "deckId": {
+          "$ref": "#/$defs/deckId"
+        },
+        "controlRevision": {
+          "$ref": "#/$defs/uint64"
+        },
+        "mediaRevision": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "analysisRevision": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "deckGeneration": {
+          "$ref": "#/$defs/uint64"
+        },
+        "trackId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preparationRevision": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/uint64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "stateBasis": {
+      "type": "object",
+      "required": [
+        "sessionId",
+        "libraryRevision",
+        "streamEpoch",
+        "capabilityRevision",
+        "decks",
+        "masterControlRevision"
+      ],
+      "properties": {
+        "sessionId": {
+          "$ref": "#/$defs/id"
+        },
+        "libraryRevision": {
+          "$ref": "#/$defs/uint64"
+        },
+        "streamEpoch": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/uint64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "capabilityRevision": {
+          "$ref": "#/$defs/id"
+        },
+        "decks": {
+          "type": "array",
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/deckBasis"
+          }
+        },
+        "masterControlRevision": {
+          "$ref": "#/$defs/uint64"
+        }
+      },
+      "additionalProperties": false
+    },
+    "trackRef": {
+      "type": "object",
+      "required": [
+        "trackId",
+        "mediaRevision",
+        "analysisRevision",
+        "preparationRevision"
+      ],
+      "properties": {
+        "trackId": {
+          "$ref": "#/$defs/id"
+        },
+        "mediaRevision": {
+          "$ref": "#/$defs/id"
+        },
+        "analysisRevision": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preparationRevision": {
+          "$ref": "#/$defs/uint64"
+        }
+      },
+      "additionalProperties": false
+    },
+    "createCrate": {
+      "type": "object",
+      "required": [
+        "actionId",
+        "kind",
+        "title",
+        "tracks"
+      ],
+      "properties": {
+        "actionId": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "const": "CREATE_CRATE"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "tracks": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 250,
+          "items": {
+            "$ref": "#/$defs/trackRef"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "cueEdit": {
+      "type": "object",
+      "required": [
+        "slot",
+        "sourceFrame",
+        "label"
+      ],
+      "properties": {
+        "slot": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "sourceFrame": {
+          "$ref": "#/$defs/uint64"
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 48
+        }
+      },
+      "additionalProperties": false
+    },
+    "preparationEdit": {
+      "type": "object",
+      "required": [
+        "actionId",
+        "kind",
+        "track",
+        "cues",
+        "respectManualLocks"
+      ],
+      "properties": {
+        "actionId": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "const": "SAVE_CUE_PROPOSAL"
+        },
+        "track": {
+          "$ref": "#/$defs/trackRef"
+        },
+        "cues": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/$defs/cueEdit"
+          }
+        },
+        "respectManualLocks": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "loadInactiveDeck": {
+      "type": "object",
+      "required": [
+        "actionId",
+        "kind",
+        "track",
+        "deckId",
+        "autoplay"
+      ],
+      "properties": {
+        "actionId": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "const": "LOAD_INACTIVE_DECK"
+        },
+        "track": {
+          "$ref": "#/$defs/trackRef"
+        },
+        "deckId": {
+          "$ref": "#/$defs/deckId"
+        },
+        "autoplay": {
+          "const": false
+        }
+      },
+      "additionalProperties": false,
+      "description": "Requires a complete current binding for the target deck and a non-null stream epoch. Inactive excludes audible tails and pending transport/automation that could make replacement unsafe. The gateway and engine recheck at commit; no autoplay is permitted."
+    },
+    "armTransition": {
+      "type": "object",
+      "required": [
+        "actionId",
+        "kind",
+        "validatedPlanId",
+        "planRevision",
+        "outgoingDeck",
+        "incomingDeck",
+        "durationBars",
+        "maximumGainDb",
+        "manualTakeoverCancels"
+      ],
+      "properties": {
+        "actionId": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "const": "ARM_TRANSITION"
+        },
+        "validatedPlanId": {
+          "$ref": "#/$defs/id"
+        },
+        "planRevision": {
+          "$ref": "#/$defs/uint64"
+        },
+        "outgoingDeck": {
+          "$ref": "#/$defs/deckId"
+        },
+        "incomingDeck": {
+          "$ref": "#/$defs/deckId"
+        },
+        "durationBars": {
+          "enum": [
+            4,
+            8,
+            16,
+            32
+          ]
+        },
+        "maximumGainDb": {
+          "type": "number",
+          "minimum": -60,
+          "maximum": 0
+        },
+        "manualTakeoverCancels": {
+          "const": true
+        }
+      },
+      "additionalProperties": false,
+      "description": "The named immutable plan must exist in trusted local storage and bind exact tracks/media, analysis/grid and preparation revisions, exit/intro markers, allowed parameter envelope, timing/deadline, gain interpretation, expiry and cancellation. Action duration/gain must equal the accepted plan. Distinct decks and complete current state bindings are mandatory. No model-authored ID establishes validity or authority. The trusted planner converts an accepted plan to one atomic native batch; the engine alone issues execution identity/revision. No trusted automation token is present in this proposal schema."
+    },
+    "prepareStems": {
+      "type": "object",
+      "required": [
+        "actionId",
+        "kind",
+        "tracks",
+        "profileId"
+      ],
+      "properties": {
+        "actionId": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "const": "PREPARE_STEMS"
+        },
+        "tracks": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/trackRef"
+          }
+        },
+        "profileId": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Queues an eligible preparation job only after explicit task authority, capability, storage and resource checks. Does not enable live separation or alter active audible stems."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "actions": {
+            "contains": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "LOAD_INACTIVE_DECK",
+                    "ARM_TRANSITION"
+                  ]
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            }
+          }
+        },
+        "required": [
+          "actions"
+        ]
+      },
+      "then": {
+        "properties": {
+          "commitPolicy": {
+            "const": "SINGLE_PERFORMANCE_ACTION"
+          },
+          "actions": {
+            "maxItems": 1
+          },
+          "stateBasis": {
+            "properties": {
+              "streamEpoch": {
+                "$ref": "#/$defs/uint64"
+              },
+              "decks": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "actions": {
+            "contains": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "ARM_TRANSITION"
+                  ]
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            }
+          }
+        },
+        "required": [
+          "actions"
+        ]
+      },
+      "then": {
+        "properties": {
+          "stateBasis": {
+            "properties": {
+              "decks": {
+                "minItems": 2
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "actions": {
+            "contains": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "PREPARE_STEMS"
+                  ]
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            }
+          }
+        },
+        "required": [
+          "actions"
+        ]
+      },
+      "then": {
+        "properties": {
+          "commitPolicy": {
+            "const": "SINGLE_PREPARATION_JOB"
+          },
+          "actions": {
+            "maxItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "actions": {
+            "items": {
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "CREATE_CRATE",
+                    "SAVE_CUE_PROPOSAL"
+                  ]
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            }
+          }
+        },
+        "required": [
+          "actions"
+        ]
+      },
+      "then": {
+        "properties": {
+          "commitPolicy": {
+            "const": "ATOMIC_PREPARATION_EDITS"
+          }
+        }
+      }
+    }
+  ],
+  "$comment": "Mandatory application validation beyond structural JSON Schema: the trusted application creates and binds immutable proposal IDs/timestamps/state; verify all cited local records rather than trusting model-authored IDs. Parse dates, enforce expiresAt > createdAt and current trusted time before commit; format alone is insufficient. Enforce uint64 bounds. Action IDs and deck IDs are unique in their respective arrays; cue slots are unique per track. Exactly one current basis record must exist for each affected deck; incoming/outgoing differ; masterControlRevision covers crossfader/master controls. Every provenance ID must resolve, preserve field lineage and permit each intended destination/purpose. Bind the complete trusted proposal/plan digest to user acceptance; edited payloads cannot reuse it. SAVE_CUE_PROPOSAL never changes locked cues or writes to source media. Atomic preparation edit batches either commit all local metadata or none. A stem-preparation proposal enqueues one job atomically; its per-track progress/failure is reported separately and never claimed atomically completed. A performance proposal contains one bounded action; dependent load-then-arm waits for load acknowledgement and obtains a fresh state-bound proposal. No partial batch may be presented as all applied. Admission retry reuses the same immutable identity; changing payload requires a new proposal and authorization. Numerical limits are proposed, not measured capacities."
+}

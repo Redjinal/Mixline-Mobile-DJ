@@ -1,0 +1,1100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mobile-dj/contracts/acquisition-job/0.3",
+  "title": "Mobile DJ Acquisition Job Snapshot v0.3",
+  "description": "Planning contract for one app-owned network-acquisition child job. Collection parents and handoff/local imports use separate records. Not a runnable downloader or provider tool schema. Trusted application code owns authority and leases.",
+  "$comment": "State transitions, canonical URL checks, evidence validity, lease ownership, cancellation races, source matching, filesystem/database reconciliation and at-most-once publication are normative application checks in Document 16 and acquisition_state_machine.json. JSON validation alone does not establish them.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "0.3"
+    },
+    "jobId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "parentJobId": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "intentRef": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "idempotencyKey": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "requestDigest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "requestRevision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "cancellationRevision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "state": {
+      "enum": [
+        "CREATED",
+        "RESOLVING",
+        "AWAITING_SELECTION",
+        "READY",
+        "QUEUED",
+        "TRANSFERRING",
+        "VERIFYING",
+        "SOURCE_VALIDATING",
+        "CONVERTING",
+        "PUBLISHING",
+        "COMPLETED",
+        "PAUSED",
+        "RETRY_WAIT",
+        "CANCEL_REQUESTED",
+        "CANCELLED",
+        "FAILED",
+        "BLOCKED"
+      ]
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "provider": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "canonicalReference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "description": "Canonical public URL or stable provider ID; no user-info, private bearer query, account cookie or secret."
+        },
+        "inputKind": {
+          "enum": [
+            "catalog_link",
+            "media_link",
+            "direct_file"
+          ]
+        }
+      },
+      "required": [
+        "provider",
+        "canonicalReference",
+        "inputKind"
+      ]
+    },
+    "adapter": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "adapterId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+            },
+            "adapterVersion": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "method": {
+              "enum": [
+                "direct_file",
+                "vendor_conversion_api",
+                "maintained_extractor"
+              ]
+            },
+            "executionLocation": {
+              "enum": [
+                "device",
+                "controlled_backend",
+                "vendor"
+              ]
+            }
+          },
+          "required": [
+            "adapterId",
+            "adapterVersion",
+            "method",
+            "executionLocation"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "technical": {
+          "enum": [
+            "not_tested",
+            "working_for_fixture",
+            "working_for_profile",
+            "broken",
+            "unsupported"
+          ]
+        },
+        "serviceAccess": {
+          "enum": [
+            "established",
+            "unresolved",
+            "restricted"
+          ]
+        },
+        "contentUse": {
+          "enum": [
+            "user_managed",
+            "documented_basis",
+            "unresolved",
+            "restricted"
+          ]
+        },
+        "distribution": {
+          "enum": [
+            "not_reviewed",
+            "private_evaluation",
+            "eligible_for_selected_channel",
+            "restricted"
+          ]
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 32,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+          }
+        }
+      },
+      "required": [
+        "technical",
+        "serviceAccess",
+        "contentUse",
+        "distribution",
+        "evidenceRefs"
+      ]
+    },
+    "admission": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "policyRevision": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+            },
+            "decision": {
+              "enum": [
+                "allow_acquisition",
+                "block_acquisition",
+                "review_required"
+              ]
+            },
+            "reasonCode": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "contextRef": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+            },
+            "checkedAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "policyRevision",
+            "decision",
+            "reasonCode",
+            "contextRef",
+            "checkedAt"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "selection": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "candidateId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+            },
+            "candidateRevision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "requestedCatalogIdentity": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/mediaIdentity"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "actualMediaSource": {
+              "$ref": "#/$defs/mediaIdentity"
+            },
+            "matchState": {
+              "enum": [
+                "exact_media",
+                "probable_recording",
+                "ambiguous",
+                "direct_source"
+              ]
+            },
+            "selectionConfirmedByIntent": {
+              "type": "boolean"
+            },
+            "sourceFormat": {
+              "$ref": "#/$defs/format"
+            },
+            "output": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "mode": {
+                  "enum": [
+                    "preserve_source",
+                    "remux",
+                    "transcode"
+                  ]
+                },
+                "format": {
+                  "$ref": "#/$defs/format"
+                },
+                "encoderBuildRef": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "mode",
+                "format",
+                "encoderBuildRef"
+              ]
+            }
+          },
+          "required": [
+            "candidateId",
+            "candidateRevision",
+            "requestedCatalogIdentity",
+            "actualMediaSource",
+            "matchState",
+            "selectionConfirmedByIntent",
+            "sourceFormat",
+            "output"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "transfer": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mode": {
+              "enum": [
+                "device_direct",
+                "controlled_relay",
+                "server_artifact"
+              ]
+            },
+            "leaseRef": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+            },
+            "leaseExpiresAt": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "sessionOrNetworkBinding": {
+              "enum": [
+                "none_verified",
+                "session_bound",
+                "network_bound",
+                "unknown"
+              ]
+            },
+            "objectIdentityRef": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+            },
+            "bytesHeld": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "expectedBytes": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "validatorRef": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "workerLeaseRef": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "retryCount": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "maxAttempts": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            }
+          },
+          "required": [
+            "mode",
+            "leaseRef",
+            "leaseExpiresAt",
+            "sessionOrNetworkBinding",
+            "objectIdentityRef",
+            "bytesHeld",
+            "expectedBytes",
+            "validatorRef",
+            "workerLeaseRef",
+            "retryCount",
+            "maxAttempts"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxBytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxDurationMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxWallTimeSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxRedirects": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "networkPolicy": {
+          "enum": [
+            "wifi_only",
+            "metered_allowed",
+            "ask_on_metered"
+          ]
+        },
+        "destinationRef": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+        }
+      },
+      "required": [
+        "maxBytes",
+        "maxDurationMs",
+        "maxWallTimeSeconds",
+        "maxRedirects",
+        "networkPolicy",
+        "destinationRef"
+      ]
+    },
+    "validation": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "result": {
+              "enum": [
+                "pending",
+                "passed",
+                "failed"
+              ]
+            },
+            "manifestRef": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+            },
+            "validatorBuildRef": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+            },
+            "actualBytes": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "contentSha256": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "actualFormat": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/format"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "durationFrames": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]{0,19}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "processingHistoryRefs": {
+              "type": "array",
+              "maxItems": 64,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+              }
+            },
+            "renditionRole": {
+              "const": "final_rendition"
+            }
+          },
+          "required": [
+            "result",
+            "manifestRef",
+            "validatorBuildRef",
+            "actualBytes",
+            "contentSha256",
+            "actualFormat",
+            "durationFrames",
+            "processingHistoryRefs",
+            "renditionRole"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "publication": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mediaAssetId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+            },
+            "mediaRevision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "contentSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "managedObjectRef": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+            },
+            "commitJournalRef": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+            },
+            "committedRequestRevision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "committedCancellationRevision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "committedAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "mediaAssetId",
+            "mediaRevision",
+            "contentSha256",
+            "managedObjectRef",
+            "commitJournalRef",
+            "committedRequestRevision",
+            "committedCancellationRevision",
+            "committedAt"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "failure": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "retryable": {
+              "type": "boolean"
+            },
+            "safeMessage": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "diagnosticRef": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "code",
+            "retryable",
+            "safeMessage",
+            "diagnosticRef"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sourceValidationRef": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "jobId",
+    "parentJobId",
+    "intentRef",
+    "idempotencyKey",
+    "requestDigest",
+    "requestRevision",
+    "cancellationRevision",
+    "createdAt",
+    "updatedAt",
+    "state",
+    "input",
+    "adapter",
+    "evidence",
+    "admission",
+    "selection",
+    "transfer",
+    "limits",
+    "validation",
+    "publication",
+    "failure",
+    "sourceValidationRef"
+  ],
+  "$defs": {
+    "mediaIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "provider": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "providerMediaId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "editionLabel": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "durationMs": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "provenanceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+          }
+        }
+      },
+      "required": [
+        "provider",
+        "providerMediaId",
+        "editionLabel",
+        "durationMs",
+        "provenanceRefs"
+      ]
+    },
+    "format": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "formatId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+        },
+        "container": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "codec": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "sampleRateHz": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "channels": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 64
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bitrateBps": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bitrateEvidence": {
+          "enum": [
+            "measured",
+            "provider_reported",
+            "variable",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "formatId",
+        "container",
+        "codec",
+        "sampleRateHz",
+        "channels",
+        "bitrateBps",
+        "bitrateEvidence"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "enum": [
+              "READY",
+              "QUEUED",
+              "TRANSFERRING",
+              "VERIFYING",
+              "SOURCE_VALIDATING",
+              "CONVERTING",
+              "PUBLISHING",
+              "COMPLETED"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "adapter": {
+            "type": "object"
+          },
+          "admission": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "const": "allow_acquisition"
+              }
+            }
+          },
+          "selection": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "enum": [
+              "TRANSFERRING",
+              "VERIFYING",
+              "SOURCE_VALIDATING",
+              "CONVERTING",
+              "PUBLISHING",
+              "COMPLETED"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "transfer": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "COMPLETED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "publication": {
+            "type": "object"
+          },
+          "validation": {
+            "type": "object",
+            "properties": {
+              "result": {
+                "const": "passed"
+              },
+              "actualBytes": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "contentSha256": {
+                "type": "string"
+              },
+              "actualFormat": {
+                "type": "object"
+              },
+              "durationFrames": {
+                "type": "string"
+              }
+            }
+          },
+          "failure": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "enum": [
+              "CANCELLED",
+              "FAILED",
+              "BLOCKED"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "publication": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "enum": [
+              "FAILED",
+              "BLOCKED"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "failure": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "PUBLISHING"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "validation": {
+            "type": "object",
+            "properties": {
+              "result": {
+                "const": "passed"
+              },
+              "actualBytes": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "contentSha256": {
+                "type": "string"
+              },
+              "actualFormat": {
+                "type": "object"
+              },
+              "durationFrames": {
+                "type": "string"
+              },
+              "renditionRole": {
+                "const": "final_rendition"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "not": {
+              "const": "COMPLETED"
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "publication": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "CONVERTING"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sourceValidationRef": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  ]
+}

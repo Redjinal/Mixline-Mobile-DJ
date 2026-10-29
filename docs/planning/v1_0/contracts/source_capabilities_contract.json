@@ -1,0 +1,157 @@
+{
+  "version": "1.0",
+  "status": "final_planning_semantic_contract_not_implemented",
+  "permission_states": [
+    "allowed",
+    "denied",
+    "unknown"
+  ],
+  "rights_contexts": [
+    "provider_controlled",
+    "user_managed_local"
+  ],
+  "provider_unknown_policy": "Deny affected provider-controlled operation until grant established.",
+  "local_policy": "Do not require ownership proof uploads. Expose technically supported local operations; retain known restrictions and user-managed rights responsibility.",
+  "context_keys": [
+    "sourceId",
+    "mediaRevision",
+    "providerAccountId",
+    "territory",
+    "accountTier",
+    "contractVersion",
+    "checkedAt",
+    "expiresAt",
+    "offlineAuthorizationUntil",
+    "provenanceLabel",
+    "originProvider",
+    "derivedFrom",
+    "policyRevision",
+    "dataClass",
+    "actionPurpose",
+    "requestedCatalogIdentity",
+    "actualMediaSource",
+    "adapterId",
+    "adapterVersion",
+    "acquisitionMethod",
+    "sourceFormat",
+    "outputFormat",
+    "processingHistory"
+  ],
+  "operations": [
+    "readPcm",
+    "seek",
+    "analyze",
+    "cacheAnalysis",
+    "changeTempo",
+    "changeKey",
+    "applyEffects",
+    "separateStems",
+    "cacheStems",
+    "cacheAudio",
+    "record",
+    "broadcast",
+    "exportAudio",
+    "publicPerformance",
+    "displayMetadata",
+    "lookup",
+    "exportMetadata",
+    "aiInference",
+    "aiEmbedding",
+    "aiTraining",
+    "voiceControl",
+    "downloadOriginal",
+    "extractLocalAudio",
+    "resolveMediaCandidate",
+    "acquireMedia",
+    "transcodeLocalMedia"
+  ],
+  "resolution_order": [
+    "source grant",
+    "track/rendition",
+    "provider account",
+    "territory",
+    "authorization lifetime",
+    "implemented engine feature",
+    "certified device capacity",
+    "app entitlement"
+  ],
+  "enforcement_points": [
+    "load",
+    "feature activation",
+    "record/export encoder",
+    "grant change",
+    "acquisition/download before and during transfer",
+    "outgoing model context and tool results",
+    "embedding/vector writes",
+    "conversational memory and logs",
+    "diagnostic export for the selected destination and purpose",
+    "execution/activation after relevant grant invalidation"
+  ],
+  "source_document": "07_Library_Data_and_Music_Sources.md",
+  "model_egress_policy": "Deny prohibited or unknown provider-controlled AI ingestion before any model, embedding, ranking, tool result or log; user consent does not override a source restriction.",
+  "spotify_default": "No Spotify-derived content in AI inference/embeddings/training or generic ripping without an applicable grant; standard API discovery/display requires separate reviewed use-case compliance.",
+  "acquisition_policy": "Implement the selected link-to-file capability with direct-file, documented vendor and maintained-extractor candidates. Preserve requested catalog identity and actual media source. Technical feasibility, service-access basis, content-use basis and distribution eligibility are independent; unofficial classification alone does not reject technical investigation. No website claim or user consent fabricates a missing source grant.",
+  "entities": [
+    "DiscoveryCandidate",
+    "ProvenanceLabel",
+    "AcquisitionJob",
+    "PreparedMedia"
+  ],
+  "additional_documents": [
+    "13_ParDay_AI_Architecture_and_Requirements.md",
+    "14_Music_Discovery_and_Acquisition.md",
+    "16_Link_Acquisition_Implementation_and_Feasibility.md",
+    "17_Open_Source_and_Home_Lab_Guide.md",
+    "18_AWS_Deployment_and_Comparison_Plan.md"
+  ],
+  "resolution_rule": "intersection_of_all_applicable_constraints",
+  "resolution_semantics": "For provider-controlled operations, any denied constraint denies; otherwise any unknown constraint remains unknown and cannot activate. Allowed requires all applicable grants plus implemented capability and device/entitlement eligibility. User-managed local files follow the separate local policy, not invented provider-grant requirements.",
+  "adapter_method_classes": [
+    "local_import",
+    "direct_file",
+    "vendor_conversion_api",
+    "maintained_extractor",
+    "external_handoff",
+    "creator_export",
+    "approved_stream",
+    "approved_cache"
+  ],
+  "adapter_evidence_axes": {
+    "technical": [
+      "not_tested",
+      "working_for_fixture",
+      "working_for_profile",
+      "broken",
+      "unsupported"
+    ],
+    "service_access": [
+      "established",
+      "unresolved",
+      "restricted"
+    ],
+    "content_use": [
+      "user_managed",
+      "documented_basis",
+      "unresolved",
+      "restricted"
+    ],
+    "distribution": [
+      "not_reviewed",
+      "private_evaluation",
+      "eligible_for_selected_channel",
+      "restricted"
+    ]
+  },
+  "source_separation_rule": "Catalog metadata and acquired media retain distinct provenance. Spotify-derived metadata does not lose its restrictions after matching/import; independently obtained local media/measurements do not inherit every catalog restriction merely through a join.",
+  "job_contract": "acquisition_job.schema.json",
+  "acquisition_acceptance_register": "link_acquisition_acceptance_register.json",
+  "deployment_context": "personal_tool_optional_future_open_source",
+  "execution_location_selection": "phone_native_local_first; deferred_D_versus_AWS_comparison_before_optional_extension_selection; no_measured_comparative_winner",
+  "control_plane_note": "Explicitly paired AWS or private home-lab service access is distinct from media-fetch SSRF policy. Service connectivity does not authorize arbitrary private/loopback/link-local/cloud-metadata fetches.",
+  "server_trial_provider": "AWS",
+  "source_access_from_cloud_verified": false,
+  "cloud_trial_profile": "aws_deployment_profile.json",
+  "initial_required_server": false,
+  "cloud_trial_phase": "future_optional_extension_not_local_design_or_release_gate",
+  "initial_source_access_verified": false
+}

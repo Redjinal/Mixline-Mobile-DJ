@@ -1,0 +1,380 @@
+{
+  "version": "1.0",
+  "protocol_id": "ACQ-COMP-01",
+  "status": "deferred_comparison_protocol_local_implementation_first_not_executed",
+  "date": "2026-10-29",
+  "owner_decision": "Build the local phone-native version first with no required server; expand to AWS later with an approximate USD 35/month planning target excluding ParDay AI-provider charges. Preserve D-versus-AWS comparison for the later extension; no comparative winner measured.",
+  "selected_winner": null,
+  "publication_authorized": false,
+  "distribution_context": "personal_tool_with_optional_future_open_source_sharing",
+  "scope": "One native acquisition interface and job contract; implement and validate D first. A later comparison does not commit to shipping both modes or gate the first local release.",
+  "source_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+  "arms": [
+    {
+      "id": "D",
+      "execution": "device",
+      "network_condition": "phone_to_source",
+      "device": "Samsung Galaxy S26 Ultra",
+      "configuration": null,
+      "phase": "first_local_implementation_and_baseline"
+    },
+    {
+      "id": "AWS",
+      "execution": "owner_operated_aws",
+      "network_condition": "actual_phone_wifi_and_mobile_to_selected_aws_region",
+      "account": null,
+      "region": null,
+      "service": null,
+      "instance": null,
+      "runtime": null,
+      "transfer_mode": null,
+      "source_access_verified": false,
+      "deployment_profile": "aws_deployment_profile.json",
+      "phase": "deferred_optional_expansion_comparison"
+    }
+  ],
+  "transfer_modes": [
+    "device_direct_after_resolution",
+    "controlled_relay",
+    "server_artifact"
+  ],
+  "comparison_classification": {
+    "same_extractor_version_and_settings": "Can help isolate execution-location effects under declared conditions.",
+    "different_extractors_or_encoders": "Compare complete implementations; do not attribute all differences to location.",
+    "scope_intersection": "Same actual source, rendition and output target; unavailable extra coverage reported separately.",
+    "unofficial_candidates": "Included; official API is not a universal technical prerequisite."
+  },
+  "fixture_manifest_fields": [
+    "fixture_id",
+    "rights_and_access_basis",
+    "requested_catalog_identity",
+    "actual_media_identity",
+    "source_sha256",
+    "source_format",
+    "duration_frames",
+    "expected_edition",
+    "output_target",
+    "failure_injection",
+    "redistribution_basis"
+  ],
+  "fixture_categories": [
+    "short_original_audio",
+    "longer_original_audio",
+    "video_with_audio",
+    "version_and_metadata_ambiguity",
+    "malformed_or_truncated_media",
+    "expiring_and_resumable_transfer",
+    "collection_partial_failure"
+  ],
+  "experiments": [
+    "preserve_source",
+    "controlled_conversion"
+  ],
+  "device_record_fields": [
+    "exact_variant",
+    "android_version_and_api",
+    "one_ui_build",
+    "security_patch",
+    "ram_storage",
+    "free_storage",
+    "app_build",
+    "extractor_build",
+    "encoder_build",
+    "audio_route",
+    "sample_rate",
+    "buffer_size",
+    "workload_profile",
+    "display_brightness_refresh",
+    "battery_charge",
+    "charging_state",
+    "power_mode",
+    "ambient_conditions",
+    "thermal_observations"
+  ],
+  "host_record_fields": [
+    "host_model",
+    "cpu",
+    "ram",
+    "storage",
+    "os_kernel",
+    "container_digest",
+    "worker_build",
+    "effective_cpu_memory_limits",
+    "active_background_services",
+    "network_topology",
+    "remote_access_configuration",
+    "artifact_retention",
+    "aws_region",
+    "aws_service_instance_and_ami",
+    "source_to_worker_network",
+    "worker_to_phone_network",
+    "runtime_cold_or_warm",
+    "retained_resources",
+    "billing_line_items"
+  ],
+  "cache_axes": [
+    "app_process",
+    "resolver_process",
+    "resolver_cache",
+    "downloaded_media_cache",
+    "analysis_cache"
+  ],
+  "stages": [
+    {
+      "id": "C0",
+      "purpose": "Eligibility and correctness",
+      "prerequisite": null,
+      "evidence": "Controlled fixture correctness and existing DLA cases; licence/deployment eligibility separated from technical status.",
+      "cloud_source_path_gate": "Validate permitted actual source resolution/acquisition from declared AWS region/runtime before meaningful performance comparison; no data-center access assumed.",
+      "phase_applicability": "D correctness applies to local build; AWS source-path variant deferred until expansion."
+    },
+    {
+      "id": "C1",
+      "purpose": "Paired preparation comparison",
+      "prerequisite": "C0 viable source path",
+      "proposed_sampling": {
+        "paired_attempts_per_selected_case_cache_condition": 5,
+        "minimum_independent_sessions": 2,
+        "order": "randomized_or_balanced",
+        "count_failed_attempts": true,
+        "expand_rule": "Only if remaining uncertainty can alter selection."
+      },
+      "report": [
+        "attempts",
+        "completed",
+        "failures_by_cause",
+        "paired_differences",
+        "median",
+        "range"
+      ],
+      "tail_estimate_rule": "Do not market stable p95/tail behavior from the small initial sample.",
+      "phase_applicability": "Paired D/AWS comparison deferred; preserve local fixtures and rerun current D cases at expansion."
+    },
+    {
+      "id": "C2",
+      "purpose": "Live coexistence",
+      "prerequisite": "Phase-specific: local D requires viable C0 correctness/source evidence; the deferred paired D/AWS comparison additionally requires usable C1 candidates.",
+      "baseline": "Same prepared local set with acquisition disabled.",
+      "profiles": [
+        "P0_first",
+        "intended_P1_P2_P3_video_combinations_after_foundation"
+      ],
+      "certification": "Relevant shared warm-soak/audio gates remain required; short comparison is not certification.",
+      "phase_applicability": "D local audio coexistence required for implemented workload; paired AWS variant deferred.",
+      "phase_prerequisites": {
+        "local_D": [
+          "C0_viable_D_source_path"
+        ],
+        "deferred_D_AWS": [
+          "C0_viable_candidates",
+          "C1_usable_paired_candidates"
+        ]
+      }
+    },
+    {
+      "id": "C3",
+      "purpose": "Failure and remote operation",
+      "prerequisite": "Viable arm",
+      "faults": [
+        "server_down",
+        "endpoint_credential_expiry",
+        "network_interruption",
+        "wifi_mobile_transition",
+        "lock_screen",
+        "low_storage",
+        "cancel_conversion",
+        "expired_media_lease",
+        "adapter_update_failure",
+        "process_termination_recovery",
+        "cloud_instance_stopped_or_warming",
+        "source_datacenter_path_unavailable",
+        "server_artifact_expired",
+        "cloud_endpoint_changed"
+      ],
+      "offline_invariant": "Prepared local set remains independent of AWS and any optional home-lab service.",
+      "phase_applicability": "Local lifecycle/recovery required; server and cloud-specific variants deferred."
+    },
+    {
+      "id": "C4",
+      "purpose": "Owner setup and maintenance; independent operator validation conditional on community-reproducibility claims",
+      "prerequisite": "Documented deployable candidate",
+      "measure": [
+        "active_setup_time",
+        "steps",
+        "failed_steps",
+        "configuration_questions",
+        "update_rollback_effort",
+        "backup_restore_result",
+        "aws_resource_inventory_before_and_after_teardown",
+        "retained_storage_and_address_charges"
+      ],
+      "operator_applicability": "Owner clean setup for personal comparison; another operator only for optional community-reproducibility validation",
+      "phase_applicability": "Phone build/setup/maintenance required; cloud setup, cost and teardown variants deferred."
+    }
+  ],
+  "timing": {
+    "end_to_end_clock": "client_monotonic",
+    "worker_clock": "worker_monotonic_with_trace_id",
+    "clock_rule": "Never subtract unsynchronized wall clocks across hosts.",
+    "spans": [
+      "resolve",
+      "human_selection_wait",
+      "queue",
+      "transfer",
+      "processing",
+      "final_validation",
+      "publication",
+      "optional_analysis"
+    ],
+    "outcomes": [
+      "first_playable",
+      "fully_prepared"
+    ],
+    "parallel_span_rule": "Spans may overlap; their sum need not equal end-to-end time."
+  },
+  "metrics": [
+    "exact_recording_success",
+    "mismatch_count",
+    "completion_count",
+    "failure_timeout_count",
+    "retry_count",
+    "time_to_first_playable",
+    "time_to_fully_prepared",
+    "network_bytes_each_leg",
+    "staging_peak_bytes",
+    "final_media_bytes",
+    "cpu_time_by_process",
+    "defined_memory_metric",
+    "audio_underruns",
+    "recorded_discontinuities",
+    "callback_budget",
+    "thermal_observations",
+    "phone_power_or_battery_observations",
+    "server_utilization",
+    "incremental_energy_operating_cost",
+    "setup_maintenance_effort",
+    "source_to_cloud_bytes",
+    "cloud_to_phone_bytes",
+    "optional_storage_transfer_bytes",
+    "cloud_start_to_ready_time",
+    "measured_billable_usage_and_reconciled_cost",
+    "source_to_phone_direct_bytes_when_that_transfer_mode_is_verified"
+  ],
+  "power_measurement_policy": {
+    "s26_power_rails_verified": false,
+    "metric_availability": "Record supported sensors/counters and sampling constraints; unavailable is not zero.",
+    "scope": "Device-level observations are not automatically app-attributed energy.",
+    "baseline": "Paired idle/local-set baseline at comparable brightness, charge, charging state and environment.",
+    "reporting": "Separate phone and server/network costs; battery percentage alone is a coarse proxy.",
+    "thermal": "Observe supported status/headroom, respecting Android sampling guidance; invalid readings remain unavailable."
+  },
+  "mandatory_gates": [
+    "correct_recording_and_final_format",
+    "no_unarmed_deck_action",
+    "safe_cancellation_publication_recovery",
+    "protected_audio_declared_profile",
+    "source_and_field_provenance_integrity",
+    "bounded_worker_and_network_behavior",
+    "compatible_dependency_and_personal_distribution_licensing"
+  ],
+  "quality_references": [
+    "DLA-01..DLA-20",
+    "QA-01",
+    "QA-02",
+    "QA-04",
+    "QA-07",
+    "QA-10",
+    "QA-15",
+    "QA-17",
+    "QA-18",
+    "QA-19",
+    "QA-20",
+    "QA-21"
+  ],
+  "tradeoff_dimensions": [
+    "phone_heat_battery",
+    "completion_time",
+    "source_coverage",
+    "storage",
+    "independence_from_external_service",
+    "setup_maintenance",
+    "privacy",
+    "ongoing_cost"
+  ],
+  "tradeoff_weights": null,
+  "decision_rule": "The local implementation sequence is selected, but no measured comparative winner is claimed. Pass mandatory gates for each implemented path; during later AWS evaluation present measured tradeoffs against local independence and the approximate USD 35/month target. No arbitrary aggregate score or automatic backend choice.",
+  "results": [],
+  "sources": [
+    {
+      "id": "B1",
+      "url": "https://developer.android.com/games/optimize/adpf/thermal"
+    },
+    {
+      "id": "B2",
+      "url": "https://developer.android.com/studio/profile/power-profiler"
+    },
+    {
+      "id": "B3",
+      "url": "https://developer.android.com/topic/performance/benchmarking/macrobenchmark-overview"
+    },
+    {
+      "id": "B4",
+      "url": "https://docs.docker.com/engine/containers/resource_constraints/"
+    }
+  ],
+  "primary_arm_ids": [
+    "D",
+    "AWS"
+  ],
+  "optional_portability_arms": [
+    {
+      "id": "H-LAN",
+      "execution": "owner_home_lab",
+      "network_condition": "local_network",
+      "host": null,
+      "transfer_mode": null,
+      "applicability": "optional_future_local_host_not_selected"
+    },
+    {
+      "id": "H-REMOTE",
+      "execution": "owner_home_lab",
+      "network_condition": "configured_private_remote_access",
+      "host": null,
+      "transfer_mode": null,
+      "applicability": "optional_future_local_host_not_selected"
+    }
+  ],
+  "aws_provider_accepted_for_trial": true,
+  "deployment_authorized": false,
+  "resources_created": false,
+  "cloud_cost_scenarios": "aws_cost_scenarios.json",
+  "additional_documents": [
+    "18_AWS_Deployment_and_Comparison_Plan.md"
+  ],
+  "delivery_sequence": {
+    "initial_implementation_arm": "D",
+    "initial_required_server": false,
+    "deferred_comparison_arms": [
+      "D",
+      "AWS"
+    ],
+    "comparison_required_for_local_design": false,
+    "comparison_required_for_first_local_release": false,
+    "initial_source_feasibility_verified": false,
+    "local_first_means_all_features_offline": false,
+    "promotion_condition": "Usable local version plus a concrete processing, maintenance or source-path benefit to evaluate; costed current AWS trial selected separately."
+  },
+  "aws_planning_target": {
+    "target_usd_per_month": 35,
+    "currency": "USD",
+    "period": "month",
+    "kind": "approximate_planning_target",
+    "excludes": [
+      "ParDay_AI_provider_charges"
+    ],
+    "phase": "future_optional_AWS_extension",
+    "is_hard_ceiling": false,
+    "deployment_or_spend_authorization": false,
+    "actual_bill_verified": false
+  }
+}

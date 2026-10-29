@@ -1,0 +1,129 @@
+{
+  "version": "0.3",
+  "status": "normative_planning_contract_not_implemented",
+  "job_scope": "one_network_acquisition_child_execution_revision",
+  "transitions": {
+    "CREATED": [
+      "RESOLVING",
+      "CANCEL_REQUESTED",
+      "BLOCKED",
+      "FAILED"
+    ],
+    "RESOLVING": [
+      "AWAITING_SELECTION",
+      "READY",
+      "RETRY_WAIT",
+      "CANCEL_REQUESTED",
+      "BLOCKED",
+      "FAILED"
+    ],
+    "AWAITING_SELECTION": [
+      "READY",
+      "CANCEL_REQUESTED",
+      "BLOCKED",
+      "FAILED"
+    ],
+    "READY": [
+      "QUEUED",
+      "CANCEL_REQUESTED",
+      "BLOCKED",
+      "FAILED"
+    ],
+    "QUEUED": [
+      "TRANSFERRING",
+      "PAUSED",
+      "RETRY_WAIT",
+      "CANCEL_REQUESTED",
+      "BLOCKED",
+      "FAILED"
+    ],
+    "TRANSFERRING": [
+      "SOURCE_VALIDATING",
+      "VERIFYING",
+      "PAUSED",
+      "RETRY_WAIT",
+      "CANCEL_REQUESTED",
+      "BLOCKED",
+      "FAILED"
+    ],
+    "SOURCE_VALIDATING": [
+      "CONVERTING",
+      "PAUSED",
+      "RETRY_WAIT",
+      "CANCEL_REQUESTED",
+      "BLOCKED",
+      "FAILED"
+    ],
+    "CONVERTING": [
+      "VERIFYING",
+      "PAUSED",
+      "RETRY_WAIT",
+      "CANCEL_REQUESTED",
+      "BLOCKED",
+      "FAILED"
+    ],
+    "VERIFYING": [
+      "PUBLISHING",
+      "PAUSED",
+      "RETRY_WAIT",
+      "CANCEL_REQUESTED",
+      "BLOCKED",
+      "FAILED"
+    ],
+    "PUBLISHING": [
+      "COMPLETED",
+      "CANCEL_REQUESTED",
+      "BLOCKED",
+      "FAILED"
+    ],
+    "PAUSED": [
+      "RESOLVING",
+      "QUEUED",
+      "TRANSFERRING",
+      "SOURCE_VALIDATING",
+      "CONVERTING",
+      "VERIFYING",
+      "CANCEL_REQUESTED",
+      "BLOCKED",
+      "FAILED"
+    ],
+    "RETRY_WAIT": [
+      "RESOLVING",
+      "QUEUED",
+      "TRANSFERRING",
+      "SOURCE_VALIDATING",
+      "CONVERTING",
+      "VERIFYING",
+      "CANCEL_REQUESTED",
+      "BLOCKED",
+      "FAILED"
+    ],
+    "CANCEL_REQUESTED": [
+      "CANCELLED"
+    ],
+    "CANCELLED": [],
+    "COMPLETED": [],
+    "FAILED": [],
+    "BLOCKED": []
+  },
+  "guards": {
+    "all": "Trusted app only; current request/cancellation revision, permitted source/admission and active worker lease where needed. No arbitrary model state writes.",
+    "READY": "Immutable candidate/format selected under an applicable admission; unresolved ambiguous match requires user choice.",
+    "SOURCE_VALIDATING": "Input bytes complete; source probe remains bounded and separate from final output validation.",
+    "CONVERTING": "Source validation passed; output settings fixed; original preserved.",
+    "VERIFYING": "Validate exact final rendition after transfer or transformation. Earlier source validation is insufficient.",
+    "PUBLISHING": "Final-rendition validation passed; same object identity/hash and selected output.",
+    "COMPLETED": "Single transaction/CAS checks current request revision, cancellation revision, PUBLISHING state and worker lease; publishes MediaAsset, idempotency outcome, publication and terminal job state together.",
+    "CANCEL_REQUESTED": "Cancel transaction wins only before terminal publication; increments cancellation revision; publication cannot pass the old fence.",
+    "PAUSED_OR_RETRY_WAIT": "Resume only the actual durable safe checkpoint with refreshed admission/lease and unchanged media identity; otherwise re-resolve or create a new selected revision.",
+    "terminal": "No automatic restart. User retry after terminal failure/block creates a new execution revision/key; completed media remains unchanged.",
+    "selection_revision": "New selection/format receives new immutable revision, digest and key; superseded execution loses its lease and cannot publish."
+  },
+  "publication_equalities": [
+    "publication.contentSha256 == validation.contentSha256 == final object hash",
+    "publication.committedRequestRevision == winning current requestRevision",
+    "publication.committedCancellationRevision == winning current cancellationRevision",
+    "publication.managedObjectRef identifies the exact validated final object"
+  ],
+  "document": "16_Link_Acquisition_Implementation_and_Feasibility.md"
+}

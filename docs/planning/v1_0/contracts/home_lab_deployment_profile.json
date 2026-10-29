@@ -1,0 +1,206 @@
+{
+  "version": "1.0",
+  "status": "final_planning_baseline_local_first_optional_service_not_implemented",
+  "date": "2026-10-29",
+  "confirmed_delivery": "personal_tool",
+  "optional_direction": "future_open_source_for_independent_home_lab_operators",
+  "backend_selected": false,
+  "public_repository_created": false,
+  "publication_authorized": false,
+  "licence_selected": null,
+  "source_document": "17_Open_Source_and_Home_Lab_Guide.md",
+  "comparison_protocol": "acquisition_comparison_protocol.json",
+  "profiles": [
+    {
+      "id": "standalone",
+      "role": "Selected first delivery: standalone Android app, prepared-local playback and on-device acquisition feasibility/implementation track; source support remains unverified.",
+      "service_dependency": false,
+      "supported_hardware": "S26 Ultra first target, untested"
+    },
+    {
+      "id": "home_lab_lan_trial",
+      "role": "Compare paired service over owner network.",
+      "service_dependency": "acquisition jobs only",
+      "host": null,
+      "measured": false,
+      "phase": "optional_future_portability"
+    },
+    {
+      "id": "home_lab_remote_trial",
+      "role": "Compare same service through explicitly configured private remote access.",
+      "service_dependency": "acquisition jobs only",
+      "remote_access_provider": null,
+      "measured": false,
+      "phase": "optional_future_portability"
+    }
+  ],
+  "independent_decisions": [
+    "acquisition_execution_location",
+    "ParDay_gateway_location",
+    "language_model_provider_and_inference_location"
+  ],
+  "control_plane": {
+    "service_endpoint": "explicitly_configured_and_paired",
+    "private_lan_or_vpn_endpoint_allowed": true,
+    "authentication": "per_device_revocable_credentials",
+    "pairing": "user_confirmed_service_identity_and_single_use_expiring_pairing_secret",
+    "transport": "verified_TLS_or_explicitly_reviewed_authenticated_encrypted_transport_no_trust_all_fallback",
+    "rotation": "document_credentials_and_certificate_rotation_and_revocation",
+    "api_compatibility": "versioned_capability_handshake_before_job_submission",
+    "internet_public_exposure_default": false
+  },
+  "source_fetch_plane": {
+    "private_loopback_link_local_metadata_destinations": "deny_for_arbitrary_media_fetches",
+    "redirect_dns_and_connection_validation": true,
+    "paired_service_address_does_not_authorize_private_media_fetch": true,
+    "local_network_media_adapter": "separate_explicit_future_scope"
+  },
+  "worker_boundary": {
+    "live_audio_dependency": false,
+    "model_execution_authority": false,
+    "privileged_container": false,
+    "docker_socket_mount": false,
+    "full_home_mount": false,
+    "arbitrary_shell_flags": false,
+    "resource_limits": "explicit_CPU_memory_time_concurrency_staging_budgets_verified_on_host",
+    "filesystem": "only_required_managed_staging_and_artifact_paths",
+    "secrets": "scoped_file_or_secret_store_mounts_excluded_from_source_and_logs"
+  },
+  "data_lifecycle": {
+    "phone_library": "authoritative_user_preparation_and_ready_local_media",
+    "server_job_journal": "persistent_until_reconciled_under_retention_policy",
+    "temporary_media": "bounded_expiry_with_cleanup_on_success_failure_cancel_and_restart",
+    "completed_server_artifact": "authenticated_delivery_then_documented_expiry",
+    "backups": "config_job_state_and_user_preparation_separately_scoped_no_automatic_public_media_copy",
+    "restoration": "reconcile_incomplete_jobs_under_current_revision_lease_and_cancellation_state; never_repeat_committed_actions_or_autoplay",
+    "logs": "bounded_redacted_no_bearer_URLs_private_paths_or_music_payloads"
+  },
+  "operator_requirements": [
+    "clean_host_setup",
+    "documented_dependency_versions",
+    "actual_image_digests",
+    "effective_resource_limits",
+    "paired_device_revoke",
+    "health_and_capability_checks",
+    "bounded_fixture_transfer",
+    "server_loss_test",
+    "upgrade_and_rollback",
+    "backup_and_restore",
+    "temporary_file_cleanup",
+    "private_data_and_licence_review_before_optional_publication"
+  ],
+  "quality_gates": [
+    "QA-17",
+    "QA-19",
+    "QA-20",
+    "QA-21",
+    "QA-24"
+  ],
+  "acceptance_cases": [
+    {
+      "id": "HL-01",
+      "scenario": "Clean-host reproduction",
+      "acceptance": "build the app and selected service profile using documented prerequisites, permitted dependencies and shareable fixtures.",
+      "applicability": "app_clean_build_required; service_clean_build_conditional_on_evaluated_or_selected_service_profile",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "HL-02",
+      "scenario": "Pair and revoke",
+      "acceptance": "a new device pairs deliberately; revocation blocks subsequent service actions without deleting its local preparation.",
+      "applicability": "conditional_on_paired_service_profile",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "HL-03",
+      "scenario": "Authentication and TLS",
+      "acceptance": "reject untrusted clients/certificates; paired private control-plane access does not permit private-target media fetching.",
+      "applicability": "conditional_on_paired_service_profile",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "HL-04",
+      "scenario": "Server loss",
+      "acceptance": "prepared local mixing continues; unavailable acquisition reports its actual state without surprise playback or lost preparation.",
+      "applicability": "local_offline_continuity_required; server_loss_variant_conditional_on_service_use",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "HL-05",
+      "scenario": "Resource limits",
+      "acceptance": "exhausted disk, hung/crashed workers and oversized jobs stay bounded and do not compromise live audio.",
+      "applicability": "required_for_implemented_acquisition_runtime; service_variants_conditional",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "HL-06",
+      "scenario": "Credential isolation",
+      "acceptance": "logs, artifacts and one worker cannot reveal another component's secrets or private context.",
+      "applicability": "required_for_implemented_acquisition_runtime; service_variants_conditional",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "HL-07",
+      "scenario": "Upgrade/recovery",
+      "acceptance": "protocol mismatch, rollback and backup restore preserve correct jobs and do not replay completed actions.",
+      "applicability": "required_for_implemented_acquisition_runtime; service_variants_conditional",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "HL-08",
+      "scenario": "AI independence",
+      "acceptance": "acquisition can run without ParDay; the local engine remains usable with all external services unavailable.",
+      "applicability": "required_across_all_profiles",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "HL-09",
+      "scenario": "Artifact cleanup",
+      "acceptance": "successful transfer, expiry, cancellation and failure follow the documented retention/deletion policy.",
+      "applicability": "required_for_implemented_acquisition_runtime; service_variants_conditional",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    },
+    {
+      "id": "HL-10",
+      "scenario": "Optional publication",
+      "acceptance": "review the exact source/history/artifacts, licence obligations and build mapping; exclude credentials, personal music and signing keys.",
+      "applicability": "only_before_optional_public_publication",
+      "status": "proposed_not_executed",
+      "verification_evidence": null
+    }
+  ],
+  "evidence": {
+    "device_tests": [],
+    "host_tests": [],
+    "deployment_results": [],
+    "publication_review": null
+  },
+  "current_owner_host": "no_existing_local_host_selected",
+  "local_host_profiles_applicability": "optional_future_portability_not_required_for_local_design_or_release_or_later_D_AWS_comparison",
+  "initial_delivery": "phone_native_local_app_no_required_server",
+  "service_profiles_required_for_first_local_release": false,
+  "future_server_trial_provider": "AWS",
+  "future_trial_profile": "aws_deployment_profile.json",
+  "aws_planning_target": {
+    "target_usd_per_month": 35,
+    "currency": "USD",
+    "period": "month",
+    "kind": "approximate_planning_target",
+    "excludes": [
+      "ParDay_AI_provider_charges"
+    ],
+    "phase": "future_optional_AWS_extension",
+    "is_hard_ceiling": false,
+    "deployment_or_spend_authorization": false,
+    "actual_bill_verified": false
+  }
+}

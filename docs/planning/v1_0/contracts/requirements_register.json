@@ -1,0 +1,995 @@
+{
+  "version": "1.0",
+  "status": "planning_requirements_acceptance_proposed",
+  "requirements": [
+    {
+      "id": "FR-001",
+      "requirement": "Core local playback shall work offline without an app account.",
+      "functional_case": "QA-FR-001",
+      "acceptance": "fresh guest session imports and mixes two authorized local tracks in airplane mode.",
+      "owner_and_first_gate": "Mobile + Audio / G2",
+      "quality_gates": [
+        "QA-19"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_account_offline_policy",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-002",
+      "requirement": "Import shall use user-selected files/folders and retain durable access or make a verified local copy.",
+      "functional_case": "QA-FR-002",
+      "acceptance": "restart, moved file and revoked access produce correct available/missing states without lost metadata.",
+      "owner_and_first_gate": "Data / G2",
+      "quality_gates": [
+        "QA-15"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-003",
+      "requirement": "Supported formats shall be enumerated by codec/container/bit depth/sample rate, initially evaluating MP3, AAC/M4A, WAV, AIFF, FLAC, Ogg/Vorbis and Opus.",
+      "functional_case": "QA-FR-003",
+      "acceptance": "approved corpus decodes correctly; malformed/unsupported files fail safely. Final format set follows G1 decoder/license review.",
+      "owner_and_first_gate": "Audio + Security / G3",
+      "quality_gates": [
+        "QA-07",
+        "QA-15"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-004",
+      "requirement": "Search shall filter title, artist, album, BPM range, key, tags, availability and played state.",
+      "functional_case": "QA-FR-004",
+      "acceptance": "exact fixtures return expected results; search remains usable during playback on the declared library-size tier.",
+      "owner_and_first_gate": "Data + Design / G3",
+      "quality_gates": [
+        "QA-15"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-005",
+      "requirement": "Crates/playlists, folders, smart rules, ratings, colors, comments, favorites and history shall support set preparation.",
+      "functional_case": "QA-FR-005",
+      "acceptance": "reorder, rename, duplicate detection and saved filter behavior survive restart.",
+      "owner_and_first_gate": "Data / G3",
+      "quality_gates": [
+        "QA-15",
+        "QA-20"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-006",
+      "requirement": "BPM, downbeat, key, waveform and loudness analysis shall run outside the real-time callback and cache versioned results.",
+      "functional_case": "QA-FR-006",
+      "acceptance": "analysis progress/error is visible; playback does not depend on completed optional analysis.",
+      "owner_and_first_gate": "DSP + Data / G3",
+      "quality_gates": [
+        "QA-04",
+        "QA-15"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-007",
+      "requirement": "Variable-tempo beatgrids and phrase/energy hints shall distinguish detected results from user corrections.",
+      "functional_case": "QA-FR-007",
+      "acceptance": "live-drumming/tempo-change fixtures retain meaningful bar positions; low-confidence results are not presented as certain.",
+      "owner_and_first_gate": "DSP / G4",
+      "quality_gates": [
+        "QA-05",
+        "QA-08",
+        "QA-15"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-008",
+      "requirement": "Users shall correct downbeats, beat positions, local tempo, half/double BPM and grid alignment, then lock edits.",
+      "functional_case": "QA-FR-008",
+      "acceptance": "loops and sync follow corrected maps; reanalysis cannot overwrite locked edits silently.",
+      "owner_and_first_gate": "DSP + Design / G3\u2013G4",
+      "quality_gates": [
+        "QA-05",
+        "QA-15"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-009",
+      "requirement": "Overview and detailed waveforms shall be derived from media, with cue/loop/grid overlays and explicit zoom.",
+      "functional_case": "QA-FR-009",
+      "acceptance": "transient positions match reference audio; overview seeking and display clocks stay consistent.",
+      "owner_and_first_gate": "Audio + UI / G3",
+      "quality_gates": [
+        "QA-05",
+        "QA-16"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-010",
+      "requirement": "Each deck shall provide load, play/pause, stop, temporary cue, nudge, position and elapsed/remaining time.",
+      "functional_case": "QA-FR-010",
+      "acceptance": "independent state and multi-touch transport actions produce documented audible results.",
+      "owner_and_first_gate": "Audio + UI / G2",
+      "quality_gates": [
+        "QA-03",
+        "QA-05",
+        "QA-07"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-011",
+      "requirement": "Each track shall support at least eight named/color-coded hot cues plus saved memory markers.",
+      "functional_case": "QA-FR-011",
+      "acceptance": "cues persist, trigger at intended musical positions and distinguish set/delete/trigger actions.",
+      "owner_and_first_gate": "Audio + Data / G3",
+      "quality_gates": [
+        "QA-05",
+        "QA-15"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-012",
+      "requirement": "The engine shall support four deck identities; four simultaneous decks shall be enabled only for a certified workload tier.",
+      "functional_case": "QA-FR-012",
+      "acceptance": "switching focus never changes transport or assignment; four-deck workload passes performance gates.",
+      "owner_and_first_gate": "Audio + UI / G4",
+      "quality_gates": [
+        "QA-02",
+        "QA-07",
+        "QA-16"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "selected_module_detailed_contract_proposed",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-013",
+      "requirement": "Touch jog/scratch shall support vinyl mode, nudge, directional movement and defined release behavior.",
+      "functional_case": "QA-FR-013",
+      "acceptance": "scratch/release tests measure audio response; pointer cancellation cannot leave a deck held.",
+      "owner_and_first_gate": "Audio + UI / G3",
+      "quality_gates": [
+        "QA-03",
+        "QA-07",
+        "QA-08"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-014",
+      "requirement": "Waveform seek/scrub shall be a first-class action distinct from jog scratching.",
+      "functional_case": "QA-FR-014",
+      "acceptance": "precise seek, coarse navigation and accidental-gesture protection work with track running or paused.",
+      "owner_and_first_gate": "Audio + Design / G3",
+      "quality_gates": [
+        "QA-03",
+        "QA-07",
+        "QA-16"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-015",
+      "requirement": "Tempo, pitch bend, key lock and independent key shift shall expose ranges and reset controls.",
+      "functional_case": "QA-FR-015",
+      "acceptance": "reference playback verifies pitch/time behavior and smooth parameter changes across the approved range.",
+      "owner_and_first_gate": "DSP / G3",
+      "quality_gates": [
+        "QA-04",
+        "QA-05",
+        "QA-08"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-016",
+      "requirement": "Manual matching and optional sync shall coexist with visible leader/follower and phase state.",
+      "functional_case": "QA-FR-016",
+      "acceptance": "sync off returns predictable manual control; invalid grids cannot silently force a bad alignment.",
+      "owner_and_first_gate": "Audio + DSP / G3",
+      "quality_gates": [
+        "QA-05",
+        "QA-08"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-017",
+      "requirement": "Quantization shall support selectable musical resolution with explicit enabled state.",
+      "functional_case": "QA-FR-017",
+      "acceptance": "cue, loop and pad commands meet the documented event scheduling rule; unquantized commands are not delayed to a beat.",
+      "owner_and_first_gate": "Audio / G3",
+      "quality_gates": [
+        "QA-05",
+        "QA-13"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-018",
+      "requirement": "Manual/auto loops, loop in/out, reloop, loop roll, beat jump and saved loops shall be supported.",
+      "functional_case": "QA-FR-018",
+      "acceptance": "boundaries, negative jumps, track edges and changing-tempo maps are exercised without invalid reads.",
+      "owner_and_first_gate": "Audio + DSP / G3\u2013G4",
+      "quality_gates": [
+        "QA-05",
+        "QA-07",
+        "QA-08"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-019",
+      "requirement": "Slip and reverse shall preserve or replace timeline position exactly as the chosen mode specifies.",
+      "functional_case": "QA-FR-019",
+      "acceptance": "scratch/loop/cue during slip returns to the calculated musical position; release is click-controlled.",
+      "owner_and_first_gate": "Audio / G4",
+      "quality_gates": [
+        "QA-05",
+        "QA-07",
+        "QA-08"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-020",
+      "requirement": "Mixer shall include trim, channel faders, EQ/isolator, filter, assignable crossfader sides/bypass and curve/cut-in.",
+      "functional_case": "QA-FR-020",
+      "acceptance": "signal-path tests verify gains, bypass, center behavior, resets and audible smoothness.",
+      "owner_and_first_gate": "DSP + UI / G3",
+      "quality_gates": [
+        "QA-06",
+        "QA-14"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-021",
+      "requirement": "Channel/master metering, peak hold, clipping indication and master protection shall reflect the actual signal.",
+      "functional_case": "QA-FR-021",
+      "acceptance": "calibrated fixtures exercise overload; meter location and limiter latency are documented.",
+      "owner_and_first_gate": "DSP / G3",
+      "quality_gates": [
+        "QA-14"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-022",
+      "requirement": "Independent cue/PFL, cue/master blend and headphone gain shall work only on valid output routes.",
+      "functional_case": "QA-FR-022",
+      "acceptance": "isolated cue never leaks to main; split-mono mode clearly trades stereo for independence.",
+      "owner_and_first_gate": "Audio + Platform / G3",
+      "quality_gates": [
+        "QA-06",
+        "QA-10"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-023",
+      "requirement": "Route setup shall identify main/cue channels, sample rate and unsupported combinations.",
+      "functional_case": "QA-FR-023",
+      "acceptance": "connect/disconnect/reconfigure on supported hardware yields truthful routes and safe fallback.",
+      "owner_and_first_gate": "Platform / G3",
+      "quality_gates": [
+        "QA-06",
+        "QA-10"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-024",
+      "requirement": "FX shall offer essential echo, delay, reverb and filter plus advanced modulation/distortion, assignment, wet/dry and tempo/free rate.",
+      "functional_case": "QA-FR-024",
+      "acceptance": "impulse/reference tests verify routing, bypass and tails; no timing depends on UI frame rate.",
+      "owner_and_first_gate": "DSP / G3\u2013G4",
+      "quality_gates": [
+        "QA-04",
+        "QA-08",
+        "QA-13"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-025",
+      "requirement": "FX XY control and macros shall show parameter mapping, hold/latch mode and reset behavior.",
+      "functional_case": "QA-FR-025",
+      "acceptance": "two-axis gestures, multi-touch and cancellation map predictably; reset cannot leave hidden wet gain.",
+      "owner_and_first_gate": "UI + DSP / G4",
+      "quality_gates": [
+        "QA-13",
+        "QA-16"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-026",
+      "requirement": "Performance pads shall have explicit cue, loop, roll, jump, slicer, sampler, pitch-play and stem modes where supported.",
+      "functional_case": "QA-FR-026",
+      "acceptance": "changing bank/mode cannot trigger a hidden action; active mode and deck remain legible.",
+      "owner_and_first_gate": "UI + Audio / G4",
+      "quality_gates": [
+        "QA-03",
+        "QA-05",
+        "QA-13",
+        "QA-16"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-027",
+      "requirement": "Sampler/sequencer supports at least 16 slots, banks, trigger modes, editable step patterns, per-step velocity/mute, length/resolution, swing and quantized start/stop/change.",
+      "functional_case": "QA-FR-027",
+      "acceptance": "Saved banks/patterns survive restart; repeated sequences, tempo changes, bar-boundary edits, mute/stop and takeover follow engine time.",
+      "owner_and_first_gate": "Audio + Data / G4",
+      "quality_gates": [
+        "QA-02",
+        "QA-05",
+        "QA-07",
+        "QA-13"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "selected_module_detailed_contract_proposed",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-028",
+      "requirement": "Prepared stems shall support aligned vocals/drums/bass/other with mute/solo/gain and readiness status.",
+      "functional_case": "QA-FR-028",
+      "acceptance": "sum/alignment reference, cache integrity and unavailable-stem fallback are verified on authorized media.",
+      "owner_and_first_gate": "DSP + Data / G4",
+      "quality_gates": [
+        "QA-02",
+        "QA-09",
+        "QA-18"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "selected_module_detailed_contract_proposed",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-029",
+      "requirement": "Live separation shall be conditional on source permission, model license and measured device capacity.",
+      "functional_case": "QA-FR-029",
+      "acceptance": "refused activation is understandable; overload does not disrupt already playing full-mix audio.",
+      "owner_and_first_gate": "DSP + Platform / G4",
+      "quality_gates": [
+        "QA-02",
+        "QA-09",
+        "QA-18"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "selected_module_detailed_contract_proposed",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-030",
+      "requirement": "Microphone/aux input shall expose permission, route, gain, mute, monitoring and talkover/ducking.",
+      "functional_case": "QA-FR-030",
+      "acceptance": "feedback-aware defaults and supported input/output latency are verified on actual hardware.",
+      "owner_and_first_gate": "Audio + Platform / G4",
+      "quality_gates": [
+        "QA-06",
+        "QA-10",
+        "QA-14",
+        "QA-22"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "selected_module_detailed_contract_proposed",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-031",
+      "requirement": "Mix recording shall provide format choice, timer, storage estimate, markers, safe finalization and partial recovery.",
+      "functional_case": "QA-FR-031",
+      "acceptance": "low storage/process interruption recover valid segments; playback remains independent of writer failure.",
+      "owner_and_first_gate": "Audio + Data / G3",
+      "quality_gates": [
+        "QA-11",
+        "QA-18"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "selected_module_detailed_contract_proposed",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-032",
+      "requirement": "Queue/automix shall show next readiness, transition settings, reorder, skip, cancel and immediate manual takeover.",
+      "functional_case": "QA-FR-032",
+      "acceptance": "unavailable next track is never treated as ready; takeover causes no surprise transport restart.",
+      "owner_and_first_gate": "Audio + Product / G4",
+      "quality_gates": [
+        "QA-05",
+        "QA-07",
+        "QA-23"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "selected_module_detailed_contract_proposed",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-033",
+      "requirement": "Preview and track preparation shall remain available while the current set plays.",
+      "functional_case": "QA-FR-033",
+      "acceptance": "browsing/search/editing never obscures required transport, output and fader access.",
+      "owner_and_first_gate": "Design + UI / G3",
+      "quality_gates": [
+        "QA-04",
+        "QA-16"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-034",
+      "requirement": "Session state shall persist deck assignments, cues, relevant controls, queue and history at defined checkpoints.",
+      "functional_case": "QA-FR-034",
+      "acceptance": "recovery presents a truthful saved state and requires deliberate audible resume after a crash.",
+      "owner_and_first_gate": "Data + Audio / G3",
+      "quality_gates": [
+        "QA-20"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-035",
+      "requirement": "Live protection shall prevent unintended audible-deck replacement and destructive reset.",
+      "functional_case": "QA-FR-035",
+      "acceptance": "load protection, live lock, quick fade and escape actions are tested under realistic touch errors.",
+      "owner_and_first_gate": "Design + Audio / G3",
+      "quality_gates": [
+        "QA-07",
+        "QA-20"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-036",
+      "requirement": "Source capability resolution shall gate analysis, caching, DSP, stems, recording, export and broadcast independently.",
+      "functional_case": "QA-FR-036",
+      "acceptance": "unknown/expired permission fails closed; provider restrictions are enforced below the UI.",
+      "owner_and_first_gate": "Integrations + Security / G5",
+      "quality_gates": [
+        "QA-18",
+        "QA-19"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-037",
+      "requirement": "Background playback, audio focus and interruption behavior shall be explicit per operating system.",
+      "functional_case": "QA-FR-037",
+      "acceptance": "calls, notifications, lock screen, route loss and system termination follow approved state transitions.",
+      "owner_and_first_gate": "Platform / G3",
+      "quality_gates": [
+        "QA-10"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-038",
+      "requirement": "Day/night, high contrast, reduced transparency/motion and color-independent identities shall be supported.",
+      "functional_case": "QA-FR-038",
+      "acceptance": "critical controls and labels remain usable in each mode; screen-reader/precise-value alternatives exist.",
+      "owner_and_first_gate": "Design + Accessibility / G3",
+      "quality_gates": [
+        "QA-16"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-039",
+      "requirement": "Portrait/landscape and compact/expanded layouts shall preserve engine state and pointer safety.",
+      "functional_case": "QA-FR-039",
+      "acceptance": "rotate during playback/gesture without audio reset, cue leakage or unintended fader movement.",
+      "owner_and_first_gate": "UI + Platform / G3",
+      "quality_gates": [
+        "QA-10",
+        "QA-16"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-040",
+      "requirement": "Accounts shall be optional for the offline core; cloud functions shall disclose the data they require.",
+      "functional_case": "QA-FR-040",
+      "acceptance": "expired app login cannot disable authorized local performance unexpectedly.",
+      "owner_and_first_gate": "Product + Security / G3",
+      "quality_gates": [
+        "QA-19"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_account_offline_policy",
+      "acceptance_status": "proposed",
+      "optional_community_detail_document": "17_Open_Source_and_Home_Lab_Guide.md"
+    },
+    {
+      "id": "FR-041",
+      "requirement": "Backup/export shall include portable metadata, version information and explicit source references.",
+      "functional_case": "QA-FR-041",
+      "acceptance": "round-trip restoration restores user work; restricted media is not copied as a side effect.",
+      "owner_and_first_gate": "Data / G4",
+      "quality_gates": [
+        "QA-15",
+        "QA-20",
+        "QA-24"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed",
+      "optional_community_detail_document": "17_Open_Source_and_Home_Lab_Guide.md"
+    },
+    {
+      "id": "FR-042",
+      "requirement": "Diagnostics shall show meaningful audio-route, storage, battery/thermal and source readiness states.",
+      "functional_case": "QA-FR-042",
+      "acceptance": "simulated faults produce actionable messages; telemetry omits track contents/tokens by default.",
+      "owner_and_first_gate": "Platform + Security / G3",
+      "quality_gates": [
+        "QA-10",
+        "QA-21"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed"
+    },
+    {
+      "id": "FR-043",
+      "requirement": "Bundled audio, fonts, icons, textures and models shall have documented rights and source versions.",
+      "functional_case": "QA-FR-043",
+      "acceptance": "every shipped asset resolves to an approved manifest entry and required attribution.",
+      "owner_and_first_gate": "Assets + Release / G6",
+      "quality_gates": [
+        "QA-17"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed",
+      "optional_community_detail_document": "17_Open_Source_and_Home_Lab_Guide.md"
+    },
+    {
+      "id": "FR-044",
+      "requirement": "Provider loss shall not invalidate the local engine, user-owned library or metadata unnecessarily.",
+      "functional_case": "QA-FR-044",
+      "acceptance": "provider unavailable/revoked while local decks play leaves those local workflows operational.",
+      "owner_and_first_gate": "Integrations / G5",
+      "quality_gates": [
+        "QA-18",
+        "QA-19"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "proposed_support_for_selected_product",
+      "acceptance_status": "proposed",
+      "optional_community_detail_document": "17_Open_Source_and_Home_Lab_Guide.md"
+    },
+    {
+      "id": "FR-045",
+      "requirement": "Selected authorized video mixing with audio-clock synchronization, protected output and explicit mobile codec/display profiles.",
+      "functional_case": "QA-FR-045",
+      "acceptance": "Pass functional case plus applicable AV cases on named device/format/workload; see specialist specification.",
+      "owner_and_first_gate": "Audio/Video + Platform / G1, G4, G6",
+      "quality_gates": [
+        "QA-02",
+        "QA-04",
+        "QA-05",
+        "QA-10",
+        "QA-18"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "selected_module_detailed_contract_proposed",
+      "acceptance_status": "proposed",
+      "detail_document": "15_Advanced_Performance_Modules.md"
+    },
+    {
+      "id": "FR-046",
+      "requirement": "Selected karaoke and broadcasting, each with separate media/rights, mic/output, encoding and failure contracts.",
+      "functional_case": "QA-FR-046",
+      "acceptance": "Pass functional case plus applicable AV cases on named device/format/workload; see specialist specification.",
+      "owner_and_first_gate": "Audio/Video + Integrations / G4-G6",
+      "quality_gates": [
+        "QA-02",
+        "QA-04",
+        "QA-10",
+        "QA-18",
+        "QA-21",
+        "QA-22"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "selected_module_detailed_contract_proposed",
+      "acceptance_status": "proposed",
+      "detail_document": "15_Advanced_Performance_Modules.md"
+    },
+    {
+      "id": "FR-047",
+      "requirement": "Selected actual third-party Android-compatible plugin hosting; lighting excluded; built-in FX alone insufficient.",
+      "functional_case": "QA-FR-047",
+      "acceptance": "Pass functional case plus applicable AV cases on named device/format/workload; see specialist specification.",
+      "owner_and_first_gate": "Architecture + Audio + Security / G1, G4, G6",
+      "quality_gates": [
+        "QA-02",
+        "QA-04",
+        "QA-05",
+        "QA-14",
+        "QA-17"
+      ],
+      "status": "proposed",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "scope_status": "selected_module_detailed_contract_proposed",
+      "acceptance_status": "proposed",
+      "detail_document": "15_Advanced_Performance_Modules.md"
+    },
+    {
+      "id": "FR-048",
+      "requirement": "ParDay provides selected preparation plus explicitly armed assisted performance, with typed proposals, deterministic local authority, immediate manual takeover and protected live audio.",
+      "functional_case": "QA-FR-048",
+      "acceptance": "Pass AI-001 through AI-024 and shared gates.",
+      "owner_and_first_gate": "AI + Product + Security + Audio / G2, G5, G6",
+      "quality_gates": [
+        "QA-04",
+        "QA-05",
+        "QA-07",
+        "QA-18",
+        "QA-19",
+        "QA-20",
+        "QA-21",
+        "QA-23"
+      ],
+      "status": "proposed",
+      "scope_status": "selected_armed_assisted_performance_detailed_contract_proposed",
+      "acceptance_status": "proposed",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "detail_document": "13_ParDay_AI_Architecture_and_Requirements.md"
+    },
+    {
+      "id": "FR-049",
+      "requirement": "Provide requested in-app Spotify/YouTube link-to-file acquisition, including unofficial adapter/extractor candidates, preserving exact media identity and provenance with separate technical, provider-access, content-rights and distribution statuses.",
+      "functional_case": "QA-FR-049",
+      "acceptance": "Pass SRC-01 through SRC-12, DLA-01 through DLA-20 and the mapped shared gates.",
+      "owner_and_first_gate": "Integrations + Data + Security / G2, G5, G6",
+      "quality_gates": [
+        "QA-02",
+        "QA-04",
+        "QA-07",
+        "QA-10",
+        "QA-15",
+        "QA-17",
+        "QA-18",
+        "QA-19",
+        "QA-20",
+        "QA-21"
+      ],
+      "status": "proposed",
+      "scope_status": "selected_capability_mechanism_and_admission_unresolved",
+      "acceptance_status": "proposed",
+      "implementation_status": "not_started",
+      "verification_status": "unverified",
+      "implementation_reference": null,
+      "verification_evidence": null,
+      "source_document": "02_Professional_Requirements.md",
+      "detail_document": "14_Music_Discovery_and_Acquisition.md",
+      "additional_detail_document": "16_Link_Acquisition_Implementation_and_Feasibility.md",
+      "additional_acceptance_register": "link_acquisition_acceptance_register.json",
+      "comparison_protocol": "acquisition_comparison_protocol.json",
+      "optional_deployment_profile": "home_lab_deployment_profile.json",
+      "cloud_trial_profile": "aws_deployment_profile.json",
+      "cloud_detail_document": "18_AWS_Deployment_and_Comparison_Plan.md",
+      "delivery_phase": "on_device_D_first_source_feasibility_required",
+      "comparison_phase": "deferred_optional_AWS_expansion",
+      "cloud_acceptance_applicability": "Only when the AWS extension is evaluated; does not gate initial local design or release."
+    }
+  ],
+  "delivery_sequence": {
+    "initial": "local_phone_native_Android_without_required_server",
+    "future": "optional_AWS_extension_and_D_vs_AWS_comparison",
+    "cloud_cases_gate_initial_design_or_local_release": false,
+    "complete_product": "All selected professional modules remain in scope; an intermediate two-deck milestone is not full-product completion."
+  }
+}

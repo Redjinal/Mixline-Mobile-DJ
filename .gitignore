@@ -1,0 +1,13 @@
+# OS and editor noise
+.DS_Store
+Thumbs.db
+*.swp
+
+# Local tooling
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+
+# Renderer scratch (see docs/planning/v1_0/RENDERING.md)
+docs/planning/v1_0/tmp/
