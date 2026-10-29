@@ -49,7 +49,7 @@
 ## Not verified / needs real-device evidence
 - Android WebView audio latency, haptic feel per kind, audio focus and headphone-unplug handling, document picker import and export, APK install and update over the 5.0 test build (new signing key unless the old keystore is supplied).
 - Live Audius / Jamendo / Internet Archive / Wikimedia requests and actual stream decoding; live YouTube embedded playback and cut behaviour. Both hosts were blocked from the build environment; adapters are unit-tested with controlled responses.
-- GitHub Actions: the first two runs on this branch failed only in checks that assumed YouTube was unreachable (the runner can reach it) and in a Settings step that a toast could cover; both are fixed and the journeys now record app state on any failure. The APK job result for the fixed run is reported in the session summary, not here.
+- GitHub Actions (verified): run 40795974765 on commit 85c959c passed both jobs — Web tests (103 unit tests, 67 browser checks on the runner's Chromium 131) and Android test APK (artifact `Mixline-APK`, 2.2 MB, signed with a CI-generated testing key because no `MIXLINE_KEYSTORE_BASE64` secret is set). The first two runs had failed only in checks that assumed YouTube was unreachable (the runner can reach it) and in a Settings step a toast could cover; both are fixed and the journeys now record app state on any failure. Installing and running that APK on a phone remains unverified.
 
 ## Known limitations (deferred from review, by user effect)
 - 5.0 preferences, Challenge queue and saved sessions are not migrated (the library and its tracks are); 5.0 sessions list as empty and cannot be restored. A one-time migration is the natural next task.
