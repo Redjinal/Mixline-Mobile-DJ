@@ -1,0 +1,91 @@
+{
+  "_note": "Document 19 §4 essential states per family. Each entry lists state-id substrings that satisfy it; the audit checks that at least one screen in the family declares a matching state.",
+  "launch": [
+    { "name": "Empty library", "match": ["empty"] },
+    { "name": "Missing file", "match": ["missing"] },
+    { "name": "Partial import", "match": ["partial"] },
+    { "name": "Duplicate", "match": ["duplicate", "dup"] },
+    { "name": "No results", "match": ["no-results", "noresults", "empty-search"] },
+    { "name": "Offline", "match": ["offline"] },
+    { "name": "Analysis pending", "match": ["pending", "analysis"] }
+  ],
+  "preparation": [
+    { "name": "Uncertain grid", "match": ["uncertain"] },
+    { "name": "Edited / locked", "match": ["edited", "locked"] },
+    { "name": "Undo", "match": ["undo"] },
+    { "name": "Pending analysis", "match": ["pending", "analysis"] },
+    { "name": "Save failure", "match": ["save-fail", "save-error", "failed"] }
+  ],
+  "routing": [
+    { "name": "No isolated cue", "match": ["speaker", "bluetooth", "usbc", "no-cue", "nocue"] },
+    { "name": "Split mono", "match": ["splitter", "split-mono", "split"] },
+    { "name": "Unsupported route", "match": ["unsupported"] },
+    { "name": "Disconnected", "match": ["disconnected", "lost"] }
+  ],
+  "performance": [
+    { "name": "Empty / loading / playing / paused", "match": ["empty", "loading", "playing", "paused", "set-ready"] },
+    { "name": "Held touch", "match": ["held", "scratch"] },
+    { "name": "Pending quantized action", "match": ["pending", "quantiz"] },
+    { "name": "Clipping", "match": ["clip"] },
+    { "name": "Protected load", "match": ["protected"] },
+    { "name": "Seek lock", "match": ["seek"] }
+  ],
+  "pads": [
+    { "name": "Bank / mode", "match": ["bank", "mode"] },
+    { "name": "Edit", "match": ["edit"] },
+    { "name": "Pending / active latch", "match": ["latch", "pending", "momentary"] },
+    { "name": "Unavailable stems", "match": ["unavailable", "restricted", "preparing"] },
+    { "name": "Resource refusal", "match": ["refus", "capacity", "denied"] }
+  ],
+  "sampler": [
+    { "name": "Empty slot", "match": ["empty"] },
+    { "name": "Sounding pattern", "match": ["playing", "sounding"] },
+    { "name": "Queued next-bar revision", "match": ["queued", "revision", "next-bar"] },
+    { "name": "Immediate / quantized stop", "match": ["stop"] }
+  ],
+  "queue": [
+    { "name": "Missing next track", "match": ["missing", "not-ready"] },
+    { "name": "Committed transition", "match": ["committed"] },
+    { "name": "Expired edit", "match": ["expired", "late"] },
+    { "name": "Manual takeover", "match": ["takeover"] }
+  ],
+  "recording": [
+    { "name": "Restricted source", "match": ["restricted", "ineligible"] },
+    { "name": "Full storage", "match": ["storage", "full"] },
+    { "name": "Interrupted writer", "match": ["interrupted", "writer"] },
+    { "name": "Recoverable segment", "match": ["recover", "segment"] }
+  ],
+  "sources": [
+    { "name": "Matching", "match": ["matching", "resolving", "resolve"] },
+    { "name": "Ambiguous version", "match": ["ambiguous"] },
+    { "name": "Unavailable adapter", "match": ["unavailable", "adapter", "blocked"] },
+    { "name": "Format / quality", "match": ["format", "quality"] },
+    { "name": "Progress unknown", "match": ["unknown"] },
+    { "name": "Cancel", "match": ["cancel"] },
+    { "name": "Validate", "match": ["validat", "verif"] },
+    { "name": "Ready", "match": ["ready", "complete", "published"] }
+  ],
+  "parday": [
+    { "name": "Local only", "match": ["local"] },
+    { "name": "Thinking", "match": ["thinking"] },
+    { "name": "Stale proposal", "match": ["stale", "expired"] },
+    { "name": "Needs review", "match": ["review"] },
+    { "name": "Applied", "match": ["applied"] },
+    { "name": "Cost limit", "match": ["cost", "limit", "quota"] },
+    { "name": "Unavailable", "match": ["unavailable"] }
+  ],
+  "av": [
+    { "name": "Preview / program distinction", "match": ["preview", "program"] },
+    { "name": "Singer queue", "match": ["singer", "queue", "karaoke"] },
+    { "name": "Mic assignment", "match": ["mic", "assign"] },
+    { "name": "Disconnected receiver", "match": ["disconnected", "receiver"] },
+    { "name": "Restricted source", "match": ["restricted"] }
+  ],
+  "system": [
+    { "name": "Missing / failed plugin", "match": ["missing", "failed", "unavailable"] },
+    { "name": "Bypass", "match": ["bypass"] },
+    { "name": "Dirty / save / discard settings", "match": ["dirty", "save", "discard", "draft"] },
+    { "name": "Restore mismatch", "match": ["mismatch", "restore"] },
+    { "name": "Interrupted session / route lost", "match": ["route-lost", "interrupted", "crash"] }
+  ]
+}

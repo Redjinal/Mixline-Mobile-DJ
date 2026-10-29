@@ -9,7 +9,7 @@
 import * as State from './state.js';
 import { getScreen, allScreens, byFamily, FAMILIES } from './registry.js';
 import { fixtures } from './fixtures.js';
-import { h } from '../components/base.js';
+import { h, registry as componentRegistry } from '../components/base.js';
 import { scenes, renderWalkBar } from './walkthrough.js';
 
 let outlet, current = null, lastKey = '';
@@ -55,6 +55,7 @@ export function init(outletEl) {
     navigate, navigateWalk, hrefFor, parseHash,
     get current() { return current; },
     screens: () => allScreens().map(describeScreen),
+    components: () => componentRegistry.components.map((c) => ({ tag: c.tag, states: c.states, fr: c.fr, hit: c.hit, fixture: !!c.fixture, file: `components/${c.tag}.js` })),
     scenes: () => scenes,
     state: State,
     fixtures,
