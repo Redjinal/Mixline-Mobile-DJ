@@ -12,8 +12,9 @@ const loopLabel = n => n < 1 ? `1/${Math.round(1 / n)}` : String(n);
 
 export function createPadsScreen(ctx) {
   const {engine, toast, sheet} = ctx;
-  const state = {deck: 0, mode: 'cues'};
-  let container = null, key = '', timer = 0;
+  const state = {deck: 0, mode: 'cues', loopIn: [null, null]};
+  const loopInFor = i => { const d = engine.decks[i]; const saved = state.loopIn[i]; return saved && d.track && saved.trackId === d.track.id ? saved.at : null; };
+  let container = null, key = '';
   const offs = [];
   const on = (el, type, selector, handler) => offs.push(delegate(el, type, selector, handler));
 
@@ -34,7 +35,7 @@ export function createPadsScreen(ctx) {
   function footer() {
     const i = state.deck, d = engine.decks[i];
     if (state.mode === 'cues') return html`<div class="pads-footer"><button class="btn btn-sm" data-pad-slip aria-pressed="${d.slip}">Slip</button><div class="cluster">${[-16, -4, 4, 16].map(n => html`<button class="btn btn-sm num" data-pad-jump="${n}" ${!d.bpm ? 'disabled' : ''}>${n > 0 ? '+' : ''}${n}</button>`)}</div><span class="dim">Hold a pad to rename or clear</span></div>`;
-    if (state.mode === 'loops') return html`<div class="pads-footer"><div class="cluster"><button class="btn btn-sm" data-pad-loop-in>In</button><button class="btn btn-sm" data-pad-loop-out ${!d.loopIn && d.loopIn !== 0 ? '' : ''}>Out</button><button class="btn btn-sm btn-ghost" data-pad-loop-exit ${!d.loop ? 'disabled' : ''}>Exit</button></div><button class="btn btn-sm" data-pad-slip aria-pressed="${d.slip}">Slip</button>${d.bpm ? html`<span class="dim num">${d.bpm.toFixed(1)} BPM</span>` : html`<button class="btn btn-sm btn-violet" data-pad-tap>${icon('tap', {size: 15})} Tap tempo</button>`}</div>`;
+    if (state.mode === 'loops') return html`<div class="pads-footer"><div class="cluster"><button class="btn btn-sm" data-pad-loop-in>In</button><button class="btn btn-sm" data-pad-loop-out>Out</button><button class="btn btn-sm btn-ghost" data-pad-loop-exit ${!d.loop ? 'disabled' : ''}>Exit</button></div><button class="btn btn-sm" data-pad-slip aria-pressed="${d.slip}">Slip</button>${d.bpm ? html`<span class="dim num">${d.bpm.toFixed(1)} BPM</span>` : html`<button class="btn btn-sm btn-violet" data-pad-tap>${icon('tap', {size: 15})} Tap tempo</button>`}</div>`;
     return html`<div class="pads-footer"><span class="dim">Eight original one-shots play on the master bus and are included in recordings.</span></div>`;
   }
   function view() {
@@ -82,21 +83,20 @@ export function createPadsScreen(ctx) {
       on(el, 'click', '[data-pad-mode]', (e, b) => { state.mode = b.dataset.padMode; haptics.play('select'); refresh(true); });
       on(el, 'click', '[data-pad]', (e, b) => {
         const n = Number(b.dataset.pad), i = state.deck, d = engine.decks[i];
-        if (state.mode === 'sampler') { engine.sampler(n); flash(b); haptics.play('press'); return; }
+        if (state.mode === 'sampler') { Promise.resolve(engine.sampler(n)).catch(err => toast(err.message, {kind: 'error'})); flash(b); haptics.play('press'); return; }
         if (!d.track) return;
         if (d.cues[n] === null) { engine.setCue(i, n); haptics.play('load'); toast(`Hot cue ${n + 1} set at ${formatTime(d.cues[n])}`, {kind: 'success'}); }
         else { engine.goCue(i, n); flash(b); haptics.play('press'); }
       });
       on(el, 'click', '[data-pad-loop]', (e, b) => { const n = Number(b.dataset.padLoop), i = state.deck, d = engine.decks[i]; try { if (d.loop && Math.abs((d.loop.beats || 0) - n) < 0.01) engine.loop(i, 0); else engine.loop(i, n); haptics.play('toggle'); } catch (err) { toast(err.message, {kind: 'error'}); } });
       on(el, 'click', '[data-pad-loop-exit]', () => { engine.loop(state.deck, 0); haptics.play('toggle'); });
-      on(el, 'click', '[data-pad-loop-in]', () => { const i = state.deck; engine.decks[i].loopIn = engine.position(i); haptics.play('press'); toast(`Loop in at ${formatTime(engine.decks[i].loopIn)}`); });
-      on(el, 'click', '[data-pad-loop-out]', () => { const i = state.deck, d = engine.decks[i]; const start = d.loopIn ?? d.cue; try { engine.setLoopPoints(i, start, engine.position(i), {quantize: d.quantize}); haptics.play('toggle'); } catch (err) { toast(err.message, {kind: 'error'}); } });
+      on(el, 'click', '[data-pad-loop-in]', () => { const i = state.deck, d = engine.decks[i]; if (!d.track) return; const at = engine.position(i); state.loopIn[i] = {trackId: d.track.id, at}; haptics.play('press'); toast(`Loop in at ${formatTime(at)}`); });
+      on(el, 'click', '[data-pad-loop-out]', () => { const i = state.deck, d = engine.decks[i]; const start = loopInFor(i) ?? d.cue; try { engine.setLoopPoints(i, start, engine.position(i), {quantize: d.quantize}); haptics.play('toggle'); } catch (err) { toast(err.message, {kind: 'error'}); } });
       on(el, 'click', '[data-pad-slip]', () => { const i = state.deck; engine.setSlip(i, !engine.decks[i].slip); haptics.play('toggle'); });
       on(el, 'click', '[data-pad-jump]', (e, b) => { try { engine.beatJump(state.deck, Number(b.dataset.padJump)); haptics.play('step'); } catch (err) { toast(err.message, {kind: 'error'}); } });
       on(el, 'click', '[data-pad-tap]', () => { const bpm = engine.tap(state.deck); haptics.play('step'); if (bpm) toast(`Tapped ${bpm.toFixed(1)} BPM`); });
-      timer = setInterval(() => { if (container && state.mode === 'cues') { /* keep pad bars static; nothing to tick */ } }, 1000);
     },
-    unmount() { offs.forEach(off => off()); offs.length = 0; clearInterval(timer); container = null; },
+    unmount() { offs.forEach(off => off()); offs.length = 0; container = null; },
     update() { if (container) refresh(false); }
   };
 }

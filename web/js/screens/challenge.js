@@ -17,7 +17,7 @@ export function createChallengeScreen(ctx) {
   const offs = []; const on = (el, type, selector, handler) => offs.push(delegate(el, type, selector, handler));
   const onError = e => toast(e.message, {kind: 'error'});
   const live = () => (video.crossfade >= 0.5 ? 1 : 0);
-  const thumb = item => html`<img class="art" src="${youtubeThumbnail(item.videoId)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'art-missing'}))">`;
+  const thumb = item => html`<span class="art-stack"><span class="art-fallback">${icon('video', {size: 22})}</span><img class="art" src="${youtubeThumbnail(item.videoId)}" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')"></span>`;
 
   function videoCard(i) {
     const d = video.decks[i], [label, cls] = STATUS[d.state] || STATUS.unknown;

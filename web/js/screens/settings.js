@@ -13,13 +13,38 @@ export function createSettingsScreen(ctx) {
   const offs = []; const on = (el, type, selector, handler) => offs.push(delegate(el, type, selector, handler));
   const onError = e => toast(e.message, {kind: 'error'});
 
+  const markFor = key => settings.changed(key) ? ['changed', 'Unsaved change', '●'] : !settings.isDefault(key) ? ['nondefault', 'Differs from default', '◆'] : ['', '', ''];
   function control(item) {
     const value = settings.draft[item.key];
-    const mark = settings.changed(item.key) ? html`<span class="changed" title="Unsaved change">●</span>` : !settings.isDefault(item.key) ? html`<span class="nondefault" title="Differs from default">◆</span>` : '';
+    const [cls, title, glyph] = markFor(item.key);
+    const mark = html`<span class="${cls}" title="${title}" data-setting-mark="${item.key}" ${cls ? '' : 'hidden'}>${glyph}</span>`;
     if (item.type === 'switch') return html`<button class="switch" role="switch" data-setting="${item.key}" aria-checked="${value}" aria-label="${item.label}"></button>${mark}`;
     if (item.type === 'select') return html`<select class="select" data-setting="${item.key}" aria-label="${item.label}">${item.options.map(([v, label]) => html`<option value="${v}" ${v === value ? 'selected' : ''}>${label}</option>`)}</select>${mark}`;
     if (item.type === 'range') return html`<div class="range-wrap"><input class="range" type="range" data-setting="${item.key}" min="${item.min}" max="${item.max}" step="${item.step}" value="${value}" aria-label="${item.label}" style="--fill:${((value - item.min) / (item.max - item.min)) * 100}%"><span class="num" data-range-value>${Math.round(value * 100)}%</span>${mark}</div>`;
     return '';
+  }
+  /** Reflect the draft into the existing controls so a control being used is never replaced under the finger. */
+  function patch() {
+    if (!container) return;
+    for (const item of SETTINGS_SCHEMA.flatMap(g => g.items)) {
+      const value = settings.draft[item.key];
+      const el = $(`[data-setting="${item.key}"]`, container);
+      if (el) {
+        if (item.type === 'switch') el.setAttribute('aria-checked', String(value));
+        else if (item.type === 'select') { if (el.value !== String(value)) el.value = String(value); }
+        else if (item.type === 'range') {
+          if (Number(el.value) !== value) el.value = String(value);
+          el.style.setProperty('--fill', `${((value - item.min) / (item.max - item.min)) * 100}%`);
+          const v = $('[data-range-value]', el.parentElement); if (v) v.textContent = `${Math.round(value * 100)}%`;
+        }
+      }
+      const mark = $(`[data-setting-mark="${item.key}"]`, container);
+      if (mark) { const [cls, title, glyph] = markFor(item.key); mark.className = cls; mark.title = title; mark.textContent = glyph; mark.hidden = !cls; }
+    }
+    const test = $('[data-settings-haptic-test]', container); if (test) test.disabled = !settings.draft.haptics;
+    const discard = $('[data-settings-discard]', container); if (discard) discard.disabled = !settings.dirty;
+    const save = $('[data-settings-save]', container);
+    if (save) { save.disabled = !settings.dirty; const label = $('[data-settings-save-label]', save); if (label) label.textContent = settings.dirty ? 'Save settings' : 'Saved'; }
   }
   function group(g, items) {
     return html`<article class="panel settings-group"><div class="panel-title"><h2>${icon(g.icon, {size: 16})} ${g.label}</h2></div>
@@ -44,7 +69,7 @@ export function createSettingsScreen(ctx) {
       <article class="panel settings-group"><div class="panel-title"><h2>${icon('info', {size: 16})} About</h2></div>
         <div class="kv"><dt>Version</dt><dd>Mixline ${VERSION}</dd><dt>Audio engine</dt><dd>Web Audio · ${engine.audioState}</dd><dt>Sources</dt><dd><button class="btn btn-sm btn-ghost" data-settings-sources>${icon('cloud', {size: 14})} Manage sources</button></dd><dt>Storage</dt><dd data-settings-storage>…</dd></div>
       </article>` : ''}
-      <div class="settings-bar"><button class="btn btn-ghost" data-settings-reset>${icon('reset', {size: 15})} Defaults</button><span class="grow"></span><button class="btn btn-ghost" data-settings-discard ${settings.dirty ? '' : 'disabled'}>Discard</button><button class="btn btn-primary" data-settings-save ${settings.dirty ? '' : 'disabled'}>${icon('check', {size: 16})} ${settings.dirty ? 'Save settings' : 'Saved'}</button></div>
+      <div class="settings-bar"><button class="btn btn-ghost" data-settings-reset>${icon('reset', {size: 15})} Defaults</button><span class="grow"></span><button class="btn btn-ghost" data-settings-discard ${settings.dirty ? '' : 'disabled'}>Discard</button><button class="btn btn-primary" data-settings-save ${settings.dirty ? '' : 'disabled'}>${icon('check', {size: 16})} <span data-settings-save-label>${settings.dirty ? 'Save settings' : 'Saved'}</span></button></div>
     </section>`;
   }
   function refresh() {
@@ -82,12 +107,12 @@ export function createSettingsScreen(ctx) {
     mount(el) {
       container = el; query = '';
       refresh(); loadCounts();
-      unsubscribe = settings.subscribe(() => refresh());
+      unsubscribe = settings.subscribe(() => patch());
       on(el, 'input', '[data-settings-search]', (e, input) => { query = input.value; refresh(); });
       on(el, 'click', '[data-settings-clear]', () => { query = ''; refresh(); });
       on(el, 'click', 'button.switch[data-setting]', (e, b) => { settings.set(b.dataset.setting, b.getAttribute('aria-checked') !== 'true'); haptics.play('toggle'); });
       on(el, 'change', 'select[data-setting]', (e, s) => { settings.set(s.dataset.setting, s.value); haptics.play('select'); });
-      on(el, 'input', 'input[data-setting]', (e, r) => { settings.set(r.dataset.setting, Number(r.value)); const v = $('[data-range-value]', r.parentElement); if (v) v.textContent = `${Math.round(Number(r.value) * 100)}%`; r.style.setProperty('--fill', `${((Number(r.value) - Number(r.min)) / (Number(r.max) - Number(r.min))) * 100}%`); });
+      on(el, 'input', 'input[data-setting]', (e, r) => { settings.set(r.dataset.setting, Number(r.value)); });
       on(el, 'click', '[data-settings-haptic-test]', () => { const ok = haptics.play('load', {force: true}); toast(ok ? 'Haptic cue sent.' : 'No haptic hardware is reachable from this browser.', {kind: ok ? 'success' : 'warning'}); });
       on(el, 'click', '[data-settings-save]', async () => { try { await settings.save(); toast('Settings saved.', {kind: 'success'}); haptics.play('load'); } catch (e) { onError(e); } });
       on(el, 'click', '[data-settings-discard]', () => { settings.discard(); toast('Changes discarded.'); });

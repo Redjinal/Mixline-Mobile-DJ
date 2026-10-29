@@ -36,7 +36,7 @@ export function createRecorder(stream, {limitBytes = 48 * 1024 * 1024, timeslice
     get pending() { return pending; },
     get bytes() { return bytes; },
     get elapsed() { return media.state === 'recording' ? (performance.now() - started) / 1000 : 0; },
-    start() { pending = true; started = performance.now(); media.start(timeslice); },
+    start() { pending = true; started = performance.now(); try { media.start(timeslice); } catch (e) { pending = false; throw e; } },
     stop() { if (media.state === 'recording') media.stop(); return done; }
   };
 }

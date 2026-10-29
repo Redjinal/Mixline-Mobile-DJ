@@ -42,7 +42,7 @@ bash scripts/build-apk.sh   # writes artifacts/Mixline-6.0.0.apk and its SHA256
 ## Testing
 
 ```bash
-npm test                 # 102 unit tests: engine, analysis, sources, video, queue, library, loader, settings, sessions, store
+npm test                 # 103 unit tests: engine, analysis, sources, video, queue, library, loader, settings, sessions, store
 npm run test:browser     # Playwright/Chromium journeys, control gestures and viewport evidence (needs the playwright package and Chromium)
 ```
 

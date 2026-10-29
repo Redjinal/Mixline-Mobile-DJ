@@ -7,6 +7,14 @@ const runner = createRunner('journey');
 const site = await serve();
 const {page, errors, close} = await launch();
 runner.setPage(page);
+runner.setDiagnostics(() => page.evaluate(() => ({
+  route: Mixline.router.current, settings: {dirty: Mixline.settings.dirty, draft: Mixline.settings.draft, current: Mixline.settings.current},
+  active: document.activeElement ? `${document.activeElement.tagName}${[...document.activeElement.attributes].filter(a => a.name.startsWith('data-')).map(a => `[${a.name}="${a.value}"]`).join('')}` : null,
+  dialogs: [...document.querySelectorAll('dialog')].map(d => `${d.className}:${d.open ? 'open' : 'closed'}`),
+  toasts: [...document.querySelectorAll('.toast')].map(t => t.textContent.trim().slice(0, 80)),
+  decks: Mixline.engine.decks.map(d => ({track: d.track?.id || null, playing: d.playing, loading: !!d.loading})),
+  video: Mixline.video.decks.map(d => ({state: d.state, error: d.error, track: d.track?.videoId || null}))
+})));
 const shot = name => page.screenshot({path: path.join(runner.output, `${name}.png`)});
 const nav = async route => { await page.locator(`nav [data-route="${route}"]`).click(); await page.waitForFunction(r => Mixline.router.current.name === r, route); };
 try {
@@ -66,6 +74,28 @@ try {
     await page.locator('[data-tempo-reset="1"]').click();
     assert.equal(await page.evaluate(() => Mixline.engine.decks[1].rate), 1);
   });
+  await runner.run('decks: a held scratch on Deck 1 survives Deck 2 loading, and the Decks crossfader follows the engine', async () => {
+    await page.evaluate(() => Mixline.engine.play(0));
+    const platter = page.locator('[data-platter="0"]');
+    await platter.scrollIntoViewIfNeeded();
+    const b = await platter.boundingBox();
+    await page.mouse.move(b.x + b.width * 0.8, b.y + b.height / 2); await page.mouse.down();
+    await page.waitForFunction(() => Mixline.engine.decks[0].scratching);
+    const platterNode = await platter.elementHandle();
+    await page.evaluate(() => Mixline.loadDemo(1, 'demo-harbour'));
+    await page.waitForFunction(() => Mixline.engine.decks[1].track?.id === 'demo-harbour' && !Mixline.engine.decks[1].loading);
+    await page.mouse.move(b.x + b.width * 0.6, b.y + b.height * 0.7, {steps: 4});
+    assert.equal(await page.evaluate(() => Mixline.engine.decks[0].scratching), true, 'scratch still held while the other deck loaded');
+    assert.equal(await platterNode.evaluate(el => el.isConnected), true, 'platter element kept under the finger');
+    assert.equal(await page.locator('[data-deck="1"] [data-deck-title="1"]').textContent(), 'Harbour Lights');
+    await page.mouse.up();
+    await page.waitForFunction(() => !Mixline.engine.decks[0].scratching && Mixline.engine.decks[0].playing);
+    await page.evaluate(() => Mixline.engine.setCrossfade(0.9));
+    await page.waitForFunction(() => Number(document.querySelector('[data-xfader]')?.getAttribute('aria-valuenow')) === 0.9);
+    await page.evaluate(() => { Mixline.engine.setCrossfade(0.5); Mixline.engine.pause(0); });
+    await page.evaluate(() => Mixline.loadDemo(1, 'demo-blue'));
+    await page.waitForFunction(() => Mixline.engine.decks[1].track?.id === 'demo-blue');
+  });
   await runner.run('deck focus view opens with detail waveform, hot cues and the other deck strip; back returns', async () => {
     await page.locator('[data-focus="0"]').click();
     await page.waitForFunction(() => Mixline.router.current.params.focus === 0);
@@ -74,6 +104,17 @@ try {
     await page.locator('.deck-focus [data-hotcue="0"]').click();
     assert.notEqual(await page.evaluate(() => Mixline.engine.decks[0].cues[0]), null);
     assert.equal(await page.locator('.deck-focus [data-other-play="1"]').count(), 1);
+    await page.locator('.deck-focus [data-wave-mode="scratch"]').click();
+    const wave = page.locator('.deck-focus [data-wave-kind="detail"] canvas');
+    const wb = await wave.boundingBox();
+    const canvasNode = await wave.elementHandle();
+    await page.mouse.move(wb.x + wb.width / 2, wb.y + wb.height / 2); await page.mouse.down();
+    await page.mouse.move(wb.x + wb.width / 2 + 30, wb.y + wb.height / 2, {steps: 4});
+    assert.equal(await page.evaluate(() => Mixline.engine.decks[0].scratching), true, 'first gesture after a mode switch scratches');
+    assert.equal(await canvasNode.evaluate(el => el.isConnected), true, 'waveform kept under the finger');
+    await page.mouse.up();
+    await page.waitForFunction(() => !Mixline.engine.decks[0].scratching);
+    await page.locator('.deck-focus [data-wave-mode="seek"]').click();
     await shot('deck-focus-412x915');
     await page.locator('[data-focus-back]').click();
     await page.waitForFunction(() => Mixline.router.current.params.focus === undefined);
@@ -202,6 +243,19 @@ try {
     await page.waitForFunction(async () => (await Mixline.store.getTrack('demo-harbour')).track.bpm === 123.5);
     assert.equal(await page.evaluate(async () => (await Mixline.store.getTrack('demo-harbour')).track.start), 2.5);
   });
+  await runner.run('library: artwork that fails to load falls back to the original cover instead of a blank', async () => {
+    const original = await page.evaluate(async () => { const t = (await Mixline.store.listTracks()).find(x => x.id === 'demo-coast'); await Mixline.store.updateTrack('demo-coast', {artwork: 'http://127.0.0.1:9/missing.png'}); await Mixline.screens.library.reload(); return t.artwork; });
+    await page.locator('[data-lib-tab="library"]').click();
+    await page.locator('[data-lib-search]').fill('Coast');
+    const row = page.locator('.row[data-track-id="demo-coast"] .row-art');
+    await row.waitFor();
+    await page.waitForFunction(() => { const art = document.querySelector('[data-track-id="demo-coast"] .row-art'); const img = art?.querySelector('img'); return art && (!img || getComputedStyle(img).display === 'none'); }, null, {timeout: 10000});
+    const fallback = row.locator('svg.art');
+    assert.equal(await fallback.count(), 1, 'fallback cover rendered');
+    assert.equal(await fallback.isVisible(), true, 'fallback cover visible');
+    await page.evaluate(async art => { await Mixline.store.updateTrack('demo-coast', {artwork: art}); await Mixline.screens.library.reload(); }, original);
+    await page.locator('[data-lib-search]').fill('');
+  });
   await runner.run('library: a long title truncates without overflow and the empty search state offers a reset', async () => {
     await page.evaluate(() => Mixline.store.saveTrack({id: 'long-title-fixture', demo: 'warm', title: 'An Extraordinarily Long Track Title That Keeps Going And Going Without Any End In Sight', artist: 'Someone With A Very Long Artist Name Indeed', bpm: 0, source: 'original'}));
     await page.evaluate(() => Mixline.screens.library.reload());
@@ -245,8 +299,11 @@ try {
     await page.locator('.toasts .toast button').first().click();
     await page.waitForFunction(() => document.querySelectorAll('.queue-item').length === 2);
     await page.locator('[data-ch-next="0"]').click();
-    await page.waitForFunction(() => /could not|unavailable|retry|connect/i.test(document.querySelector('[data-video-status="0"]')?.textContent || ''), null, {timeout: 25000});
-    assert.equal(await page.locator('[data-video-retry="0"]').count(), 1);
+    // Online runners load the real player (ready / playing); offline ones surface the connection failure with Retry.
+    await page.waitForFunction(() => /could not|unavailable|retry|connect|ready|loading|playing|paused|buffering/i.test(document.querySelector('[data-video-status="0"]')?.textContent || ''), null, {timeout: 25000});
+    const status = await page.locator('[data-video-status="0"]').textContent();
+    if (/could not|unavailable|connect/i.test(status)) assert.equal(await page.locator('[data-video-retry="0"]').count(), 1, 'offline state offers Retry');
+    else assert.equal(await page.evaluate(() => Mixline.video.decks[0].track?.videoId), '9bZkp7q19f0', 'online player holds the queued video');
     await shot('challenge-412x915');
     await page.locator('[data-ch-clear]').click();
     await page.waitForSelector('dialog.modal[open]');
@@ -260,10 +317,31 @@ try {
     await page.locator('[data-settings-search]').fill('haptic');
     await page.waitForFunction(() => document.querySelectorAll('[data-setting]').length < 8 && document.querySelector('[data-setting="hapticProfile"]'));
     await page.locator('[data-settings-search]').fill('');
+    const glow = page.locator('[data-setting="glow"]');
+    await glow.focus();
+    await page.keyboard.press('ArrowRight');
+    await page.waitForFunction(() => Math.abs(Mixline.settings.draft.glow - 1.1) < 1e-9);
+    assert.equal(await page.evaluate(() => document.activeElement?.dataset.setting), 'glow', 'the range keeps focus after its own update');
+    await page.keyboard.press('ArrowRight');
+    await page.waitForFunction(() => Math.abs(Mixline.settings.draft.glow - 1.2) < 1e-9);
+    await page.keyboard.press('ArrowLeft'); await page.keyboard.press('ArrowLeft');
+    await page.waitForFunction(() => Math.abs(Mixline.settings.draft.glow - 1) < 1e-9);
+    const hapticSelect = await page.locator('[data-setting="hapticProfile"]').elementHandle();
     await page.locator('[data-setting="hapticProfile"]').selectOption('detailed');
+    assert.equal(await hapticSelect.evaluate(el => el.isConnected), true, 'select is updated in place, not replaced');
     await page.locator('[data-setting="decks"]').selectOption('violet');
     assert.equal(await page.evaluate(() => document.documentElement.dataset.decks), 'violet');
     await page.waitForSelector('[data-settings-save]:not([disabled])');
+    await page.evaluate(() => Mixline.toast('A long error message that must never sit on top of the save bar.', {kind: 'error', timeout: 4000}));
+    await page.waitForSelector('.toast.is-error');
+    const saveBox = await page.locator('[data-settings-save]').boundingBox();
+    const hit = await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.closest('[data-settings-save], .toasts')?.className || 'none', [saveBox.x + saveBox.width / 2, saveBox.y + saveBox.height / 2]);
+    assert.match(hit, /btn-primary/, 'the toast does not intercept the Save button');
+    await page.evaluate(() => Mixline.back());
+    await page.waitForSelector('dialog.modal[open]');
+    await page.locator('dialog.modal button[value="cancel"]').click();
+    await page.waitForFunction(() => !document.querySelector('dialog.modal[open]'));
+    assert.equal(await page.evaluate(() => Mixline.router.current.name === 'settings' && Mixline.settings.dirty), true, 'back asks before discarding and cancel keeps the draft');
     await page.locator('nav [data-route="decks"]').click();
     await page.waitForSelector('dialog.modal[open]');
     await page.locator('dialog.modal button[value="cancel"]').click();
@@ -272,8 +350,9 @@ try {
     await page.waitForFunction(() => Mixline.settings.current.hapticProfile === 'detailed');
     await page.reload();
     await page.waitForFunction(() => window.Mixline?.settings?.current?.hapticProfile === 'detailed' && document.documentElement.dataset.decks === 'violet');
-    await shot('settings-412x915');
     await page.evaluate(() => { Mixline.router.navigate('settings'); });
+    await page.waitForSelector('[data-settings-save]');
+    await shot('settings-412x915');
     await page.locator('[data-setting="decks"]').selectOption('red');
     await page.locator('[data-settings-save]').click();
     await page.waitForFunction(() => Mixline.settings.current.decks === 'red');
@@ -316,6 +395,14 @@ try {
   await runner.run('keyboard: q toggles Deck 1, typing in a field is ignored, slash centres the crossfader, ? opens the shortcut sheet', async () => {
     await nav('decks');
     await page.evaluate(() => { Mixline.engine.pauseAll(); Mixline.engine.setCrossfade(0.1); });
+    await page.locator('body').click({position: {x: 5, y: 300}});
+    await page.evaluate(() => Mixline.engine.eject(0));
+    await page.waitForFunction(() => !Mixline.engine.decks[0].track);
+    await page.keyboard.press('q');
+    await page.waitForSelector('.toast.is-error');
+    assert.equal(errors.filter(e => /Load a track/.test(e)).length, 0, 'an empty deck shortcut is a toast, not a page error');
+    await page.evaluate(() => Mixline.loadDemo(0, 'demo-red'));
+    await page.waitForFunction(() => Mixline.engine.decks[0].track?.id === 'demo-red' && !Mixline.engine.decks[0].loading);
     await page.locator('body').click({position: {x: 5, y: 300}});
     await page.keyboard.press('q');
     await page.waitForFunction(() => Mixline.engine.decks[0].playing);

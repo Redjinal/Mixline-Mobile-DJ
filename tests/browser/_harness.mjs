@@ -33,7 +33,8 @@ export async function launch({viewport = {width: 412, height: 915}, reducedMotio
   const page = await context.newPage();
   page.setDefaultTimeout(15000);
   const errors = [];
-  page.on('pageerror', e => errors.push(e.message + (e.stack ? '\n' + String(e.stack).split('\n').slice(0, 4).join('\n') : '')));
+  // Errors thrown inside third-party player scripts (YouTube embeds) are environment noise, not application errors.
+  page.on('pageerror', e => { if (/youtube\.com|ytimg\.com/.test(String(e.stack || ''))) return; errors.push(e.message + (e.stack ? '\n' + String(e.stack).split('\n').slice(0, 4).join('\n') : '')); });
   // Blocked network resources (YouTube, thumbnails) are environment conditions, not application errors.
   page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource|ERR_TUNNEL|ERR_NAME_NOT_RESOLVED|net::/.test(m.text())) errors.push('console: ' + m.text()); });
   return {browser, context, page, errors, close: () => browser.close()};
@@ -42,21 +43,25 @@ export async function launch({viewport = {width: 412, height: 915}, reducedMotio
 export function createRunner(name) {
   const output = process.env.MIXLINE_TEST_OUTPUT || path.join('artifacts', name);
   const checks = [], failures = [];
-  let page = null;
+  let page = null, diagnostics = null;
   const run = async (title, fn) => {
     try {
       const evidence = await fn();
       checks.push({title, evidence: evidence ?? {}});
       console.log('PASS ' + title);
     } catch (e) {
-      failures.push({title, message: e.message, stack: e.stack});
+      const state = diagnostics ? await Promise.resolve().then(diagnostics).catch(err => ({diagnosticsFailed: err.message})) : undefined;
+      failures.push({title, message: e.message, stack: e.stack, state});
       console.error('FAIL ' + title + ': ' + e.message);
-      if (page) await page.screenshot({path: path.join(output, `failure-${failures.length}.png`)}).catch(() => {});
+      if (state) console.error('  state: ' + JSON.stringify(state));
+      if (page) { await mkdir(output, {recursive: true}).catch(() => {}); await page.screenshot({path: path.join(output, `failure-${failures.length}.png`)}).catch(() => {}); }
     }
   };
   return {
     output, checks, failures, run,
     setPage(p) { page = p; },
+    /** App-level state captured on each failure, written to results.json and the log. */
+    setDiagnostics(fn) { diagnostics = fn; },
     async finish(extra = {}) {
       await mkdir(output, {recursive: true});
       await writeFile(path.join(output, 'results.json'), JSON.stringify({name, checks, failures, ...extra}, null, 2));

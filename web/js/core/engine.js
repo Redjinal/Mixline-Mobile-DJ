@@ -490,7 +490,13 @@ export class MixEngine extends EventTarget {
       if (this.fade !== transition) return;
       this.setCrossfade(start + (target - start) * progress, {fromFade: true});
       // A change listener may cancel or replace this fade during the fader update.
-      if (progress >= 1 && this.fade === transition) { this.cancelFade(); this.emit('transitionend', {incoming: i}); this.emit('change', {transition: 'done'}); }
+      if (progress >= 1 && this.fade === transition) {
+        this.cancelFade();
+        // The outgoing deck is now inaudible: hand its EQ and echo back so the next track on it plays as set.
+        if (style === 'bass') { this.setEQ(outgoing, 'low', originalLow[outgoing], {fromFade: true}); this.setEQ(i, 'low', originalLow[i], {fromFade: true}); }
+        if (style === 'echo') this.setFX(outgoing, 'echo', originalEcho, {fromFade: true});
+        this.emit('transitionend', {incoming: i}); this.emit('change', {transition: 'done'});
+      }
     }, 20);
     this.emit('change', {transition: 'start'});
   }

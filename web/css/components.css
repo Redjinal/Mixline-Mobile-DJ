@@ -438,9 +438,15 @@
 
 /* --- Artwork fallback --- */
 .art { width: 100%; height: 100%; display: block; }
+.art-stack { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; border-radius: inherit; }
+.art-stack > img { position: relative; }
+.art-stack > svg, .art-stack > .art-fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
+.art-stack > .art-fallback { display: flex; align-items: center; justify-content: center; background: var(--raised); color: var(--text-dim); }
+.art-stack.is-missing > img { display: none; }
 
 /* --- Toast --- */
-.toasts { position: fixed; left: 50%; bottom: calc(var(--nav-h) + var(--dock-h) + var(--safe-bottom) + 12px); transform: translateX(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 60; width: min(92vw, 420px); pointer-events: none; }
+/* Toasts sit under the header, never over the dock, tab bar or a screen's action bar. */
+.toasts { position: fixed; left: 50%; top: calc(var(--safe-top) + var(--header-h) + 8px); transform: translateX(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 60; width: min(92vw, 420px); pointer-events: none; }
 .toast { pointer-events: auto; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: var(--radius-m); background: rgba(24, 25, 31, 0.96); border: 1px solid var(--line-strong); box-shadow: var(--shadow); font-size: var(--fs-label); animation: toast-in var(--t-med) var(--ease); }
 .toast svg { width: 18px; height: 18px; flex: none; }
 .toast.is-success svg { color: var(--green); }
@@ -448,7 +454,7 @@
 .toast.is-warning svg { color: var(--amber); }
 .toast.is-info svg { color: var(--violet); }
 .toast .btn { margin-left: auto; }
-@keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes toast-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 
 /* --- Dialog & sheet --- */
 dialog.modal, dialog.sheet { border: 1px solid var(--line-strong); background: linear-gradient(180deg, var(--surface-2), var(--surface)); color: var(--text); padding: 0; box-shadow: var(--shadow); }

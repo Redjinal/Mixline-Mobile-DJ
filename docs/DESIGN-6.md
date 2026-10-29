@@ -16,6 +16,7 @@
 - Density: compact instrument density; 48 px primary targets, 44 px secondary.
 - Imagery: original SVG covers for the six practice tracks; deterministic generated covers for tracks without artwork; never implied album art.
 - Interaction character: technical and calm; glow communicates state, motion is feedback or continuity only (120–320 ms, zero under reduced motion).
+- Feedback placement: toasts drop in under the header and never cover the dock, the tab bar or a screen's action bar (Save / Discard, Load to Deck), so an outcome message can never steal a tap. Destructive or irreversible actions use a modal; everything else is a toast or inline status.
 
 ## Representative workflow designed completely
 - Screens and states: Decks (empty, loading with cancel, loaded, playing, playing-but-silent, scratch, cue hold, focus view), Library (empty library, filtered-empty with clear, online loading skeletons, online error with retry, rights restriction, selected inspector), Challenge (empty queue, queued / buffering / blocked items, player error with retry and open-in-YouTube), Settings (dirty, saved, discard protection, reset preview).

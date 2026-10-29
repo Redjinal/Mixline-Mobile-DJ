@@ -149,7 +149,7 @@ engine.addEventListener('loaded', e => {
   if (d.track.id && !d.track.transient) store.updateTrack(d.track.id, {peaks: Array.from(d.peaks), duration: d.duration, ...(d.bpm && d.track.bpm !== d.bpm ? {bpm: d.bpm, bpmSource: d.bpmSource} : {})}).then(() => screens.library.reload?.()).catch(() => {});
 });
 engine.addEventListener('transitionend', e => { toast(`Transition complete: Deck ${e.detail.incoming + 1} is live`, {kind: 'success'}); if (settings.current.stopOutgoing) engine.pause(1 - e.detail.incoming); });
-engine.addEventListener('recording', e => { if (e.detail.autoStop) { clearInterval(recordTimer); $('[data-record-time]').hidden = true; $('[data-record]').classList.remove('is-active'); store.saveRecording(e.detail.blob, `Mixline ${new Date().toLocaleString()}`).then(() => toast('The recording hit the safety limit and was saved.', {kind: 'warning'})); } });
+engine.addEventListener('recording', e => { if (e.detail.autoStop) { clearInterval(recordTimer); $('[data-record-time]').hidden = true; $('[data-record]').classList.remove('is-active'); $('[data-record]').setAttribute('aria-pressed', 'false'); store.saveRecording(e.detail.blob, `Mixline ${new Date().toLocaleString()}`).then(() => toast('The recording hit the safety limit and was saved.', {kind: 'warning'})); } });
 let warnedLevel = false;
 engine.addEventListener('change', e => { if (e.detail?.master && settings.current.safeLevel) { if (engine.master > 0.9 && !warnedLevel) { warnedLevel = true; toast('Master is above 90%. The limiter protects the output, but keep an ear on levels.', {kind: 'warning'}); } else if (engine.master <= 0.9) warnedLevel = false; } });
 // Persist preparation edits (hot cues, markers, grid, loop, tempo) so they return on the next load.
@@ -191,8 +191,16 @@ startup();
 document.addEventListener('visibilitychange', () => { if (document.hidden) sessions.snapshotNow().catch(() => {}); });
 
 /* ---------- keyboard and native bridge ---------- */
-const back = () => closeTopDialog() || router.back();
-const keyboard = createKeyboard({engine, router, workspaces: WORKSPACES.map(w => w.name), toast, sheet, onRecord: toggleRecording, onBack: back});
+const back = () => {
+  if (closeTopDialog()) return true;
+  if (router.current.name === 'settings' && settings.dirty) {
+    confirmDialog({title: 'Discard unsaved settings?', body: 'Your saved preferences stay in place; the previewed changes will be reverted.', confirmLabel: 'Discard', danger: true})
+      .then(ok => { if (ok) { settings.discard(); router.back(); } });
+    return true;
+  }
+  return router.back();
+};
+const keyboard = createKeyboard({engine, router, navigate: name => go(name), workspaces: WORKSPACES.map(w => w.name), toast, sheet, onRecord: toggleRecording, onBack: back});
 const native = installNativeBridge({engine, video, sessions, toast, back});
 
 window.Mixline = {

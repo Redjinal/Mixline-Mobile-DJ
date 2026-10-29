@@ -18,21 +18,23 @@ const DECK_KEYS = {
 const typing = () => { const el = document.activeElement; return !!el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT' || el.isContentEditable); };
 const dialogOpen = () => !!document.querySelector('dialog[open]');
 
-export function createKeyboard({engine, router, workspaces, toast, sheet, onRecord, onBack}) {
+export function createKeyboard({engine, router, navigate, workspaces, toast, sheet, onRecord, onBack}) {
   const held = new Set();
+  const report = e => toast(e.message, {kind: 'error'});
+  const settle = result => { if (result && typeof result.then === 'function') result.catch(report); };
   function act(binding, down) {
     const d = engine.decks[binding.deck];
     try {
       switch (binding.action) {
-        case 'toggle': if (down) engine.toggle(binding.deck); break;
-        case 'cue': if (down) { if (!held.has('cue' + binding.deck)) { held.add('cue' + binding.deck); engine.cueDown(binding.deck); } } else { held.delete('cue' + binding.deck); engine.cueUp(binding.deck); } break;
+        case 'toggle': if (down) settle(engine.toggle(binding.deck)); break;
+        case 'cue': if (down) { if (!held.has('cue' + binding.deck)) { held.add('cue' + binding.deck); settle(engine.cueDown(binding.deck)); } } else { held.delete('cue' + binding.deck); settle(engine.cueUp(binding.deck)); } break;
         case 'sync': if (down) engine.sync(binding.deck); break;
         case 'nudge': if (down) { if (d.track) engine.bend(binding.deck, binding.amount); } else engine.endBend(binding.deck); break;
         case 'loop': if (down) engine.loop(binding.deck, d.loop ? 0 : 4); break;
         case 'hotcue': if (down && d.track) { if (d.cues[binding.slot] === null) engine.setCue(binding.deck, binding.slot); else engine.goCue(binding.deck, binding.slot); } break;
       }
       if (down) haptics.play('press');
-    } catch (e) { if (down) toast(e.message, {kind: 'error'}); }
+    } catch (e) { if (down) report(e); }
   }
   function showHelp() {
     sheet({title: 'Keyboard shortcuts', body: html`<div class="stack">${SHORTCUTS.map(g => html`<div><h3 class="label" style="margin-bottom:6px">${g.group}</h3><dl class="kv">${g.keys.map(([k, label]) => html`<dt>${label}</dt><dd><kbd>${k}</kbd></dd>`)}</dl></div>`)}<p class="dim" style="font-size:11px">Shortcuts pause while you type in a field.</p></div>`});
@@ -46,7 +48,7 @@ export function createKeyboard({engine, router, workspaces, toast, sheet, onReco
     if (event.shiftKey && key === 'r') { event.preventDefault(); onRecord?.(); return; }
     if (key === ',' || key === '.') { event.preventDefault(); engine.setCrossfade(engine.crossfade + (key === ',' ? -0.05 : 0.05)); return; }
     if (key === '/') { event.preventDefault(); engine.setCrossfade(0.5); haptics.play('center'); return; }
-    if (key === '[' || key === ']') { event.preventDefault(); const i = workspaces.indexOf(router.current.name); const next = workspaces[(i + (key === ']' ? 1 : workspaces.length - 1)) % workspaces.length]; router.navigate(next); return; }
+    if (key === '[' || key === ']') { event.preventDefault(); const i = workspaces.indexOf(router.current.name); const next = workspaces[(i + (key === ']' ? 1 : workspaces.length - 1)) % workspaces.length]; (navigate || router.navigate)(next); return; }
     const binding = DECK_KEYS[key];
     if (!binding) return;
     event.preventDefault();

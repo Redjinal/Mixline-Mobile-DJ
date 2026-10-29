@@ -18,6 +18,10 @@
       "evidence": {}
     },
     {
+      "title": "decks: a held scratch on Deck 1 survives Deck 2 loading, and the Decks crossfader follows the engine",
+      "evidence": {}
+    },
+    {
       "title": "deck focus view opens with detail waveform, hot cues and the other deck strip; back returns",
       "evidence": {}
     },
@@ -43,6 +47,10 @@
     },
     {
       "title": "library: favourite and crate persist; recents reflect loads; prepare saves BPM and start",
+      "evidence": {}
+    },
+    {
+      "title": "library: artwork that fails to load falls back to the original cover instead of a blank",
       "evidence": {}
     },
     {

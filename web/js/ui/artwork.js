@@ -15,7 +15,8 @@ export function fallbackCover(track = {}, size = 120) {
   return `<svg class="art" viewBox="0 0 100 100" width="${size}" height="${size}" role="img" aria-label="${esc(track.title || 'Cover')}"><defs><linearGradient id="${id}" gradientTransform="rotate(${angle} .5 .5)"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="100" height="100" fill="url(#${id})"/><rect width="100" height="100" fill="rgba(8,9,12,0.45)"/>${circles}<circle cx="${cx}" cy="${cy}" r="5" fill="#fff" opacity=".9"/></svg>`;
 }
 
+/** Artwork image with the original cover underneath: a failed or blocked image reveals the cover instead of a blank. */
 export function artwork(track, {size = 120, className = ''} = {}) {
-  if (track?.artwork) return raw(`<img class="art ${className}" src="${esc(track.artwork)}" alt="" width="${size}" height="${size}" loading="lazy" decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'art-missing'}))">`);
+  if (track?.artwork) return raw(`<span class="art-stack ${className}">${fallbackCover(track, size)}<img class="art" src="${esc(track.artwork)}" alt="" width="${size}" height="${size}" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('is-missing')"></span>`);
   return raw(fallbackCover(track, size));
 }

@@ -198,10 +198,19 @@ test('bass exchange follows the audio clock; manual channel changes stop automat
   assert.equal(e.decks[0].eq.low, -15); assert.equal(e.decks[1].eq.low, -15); assert.equal(e.crossfade, 0.5);
   e.setGain(0, 0.7); assert.equal(e.fade, null); ctx.currentTime = 2; t.mock.timers.tick(100); assert.equal(e.decks[0].eq.low, -15); assert.equal(e.crossfade, 0.5); await e.destroy();
 });
-test('echo-out transition raises the outgoing echo while blending', async t => {
+test('echo-out transition raises the outgoing echo while blending and hands the deck back untouched when done', async t => {
   t.mock.timers.enable({apis: ['setInterval']}); const {ctx, e} = make(); await e.load(0, {id: 'a', bpm: 120}, file); await e.load(1, {id: 'b', bpm: 120}, file);
-  await e.play(0); await e.play(1); e.setCrossfade(0); e.transitionTo(1, 2, 'echo'); ctx.currentTime = 2; t.mock.timers.tick(20);
-  assert.equal(e.decks[0].fx.echo, 0.75); assert.equal(e.crossfade, 1); assert.equal(e.fade, null); await e.destroy();
+  await e.play(0); await e.play(1); e.setCrossfade(0); e.setFX(0, 'echo', 0.2); e.transitionTo(1, 2, 'echo'); ctx.currentTime = 1; t.mock.timers.tick(20);
+  assert.ok(Math.abs(e.decks[0].fx.echo - 0.475) < 1e-9); assert.equal(e.crossfade, 0.5);
+  ctx.currentTime = 2; t.mock.timers.tick(20);
+  assert.equal(e.decks[0].fx.echo, 0.2); assert.equal(e.crossfade, 1); assert.equal(e.fade, null); await e.destroy();
+});
+test('a completed bass swap restores both decks\' low EQ so the next track on the outgoing deck has its bass', async t => {
+  t.mock.timers.enable({apis: ['setInterval']}); const {ctx, e} = make(); await e.load(0, {id: 'a', bpm: 120}, file); await e.load(1, {id: 'b', bpm: 120}, file);
+  await e.play(0); await e.play(1); e.setCrossfade(0); e.setEQ(0, 'low', 3); e.setEQ(1, 'low', -6); e.transitionTo(1, 2, 'bass');
+  ctx.currentTime = 1; t.mock.timers.tick(20); assert.ok(e.decks[0].eq.low < 3 && e.decks[1].eq.low < -6);
+  ctx.currentTime = 2; t.mock.timers.tick(20);
+  assert.equal(e.fade, null); assert.equal(e.decks[0].eq.low, 3); assert.equal(e.decks[1].eq.low, -6); assert.equal(e.crossfade, 1); await e.destroy();
 });
 test('prepared metadata loads independently using both legacy and new field names', async () => {
   const {e} = make(); const track = {id: 'prepared', bpm: 124, start: 1, downbeat: 0.2, quantize: true, cues: [1, 3], cueNames: ['Intro', 'Drop'], cueColors: ['#ffaa00', '#ff3355'], markers: [{id: 'm', name: 'Vocal', time: 4}], loop: {start: 1, end: 3}};
