@@ -1,9 +1,0 @@
-{
-  "apk": "Mixline-5.0.0-test1.apk",
-  "sha256": "778e1efd5cc88cb1e52fb128de05bb0290d0194e229948877e6c5bb4279511db",
-  "bytes": 5869655,
-  "webAssetsMatched": 17,
-  "nativeLibraries": [],
-  "sameSigningCertificateAs4": true,
-  "certificateSHA256": "de58be026d6a1d7034c1f71657185af80871c5431e7adcd0c1ae884f365a1e2a"
-}
