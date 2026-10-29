@@ -1,48 +1,77 @@
-# Mixline Mobile DJ
+# Mixline 6
 
-Mixline **5.0.0-test1** restores the audio-first Touch/Wave Studio workflow for Android: balanced waveforms and medium platters, direct Decks/Waves/Mixer/Pads/FX/Library workspaces, and a persistent two-deck transport dock.
+Mixline is a mobile DJ instrument: two audio decks with vinyl platters and waveforms, a mixer, performance pads, a filter × echo effects pad, a music library with open online sources, and a Challenge mode that cuts between queued videos. Version 6 is a complete recreation in the "neon performance instrument on obsidian" design language from the project's design boards: Deck 1 red, Deck 2 cyan, violet for creative controls.
 
-## Download
+![Decks workspace](docs/verification/6.0/decks-412x915.png)
 
-**[Download Mixline 5.0.0-test1 APK](https://github.com/Redjinal/Mixline-Mobile-DJ/raw/refs/heads/main/downloads/Mixline-5.0.0-test1.apk)**
+## Workspaces
 
-Open the link on your phone; sign in to GitHub if this repository is private. The [downloads folder](downloads/) contains checksums and installation notes. The package and testing signing identity match 4.0 test2 so an ordinary update preserves its local library. Do not uninstall first if you want to retain that data.
+| Tab | What it does |
+|---|---|
+| **Decks** | Dual deck view with artwork, waveform, platter, CUE / PLAY / SYNC, tempo and quick loop. Tap a deck's artwork for the focus view: zoomable detail waveform with Seek / Pan / Scratch, EQ, tempo fader, hot cues, loop lengths and the other deck in a strip. |
+| **Mixer** | Trim, three-band EQ with kill buttons, filter, channel faders with live meters, master level, mute and meter, Blend / Cut crossfader curve. |
+| **Pads** | Per deck: eight hot cues (hold a pad to name, colour or clear), beat loops from 1/4 to 32 with In / Out / Exit, an eight-sound sampler, slip and beat jumps. |
+| **FX** | Latched filter × echo XY pad with Bypass and Reset, filter / echo cards with on-off switches, reverb, feedback and echo time, and timed transitions (Blend, Bass swap, Echo out over 4 / 8 / 16 bars). Any manual move takes over. |
+| **Library** | Search by title / artist / BPM, source chips, six original practice tracks, import from the device, Audius / Jamendo / Internet Archive / Wikimedia discovery with license checks, an inspector with waveform, preview, start point, loop In / Out, preparation (title, artist, BPM tap / analyse) and Load to Deck 1 / 2. Favourites, recents and crates with practice pairs and set recipes. |
+| **Challenge** | Two visible YouTube decks with a video crossfader, NEXT · Deck 1 / CUT / NEXT · Deck 2, fade length, an optional local audio layer and the Up Next queue (start times, loop, reorder, remove with undo, skip). |
+| **Settings** | Studio settings with search and explicit Save: crossfader curve, transition behaviour, safe level warning, haptics profile with a test cue, theme, deck colour palette (Red · Cyan or Violet · Teal), glow intensity, motion. Sessions (named, restore paused) and recordings (play, save to file, delete). |
 
-## What's in 5.0
+The persistent dock keeps both deck identities, CUE / PLAY and the crossfader reachable in every audio workspace. The header has the master-bus record button and a performance lock that protects loading and deck replacement.
 
-- Balanced decks, actual audio waveforms, platter scratching, Cue hold/audition, temporary nudge, slip, exact/fine knob controls and keyboard transport shortcuts.
-- Expanded Wave workspace: overview/detail, seek/pan/scratch, pinch zoom, fine seeking, Fit/Follow, named/colorable hot cues, manual markers, draggable custom loops, grid/downbeat, quantize and approximate BPM estimation.
-- Latched filter/echo XY pad with separate Bypass and Reset, echo timing/feedback, reverb, eight synthesized sampler sounds, blend/bass-swap/echo-out transitions and manual takeover.
-- Trim, channel levels, three-band EQ/cuts, filter, master mute and measured meters. Tempo changes still change pitch; there is no key-lock or continuous-sync claim.
-- Library selection/inspection, title/artist/BPM filters, Favorites/Recents/Crates, independent preparation/preview, saved starts/cues/markers/loops/grid, set recipes and adjacent-pair transition rehearsal. Preview uses the current output and is audible to anyone listening there.
-- Six original synthesized practice tracks, persistent local imports, protected deck replacement, cancellation/ejection, queue rename/start/reorder/skip/restore, session recovery and local-master recording/export.
-- Audius and Jamendo library adapters; experimental Internet Archive and Wikimedia discovery. Track capabilities and credits are explicit. **Live provider access remains unverified in this environment.** Free To Use remains a research entry because a current supported API and applicable terms could not be established; Spotify DJ access is not connected.
-- Existing visible YouTube/Challenge, repeat/retry and local accompaniment paths are retained. Live YouTube overlap still requires device and provider validation; video audio does not enter the local DSP or recording.
+## Run it
 
-See [5.0 release scope](docs/RELEASE-5.md), [verification](docs/VERIFICATION-5.md), [restoration audit](docs/design/MIXLINE-5-PARITY.md), and [S26 Ultra test checklist](docs/DEVICE-TESTING.md). Historical concept images are design references, not screenshots of the APK.
-
-## Build and verify
-
-```bash
-cd /workspace/Mixline-Mobile-DJ
-source /workspace/.mixline-tools/activate.sh
-npm test
-bash scripts/build-apk.sh
-```
-
-The prepared environment supplies JDK 21, SDK 36, Build Tools 36.0.0 and Gradle 8.13. Elsewhere install corresponding tools and set `JAVA_HOME` and `ANDROID_HOME`. The build script runs assembly/lint, validates signing/alignment and writes `artifacts/Mixline-5.0.0-test1.apk` plus SHA256.
-
-For browser development, run `npm run serve`, then:
+**In a browser (desktop or phone on the same network)**
 
 ```bash
-node tests/v5-browser.mjs
-node tests/video-browser.mjs
+npm run serve           # http://127.0.0.1:8080
 ```
 
-Browser checks require Chromium and Playwright; scripts support the prepared cloud tooling. Video checks use controlled players and do not establish live YouTube playback. The older app/motion browser scripts document 4.0 and use its retired navigation selectors.
+Open the address on a phone to test touch, or on a desktop to use the keyboard shortcuts (press `?` in the app for the list).
 
-## Test edition
+**Android test APK**
 
-Package `com.mixline.studio.testing`; version `5.0.0-test1` / `50001`; minimum API 29, target API 36. The app uses bundled Web UI/Web Audio inside a Java Android shell with scoped native file import/export, interruption handling and haptics. It does not contain native low-latency DJ DSP.
+GitHub Actions builds a signed test APK on every push: open the latest *CI* run, download the **Mixline-APK** artifact and install `Mixline-6.0.0.apk` (Android 10+). A tag such as `v6.0.0` also attaches the APK to a GitHub release. To keep the APK installable as an update over an earlier test build, add the previous testing keystore as the repository secret `MIXLINE_KEYSTORE_BASE64` (base64 of `.signing/mixline-test.keystore`); without it CI generates a fresh testing key and the old test app must be uninstalled first (that removes its local library).
 
-This signed sideloading build is for testing. Physical S26 Ultra latency, haptics, thermal behavior, interruptions, USB-C routing, source playback and native export still require device checks. Recording captures supported local/eligible master audio, effects and sampler, with no microphone. MediaRecorder format depends on WebView; the recording safety threshold is 48 MB and native export ceiling 64 MB. Uninstalling/clearing app data removes local imports, sessions and unexported takes.
+To build locally you need JDK 17+ and an Android SDK with platform 36 and build-tools 36.0.0:
+
+```bash
+export ANDROID_HOME=/path/to/android-sdk
+bash scripts/build-apk.sh   # writes artifacts/Mixline-6.0.0.apk and its SHA256
+```
+
+## Testing
+
+```bash
+npm test                 # 102 unit tests: engine, analysis, sources, video, queue, library, loader, settings, sessions, store
+npm run test:browser     # Playwright/Chromium journeys, control gestures and viewport evidence (needs the playwright package and Chromium)
+```
+
+Browser runs write screenshots and `results.json` files under `artifacts/`. The checked-in evidence for this release is in [docs/verification/6.0](docs/verification/6.0) and summarised in [docs/VERIFICATION-6.md](docs/VERIFICATION-6.md).
+
+## Music sources and rights
+
+- **Mixline Originals**: six synthesised practice tracks generated in code with their own cover art. No external samples.
+- **Your files**: imported audio is stored on the device (IndexedDB) and survives relaunches; it is removed when app data is cleared.
+- **Audius, Jamendo, Internet Archive, Wikimedia Commons**: search and preview; a track loads into a deck only after an explicit supported-license check. Jamendo needs a public Client ID (Library → Sources). Live access to each service was not verifiable from the build environment.
+- **Spotify** is listed as not connected: DJ playback requires an approved partner integration.
+- **YouTube** plays in Challenge through the official embedded players. That audio is never mixed into the audio decks or recordings.
+
+## Project layout
+
+```
+web/                 the app (no build step): index.html, css/, js/core (engine, store, sources…), js/ui (controls), js/screens, js/shell
+app/                 Android WebView shell (package com.mixline.studio.testing, version 6.0.0)
+tests/               node unit tests (*.test.mjs) and browser journeys (tests/browser)
+docs/                design spec and plan (docs/superpowers), design brief, verification report, device checklist, archived 4.0/5.0 material
+.github/workflows/   CI: unit tests, browser journeys, APK build and release upload
+```
+
+## Known limits
+
+Tempo changes alter pitch (no key lock); Sync is a one-time tempo match and phase alignment, not continuous beat sync; there is no headphone cue because the shell has one stereo output; recordings use the WebView's MediaRecorder format (WebM/Opus or MP4) with a 48 MB safety stop; physical-phone latency, haptics, interruptions and live online providers still need testing on the device (see [docs/DEVICE-TESTING.md](docs/DEVICE-TESTING.md)).
+
+## Documents
+
+- [Design specification](docs/superpowers/specs/2026-10-28-mixline-6-design.md) and [implementation plan](docs/superpowers/plans/2026-10-28-mixline-6-plan.md)
+- [Design brief](docs/DESIGN-6.md) · [Verification report](docs/VERIFICATION-6.md) · [Device test checklist](docs/DEVICE-TESTING.md)
+- [Archived 4.0 / 5.0 documentation](docs/archive/5.0)

@@ -121,6 +121,11 @@
 }
 .segmented button {
   min-height: 40px;
+  min-width: 0;
+  padding: 0 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   border-radius: 9px;
   font-size: var(--fs-caption);
   font-weight: 700;

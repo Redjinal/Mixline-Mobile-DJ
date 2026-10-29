@@ -44,7 +44,7 @@ export function createSettingsScreen(ctx) {
       <article class="panel settings-group"><div class="panel-title"><h2>${icon('info', {size: 16})} About</h2></div>
         <div class="kv"><dt>Version</dt><dd>Mixline ${VERSION}</dd><dt>Audio engine</dt><dd>Web Audio · ${engine.audioState}</dd><dt>Sources</dt><dd><button class="btn btn-sm btn-ghost" data-settings-sources>${icon('cloud', {size: 14})} Manage sources</button></dd><dt>Storage</dt><dd data-settings-storage>…</dd></div>
       </article>` : ''}
-      <div class="settings-bar"><button class="btn btn-ghost" data-settings-reset>Reset to defaults</button><span class="grow"></span><button class="btn btn-ghost" data-settings-discard ${settings.dirty ? '' : 'disabled'}>Discard</button><button class="btn btn-primary" data-settings-save ${settings.dirty ? '' : 'disabled'}>${icon('check', {size: 16})} ${settings.dirty ? 'Save settings' : 'Saved'}</button></div>
+      <div class="settings-bar"><button class="btn btn-ghost" data-settings-reset>${icon('reset', {size: 15})} Defaults</button><span class="grow"></span><button class="btn btn-ghost" data-settings-discard ${settings.dirty ? '' : 'disabled'}>Discard</button><button class="btn btn-primary" data-settings-save ${settings.dirty ? '' : 'disabled'}>${icon('check', {size: 16})} ${settings.dirty ? 'Save settings' : 'Saved'}</button></div>
     </section>`;
   }
   function refresh() {

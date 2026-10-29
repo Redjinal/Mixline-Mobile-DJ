@@ -1,0 +1,90 @@
+{
+  "name": "journey",
+  "checks": [
+    {
+      "title": "decks: both originals load from the library helper and the deck panels show their identity",
+      "evidence": {}
+    },
+    {
+      "title": "dock: play from the dock, navigate every workspace, deck keeps playing",
+      "evidence": {}
+    },
+    {
+      "title": "cue hold from the dock auditions and releases; navigation mid-hold releases safely",
+      "evidence": {}
+    },
+    {
+      "title": "decks: platter scratch, sync and tempo controls act on the engine",
+      "evidence": {}
+    },
+    {
+      "title": "deck focus view opens with detail waveform, hot cues and the other deck strip; back returns",
+      "evidence": {}
+    },
+    {
+      "title": "empty deck state offers Library and loading/replace protection asks first",
+      "evidence": {}
+    },
+    {
+      "title": "mixer: EQ kill, master mute, curve and channel fader act on the engine; meters present",
+      "evidence": {}
+    },
+    {
+      "title": "pads: cues set and jump, loops engage by beats, sampler fires, slip toggles",
+      "evidence": {}
+    },
+    {
+      "title": "fx: XY latches through navigation; bypass keeps values; reset neutralises; manual move takes over a transition",
+      "evidence": {}
+    },
+    {
+      "title": "library: search finds a track, selecting opens the inspector, Load to Deck 2 keeps Deck 1 playing",
+      "evidence": {}
+    },
+    {
+      "title": "library: favourite and crate persist; recents reflect loads; prepare saves BPM and start",
+      "evidence": {}
+    },
+    {
+      "title": "library: a long title truncates without overflow and the empty search state offers a reset",
+      "evidence": {}
+    },
+    {
+      "title": "library: sources sheet saves a public Jamendo Client ID without claiming a connection",
+      "evidence": {}
+    },
+    {
+      "title": "challenge: queue links, refuse bad ones, reorder, remove with undo, and surface an honest offline player state",
+      "evidence": {}
+    },
+    {
+      "title": "settings: search, change haptics profile and theme preview, Save persists across reload, discard protection",
+      "evidence": {}
+    },
+    {
+      "title": "recording: a short take of the master bus is decodable, non-silent and listed in Recordings",
+      "evidence": {}
+    },
+    {
+      "title": "sessions: save a named session, change state, restore it paused; recovery snapshot exists",
+      "evidence": {}
+    },
+    {
+      "title": "keyboard: q toggles Deck 1, typing in a field is ignored, slash centres the crossfader, ? opens the shortcut sheet",
+      "evidence": {}
+    },
+    {
+      "title": "native bridge: playback focus messages, lifecycle pause stops everything, back closes a sheet then navigates",
+      "evidence": {}
+    },
+    {
+      "title": "no horizontal overflow and dock reachable in portrait and landscape",
+      "evidence": {}
+    },
+    {
+      "title": "no page errors",
+      "evidence": {}
+    }
+  ],
+  "failures": []
+}
