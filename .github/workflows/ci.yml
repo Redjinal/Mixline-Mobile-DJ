@@ -61,10 +61,17 @@ jobs:
             artifacts/*.apk
             artifacts/*.sha256
             artifacts/signing-certificate.txt
-      - name: Attach to release
-        if: startsWith(github.ref, 'refs/tags/v')
+      - name: Read app version
+        id: version
+        run: echo "name=$(sed -n "s/.*versionName '\(.*\)'.*/\1/p" app/build.gradle)" >> "$GITHUB_OUTPUT"
+      - name: Publish release
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/v') && github.ref_name || format('v{0}', steps.version.outputs.name) }}
+          name: Mixline ${{ steps.version.outputs.name }}
+          target_commitish: ${{ github.sha }}
+          body: Signed Mixline test APK built from ${{ github.sha }}. Android 10 or newer. Verify with the .sha256 file before installing.
           files: |
             artifacts/*.apk
             artifacts/*.sha256
