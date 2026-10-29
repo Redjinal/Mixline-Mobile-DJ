@@ -53,9 +53,12 @@ export function sheet({title, body = '', onClose} = {}) {
 
 /** Close the top-most dialog; returns true when one was open (used by Android back). */
 export function closeTopDialog() {
-  const last = [...open].at(-1);
-  if (!last) return false;
-  last.close();
-  return true;
+  // The close event that removes a dialog from the registry fires asynchronously; skip already-closed entries.
+  for (const dialog of [...open].reverse()) {
+    if (!dialog.open) { open.delete(dialog); continue; }
+    dialog.close();
+    return true;
+  }
+  return false;
 }
-export const anyDialogOpen = () => open.size > 0;
+export const anyDialogOpen = () => [...open].some(dialog => dialog.open);
