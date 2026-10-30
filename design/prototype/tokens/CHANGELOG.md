@@ -1,6 +1,6 @@
 # Token changes relative to the planning pack
 
-Source of record: `docs/planning/v1_0/assets/design_tokens_proposed.json` (version 0.3, C selected, native contrast unverified). This prototype's `tokens.json` is version 0.4-prototype. Every entry below is a **proposal** recorded for Document 19 §7 ("token changes"); none is validated on the S26 Ultra.
+Source of record: `docs/planning/v1_0/assets/design_tokens_proposed.json` (version 0.3, C selected, native contrast unverified). This prototype's `tokens.json` is version 0.5-prototype. Every entry below is a **proposal** recorded for Document 19 §7 ("token changes"); none is validated on the S26 Ultra.
 
 ## Kept unchanged
 
@@ -20,6 +20,7 @@ Daylight C role colours (`stage`, `control_surface` → `control`, `raised_surfa
 | `meter_low/mid/hot` | `#2E9B8E`, `#C98B1B`, `#A01939` | Meter segment colours separate from status semantics. |
 | `fixture`, `fixture_fill` | `#5A3E8E`, `#E9E1F7` | The FIXTURE mark colour; deliberately unlike any deck or status colour. |
 | `hit_outline` | `#C21F8A` | Hit-bound overlay colour for audits. |
+| `cue_cyan … cue_yellow` | see `tokens.json` | Hot-cue colour names (Document 02 FR-011 colour-coded cues). Text-safe on pale surfaces; used only as 2 px edges and 8 px swatches, never as fills, so letter + deck fill keep deck identity dominant. Requested by the transport-pads family. |
 | `radius.*` | control 6 · pad 10 · panel 14 · sheet 18 | Document 04's "corner vocabulary" needed numbers. |
 | `type.sizes.xxl` | 36 sp | BPM readout in landscape deck headers. |
 | `insets` | status 24 · gesture 16 · gutter 16 dp | Assumed Android insets drawn as guides; unmeasured. |

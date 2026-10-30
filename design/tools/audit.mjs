@@ -44,16 +44,35 @@ function pageAudit() {
     // inside the device canvas and not fully clipped
     return r.right > dRect.left && r.left < dRect.right && r.bottom > dRect.top && r.top < dRect.bottom;
   };
+  // Clip an element's rect to every overflow:auto|hidden|scroll ancestor: a cell scrolled out of a
+  // horizontal strip is unhittable and must not count as overlapping what sits above the strip.
+  const clipRect = (el) => {
+    let r = el.getBoundingClientRect();
+    let x1 = r.left, y1 = r.top, x2 = r.right, y2 = r.bottom;
+    let node = el.parentElement;
+    while (node && node !== device) {
+      const cs = getComputedStyle(node);
+      if (/(auto|hidden|scroll)/.test(cs.overflow + cs.overflowX + cs.overflowY)) {
+        const c = node.getBoundingClientRect();
+        x1 = Math.max(x1, c.left); y1 = Math.max(y1, c.top); x2 = Math.min(x2, c.right); y2 = Math.min(y2, c.bottom);
+      }
+      node = node.parentElement;
+    }
+    return { full: r, x1, y1, x2, y2, clippedW: Math.max(0, x2 - x1), clippedH: Math.max(0, y2 - y1) };
+  };
   const targets = [];
   for (const el of device.querySelectorAll('[data-hit]')) {
     if (!visible(el)) continue;
     const hit = parseInt(el.dataset.hit, 10) || 0;
     if (!hit) continue;
-    const r = el.getBoundingClientRect();
+    const c = clipRect(el);
+    if (c.clippedW < 1 || c.clippedH < 1) continue; // fully scrolled out of view: not hittable
+    const r = c.full;
     const comp = el.closest('[data-component]');
-    targets.push({ hit, x: r.left - dRect.left, y: r.top - dRect.top, w: r.width, h: r.height, tag: el.tagName.toLowerCase(), comp: comp?.dataset.component || null, label: (el.getAttribute('aria-label') || el.textContent || '').trim().slice(0, 60), el });
+    targets.push({ hit, x: c.x1 - dRect.left, y: c.y1 - dRect.top, w: c.clippedW, h: c.clippedH, fullW: r.width, fullH: r.height, tag: el.tagName.toLowerCase(), comp: comp?.dataset.component || null, label: (el.getAttribute('aria-label') || el.textContent || '').trim().slice(0, 60), el });
   }
-  const small = targets.filter((t) => t.w + 0.5 < t.hit || t.h + 0.5 < t.hit).map(({ el, ...t }) => t);
+  // Size is judged on the element's full box (a partially scrolled cell is still a 48 dp cell).
+  const small = targets.filter((t) => t.fullW + 0.5 < t.hit || t.fullH + 0.5 < t.hit).map(({ el, ...t }) => t);
   const overlaps = [];
   for (let i = 0; i < targets.length; i++) for (let j = i + 1; j < targets.length; j++) {
     const a = targets[i], b = targets[j];

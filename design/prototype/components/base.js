@@ -32,7 +32,10 @@ export class MdjElement extends HTMLElement {
 
   connectedCallback() {
     const cls = this.constructor;
-    if (cls.hit) this.dataset.hit = String(cls.hit);
+    // Hit class: the component default, or a per-instance `hit` attribute (e.g. 48 for a slim dock).
+    const hitAttr = parseInt(this.getAttribute('hit') || '', 10);
+    if (hitAttr === 0 && this.hasAttribute('hit')) delete this.dataset.hit;
+    else if (hitAttr >= 48 || cls.hit) this.dataset.hit = String(hitAttr >= 48 ? hitAttr : cls.hit);
     if (cls.fr.length && !this.dataset.fr) this.dataset.fr = cls.fr.join(' ');
     if (!this.dataset.component) this.dataset.component = cls.tag;
     this.syncState();

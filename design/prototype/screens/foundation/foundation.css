@@ -4,8 +4,8 @@
 .gallery__title { font-size: var(--fs-lg); margin: 0; }
 .gallery__meta { font-size: var(--fs-xs); color: var(--ink-2); margin: 0; }
 .gallery__states { display: grid; gap: var(--space-2); }
-.gallery__state { display: grid; grid-template-columns: 96px 1fr; gap: var(--space-2); align-items: center; padding: var(--space-2); border: 1px dashed var(--line); border-radius: var(--radius-control); position: relative; min-height: 64px; }
+.gallery__state { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: var(--space-2); align-items: center; padding: var(--space-2); border: 1px dashed var(--line); border-radius: var(--radius-control); position: relative; min-height: 64px; }
 .gallery__state-name { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--ink-2); }
-.gallery__sample { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; min-height: 48px; }
+.gallery__sample { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; min-height: 48px; max-width: 100%; overflow-x: auto; }
 .shell-demo { padding: var(--space-4) var(--gutter); display: grid; gap: var(--space-3); }
 .shell-demo__panel { padding: var(--space-3); display: grid; gap: var(--space-2); }

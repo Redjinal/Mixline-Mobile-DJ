@@ -66,7 +66,7 @@ export class MdjShell extends HTMLElement {
       const empty = !d.track || d.state === 'empty' || d.state === 'missing' || d.state === 'loading';
       const cueState = empty ? 'disabled' : d.cueSelected ? 'active' : 'idle';
       const playState = empty ? 'disabled' : d.state === 'playing' ? 'playing' : d.state === 'interrupted' ? 'interrupted' : 'paused';
-      return [h('mdj-transport', { kind: 'cue', deck: letter, state: cueState, size }), h('mdj-transport', { kind: 'play', deck: letter, state: playState, size })];
+      return [h('mdj-transport', { kind: 'cue', deck: letter, state: cueState, size, hit: size }), h('mdj-transport', { kind: 'play', deck: letter, state: playState, size, hit: size })];
     };
     const xf = h('mdj-crossfader', { value: s.crossfader, 'assign-a': fa, 'assign-b': fb, compact: true, state: s.route.status === 'lost' ? 'disabled' : 'idle' });
     const transport = h('div', { class: 'shell__transport' }, [
