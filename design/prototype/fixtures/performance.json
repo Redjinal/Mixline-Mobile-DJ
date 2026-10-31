@@ -23,11 +23,11 @@
     "perform/mixer:bypass-crossfader": { "route": "usb-4ch", "cue": { "deck": null }, "decks": { "A": { "xf": "thru" } } },
     "perform/mixer:four-channel": { "cue": { "deck": "B" } },
 
-    "perform/master:normal": { "route": "usb-4ch", "cue": { "deck": "B", "mix": 0.4, "gainDb": -3 }, "master": { "levelDb": 0, "limiterGrDb": 0 } },
+    "perform/master:normal": { "route": "usb-4ch", "cue": { "deck": "B", "mix": 0.4, "gainDb": -3 }, "master": { "levelDb": 0 } },
     "perform/master:limiter-active": { "route": "usb-4ch", "cue": { "deck": "B", "mix": 0.5, "gainDb": -3 }, "master": { "levelL": 0.93, "levelR": 0.91, "peakHold": 0.97, "clip": false, "limiterGrDb": -1.8, "levelDb": 0 } },
     "perform/master:clipping": { "master": { "levelDb": 0, "clipLatched": true } },
-    "perform/master:cue-unavailable": { "master": { "levelDb": 0, "limiterGrDb": 0 } },
-    "perform/master:split-cue": { "route": "usb-4ch", "cue": { "deck": "B", "mix": 0.5, "gainDb": -3, "split": true }, "master": { "levelDb": 0, "limiterGrDb": 0 } }
+    "perform/master:cue-unavailable": { "master": { "levelDb": 0 } },
+    "perform/master:split-cue": { "route": "usb-4ch", "cue": { "deck": "B", "mix": 0.5, "gainDb": -3, "split": true }, "master": { "levelDb": 0 } }
   },
   "seek": { "deck": "A", "targetSec": 161.0, "_note": "Seek-lock preview target used by the 'Preview seek' accessible action; a drag on the overview sets its own target." },
   "nextLoad": { "trackId": "copper", "_note": "The library selection the 'Load next' action carries. Load is never a row tap; it names its destination." },

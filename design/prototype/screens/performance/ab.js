@@ -542,7 +542,7 @@ function laneRow(v, d) {
   const seekHere = v.st === 'seek-preview' && d.letter === perfData.seek.deck;
   const held = v.st === 'held-scratch' && d.letter === perfData.heldScratch.deck;
   const loaded = !!d.track && !['loading', 'missing', 'empty'].includes(d.state);
-  const sync = h('mdj-transport', { kind: 'sync', deck: d.letter, size: 48, state: !loaded || v.s.route.status === 'lost' ? 'disabled' : d.sync ? 'active' : 'idle' });
+  const sync = h('mdj-transport', { kind: 'sync', deck: d.letter, size: 48, hit: 48, state: !loaded || v.s.route.status === 'lost' ? 'disabled' : d.sync ? 'active' : 'idle' });
   const lane = h('mdj-waveform', {
     track: d.track ? d.track.id : null, deck: d.letter, mode: seekHere ? 'overview' : 'detailed', zoom: 8, position: d.positionSec, height: 48, 'no-head': true,
     markers: seekHere ? 'cues loops phrases' : 'cues loops grid', 'seek-lock': seekHere ? true : null, 'seek-target': seekHere ? perfData.seek.targetSec : null,

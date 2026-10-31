@@ -81,7 +81,7 @@ export class MdjJog extends MdjElement {
     const active = document.activeElement;
     const focusKey = this.contains(active) ? (active.dataset.alt ? `[data-alt='${active.dataset.alt}']` : '.jog__platter') : null;
     const disabled = m.state === 'disabled';
-    const slipping = m.state === 'slip' && m.slip != null;
+    const slipping = m.slip != null && m.state !== 'disabled';  // also during a held scratch with Slip on
     this.className = `jog deck-${m.deck.toLowerCase()} jog--${m.explicit ? 'explicit' : 'zones'} ${m.playing && !disabled ? 'jog--playing' : ''} ${m.scratchOn ? 'jog--scratch' : 'jog--nudge'}`.trim();
     this.style.setProperty('--size', `${m.size}px`);
     const modeText = m.zones ? 'vinyl mode, centre scratch and rim nudge' : m.scratchOn ? 'scratch mode' : 'nudge mode';

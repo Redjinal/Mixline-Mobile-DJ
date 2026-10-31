@@ -53,7 +53,7 @@ export class MdjShell extends HTMLElement {
     const tabs = h('div', { class: 'shell__decks', role: 'tablist', 'aria-label': 'Decks' });
     for (const d of decks) {
       tabs.appendChild(h('mdj-deck-tab', {
-        deck: d.letter, state: d.state, title: d.track ? d.track.title : '', focused: s.focus.includes(d.letter) ? true : null,
+        deck: d.letter, state: d.interrupted ? 'interrupted' : d.state, title: d.track ? d.track.title : '', focused: s.focus.includes(d.letter) ? true : null,
         level: Math.max(d.levelL || 0, d.levelR || 0), compact: o === 'landscape' || decks.length > 2 ? true : null,
       }));
     }
@@ -65,7 +65,7 @@ export class MdjShell extends HTMLElement {
       const d = s.decks[letter];
       const empty = !d.track || d.state === 'empty' || d.state === 'missing' || d.state === 'loading';
       const cueState = empty ? 'disabled' : d.cueSelected ? 'active' : 'idle';
-      const playState = empty ? 'disabled' : d.state === 'playing' ? 'playing' : d.state === 'interrupted' ? 'interrupted' : 'paused';
+      const playState = empty ? 'disabled' : d.state === 'playing' ? 'playing' : (d.state === 'interrupted' || d.interrupted) ? 'interrupted' : 'paused';
       return [h('mdj-transport', { kind: 'cue', deck: letter, state: cueState, size, hit: size }), h('mdj-transport', { kind: 'play', deck: letter, state: playState, size, hit: size })];
     };
     const xf = h('mdj-crossfader', { value: s.crossfader, 'assign-a': fa, 'assign-b': fb, compact: true, state: s.route.status === 'lost' ? 'disabled' : 'idle' });

@@ -280,3 +280,6 @@ mdj-fixture-mark[inline] { position: static; }
   .device { width: 100%; height: 100%; border-radius: 0; box-shadow: none; }
   #walkbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 39; }
 }
+
+/* Keep the dock's Master label on one line at 200 % font scale. */
+.shell__master-btn .btn-label { white-space: nowrap; }
