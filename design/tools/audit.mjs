@@ -188,6 +188,7 @@ async function main() {
     for (const sc of screens) (byFamily[sc.family] ||= []).push(sc);
     const requiredReport = {};
     for (const [fam, list] of Object.entries(REQUIRED)) {
+      if (!Array.isArray(list)) continue; // skip _note and other metadata keys
       if (FAMILY && fam !== FAMILY) continue;
       const ids = (byFamily[fam] || []).flatMap((sc) => Object.keys(sc.states).map((k) => `${k} ${sc.states[k].label}`.toLowerCase()));
       requiredReport[fam] = list.map((req) => ({ name: req.name, satisfied: ids.some((id) => req.match.some((m) => id.includes(m))), screens: (byFamily[fam] || []).length }));

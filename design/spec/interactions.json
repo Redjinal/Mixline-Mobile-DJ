@@ -1,0 +1,2784 @@
+{
+  "scope": "Prototype navigation only",
+  "scenes": [
+    {
+      "screen": "launch/open",
+      "state": "empty",
+      "pass": true
+    },
+    {
+      "screen": "launch/import",
+      "state": "partial",
+      "pass": true
+    },
+    {
+      "screen": "prep/track",
+      "state": "uncertain",
+      "pass": true
+    },
+    {
+      "screen": "prep/track",
+      "state": "edited",
+      "pass": true
+    },
+    {
+      "screen": "route/check",
+      "state": "speaker",
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "protected-load",
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "transition",
+      "pass": true
+    },
+    {
+      "screen": "rec/panel",
+      "state": "recording",
+      "pass": true
+    },
+    {
+      "screen": "rec/history",
+      "state": "saved",
+      "pass": true
+    },
+    {
+      "screen": "system/recovery",
+      "state": "route-lost",
+      "pass": true
+    },
+    {
+      "screen": "launch/open",
+      "state": "resume-missing",
+      "pass": true
+    }
+  ],
+  "results": [
+    {
+      "screen": "launch/open",
+      "state": "demo",
+      "orientation": "portrait",
+      "via": {
+        "from": "empty",
+        "control": "Demo crate"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/open",
+      "state": "demo",
+      "orientation": "landscape",
+      "via": {
+        "from": "empty",
+        "control": "Demo crate"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/open",
+      "state": "resume-missing",
+      "orientation": "portrait",
+      "via": {
+        "from": "resume",
+        "control": "Rooftop warm-up"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/open",
+      "state": "resume-missing",
+      "orientation": "landscape",
+      "via": {
+        "from": "resume",
+        "control": "Rooftop warm-up"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/import",
+      "state": "picker",
+      "orientation": "portrait",
+      "via": {
+        "from": "launch/open:empty",
+        "control": "Import music"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/import",
+      "state": "picker",
+      "orientation": "landscape",
+      "via": {
+        "from": "launch/open:empty",
+        "control": "Import music"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/import",
+      "state": "indexing",
+      "orientation": "portrait",
+      "via": {
+        "from": "picker",
+        "control": "Choose a folder"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/import",
+      "state": "indexing",
+      "orientation": "landscape",
+      "via": {
+        "from": "picker",
+        "control": "Choose a folder"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/library",
+      "state": "selected",
+      "orientation": "portrait",
+      "via": {
+        "from": "browse",
+        "control": "Select DRIFT HOUR"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/library",
+      "state": "selected",
+      "orientation": "landscape",
+      "via": {
+        "from": "browse",
+        "control": "Select DRIFT HOUR"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/library",
+      "state": "search-results",
+      "orientation": "portrait",
+      "via": {
+        "from": "selected",
+        "control": "Search co"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/library",
+      "state": "search-results",
+      "orientation": "landscape",
+      "via": {
+        "from": "selected",
+        "control": "Search co"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/library",
+      "state": "no-results",
+      "orientation": "portrait",
+      "via": {
+        "from": "browse",
+        "control": "Search zzz"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/library",
+      "state": "no-results",
+      "orientation": "landscape",
+      "via": {
+        "from": "browse",
+        "control": "Search zzz"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/library",
+      "state": "protected-load",
+      "orientation": "portrait",
+      "via": {
+        "from": "selected",
+        "control": "Load DRIFT HOUR to Deck A, playing, protected: asks for confirmation"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/library",
+      "state": "protected-load",
+      "orientation": "landscape",
+      "via": {
+        "from": "selected",
+        "control": "Load DRIFT HOUR to Deck A, playing, protected: asks for confirmation"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/crates",
+      "state": "crate-detail",
+      "orientation": "portrait",
+      "via": {
+        "from": "crates",
+        "control": "Open Warm-up"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/crates",
+      "state": "crate-detail",
+      "orientation": "landscape",
+      "via": {
+        "from": "crates",
+        "control": "Open Warm-up"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/crates",
+      "state": "smart-rule",
+      "orientation": "portrait",
+      "via": {
+        "from": "crates",
+        "control": "Open Compatible with A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/crates",
+      "state": "smart-rule",
+      "orientation": "landscape",
+      "via": {
+        "from": "crates",
+        "control": "Open Compatible with A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/crates",
+      "state": "history",
+      "orientation": "portrait",
+      "via": {
+        "from": "crates",
+        "control": "History"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/crates",
+      "state": "history",
+      "orientation": "landscape",
+      "via": {
+        "from": "crates",
+        "control": "History"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/crates",
+      "state": "rename-duplicate",
+      "orientation": "portrait",
+      "via": {
+        "from": "crate-detail",
+        "control": "Rename crate"
+      },
+      "pass": true
+    },
+    {
+      "screen": "launch/crates",
+      "state": "rename-duplicate",
+      "orientation": "landscape",
+      "via": {
+        "from": "crate-detail",
+        "control": "Rename crate"
+      },
+      "pass": true
+    },
+    {
+      "screen": "prep/track",
+      "state": "cue-edit",
+      "orientation": "portrait",
+      "via": {
+        "from": "uncertain",
+        "control": "Edit cues"
+      },
+      "pass": true
+    },
+    {
+      "screen": "prep/track",
+      "state": "cue-edit",
+      "orientation": "landscape",
+      "via": {
+        "from": "uncertain",
+        "control": "Edit cues"
+      },
+      "pass": true
+    },
+    {
+      "screen": "prep/track",
+      "state": "edited",
+      "orientation": "portrait",
+      "via": {
+        "from": "cue-edit",
+        "control": "Keep correction"
+      },
+      "pass": true
+    },
+    {
+      "screen": "prep/track",
+      "state": "edited",
+      "orientation": "landscape",
+      "via": {
+        "from": "cue-edit",
+        "control": "Keep correction"
+      },
+      "pass": true
+    },
+    {
+      "screen": "prep/track",
+      "state": "undo",
+      "orientation": "portrait",
+      "via": {
+        "from": "edited",
+        "control": "Undo"
+      },
+      "pass": true
+    },
+    {
+      "screen": "prep/track",
+      "state": "undo",
+      "orientation": "landscape",
+      "via": {
+        "from": "edited",
+        "control": "Undo"
+      },
+      "pass": true
+    },
+    {
+      "screen": "prep/track",
+      "state": "half-double",
+      "orientation": "portrait",
+      "via": {
+        "from": "locked",
+        "control": "Half / Double"
+      },
+      "pass": true
+    },
+    {
+      "screen": "prep/track",
+      "state": "half-double",
+      "orientation": "landscape",
+      "via": {
+        "from": "locked",
+        "control": "Half / Double"
+      },
+      "pass": true
+    },
+    {
+      "screen": "route/check",
+      "state": "speaker",
+      "orientation": "portrait",
+      "via": {
+        "from": "disconnected",
+        "control": "Phone speaker"
+      },
+      "pass": true
+    },
+    {
+      "screen": "route/check",
+      "state": "speaker",
+      "orientation": "landscape",
+      "via": {
+        "from": "disconnected",
+        "control": "Phone speaker"
+      },
+      "pass": true
+    },
+    {
+      "screen": "route/check",
+      "state": "usbc-stereo",
+      "orientation": "portrait",
+      "via": {
+        "from": "speaker",
+        "control": "USB-C headphones / DAC"
+      },
+      "pass": true
+    },
+    {
+      "screen": "route/check",
+      "state": "usbc-stereo",
+      "orientation": "landscape",
+      "via": {
+        "from": "speaker",
+        "control": "USB-C headphones / DAC"
+      },
+      "pass": true
+    },
+    {
+      "screen": "route/check",
+      "state": "splitter",
+      "orientation": "portrait",
+      "via": {
+        "from": "swapped",
+        "control": "Swap master/cue sides"
+      },
+      "pass": true
+    },
+    {
+      "screen": "route/check",
+      "state": "splitter",
+      "orientation": "landscape",
+      "via": {
+        "from": "swapped",
+        "control": "Swap master/cue sides"
+      },
+      "pass": true
+    },
+    {
+      "screen": "route/check",
+      "state": "swapped",
+      "orientation": "portrait",
+      "via": {
+        "from": "splitter",
+        "control": "Swap master/cue sides"
+      },
+      "pass": true
+    },
+    {
+      "screen": "route/check",
+      "state": "swapped",
+      "orientation": "landscape",
+      "via": {
+        "from": "splitter",
+        "control": "Swap master/cue sides"
+      },
+      "pass": true
+    },
+    {
+      "screen": "route/check",
+      "state": "usb-4ch",
+      "orientation": "portrait",
+      "via": {
+        "from": "checking",
+        "control": "Cancel check, USB interface — Quadra 4 (fixture)"
+      },
+      "pass": true
+    },
+    {
+      "screen": "route/check",
+      "state": "usb-4ch",
+      "orientation": "landscape",
+      "via": {
+        "from": "checking",
+        "control": "Cancel check, USB interface — Quadra 4 (fixture)"
+      },
+      "pass": true
+    },
+    {
+      "screen": "route/check",
+      "state": "checking",
+      "orientation": "portrait",
+      "via": {
+        "from": "usb-4ch",
+        "control": "Run isolation check, USB interface — Quadra 4 (fixture)"
+      },
+      "pass": true
+    },
+    {
+      "screen": "route/check",
+      "state": "checking",
+      "orientation": "landscape",
+      "via": {
+        "from": "usb-4ch",
+        "control": "Run isolation check, USB interface — Quadra 4 (fixture)"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "playing",
+      "orientation": "portrait",
+      "via": {
+        "from": "set-ready",
+        "control": "Play deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "playing",
+      "orientation": "landscape",
+      "via": {
+        "from": "set-ready",
+        "control": "Play deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "protected-load",
+      "orientation": "portrait",
+      "via": {
+        "from": "playing",
+        "control": "Load next"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "protected-load",
+      "orientation": "landscape",
+      "via": {
+        "from": "playing",
+        "control": "Load next"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "b-loaded",
+      "orientation": "portrait",
+      "via": {
+        "from": "protected-load",
+        "control": "Load to B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "b-loaded",
+      "orientation": "landscape",
+      "via": {
+        "from": "protected-load",
+        "control": "Load to B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "transition",
+      "orientation": "portrait",
+      "via": {
+        "from": "b-loaded",
+        "control": "Play deck B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "transition",
+      "orientation": "landscape",
+      "via": {
+        "from": "b-loaded",
+        "control": "Play deck B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "seek-preview",
+      "orientation": "portrait",
+      "via": {
+        "from": "playing",
+        "control": "Preview seek"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "seek-preview",
+      "orientation": "landscape",
+      "via": {
+        "from": "playing",
+        "control": "Preview seek"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "seeked",
+      "orientation": "portrait",
+      "via": {
+        "from": "seek-preview",
+        "control": "Seek to 2:41"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "seeked",
+      "orientation": "landscape",
+      "via": {
+        "from": "seek-preview",
+        "control": "Seek to 2:41"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "pending-quantized",
+      "orientation": "portrait",
+      "via": {
+        "from": "playing",
+        "control": "Hot cue 3 'Break', deck A, bank 1, loaded"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "pending-quantized",
+      "orientation": "landscape",
+      "via": {
+        "from": "playing",
+        "control": "Hot cue 3 'Break', deck A, bank 1, loaded"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "four-deck",
+      "orientation": "portrait",
+      "via": {
+        "from": "perform/focus-map:four-deck",
+        "control": "Focus pair A/B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "four-deck",
+      "orientation": "landscape",
+      "via": {
+        "from": "perform/focus-map:four-deck",
+        "control": "Focus pair A/B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "four-deck-cd",
+      "orientation": "portrait",
+      "via": {
+        "from": "four-deck",
+        "control": "Focus pair C/D"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "four-deck-cd",
+      "orientation": "landscape",
+      "via": {
+        "from": "four-deck",
+        "control": "Focus pair C/D"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "four-deck-ac",
+      "orientation": "portrait",
+      "via": {
+        "from": "perform/focus-map:four-deck",
+        "control": "Focus pair A/C"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "four-deck-ac",
+      "orientation": "landscape",
+      "via": {
+        "from": "perform/focus-map:four-deck",
+        "control": "Focus pair A/C"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "four-deck-bd",
+      "orientation": "portrait",
+      "via": {
+        "from": "perform/focus-map:four-deck",
+        "control": "Focus pair B/D"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/ab",
+      "state": "four-deck-bd",
+      "orientation": "landscape",
+      "via": {
+        "from": "perform/focus-map:four-deck",
+        "control": "Focus pair B/D"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/mixer",
+      "state": "cue-selected",
+      "orientation": "portrait",
+      "via": {
+        "from": "normal",
+        "control": "Headphone cue, channel B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/mixer",
+      "state": "cue-selected",
+      "orientation": "landscape",
+      "via": {
+        "from": "normal",
+        "control": "Headphone cue, channel B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/mixer",
+      "state": "bypass-crossfader",
+      "orientation": "portrait",
+      "via": {
+        "from": "normal",
+        "control": "Thru, channel A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "perform/mixer",
+      "state": "bypass-crossfader",
+      "orientation": "landscape",
+      "via": {
+        "from": "normal",
+        "control": "Thru, channel A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/pads",
+      "state": "cue-bank1",
+      "orientation": "portrait",
+      "via": {
+        "from": "edit-mode",
+        "control": "Done editing, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/pads",
+      "state": "cue-bank1",
+      "orientation": "landscape",
+      "via": {
+        "from": "edit-mode",
+        "control": "Done editing, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/pads",
+      "state": "bank-switch",
+      "orientation": "portrait",
+      "via": {
+        "from": "cue-bank1",
+        "control": "Bank 2 of 4, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/pads",
+      "state": "bank-switch",
+      "orientation": "landscape",
+      "via": {
+        "from": "cue-bank1",
+        "control": "Bank 2 of 4, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/pads",
+      "state": "edit-mode",
+      "orientation": "portrait",
+      "via": {
+        "from": "cue-bank1",
+        "control": "Edit pads, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/pads",
+      "state": "edit-mode",
+      "orientation": "landscape",
+      "via": {
+        "from": "cue-bank1",
+        "control": "Edit pads, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/pads",
+      "state": "pending-quantized",
+      "orientation": "portrait",
+      "via": {
+        "from": "cue-bank1",
+        "control": "Hot cue 3 'Break', deck A, bank 1, loaded"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/pads",
+      "state": "pending-quantized",
+      "orientation": "landscape",
+      "via": {
+        "from": "cue-bank1",
+        "control": "Hot cue 3 'Break', deck A, bank 1, loaded"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/pads",
+      "state": "slicer",
+      "orientation": "portrait",
+      "via": {
+        "from": "cue-bank1",
+        "control": "Pad mode Slicer, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/pads",
+      "state": "slicer",
+      "orientation": "landscape",
+      "via": {
+        "from": "cue-bank1",
+        "control": "Pad mode Slicer, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/pads",
+      "state": "pitch-play",
+      "orientation": "portrait",
+      "via": {
+        "from": "cue-bank1",
+        "control": "Pad mode Pitch play, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/pads",
+      "state": "pitch-play",
+      "orientation": "landscape",
+      "via": {
+        "from": "cue-bank1",
+        "control": "Pad mode Pitch play, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/loops",
+      "state": "inactive",
+      "orientation": "portrait",
+      "via": {
+        "from": "active-8",
+        "control": "Exit loop, deck A, 8 beats looping"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/loops",
+      "state": "inactive",
+      "orientation": "landscape",
+      "via": {
+        "from": "active-8",
+        "control": "Exit loop, deck A, 8 beats looping"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/loops",
+      "state": "pending",
+      "orientation": "portrait",
+      "via": {
+        "from": "inactive",
+        "control": "Loop in, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/loops",
+      "state": "pending",
+      "orientation": "landscape",
+      "via": {
+        "from": "inactive",
+        "control": "Loop in, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/loops",
+      "state": "active-8",
+      "orientation": "portrait",
+      "via": {
+        "from": "pending",
+        "control": "Loop out, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/loops",
+      "state": "active-8",
+      "orientation": "landscape",
+      "via": {
+        "from": "pending",
+        "control": "Loop out, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/loops",
+      "state": "saved-loops",
+      "orientation": "portrait",
+      "via": {
+        "from": "inactive",
+        "control": "Show saved loops, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/loops",
+      "state": "saved-loops",
+      "orientation": "landscape",
+      "via": {
+        "from": "inactive",
+        "control": "Show saved loops, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/fx",
+      "state": "idle",
+      "orientation": "portrait",
+      "via": {
+        "from": "latch-armed",
+        "control": "Momentary mode, Echo on deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/fx",
+      "state": "idle",
+      "orientation": "landscape",
+      "via": {
+        "from": "latch-armed",
+        "control": "Momentary mode, Echo on deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/fx",
+      "state": "latch-armed",
+      "orientation": "portrait",
+      "via": {
+        "from": "idle",
+        "control": "Latch mode, Echo on deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/fx",
+      "state": "latch-armed",
+      "orientation": "landscape",
+      "via": {
+        "from": "idle",
+        "control": "Latch mode, Echo on deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/fx",
+      "state": "latched",
+      "orientation": "portrait",
+      "via": {
+        "from": "latch-armed",
+        "control": "Latch XY now, Echo on deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/fx",
+      "state": "latched",
+      "orientation": "landscape",
+      "via": {
+        "from": "latch-armed",
+        "control": "Latch XY now, Echo on deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/fx",
+      "state": "bypassed",
+      "orientation": "portrait",
+      "via": {
+        "from": "latched",
+        "control": "Bypass Echo on deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/fx",
+      "state": "bypassed",
+      "orientation": "landscape",
+      "via": {
+        "from": "latched",
+        "control": "Bypass Echo on deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/fx",
+      "state": "macro",
+      "orientation": "portrait",
+      "via": {
+        "from": "idle",
+        "control": "Open macro, deck A FX"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/fx",
+      "state": "macro",
+      "orientation": "landscape",
+      "via": {
+        "from": "idle",
+        "control": "Open macro, deck A FX"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/fx",
+      "state": "tails",
+      "orientation": "portrait",
+      "via": {
+        "from": "bypassed",
+        "control": "Tail behaviour"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/fx",
+      "state": "tails",
+      "orientation": "landscape",
+      "via": {
+        "from": "bypassed",
+        "control": "Tail behaviour"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/stems",
+      "state": "ready",
+      "orientation": "portrait",
+      "via": {
+        "from": "vocals-muted",
+        "control": "Mute vocals, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/stems",
+      "state": "ready",
+      "orientation": "landscape",
+      "via": {
+        "from": "vocals-muted",
+        "control": "Mute vocals, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/stems",
+      "state": "vocals-muted",
+      "orientation": "portrait",
+      "via": {
+        "from": "ready",
+        "control": "Mute vocals, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/stems",
+      "state": "vocals-muted",
+      "orientation": "landscape",
+      "via": {
+        "from": "ready",
+        "control": "Mute vocals, deck A"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/stems",
+      "state": "full-mix-fallback",
+      "orientation": "portrait",
+      "via": {
+        "from": "preparing",
+        "control": "Cancel stem preparation, deck B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "pads/stems",
+      "state": "full-mix-fallback",
+      "orientation": "landscape",
+      "via": {
+        "from": "preparing",
+        "control": "Cancel stem preparation, deck B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/banks",
+      "state": "bank-a",
+      "orientation": "portrait",
+      "via": {
+        "from": "bank-b",
+        "control": "Bank 1, slots 1 to 8"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/banks",
+      "state": "bank-a",
+      "orientation": "landscape",
+      "via": {
+        "from": "bank-b",
+        "control": "Bank 1, slots 1 to 8"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/banks",
+      "state": "bank-b",
+      "orientation": "portrait",
+      "via": {
+        "from": "bank-a",
+        "control": "Bank 2, slots 9 to 16"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/banks",
+      "state": "bank-b",
+      "orientation": "landscape",
+      "via": {
+        "from": "bank-a",
+        "control": "Bank 2, slots 9 to 16"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/banks",
+      "state": "empty-slot",
+      "orientation": "portrait",
+      "via": {
+        "from": "bank-b",
+        "control": "Assign slot 12"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/banks",
+      "state": "empty-slot",
+      "orientation": "landscape",
+      "via": {
+        "from": "bank-b",
+        "control": "Assign slot 12"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/banks",
+      "state": "playing",
+      "orientation": "portrait",
+      "via": {
+        "from": "bank-a",
+        "control": "Sample 1 'Kick', bank 1, one-shot, choke group 1, level 90 %, loaded"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/banks",
+      "state": "playing",
+      "orientation": "landscape",
+      "via": {
+        "from": "bank-a",
+        "control": "Sample 1 'Kick', bank 1, one-shot, choke group 1, level 90 %, loaded"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/banks",
+      "state": "choked",
+      "orientation": "portrait",
+      "via": {
+        "from": "playing",
+        "control": "Sample 2 'Clap', bank 1, one-shot, choke group 1, level 80 %, loaded"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/banks",
+      "state": "choked",
+      "orientation": "landscape",
+      "via": {
+        "from": "playing",
+        "control": "Sample 2 'Clap', bank 1, one-shot, choke group 1, level 80 %, loaded"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/banks",
+      "state": "edit",
+      "orientation": "portrait",
+      "via": {
+        "from": "bank-a",
+        "control": "Edit"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/banks",
+      "state": "edit",
+      "orientation": "landscape",
+      "via": {
+        "from": "bank-a",
+        "control": "Edit"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/sequencer",
+      "state": "stopped",
+      "orientation": "portrait",
+      "via": {
+        "from": "stop-immediate",
+        "control": "Back to stopped pattern"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/sequencer",
+      "state": "stopped",
+      "orientation": "landscape",
+      "via": {
+        "from": "stop-immediate",
+        "control": "Back to stopped pattern"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/sequencer",
+      "state": "playing-sounding",
+      "orientation": "portrait",
+      "via": {
+        "from": "stopped",
+        "control": "Start, pattern A1"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/sequencer",
+      "state": "playing-sounding",
+      "orientation": "landscape",
+      "via": {
+        "from": "stopped",
+        "control": "Start, pattern A1"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/sequencer",
+      "state": "queued-next-bar-revision",
+      "orientation": "portrait",
+      "via": {
+        "from": "playing-sounding",
+        "control": "Clap, step 8, off"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/sequencer",
+      "state": "queued-next-bar-revision",
+      "orientation": "landscape",
+      "via": {
+        "from": "playing-sounding",
+        "control": "Clap, step 8, off"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/sequencer",
+      "state": "editing",
+      "orientation": "portrait",
+      "via": {
+        "from": "stopped",
+        "control": "Edit pattern"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/sequencer",
+      "state": "editing",
+      "orientation": "landscape",
+      "via": {
+        "from": "stopped",
+        "control": "Edit pattern"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/sequencer",
+      "state": "stop-quantized-pending",
+      "orientation": "portrait",
+      "via": {
+        "from": "playing-sounding",
+        "control": "Stop at bar, pattern A1"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/sequencer",
+      "state": "stop-quantized-pending",
+      "orientation": "landscape",
+      "via": {
+        "from": "playing-sounding",
+        "control": "Stop at bar, pattern A1"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/sequencer",
+      "state": "stop-immediate",
+      "orientation": "portrait",
+      "via": {
+        "from": "playing-sounding",
+        "control": "Stop now, pattern A1"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/sequencer",
+      "state": "stop-immediate",
+      "orientation": "landscape",
+      "via": {
+        "from": "playing-sounding",
+        "control": "Stop now, pattern A1"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/sequencer",
+      "state": "pattern-change",
+      "orientation": "portrait",
+      "via": {
+        "from": "playing-sounding",
+        "control": "Queue pattern B1 Lift for the next bar"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sampler/sequencer",
+      "state": "pattern-change",
+      "orientation": "landscape",
+      "via": {
+        "from": "playing-sounding",
+        "control": "Queue pattern B1 Lift for the next bar"
+      },
+      "pass": true
+    },
+    {
+      "screen": "queue/queue",
+      "state": "inspect-next",
+      "orientation": "portrait",
+      "via": {
+        "from": "ready",
+        "control": "Inspect next"
+      },
+      "pass": true
+    },
+    {
+      "screen": "queue/queue",
+      "state": "inspect-next",
+      "orientation": "landscape",
+      "via": {
+        "from": "ready",
+        "control": "Inspect next"
+      },
+      "pass": true
+    },
+    {
+      "screen": "queue/queue",
+      "state": "committed-transition",
+      "orientation": "portrait",
+      "via": {
+        "from": "ready",
+        "control": "Start transition at next phrase"
+      },
+      "pass": true
+    },
+    {
+      "screen": "queue/queue",
+      "state": "committed-transition",
+      "orientation": "landscape",
+      "via": {
+        "from": "ready",
+        "control": "Start transition at next phrase"
+      },
+      "pass": true
+    },
+    {
+      "screen": "queue/queue",
+      "state": "takeover",
+      "orientation": "portrait",
+      "via": {
+        "from": "ready",
+        "control": "Stop automation — Automix running"
+      },
+      "pass": true
+    },
+    {
+      "screen": "queue/queue",
+      "state": "takeover",
+      "orientation": "landscape",
+      "via": {
+        "from": "ready",
+        "control": "Stop automation — Automix running"
+      },
+      "pass": true
+    },
+    {
+      "screen": "queue/queue",
+      "state": "automix-off",
+      "orientation": "portrait",
+      "via": {
+        "from": "ready",
+        "control": "Automix"
+      },
+      "pass": true
+    },
+    {
+      "screen": "queue/queue",
+      "state": "automix-off",
+      "orientation": "landscape",
+      "via": {
+        "from": "ready",
+        "control": "Automix"
+      },
+      "pass": true
+    },
+    {
+      "screen": "rec/history",
+      "state": "export",
+      "orientation": "portrait",
+      "via": {
+        "from": "saved",
+        "control": "Export session log"
+      },
+      "pass": true
+    },
+    {
+      "screen": "rec/history",
+      "state": "export",
+      "orientation": "landscape",
+      "via": {
+        "from": "saved",
+        "control": "Export session log"
+      },
+      "pass": true
+    },
+    {
+      "screen": "rec/history",
+      "state": "session-detail",
+      "orientation": "portrait",
+      "via": {
+        "from": "saved",
+        "control": "Rooftop warm-up"
+      },
+      "pass": true
+    },
+    {
+      "screen": "rec/history",
+      "state": "session-detail",
+      "orientation": "landscape",
+      "via": {
+        "from": "saved",
+        "control": "Rooftop warm-up"
+      },
+      "pass": true
+    },
+    {
+      "screen": "rec/history",
+      "state": "recover-fragments",
+      "orientation": "portrait",
+      "via": {
+        "from": "incomplete-recording",
+        "control": "Recover"
+      },
+      "pass": true
+    },
+    {
+      "screen": "rec/history",
+      "state": "recover-fragments",
+      "orientation": "landscape",
+      "via": {
+        "from": "incomplete-recording",
+        "control": "Recover"
+      },
+      "pass": true
+    },
+    {
+      "screen": "rec/panel",
+      "state": "recording",
+      "orientation": "portrait",
+      "via": {
+        "from": "idle",
+        "control": "Start recording"
+      },
+      "pass": true
+    },
+    {
+      "screen": "rec/panel",
+      "state": "recording",
+      "orientation": "landscape",
+      "via": {
+        "from": "idle",
+        "control": "Start recording"
+      },
+      "pass": true
+    },
+    {
+      "screen": "rec/panel",
+      "state": "finalizing",
+      "orientation": "portrait",
+      "via": {
+        "from": "recording",
+        "control": "Stop recording"
+      },
+      "pass": true
+    },
+    {
+      "screen": "rec/panel",
+      "state": "finalizing",
+      "orientation": "landscape",
+      "via": {
+        "from": "recording",
+        "control": "Stop recording"
+      },
+      "pass": true
+    },
+    {
+      "screen": "rec/panel",
+      "state": "format-choice",
+      "orientation": "portrait",
+      "via": {
+        "from": "idle",
+        "control": "Change format"
+      },
+      "pass": true
+    },
+    {
+      "screen": "rec/panel",
+      "state": "format-choice",
+      "orientation": "landscape",
+      "via": {
+        "from": "idle",
+        "control": "Change format"
+      },
+      "pass": true
+    },
+    {
+      "screen": "rec/panel",
+      "state": "markers",
+      "orientation": "portrait",
+      "via": {
+        "from": "recording",
+        "control": "Add marker"
+      },
+      "pass": true
+    },
+    {
+      "screen": "rec/panel",
+      "state": "markers",
+      "orientation": "landscape",
+      "via": {
+        "from": "recording",
+        "control": "Add marker"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/add",
+      "state": "pasted-link",
+      "orientation": "portrait",
+      "via": {
+        "from": "idle",
+        "control": "Paste"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/add",
+      "state": "pasted-link",
+      "orientation": "landscape",
+      "via": {
+        "from": "idle",
+        "control": "Paste"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/resolve",
+      "state": "matching",
+      "orientation": "portrait",
+      "via": {
+        "from": "sources/add:pasted-link",
+        "control": "Resolve"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/resolve",
+      "state": "matching",
+      "orientation": "landscape",
+      "via": {
+        "from": "sources/add:pasted-link",
+        "control": "Resolve"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/resolve",
+      "state": "exact",
+      "orientation": "portrait",
+      "via": {
+        "from": "sources/add:share-received",
+        "control": "Resolve"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/resolve",
+      "state": "exact",
+      "orientation": "landscape",
+      "via": {
+        "from": "sources/add:share-received",
+        "control": "Resolve"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/resolve",
+      "state": "ambiguous",
+      "orientation": "portrait",
+      "via": {
+        "from": "matching",
+        "control": "Show resolver answer (fixture)"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/resolve",
+      "state": "ambiguous",
+      "orientation": "landscape",
+      "via": {
+        "from": "matching",
+        "control": "Show resolver answer (fixture)"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/format",
+      "state": "options",
+      "orientation": "portrait",
+      "via": {
+        "from": "sources/resolve:ambiguous",
+        "control": "Choose Radio Edit"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/format",
+      "state": "options",
+      "orientation": "landscape",
+      "via": {
+        "from": "sources/resolve:ambiguous",
+        "control": "Choose Radio Edit"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/format",
+      "state": "unknown-bitrate",
+      "orientation": "portrait",
+      "via": {
+        "from": "sources/resolve:exact",
+        "control": "Choose format"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/format",
+      "state": "unknown-bitrate",
+      "orientation": "landscape",
+      "via": {
+        "from": "sources/resolve:exact",
+        "control": "Choose format"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/format",
+      "state": "conversion-warning",
+      "orientation": "portrait",
+      "via": {
+        "from": "options",
+        "control": "FLAC — lossless container"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/format",
+      "state": "conversion-warning",
+      "orientation": "landscape",
+      "via": {
+        "from": "options",
+        "control": "FLAC — lossless container"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/queue",
+      "state": "active",
+      "orientation": "portrait",
+      "via": {
+        "from": "sources/format:options",
+        "control": "Download"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/queue",
+      "state": "active",
+      "orientation": "landscape",
+      "via": {
+        "from": "sources/format:options",
+        "control": "Download"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/queue",
+      "state": "cancelling",
+      "orientation": "portrait",
+      "via": {
+        "from": "active",
+        "control": "Cancel download"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/queue",
+      "state": "cancelling",
+      "orientation": "landscape",
+      "via": {
+        "from": "active",
+        "control": "Cancel download"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/queue",
+      "state": "cancelled",
+      "orientation": "portrait",
+      "via": {
+        "from": "cancelling",
+        "control": "Show worker acknowledgement (fixture)"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/queue",
+      "state": "cancelled",
+      "orientation": "landscape",
+      "via": {
+        "from": "cancelling",
+        "control": "Show worker acknowledgement (fixture)"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/queue",
+      "state": "paused",
+      "orientation": "portrait",
+      "via": {
+        "from": "active",
+        "control": "Pause"
+      },
+      "pass": true
+    },
+    {
+      "screen": "sources/queue",
+      "state": "paused",
+      "orientation": "landscape",
+      "via": {
+        "from": "active",
+        "control": "Pause"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/perform",
+      "state": "read-propose",
+      "orientation": "portrait",
+      "via": {
+        "from": "parday/arm:review",
+        "control": "Back to ParDay"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/perform",
+      "state": "read-propose",
+      "orientation": "landscape",
+      "via": {
+        "from": "parday/arm:review",
+        "control": "Back to ParDay"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/perform",
+      "state": "proposal-transition",
+      "orientation": "portrait",
+      "via": {
+        "from": "read-propose",
+        "control": "Preview — proposal P42, deck A to deck B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/perform",
+      "state": "proposal-transition",
+      "orientation": "landscape",
+      "via": {
+        "from": "read-propose",
+        "control": "Preview — proposal P42, deck A to deck B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/perform",
+      "state": "armed",
+      "orientation": "portrait",
+      "via": {
+        "from": "parday/arm:armed",
+        "control": "Back to ParDay"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/perform",
+      "state": "armed",
+      "orientation": "landscape",
+      "via": {
+        "from": "parday/arm:armed",
+        "control": "Back to ParDay"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/perform",
+      "state": "executing",
+      "orientation": "portrait",
+      "via": {
+        "from": "armed",
+        "control": "Fixture: plan starts"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/perform",
+      "state": "executing",
+      "orientation": "landscape",
+      "via": {
+        "from": "armed",
+        "control": "Fixture: plan starts"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/perform",
+      "state": "takeover-cancelled",
+      "orientation": "portrait",
+      "via": {
+        "from": "executing",
+        "control": "Fixture: touch the crossfader"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/perform",
+      "state": "takeover-cancelled",
+      "orientation": "landscape",
+      "via": {
+        "from": "executing",
+        "control": "Fixture: touch the crossfader"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/perform",
+      "state": "stopped",
+      "orientation": "portrait",
+      "via": {
+        "from": "executing",
+        "control": "Stop automation — P42 running"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/perform",
+      "state": "stopped",
+      "orientation": "landscape",
+      "via": {
+        "from": "executing",
+        "control": "Stop automation — P42 running"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/arm",
+      "state": "review",
+      "orientation": "portrait",
+      "via": {
+        "from": "parday/perform:read-propose",
+        "control": "Arm transition — proposal P42, deck A to deck B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/arm",
+      "state": "review",
+      "orientation": "landscape",
+      "via": {
+        "from": "parday/perform:read-propose",
+        "control": "Arm transition — proposal P42, deck A to deck B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/arm",
+      "state": "armed",
+      "orientation": "portrait",
+      "via": {
+        "from": "review",
+        "control": "Arm this transition — P42, deck A to deck B, 16 bars"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/arm",
+      "state": "armed",
+      "orientation": "landscape",
+      "via": {
+        "from": "review",
+        "control": "Arm this transition — P42, deck A to deck B, 16 bars"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/arm",
+      "state": "executing",
+      "orientation": "portrait",
+      "via": {
+        "from": "armed",
+        "control": "Fixture: plan starts"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/arm",
+      "state": "executing",
+      "orientation": "landscape",
+      "via": {
+        "from": "armed",
+        "control": "Fixture: plan starts"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/arm",
+      "state": "cancelled",
+      "orientation": "portrait",
+      "via": {
+        "from": "armed",
+        "control": "Cancel P42 — remaining events stop at the next control boundary; faders hold"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/arm",
+      "state": "cancelled",
+      "orientation": "landscape",
+      "via": {
+        "from": "armed",
+        "control": "Cancel P42 — remaining events stop at the next control boundary; faders hold"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/prepare",
+      "state": "thinking",
+      "orientation": "portrait",
+      "via": {
+        "from": "ready",
+        "control": "Build a 30-minute crate — uses the model"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/prepare",
+      "state": "thinking",
+      "orientation": "landscape",
+      "via": {
+        "from": "ready",
+        "control": "Build a 30-minute crate — uses the model"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/prepare",
+      "state": "proposal-ready",
+      "orientation": "portrait",
+      "via": {
+        "from": "thinking",
+        "control": "Fixture: proposal arrives"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/prepare",
+      "state": "proposal-ready",
+      "orientation": "landscape",
+      "via": {
+        "from": "thinking",
+        "control": "Fixture: proposal arrives"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/prepare",
+      "state": "applied",
+      "orientation": "portrait",
+      "via": {
+        "from": "proposal-ready",
+        "control": "Apply to preparation — proposal P37"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/prepare",
+      "state": "applied",
+      "orientation": "landscape",
+      "via": {
+        "from": "proposal-ready",
+        "control": "Apply to preparation — proposal P37"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/prepare",
+      "state": "undone",
+      "orientation": "portrait",
+      "via": {
+        "from": "applied",
+        "control": "Undo (preparation) — proposal P37"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/prepare",
+      "state": "undone",
+      "orientation": "landscape",
+      "via": {
+        "from": "applied",
+        "control": "Undo (preparation) — proposal P37"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/prepare",
+      "state": "rejected",
+      "orientation": "portrait",
+      "via": {
+        "from": "proposal-ready",
+        "control": "Dismiss — proposal P37"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/prepare",
+      "state": "rejected",
+      "orientation": "landscape",
+      "via": {
+        "from": "proposal-ready",
+        "control": "Dismiss — proposal P37"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/prepare",
+      "state": "restricted-source-note",
+      "orientation": "portrait",
+      "via": {
+        "from": "ready",
+        "control": "What ParDay can see"
+      },
+      "pass": true
+    },
+    {
+      "screen": "parday/prepare",
+      "state": "restricted-source-note",
+      "orientation": "landscape",
+      "via": {
+        "from": "ready",
+        "control": "What ParDay can see"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/video",
+      "state": "unlinked",
+      "orientation": "portrait",
+      "via": {
+        "from": "linked",
+        "control": "Unlink video crossfader"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/video",
+      "state": "unlinked",
+      "orientation": "landscape",
+      "via": {
+        "from": "linked",
+        "control": "Unlink video crossfader"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/video",
+      "state": "audio-only-fallback",
+      "orientation": "portrait",
+      "via": {
+        "from": "linked",
+        "control": "Audio only, deck B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/video",
+      "state": "audio-only-fallback",
+      "orientation": "landscape",
+      "via": {
+        "from": "linked",
+        "control": "Audio only, deck B"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/video",
+      "state": "display-verifying",
+      "orientation": "portrait",
+      "via": {
+        "from": "external-display-connected",
+        "control": "Verify display"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/video",
+      "state": "display-verifying",
+      "orientation": "landscape",
+      "via": {
+        "from": "external-display-connected",
+        "control": "Verify display"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/karaoke",
+      "state": "active-singer",
+      "orientation": "portrait",
+      "via": {
+        "from": "queue",
+        "control": "Start next singer"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/karaoke",
+      "state": "active-singer",
+      "orientation": "landscape",
+      "via": {
+        "from": "queue",
+        "control": "Start next singer"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/karaoke",
+      "state": "reorder",
+      "orientation": "portrait",
+      "via": {
+        "from": "active-singer",
+        "control": "Move up, Theo & Ines"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/karaoke",
+      "state": "reorder",
+      "orientation": "landscape",
+      "via": {
+        "from": "active-singer",
+        "control": "Move up, Theo & Ines"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/karaoke",
+      "state": "missing-captions",
+      "orientation": "portrait",
+      "via": {
+        "from": "active-singer",
+        "control": "Next singer"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/karaoke",
+      "state": "missing-captions",
+      "orientation": "landscape",
+      "via": {
+        "from": "active-singer",
+        "control": "Next singer"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/karaoke",
+      "state": "paused",
+      "orientation": "portrait",
+      "via": {
+        "from": "active-singer",
+        "control": "Pause"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/karaoke",
+      "state": "paused",
+      "orientation": "landscape",
+      "via": {
+        "from": "active-singer",
+        "control": "Pause"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/karaoke",
+      "state": "return-to-dj",
+      "orientation": "portrait",
+      "via": {
+        "from": "active-singer",
+        "control": "Return to DJ"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/karaoke",
+      "state": "return-to-dj",
+      "orientation": "landscape",
+      "via": {
+        "from": "active-singer",
+        "control": "Return to DJ"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/broadcast",
+      "state": "private-monitoring",
+      "orientation": "portrait",
+      "via": {
+        "from": "setup",
+        "control": "Test receiver check, Fixture RTMPS receiver"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/broadcast",
+      "state": "private-monitoring",
+      "orientation": "landscape",
+      "via": {
+        "from": "setup",
+        "control": "Test receiver check, Fixture RTMPS receiver"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/broadcast",
+      "state": "connecting",
+      "orientation": "portrait",
+      "via": {
+        "from": "private-monitoring",
+        "control": "Start broadcast to Fixture RTMPS receiver"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/broadcast",
+      "state": "connecting",
+      "orientation": "landscape",
+      "via": {
+        "from": "private-monitoring",
+        "control": "Start broadcast to Fixture RTMPS receiver"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/broadcast",
+      "state": "connected",
+      "orientation": "portrait",
+      "via": {
+        "from": "connecting",
+        "control": "Fixture: destination acknowledges"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/broadcast",
+      "state": "connected",
+      "orientation": "landscape",
+      "via": {
+        "from": "connecting",
+        "control": "Fixture: destination acknowledges"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/broadcast",
+      "state": "stopped",
+      "orientation": "portrait",
+      "via": {
+        "from": "connected",
+        "control": "Stop broadcast to Fixture RTMPS receiver"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/broadcast",
+      "state": "stopped",
+      "orientation": "landscape",
+      "via": {
+        "from": "connected",
+        "control": "Stop broadcast to Fixture RTMPS receiver"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/mic",
+      "state": "off",
+      "orientation": "portrait",
+      "via": {
+        "from": "live",
+        "control": "Mute and disable microphone"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/mic",
+      "state": "off",
+      "orientation": "landscape",
+      "via": {
+        "from": "live",
+        "control": "Mute and disable microphone"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/mic",
+      "state": "armed",
+      "orientation": "portrait",
+      "via": {
+        "from": "off",
+        "control": "Enable microphone"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/mic",
+      "state": "armed",
+      "orientation": "landscape",
+      "via": {
+        "from": "off",
+        "control": "Enable microphone"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/mic",
+      "state": "live",
+      "orientation": "portrait",
+      "via": {
+        "from": "armed",
+        "control": "Unmute"
+      },
+      "pass": true
+    },
+    {
+      "screen": "av/mic",
+      "state": "live",
+      "orientation": "landscape",
+      "via": {
+        "from": "armed",
+        "control": "Unmute"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/settings",
+      "state": "clean",
+      "orientation": "portrait",
+      "via": {
+        "from": "dirty",
+        "control": "Save 1 unsaved change in Performance"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/settings",
+      "state": "clean",
+      "orientation": "landscape",
+      "via": {
+        "from": "dirty",
+        "control": "Save 1 unsaved change in Performance"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/settings",
+      "state": "dirty",
+      "orientation": "portrait",
+      "via": {
+        "from": "clean",
+        "control": "Jump-to-touch"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/settings",
+      "state": "dirty",
+      "orientation": "landscape",
+      "via": {
+        "from": "clean",
+        "control": "Jump-to-touch"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/settings",
+      "state": "reset-scoped",
+      "orientation": "portrait",
+      "via": {
+        "from": "clean",
+        "control": "Reset Performance to defaults (this section only)"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/settings",
+      "state": "reset-scoped",
+      "orientation": "landscape",
+      "via": {
+        "from": "clean",
+        "control": "Reset Performance to defaults (this section only)"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/settings",
+      "state": "search",
+      "orientation": "portrait",
+      "via": {
+        "from": "clean",
+        "control": "Search"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/settings",
+      "state": "search",
+      "orientation": "landscape",
+      "via": {
+        "from": "clean",
+        "control": "Search"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/diagnostics",
+      "state": "telemetry-consent",
+      "orientation": "portrait",
+      "via": {
+        "from": "normal",
+        "control": "Review crash-report sharing"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/diagnostics",
+      "state": "telemetry-consent",
+      "orientation": "landscape",
+      "via": {
+        "from": "normal",
+        "control": "Review crash-report sharing"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/diagnostics",
+      "state": "export-review",
+      "orientation": "portrait",
+      "via": {
+        "from": "normal",
+        "control": "Export diagnostics"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/diagnostics",
+      "state": "export-review",
+      "orientation": "landscape",
+      "via": {
+        "from": "normal",
+        "control": "Export diagnostics"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/backup",
+      "state": "in-progress-unknown",
+      "orientation": "portrait",
+      "via": {
+        "from": "backup",
+        "control": "Back up now"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/backup",
+      "state": "in-progress-unknown",
+      "orientation": "landscape",
+      "via": {
+        "from": "backup",
+        "control": "Back up now"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/backup",
+      "state": "restore-ok",
+      "orientation": "portrait",
+      "via": {
+        "from": "backup",
+        "control": "Restore backup-2026-10-24"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/backup",
+      "state": "restore-ok",
+      "orientation": "landscape",
+      "via": {
+        "from": "backup",
+        "control": "Restore backup-2026-10-24"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/backup",
+      "state": "restore-mismatch",
+      "orientation": "portrait",
+      "via": {
+        "from": "backup",
+        "control": "Restore backup-tablet-0.5"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/backup",
+      "state": "restore-mismatch",
+      "orientation": "landscape",
+      "via": {
+        "from": "backup",
+        "control": "Restore backup-tablet-0.5"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/backup",
+      "state": "restore-rejected",
+      "orientation": "portrait",
+      "via": {
+        "from": "backup",
+        "control": "Restore shared-archive"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/backup",
+      "state": "restore-rejected",
+      "orientation": "landscape",
+      "via": {
+        "from": "backup",
+        "control": "Restore shared-archive"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/backup",
+      "state": "restore-conflicts",
+      "orientation": "portrait",
+      "via": {
+        "from": "restore-ok",
+        "control": "Restore now"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/backup",
+      "state": "restore-conflicts",
+      "orientation": "landscape",
+      "via": {
+        "from": "restore-ok",
+        "control": "Restore now"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/backup",
+      "state": "restore-resolved",
+      "orientation": "portrait",
+      "via": {
+        "from": "restore-conflicts",
+        "control": "Keep mine"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/backup",
+      "state": "restore-resolved",
+      "orientation": "landscape",
+      "via": {
+        "from": "restore-conflicts",
+        "control": "Keep mine"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/plugins",
+      "state": "loaded",
+      "orientation": "portrait",
+      "via": {
+        "from": "compatible-list",
+        "control": "Load"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/plugins",
+      "state": "loaded",
+      "orientation": "landscape",
+      "via": {
+        "from": "compatible-list",
+        "control": "Load"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/plugins",
+      "state": "bypass",
+      "orientation": "portrait",
+      "via": {
+        "from": "loaded",
+        "control": "Bypass"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/plugins",
+      "state": "bypass",
+      "orientation": "landscape",
+      "via": {
+        "from": "loaded",
+        "control": "Bypass"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/plugins",
+      "state": "parameters",
+      "orientation": "portrait",
+      "via": {
+        "from": "loaded",
+        "control": "Parameters"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/plugins",
+      "state": "parameters",
+      "orientation": "landscape",
+      "via": {
+        "from": "loaded",
+        "control": "Parameters"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/recovery",
+      "state": "route-verifying",
+      "orientation": "portrait",
+      "via": {
+        "from": "route-lost",
+        "control": "Check the output again"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/recovery",
+      "state": "route-verifying",
+      "orientation": "landscape",
+      "via": {
+        "from": "route-lost",
+        "control": "Check the output again"
+      },
+      "pass": true
+    }
+  ],
+  "consoleErrors": [],
+  "passed": true
+}
