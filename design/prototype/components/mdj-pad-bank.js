@@ -108,7 +108,7 @@ export class MdjPadBank extends MdjElement {
       const el = h('mdj-pad', {
         mode, n: i + 1, bank, deck, size, label: p.label || '', color: p.color || 'none', state: padState,
         quantized: padState === 'pending' ? (quantized || '1 beat') : null, reason: reason || null,
-        class: selected === i + 1 && state === 'edit' ? 'pad--selected' : null,
+        'data-selected': selected === i + 1 && state === 'edit' ? '' : null,  // an attribute: mdj-pad rewrites its own className on render
       });
       grid.appendChild(el);
     });

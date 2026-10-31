@@ -81,7 +81,7 @@
 .pad[data-state='edit'] .pad__ring { display: block; border: 2px dotted var(--ink-2); }
 .pad[data-state='edit'] .pad__word { color: var(--ink); }
 .pad[data-state='edit'] .pad__face { box-shadow: inset 0 1px 0 var(--glass-edge), 0 1px 3px var(--glass-shadow); }
-.pad--selected .pad__face { box-shadow: 0 0 0 3px var(--focus) !important; }
+.pad--selected .pad__face, mdj-pad[data-selected] .pad__face { box-shadow: 0 0 0 3px var(--focus) !important; }
 .pad[data-state='error'] .pad__face { box-shadow: inset 0 0 0 2px var(--critical); }
 .pad[data-state='error'] .pad__word { color: var(--critical); background: var(--critical-fill); }
 .pad[data-state='disabled'] .pad__btn { cursor: not-allowed; }
