@@ -47,7 +47,7 @@ register({
 function decks(ctx, { muted = false, letters = null } = {}) {
   const s = ctx.session;
   const list = Object.values(s.decks).filter((d) => d.enabled && d.track && (!letters || letters.includes(d.letter)));
-  return panel({ title: muted ? 'Decks — paused and muted' : 'Decks', ic: 'deck-focus', children: list.map((d) => h('div', { class: 'system-recovery__deck' }, [
+  return panel({ title: muted ? 'Decks — paused and muted' : 'Decks', ic: 'deck-focus', fixture: 'deck snapshot', children: list.map((d) => h('div', { class: 'system-recovery__deck' }, [
     h('mdj-deck-summary', { deck: d.letter, track: d.track.id, size: 'compact', position: String(d.positionSec), state: d.state }),
     muted ? h('p', { class: 'label system-recovery__muted' }, [icon('mute', { size: 12 }), h('span', { text: `Deck ${d.letter} muted · position kept` })]) : null,
   ])) });
@@ -76,16 +76,16 @@ function routeLost(ctx, say) {
   return {
     lead: [
       head('route-lost', 'critical', 'Output lost. Decks paused and muted.', 'Cue was not sent to the speaker. The USB interface — Quadra 4 (fixture) disappeared at 21:40; nothing was rerouted.'),
+      h('div', { class: 'system-actions system-recovery__actions' }, [
+        button({ label: 'Check the output again', icon: 'refresh', hit: 48, cls: 'btn--primary', fr: ['FR-023'], on: { click: () => ctx.setState('route-verifying') } }),
+        button({ label: 'Choose another route', icon: 'route', hit: 48, cls: 'btn--secondary', fr: ['FR-022', 'FR-023'], on: { click: () => ctx.navigate('route/check') } }),
+        resumeDisabled('no verified route yet'),
+      ]),
       panel({ title: 'Get sound back', ic: 'route', children: [
         steps([
           ['current', 'Reconnect the USB interface (or another output)', 'Not detected'],
           ['todo', 'Verify its channels — a matching name alone is not enough', 'After reconnect'],
           ['blocked', 'Resume deliberately — nothing plays by itself', 'After verify'],
-        ]),
-        h('div', { class: 'system-actions' }, [
-          button({ label: 'Check the output again', icon: 'refresh', hit: 48, cls: 'btn--primary', fr: ['FR-023'], on: { click: () => ctx.setState('route-verifying') } }),
-          button({ label: 'Choose another route', icon: 'route', hit: 48, cls: 'btn--secondary', fr: ['FR-022', 'FR-023'], on: { click: () => ctx.navigate('route/check') } }),
-          resumeDisabled('no verified route yet'),
         ]),
       ] }),
     ],
@@ -100,16 +100,16 @@ function routeVerifying(ctx, say) {
   return {
     lead: [
       head('usb', 'info', 'Device found — verifying channels.', 'USB interface — Quadra 4 (fixture) reconnected. Decks stay paused and muted until the channel map is verified.'),
+      h('div', { class: 'system-actions system-recovery__actions' }, [
+        button({ label: 'Cancel check', icon: 'x', hit: 48, cls: 'btn--secondary', fr: ['FR-023'], on: { click: () => ctx.setState('route-lost') } }),
+        button({ label: 'Choose another route', icon: 'route', hit: 48, cls: 'btn--secondary', fr: ['FR-022', 'FR-023'], on: { click: () => ctx.navigate('route/check') } }),
+        resumeDisabled('channel check not confirmed yet'),
+      ]),
       panel({ title: 'Get sound back', ic: 'route', children: [
         steps([
           ['done', 'USB interface reconnected', 'Found'],
           ['current', 'Verifying 4 channels: master 1–2, cue 3–4', 'SENT · waiting'],
           ['blocked', 'Resume deliberately — nothing plays by itself', 'After verify'],
-        ]),
-        h('div', { class: 'system-actions' }, [
-          button({ label: 'Cancel check', icon: 'x', hit: 48, cls: 'btn--secondary', fr: ['FR-023'], on: { click: () => ctx.setState('route-lost') } }),
-          button({ label: 'Choose another route', icon: 'route', hit: 48, cls: 'btn--secondary', fr: ['FR-022', 'FR-023'], on: { click: () => ctx.navigate('route/check') } }),
-          resumeDisabled('channel check not confirmed yet'),
         ]),
         h('p', { class: 'body muted', text: 'The engine reopens the stream off the audio thread and confirms the channel map. In this prototype no engine answers, so the check stays sent.' }),
       ] }),

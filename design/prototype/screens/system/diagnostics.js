@@ -58,7 +58,7 @@ register({
         ['Master', routeLost ? 'none — decks paused and muted' : `${r.master} · ${r.channels} channels`],
         ['Cue', r.cue && r.cue !== 'none' ? r.cue : 'none on this route'],
         ['Channel map', routeLost ? 'invalidated — verify after reconnecting' : r.verified ? 'verified (fixture)' : 'not verified'],
-        ['Sample rate', r.sampleRate ? `${r.sampleRate} Hz` : 'unknown'],
+        ['Sample rate', r.sampleRate ? `${r.sampleRate / 1000} kHz` : 'unknown'],
         ['Buffer', r.bufferFrames ? `${r.bufferFrames} frames` : 'unknown'],
       ]),
     ] });

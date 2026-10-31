@@ -133,8 +133,10 @@ function mount(ctx, root) {
   const tabsEl = h('div', { class: 'launch-lib__tabs', role: 'tablist', 'aria-label': 'Crates' });
   const searchEl = h('div', { class: 'launch-lib__search' });
   const stripEl = h('div', { class: 'launch-lib__strip' });
-  const listEl = h('div', { class: 'launch-lib__list', role: 'listbox', 'aria-label': 'Tracks', 'aria-multiselectable': 'false' });
-  const detailEl = landscape ? h('aside', { class: 'launch-lib__detail glass', 'aria-label': 'Selected track' }) : null;
+  const listEl = h('div', { class: 'launch-lib__rows', role: 'listbox', 'aria-label': 'Tracks', 'aria-multiselectable': 'false' });
+  const preEl = h('div', { class: 'launch-lib__pre' });
+  const scrollEl = h('div', { class: 'launch-lib__list' }, [preEl, stripEl, listEl]);
+  const detailEl = landscape && !setup.keyboard ? h('aside', { class: 'launch-lib__detail glass', 'aria-label': 'Selected track' }) : null;
   const overlayEl = h('div', { class: 'launch-lib__overlay' });
   const live = h('p', { class: 'launch-sr', role: 'status', 'aria-live': 'polite' });
 
@@ -148,9 +150,9 @@ function mount(ctx, root) {
 
     // search bar
     const sbState = offline ? 'offline' : query ? (list.length ? 'results' : 'no-results') : 'idle';
-    const sb = h('mdj-search-bar', { value: query, placeholder: 'Search title, artist, key, tag', scope: 'Library', count: String(list.length), filters: String(view.filters.size), state: ctx.state === 'keyboard-open' ? 'focused' : sbState, compact: landscape || setup.keyboard ? true : null });
+    const sb = h('mdj-search-bar', { value: query, placeholder: 'Search title, artist, key, tag', scope: 'Library', count: String(list.length), filters: String(view.filters.size), state: ctx.state === 'keyboard-open' ? 'focused' : sbState, compact: true });
     const sortBtn = button({ label: `Sort: ${SORTS[view.sort].label}`, icon: 'sort', cls: 'btn--ghost launch-lib__sort', fr: ['FR-004'], on: { click: () => { view.sort = (view.sort + 1) % SORTS.length; paint(); live.textContent = `Sorted by ${SORTS[view.sort].label}`; } } });
-    searchEl.replaceChildren(sb, setup.keyboard ? null : sortBtn);
+    searchEl.replaceChildren(sb);
 
     // quick strip: next in queue, recent searches, filters
     const strip = [];
@@ -171,8 +173,9 @@ function mount(ctx, root) {
       const chip = h('mdj-chip', { kind: 'filter', label: f.label, count: String(count), state: on ? 'selected' : 'idle', removable: on ? true : null });
       chips.appendChild(chip);
     }
+    if (!setup.keyboard) chips.appendChild(sortBtn);
     if (view.filters.size) chips.appendChild(button({ label: 'Clear filters', icon: 'x', cls: 'btn--ghost', fr: ['FR-004'], on: { click: () => { view.filters.clear(); if (ctx.state === 'no-results') ctx.setState('browse'); else paint(); } } }));
-    stripEl.replaceChildren(...(strip.length ? [h('div', { class: 'launch-lib__quickrow' }, strip)] : []), setup.keyboard ? null : chips);
+    stripEl.replaceChildren(...[strip.length ? h('div', { class: 'launch-lib__quickrow' }, strip) : null, setup.keyboard ? null : chips].filter(Boolean));
 
     // list
     listEl.replaceChildren(...buildList(list));
@@ -199,8 +202,12 @@ function mount(ctx, root) {
 
   function buildList(list) {
     const out = [];
-    if (offline) out.push(h('div', { class: 'launch-lib__banner tone-neutral', role: 'status' }, [icon('wifi-off', { size: 16 }), h('span', { class: 'body' }, [h('strong', { text: 'Offline · local results only.' }), ' Everything on this phone plays; online sources and downloads wait for a connection.'])]));
-    if (ctx.state === 'analysis-pending') out.push(h('mdj-section-header', { title: 'Analysis queue', count: '1', note: 'GLASSWORK · progress unknown · plays without a grid', state: 'busy', level: '3' }));
+    const pre = [];
+    if (offline) pre.push(h('div', { class: 'launch-lib__banner tone-neutral', role: 'status' }, [icon('wifi-off', { size: 16 }), h('span', { class: 'body' }, [h('strong', { text: 'Offline · local results only.' }), ' Everything on this phone plays; online sources and downloads wait for a connection.'])]));
+    if (ctx.state === 'analysis-pending') pre.push(h('mdj-section-header', { title: 'Analysis queue', count: '1', note: 'GLASSWORK · progress unknown · plays without a grid', state: 'busy', level: '3' }));
+    preEl.replaceChildren(...pre);
+    listEl.setAttribute('role', query && !list.length ? 'region' : 'listbox');
+    listEl.setAttribute('aria-label', query && !list.length ? 'No results' : 'Tracks');
     if (query && !list.length) {
       const empty = h('mdj-empty-state', {
         state: 'no-results', query, title: `No tracks match "${query}"`,
@@ -219,6 +226,22 @@ function mount(ctx, root) {
       out.push(...list.map((t) => row(t)));
       if (offline) out.push(onlineSection());
       return out;
+    }
+    if (setup.keyboard) {
+      preEl.replaceChildren(h('mdj-fixture-mark', { for: 'BPM and key' }));
+      // Compact search workflow: one 48 dp line per result while the keyboard is up. A tap submits the search
+      // (the keyboard closes) and shows the full result rows with their Load targets.
+      listEl.setAttribute('role', 'list');
+      listEl.setAttribute('aria-label', `Results while typing, ${list.length}`);
+      return list.map((t) => {
+        const analysed = t.analysis === 'complete';
+        const word = t.availability === 'ready' ? (analysed ? 'Ready' : 'Analysis pending') : (t.availability === 'unsupported' ? 'Unsupported' : t.availability === 'missing' ? 'Missing' : 'Needs access');
+        return h('div', { role: 'listitem' }, [h('button', { type: 'button', class: 'launch-kbdrow raised', dataset: { hit: '48', fr: 'FR-004' }, 'aria-label': `${t.title}, ${analysed ? `${fmt.bpm(t.bpm)} BPM, key ${t.key}` : 'analysis pending'}, ${word}. Show full result`, on: { click: () => runSearch(query) } }, [
+          h('span', { class: 'title truncate launch-kbdrow__title', text: t.title }),
+          h('span', { class: 'numeral launch-kbdrow__nums', text: analysed ? `${fmt.bpm(t.bpm)} · ${t.key}` : '— · —' }),
+          h('span', { class: `label launch-kbdrow__word${t.availability === 'ready' ? '' : ' tone-critical'}`, text: word }),
+        ])]);
+      });
     }
     // search results grouped by result type (Document 14 §4)
     const local = list.filter((t) => t.source === 'local' && ['ready'].includes(t.availability));
@@ -273,22 +296,21 @@ function mount(ctx, root) {
     const analysed = t.analysis === 'complete';
     const nums = h('div', { class: 'launch-lib__dnums ink-backing launch-fixture-box' }, [
       num(analysed ? fmt.bpm(t.bpm) : '—', 'BPM'), num(analysed ? t.key : '—', 'Key'), num(fmt.time(t.durationSec), 'Length'),
-      num(analysed ? (t.gridConfidence || '—') : 'pending', 'Grid'),
       h('mdj-fixture-mark', { for: 'analysis values' }),
     ]);
     const crates = fx.library.crates.filter((c) => c.trackIds.includes(t.id)).map((c) => c.name);
     return [
       h('div', { class: 'launch-lib__dhead' }, [
-        h('mdj-art', { seed: t.id, size: 56, label: t.title }),
+        h('mdj-art', { seed: t.id, size: 40, label: t.title }),
         h('div', { class: 'launch-lib__dtitle' }, [h('h2', { class: 'title wrap-2', text: t.title }), h('p', { class: 'body muted truncate', text: t.artist })]),
       ]),
-      nums,
-      h('p', { class: 'body muted launch-lib__dmeta', text: `${t.fileFormat}${crates.length ? ` · in ${crates.join(', ')}` : ''}${t.playedCount ? ` · played ×${t.playedCount}` : ' · not played'}` }),
       h('mdj-load-target', {
         decks: decks.letters.join(','), occupied: decks.occupied.join(','), audible: decks.audible.join(','), focus: decks.focus, track: t.id,
         state: view.sent?.trackId === t.id ? 'pending' : (['ready'].includes(t.availability) ? 'idle' : 'disabled'), pending: view.sent?.trackId === t.id ? view.sent.deck : null,
         reason: t.availability === 'ready' ? null : (t.missingNote || 'Unavailable'),
       }),
+      nums,
+      h('p', { class: 'body muted launch-lib__dmeta', text: `${analysed ? `Grid confidence ${t.gridConfidence}` : 'Analysis pending'} · ${t.fileFormat}${crates.length ? ` · in ${crates.join(', ')}` : ''}${t.playedCount ? ` · played ×${t.playedCount}` : ' · not played'}` }),
       button({ label: 'Open in Prepare', icon: 'edit', cls: 'btn--ghost', fr: ['FR-033'], attrs: { 'aria-label': `Open ${t.title} in Prepare` }, on: { click: () => ctx.navigate('prep/track', t.id === 'glasswork' ? { state: 'pending-analysis' } : {}) } }),
     ];
   }
@@ -374,13 +396,12 @@ function mount(ctx, root) {
   });
 
   paint();
-  const head = h('div', { class: 'launch-lib__head' }, [landscape ? null : tabsEl, searchEl, landscape ? tabsEl : null, stripEl]);
-  const main = h('div', { class: 'launch-lib__main' }, [head, listEl]);
-  root.replaceChildren(...[main, detailEl, overlayEl, live, setup.keyboard ? keyboardGuide(landscape) : null].filter(Boolean));
-}
-
-function keyboardGuide(landscape) {
-  return h('p', { class: 'launch-lib__kbdnote ink-backing body' }, [icon('info', { size: 14 }), h('span', { text: landscape
-    ? 'Compact search workflow: one 48 dp field and the results that fit. The soft keyboard (inset guide below) never covers the dock.'
-    : 'Keyboard open: results shrink to what fits. The dock stays above the keyboard, so Play, Cue and the crossfader remain reachable.' })]);
+  // Bring the selected row (and its Load targets) into view inside the list's own scroller only.
+  if (view.selected) requestAnimationFrame(() => {
+    const r = listEl.querySelector(`mdj-library-row[track="${view.selected}"]`);
+    if (r) scrollEl.scrollTop = Math.max(0, r.offsetTop - 8);
+  });
+  const head = h('div', { class: 'launch-lib__head' }, [setup.keyboard ? null : tabsEl, searchEl].filter(Boolean));
+  const main = h('div', { class: 'launch-lib__main' }, [head, scrollEl]);
+  root.replaceChildren(...[main, detailEl, overlayEl, live].filter(Boolean));
 }

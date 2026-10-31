@@ -68,13 +68,14 @@ function backupHome(ctx) {
   media.addEventListener('mdj:setting-change', (e) => { media.setAttribute('value', e.detail.value); media.setAttribute('dirty', e.detail.value === 'on' ? '' : 'false'); });
   const backupPanel = panel({ title: 'Back up', ic: 'backup', fixture: 'backup contents', children: [
     h('p', { class: 'body', text: `Last backup: ${B.lastBackup}. Writes a versioned archive to Phone storage › Mobile DJ › Backups.` }),
-    kv(B.contents),
-    h('p', { class: 'label', text: 'Never included' }),
-    bullets(B.excluded, 'x', 'system-bullets--excluded'),
     media,
     h('div', { class: 'system-actions' }, [
       button({ label: 'Back up now', icon: 'backup', hit: 48, cls: 'btn--primary', fr: ['FR-041'], on: { click: () => ctx.setState('in-progress-unknown') } }),
     ]),
+    h('p', { class: 'label', text: 'Included' }),
+    kv(B.contents),
+    h('p', { class: 'label', text: 'Never included' }),
+    bullets(B.excluded, 'x', 'system-bullets--excluded'),
   ] });
   const list = h('ul', { class: 'system-archives' }, B.archives.map((a) => h('li', {}, [archiveCard(a, [
     h('div', { class: 'system-archive__actions' }, [
@@ -185,8 +186,8 @@ function conflicts(ctx, firstResolved) {
       notice({ tone: open.length ? 'warning' : 'ok', ic: open.length ? 'warning' : 'check', role: 'status',
         lead: open.length ? `Restored — ${open.length} ${open.length === 1 ? 'conflict' : 'conflicts'} kept for you to decide.` : 'Restore finished — every conflict decided.',
         text: open.length ? 'Sessions, crates, settings and the other cues and grids were restored (fixture acknowledgement). These edits differ from the backup; neither side wins automatically.' : 'The library store confirmed the restore (fixture acknowledgement). A checkpoint of your previous data is kept in Backups.' }),
-      kv(B.contents.map(([k, v]) => [k, `${v} restored`])),
     );
+    const summary = panel({ title: 'Restored from backup-2026-10-24', ic: 'restore', fixture: 'restore result', children: [kv(B.contents.map(([k, v]) => [k, `${v} restored`]))] });
     const cards = [];
     list.forEach((c, i) => {
       const isFocus = open[0] && open[0].id === c.id;
@@ -209,7 +210,8 @@ function conflicts(ctx, firstResolved) {
       ]);
       cards.push(card);
     });
-    right.replaceChildren(...cards);
+    left.append(...cards);
+    right.replaceChildren(summary);
   };
   draw();
   wrap.append(left, right);

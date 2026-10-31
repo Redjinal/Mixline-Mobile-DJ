@@ -72,7 +72,7 @@ register({
         h('h1', { class: 'title system-plugins__title', text: 'Plugin rack' }),
         h('p', { class: 'label', text: `${SYS.plugins.chainName} · ${SYS.plugins.slots} slots` }),
       ]),
-      h('p', { class: 'system-plugins__qualified body' }, [icon('clock', { size: 14 }), h('span', { text: SYS.plugins.qualifiedNote })]),
+      h('p', { class: 'system-plugins__qualified body' }, [icon('clock', { size: 14 }), h('span', { text: ctx.orientation === 'landscape' ? 'Loads at a qualified time — never during a transition.' : SYS.plugins.qualifiedNote })]),
       h('div', { class: 'system-plugins__legend', role: 'list', 'aria-label': 'Isolation models' }, Object.entries(FX.isolationModels).map(([k, m]) =>
         h('span', { class: `system-plugins__iso system-plugins__iso--${k} label`, role: 'listitem', title: m.detail }, [icon(k === 'process' ? 'lock' : 'unlock', { size: 12 }), h('span', { text: m.label })]))),
     ]);
@@ -90,12 +90,13 @@ register({
     // ---- chain ----
     const chain = h('section', { class: 'system-plugins__chain', 'aria-label': SYS.plugins.chainName });
     chain.appendChild(h('mdj-section-header', { title: 'Chain · master insert', count: String(plan.chain.length), level: '2', note: plan.chain.length ? 'Processed in slot order' : 'Empty — the master output is unprocessed' }));
-    for (let i = 0; i < SYS.plugins.slots; i++) {
-      const entry = plan.chain[i];
-      if (entry) chain.appendChild(h('mdj-plugin-slot', { plugin: entry[0], state: entry[1], slot: String(i + 1), compact: ctx.orientation === 'landscape' ? true : null }));
-      else chain.appendChild(h('div', { class: 'system-plugins__empty', role: 'group', 'aria-label': `Slot ${i + 1}, empty` }, [
-        h('span', { class: 'system-plugins__empty-num numeral', 'aria-hidden': 'true', text: String(i + 1) }),
-        h('span', { class: 'body muted', text: i === plan.chain.length ? 'Empty slot — choose a compatible plugin from the list.' : 'Empty slot' }),
+    plan.chain.forEach((entry, i) => chain.appendChild(h('mdj-plugin-slot', { plugin: entry[0], state: entry[1], slot: String(i + 1), compact: ctx.orientation === 'landscape' ? true : null })));
+    const firstEmpty = plan.chain.length + 1;
+    if (firstEmpty <= SYS.plugins.slots) {
+      const range = firstEmpty === SYS.plugins.slots ? `Slot ${firstEmpty}` : `Slots ${firstEmpty}–${SYS.plugins.slots}`;
+      chain.appendChild(h('div', { class: 'system-plugins__empty', role: 'group', 'aria-label': `${range}, empty` }, [
+        h('span', { class: 'system-plugins__empty-num numeral', 'aria-hidden': 'true', text: firstEmpty === SYS.plugins.slots ? String(firstEmpty) : `${firstEmpty}–${SYS.plugins.slots}` }),
+        h('span', { class: 'body muted', text: `${range} empty${plan.chain.length ? '' : ' — choose a compatible plugin from the list'}. Audio passes through unchanged.` }),
       ]));
     }
 
@@ -108,27 +109,31 @@ register({
         const p = P(id);
         const [tone, word] = inChain.has(id) ? ['ok', `In chain · slot ${plan.chain.findIndex((c) => c[0] === id) + 1}`] : CAT_STATUS[p.status] || ['neutral', p.status];
         const isSel = selected === id;
-        list.appendChild(h('div', { role: 'listitem' }, [h('button', {
+        const item = h('div', { role: 'listitem', class: 'system-plugins__item' });
+        list.appendChild(item);
+        item.appendChild(h('button', {
           type: 'button', class: `system-plugins__row${isSel ? ' is-selected' : ''}`, dataset: { hit: '48', fr: 'FR-047' }, 'aria-pressed': String(isSel),
           'aria-label': `${p.name}, ${word}${isSel ? ', shown below' : ''}`,
           on: { click: () => { selected = id; detailState = inChain.has(id) ? null : (p.status === 'latency-change' ? 'compatible' : p.status); drawCatalogue(); } },
         }, [
           h('span', { class: `system-plugins__kind${p.kind === 'instrument' ? ' is-instrument' : ''}`, 'aria-hidden': 'true' }, [icon(p.kind === 'instrument' ? 'key' : 'fx', { size: 16 })]),
           h('span', { class: 'system-plugins__row-text' }, [
-            h('span', { class: 'title truncate', text: p.name }),
+            h('span', { class: 'title wrap-2 system-plugins__name', text: p.name }),
             h('span', { class: 'label truncate', text: `${p.format} · ${p.kind}` }),
           ]),
           statusWord(tone, word),
-        ])]));
+        ]));
+        // The selected plugin's declared contract opens directly under its row.
+        if (isSel && detailState) item.appendChild(h('mdj-plugin-slot', { plugin: id, state: detailState, slot: String(Math.min(plan.chain.length + 1, SYS.plugins.slots)) }));
       }
-      const parts = [h('mdj-section-header', { title: 'On this device', count: String(CATALOGUE.length), level: '2', note: 'Only validated Android plugins can be loaded' }), list];
-      if (selected && detailState) parts.push(h('mdj-plugin-slot', { plugin: selected, state: detailState, slot: String(Math.min(plan.chain.length + 1, SYS.plugins.slots)) }));
-      cat.replaceChildren(...parts);
+      cat.replaceChildren(h('mdj-section-header', { title: 'On this device', count: String(CATALOGUE.length), level: '2', note: 'Only validated Android plugins can be loaded' }), list);
     };
     drawCatalogue();
 
-    const cols = h('div', { class: 'system-plugins__cols' }, [chain, cat]);
-    scroll.append(head, notes, live, cols);
+    // The section the state is about comes first; its notices sit directly above it.
+    const [first, second] = plan.select ? [cat, chain] : [chain, cat];
+    const cols = h('div', { class: 'system-plugins__cols' }, [h('div', { class: 'system-plugins__col' }, [notes, live, first]), h('div', { class: 'system-plugins__col' }, [second])]);
+    scroll.append(head, cols);
     root.appendChild(scroll);
 
     // ---- parameters / presets sheet ----

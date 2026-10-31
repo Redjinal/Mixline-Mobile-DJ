@@ -152,7 +152,7 @@ register({
         h('div', { class: 'system-settings__swatch', 'aria-hidden': 'true' }, [h('span', { class: 'system-settings__swatch-a' }), h('span', { class: 'system-settings__swatch-b' })]),
         h('div', { class: 'system-settings__preview-text' }, [
           h('p', { class: 'title', text: 'Previewing Low-light — not saved' }),
-          h('p', { class: 'body muted', text: 'The whole app shows the Low-light theme while you look. Leaving this page or Discard preview returns to Daylight; Save keeps it.' }),
+          h('p', { class: 'body muted', text: 'In the app, Preview shows Low-light everywhere until you Save or Discard preview; leaving this page also returns to Daylight. This prototype draws the draft as the swatch only — use the prototype theme switch to see Low-light screens.' }),
         ]),
         button({ label: 'Discard preview', icon: 'discard', hit: 48, cls: 'btn--secondary', on: { click: () => { drafts = {}; barState = null; setFlash(ID, { state: 'clean', tone: 'neutral', ic: 'undo', lead: 'Preview discarded.', text: 'Display is back to Daylight. Nothing was saved.' }); ctx.setState('clean'); } } }),
       ]);
@@ -238,6 +238,8 @@ register({
 
     draw();
     showFlash(flash);
+    // Keep the open category's tab in view in the portrait strip (local scroll only, never the page).
+    requestAnimationFrame(() => { const t = nav.querySelector('.is-current'); if (t && !land) nav.scrollLeft = Math.max(0, t.offsetLeft - nav.offsetLeft - 16); });
     if (plan.failed) live.replaceChildren(notice({ tone: 'critical', ic: 'warning', lead: 'Save failed — your change is kept as a draft.', text: 'The settings store could not write: storage is full (fixture). Free some space in Diagnostics, then Retry save. Jump-to-touch stays off until a save succeeds.' }));
 
     const scroll = h('div', { class: 'system-settings__scroll' }, [live, searchRow, body].filter(Boolean));

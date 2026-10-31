@@ -104,7 +104,7 @@ function lists(ctx) {
   const otherCol = h('section', { class: 'launch-crates__col', 'aria-label': 'Playlists and smart rules' }, [
     h('mdj-section-header', { title: 'Playlists', count: String(lib.playlists.length), level: '2' }),
     ...lib.playlists.map((p) => {
-      const r = h('mdj-crate-row', { crate: p.id, kind: 'playlist', name: p.name, count: String(p.entries.length), note: 'Ordered · repeats allowed' });
+      const r = h('mdj-crate-row', { crate: p.id, kind: 'playlist', name: p.name, count: String(new Set(p.entries.map((e) => e.trackId)).size), note: `${p.entries.length} entries in order · repeats allowed` });
       return h('div', { class: 'launch-crates__line' }, [r, openBtn(ctx, p.name, () => selectRow(r, p.name))]);
     }),
     h('mdj-section-header', { title: 'Smart rules', count: String(lib.smartRules.length), level: '2' }),
@@ -178,7 +178,7 @@ function crateDetail(ctx) {
   const meta = h('section', { class: 'launch-crates__meta glass', 'aria-label': 'Crate details' }, [
     h('div', { class: 'ink-backing launch-pad' }, [
       h('p', { class: 'launch-crates__metaline' }, [
-        h('span', { class: 'launch-swatch', style: { '--tag': `var(--cue-${crate.color})` }, role: 'img', 'aria-label': `Colour ${crate.color}` }),
+        swatch(crate.color),
         h('span', { class: 'numeral', text: `${entries.length} entries · ${unique} tracks` }),
       ]),
       h('p', { class: 'body' }, [h('strong', { text: 'Note: ' }), crate.note]),
@@ -209,6 +209,12 @@ function crateDetail(ctx) {
     backBar(ctx, 'Crate', crate.name),
     h('div', { class: 'launch-crates__split' }, [meta, h('section', { class: 'launch-crates__entries', 'aria-label': 'Entries' }, [listEl]), live]),
   ];
+}
+
+function swatch(color) {
+  const el = h('span', { class: 'launch-swatch', role: 'img', 'aria-label': `Colour ${color}` });
+  el.style.setProperty('--tag', `var(--cue-${color})`);
+  return el;
 }
 
 function entryRow(ctx, e, i, n, move) {
@@ -309,8 +315,8 @@ function smartRule(ctx) {
 
   return [
     backBar(ctx, 'Smart rule · updates as the library changes', rule.name),
-    h('div', { class: 'launch-crates__split' }, [
-      h('div', { class: 'launch-crates__stack' }, [rules, save]),
+    h('div', { class: 'launch-crates__split launch-rule__split' }, [
+      rules, save,
       h('section', { class: 'launch-rule__out', 'aria-label': 'Live results' }, [
         countEl, resultsEl,
         button({ label: 'Show in library', icon: 'library', cls: 'btn--secondary', fr: ['FR-004'], on: { click: () => ctx.navigate('launch/library', { state: 'browse' }) } }),

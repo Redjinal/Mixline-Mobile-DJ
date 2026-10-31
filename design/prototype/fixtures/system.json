@@ -6,10 +6,10 @@
     "qualifiedNote": "Loads at a qualified time: prepare and state parsing run off the audio callback, never during an armed or running transition.",
     "parameters": {
       "glassverb": [
-        { "id": "mix", "label": "Mix", "value": 32, "min": 0, "max": 100, "unit": "%", "default": 25 },
-        { "id": "decay", "label": "Decay", "value": 2.8, "min": 0.2, "max": 12, "unit": "s", "default": 2.0 },
+        { "id": "mix", "label": "Mix", "value": 32, "min": 0, "max": 100, "unit": "%", "default": 0 },
+        { "id": "decay", "label": "Decay", "value": 2.8, "min": 0.2, "max": 12, "unit": "s", "default": 0.2 },
         { "id": "predelay", "label": "Pre-delay", "value": 12, "min": 0, "max": 120, "unit": "ms", "default": 0 },
-        { "id": "lowcut", "label": "Low cut", "value": 180, "min": 20, "max": 1000, "unit": "Hz", "default": 120 }
+        { "id": "lowcut", "label": "Low cut", "value": 180, "min": 20, "max": 1000, "unit": "Hz", "default": 20 }
       ]
     },
     "presets": {

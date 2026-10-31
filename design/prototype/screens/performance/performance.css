@@ -43,6 +43,17 @@
 .performance-sheet .sheet__body p { margin: 0 0 6px; }
 .performance-sheet__warn { padding: 6px 8px; border-radius: var(--radius-control); }
 
+/* ---------- one-line deck summary ---------- */
+.performance-sum { display: flex; align-items: center; gap: 6px; margin: 0; min-height: 26px; min-width: 0; padding: 2px 6px 2px 2px; border-radius: var(--radius-control); background: var(--raised); border: 1px solid var(--line); }
+.performance-sum__title { flex: 1 1 auto; min-width: 40px; font-size: var(--fs-sm); font-weight: 700; color: var(--ink); }
+.performance-sum--empty .performance-sum__title, .performance-sum--loading .performance-sum__title { color: var(--ink-2); font-weight: 600; }
+.performance-sum__num { display: inline-flex; gap: 6px; flex: none; font-size: var(--fs-xs); color: var(--ink); }
+.performance-sum__key { color: var(--deck); font-weight: 700; }
+.performance-sum__state { display: inline-flex; align-items: center; gap: 3px; flex: 0 1 auto; min-width: 0; font-size: calc(var(--fs-xs) * 0.8); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.performance-sum__state .icon { width: 12px; height: 12px; flex: none; }
+.performance-sum__state--playing { color: var(--deck); }
+:root[data-fontscale='200'] .performance-sum { flex-wrap: wrap; }
+
 /* ---------- perform/ab · portrait ---------- */
 .performance-portrait { display: grid; gap: 6px; min-width: 0; }
 .performance-overview { display: grid; gap: 6px; padding: 6px; border-radius: var(--radius-panel); min-width: 0; }
@@ -68,7 +79,7 @@
 .btn[aria-pressed='true'] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
 
 .performance-focus { display: grid; gap: 6px; padding: 6px 8px 8px; border-radius: var(--radius-panel); min-width: 0; box-shadow: inset 0 3px 0 var(--deck); }
-.performance-focus__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; }
+.performance-focus__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; min-height: 48px; }
 .performance-focus__id { display: flex; align-items: center; gap: 6px; margin: 0; }
 .performance-focus__actions { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
 .performance-focus__actions .btn { padding: 0 10px; }
@@ -100,10 +111,10 @@
 .performance-rail__btn .icon { width: 18px; height: 18px; }
 .performance-lanes { grid-area: lanes; display: grid; gap: 3px; min-width: 0; }
 .performance-lane { display: grid; grid-template-columns: 158px minmax(0, 1fr); gap: 4px; align-items: stretch; min-width: 0; }
-.performance-lane__id { display: flex; align-items: center; gap: 6px; padding: 2px 6px; border-radius: var(--radius-control); min-width: 0; border-left: 3px solid var(--deck); }
+.performance-lane__id { display: flex; align-items: center; gap: 6px; padding: 0 6px; height: 34px; border-radius: var(--radius-control); min-width: 0; border-left: 3px solid var(--deck); overflow: hidden; }
 .performance-lane__text { display: grid; min-width: 0; line-height: 1.15; }
-.performance-lane__title { font-size: var(--fs-xs); font-weight: 700; }
-.performance-lane__meta { display: flex; flex-wrap: wrap; gap: 0 6px; font-size: calc(var(--fs-xs) * 0.85); color: var(--ink); }
+.performance-lane__title { font-size: var(--fs-xs); font-weight: 700; line-height: 1.2; }
+.performance-lane__meta { display: flex; flex-wrap: nowrap; gap: 0 6px; font-size: calc(var(--fs-xs) * 0.85); line-height: 1.25; color: var(--ink); white-space: nowrap; overflow: hidden; }
 .performance-lane__meta .label { font-size: calc(var(--fs-xs) * 0.8); color: var(--ink-2); }
 .performance-deck { display: grid; gap: 6px; align-content: start; min-width: 0; }
 .performance-deck--left { grid-area: deckl; }
@@ -114,7 +125,10 @@
 .performance-deck__body { display: grid; grid-template-columns: auto auto; gap: 6px; align-items: start; justify-content: start; }
 .performance-deck--right .performance-deck__body { justify-content: end; grid-template-columns: auto auto; }
 .performance-deck--right .performance-deck__body > mdj-jog { order: 2; }
-.performance-deck__transport { display: grid; gap: 3px; justify-items: center; }
+.performance-deck__transport { display: grid; gap: 3px; justify-items: center; align-content: start; }
+.performance-deck__transport mdj-transport[kind='sync'] .transport__btn { width: 56px; min-width: 56px; height: 48px; padding: 0 2px; }
+.performance-deck__transport mdj-transport[kind='sync'] .transport__face { grid-auto-flow: row; gap: 0; }
+.performance-deck__transport mdj-transport[kind='sync'] .icon { width: 16px; height: 16px; }
 .performance-deck__note { margin: 0; padding: 4px 6px; border-radius: var(--radius-control); font-size: calc(var(--fs-xs) * 0.85); border-left: 3px solid var(--deck); }
 /* Landscape jog: alternatives column beside the platter so the lane, pads and jog fit 319 dp. */
 .performance-deck mdj-jog { grid-template-columns: var(--size) auto; grid-template-areas: 'platter alts'; column-gap: 6px; align-items: start; }
@@ -130,6 +144,7 @@
 .performance-mix__strip { display: grid; grid-template-columns: auto auto auto; gap: 3px; align-items: start; justify-content: center; }
 .performance-mix__dials { display: grid; gap: 0; }
 .performance-mix__meter { width: 16px; height: 150px; }
+.performance-mix__meter > mdj-fixture-mark { writing-mode: vertical-rl; top: auto; bottom: 0; right: 0; padding: 3px 0; }
 .performance-mix mdj-crossfader { width: 100%; }
 
 .performance-band { grid-area: band; display: grid; gap: 6px; padding-top: 4px; border-top: 1px solid var(--line); }
