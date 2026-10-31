@@ -9,7 +9,7 @@
     "masterControlRevision": 14,
     "routeEpoch": 4,
     "libraryRevision": 41,
-    "route": "USB-C stereo · cue isolated",
+    "route": "USB interface — Quadra 4 · cue isolated",
     "decks": {
       "A": { "trackId": "aurora", "state": "playing", "positionSec": 252.0 },
       "B": { "trackId": "copper", "state": "paused", "positionSec": 15.48, "cueSelected": true }
@@ -92,7 +92,7 @@
       "requestedAt": "21:13:40",
       "proposedAt": "21:13:52",
       "expiresAt": "21:26:00",
-      "context": "Perform · A playing AURORA DRIVE at 4:12 · B cued COPPER SKY at Drums · USB-C stereo, cue isolated",
+      "context": "Perform · A playing AURORA DRIVE at 4:12 · B cued COPPER SKY at Drums · USB interface, cue isolated",
       "body": "Start the blend at AURORA DRIVE’s Exit marker and bring COPPER SKY in from its Drums marker. Both tracks are 124.0 BPM in 8A, so no tempo change is needed. The vocal in COPPER SKY starts at 1:32 — after the blend ends — but that is inferred, not measured: preview on headphones to check.",
       "affected": [
         { "deck": "A", "trackId": "aurora", "role": "outgoing" },
@@ -175,7 +175,7 @@
       "eligibility": "Deterministic local check — no model request, works offline.",
       "undo": { "reversible": null, "text": "Nothing to undo — a check only." },
       "claims": [
-        { "text": "USB-C stereo, cue isolated", "provenance": "measured", "note": "route epoch 4" },
+        { "text": "USB interface — Quadra 4, cue isolated", "provenance": "measured", "note": "route epoch 4" },
         { "text": "Availability and analysis state of 5 tracks", "provenance": "measured" },
         { "text": "Set list from session “Saturday practice”", "provenance": "user" }
       ],

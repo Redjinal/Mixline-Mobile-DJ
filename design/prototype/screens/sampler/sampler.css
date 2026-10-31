@@ -198,7 +198,7 @@
 /* Grid top row: lane switch (landscape) + pending transport marker. */
 .sampler-gridtop { display: flex; flex-wrap: wrap; gap: 4px var(--space-2); align-items: center; }
 .sampler-gridtop .sampler-pairs { flex: 1 1 360px; }
-.sampler-marker { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 4px 10px; border-radius: var(--radius-pill); font: 700 var(--fs-xs) var(--font-mono); color: var(--ink); }
+.sampler-marker { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 4px 10px; border-radius: var(--radius-control); font: 700 var(--fs-xs) var(--font-mono); color: var(--ink); }
 .sampler-marker .icon { width: 14px; height: 14px; flex: none; }
 .sampler-marker--next { background: var(--info-fill); border: 1.5px dashed var(--info); }
 .sampler-marker--stop { background: var(--sunken); border: 1.5px solid var(--critical); }
