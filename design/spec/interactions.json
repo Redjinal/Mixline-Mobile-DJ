@@ -2579,6 +2579,66 @@
       "pass": true
     },
     {
+      "screen": "system/plugins",
+      "state": "loaded",
+      "orientation": "portrait",
+      "via": {
+        "from": "compatible-list",
+        "control": "Load"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/plugins",
+      "state": "loaded",
+      "orientation": "landscape",
+      "via": {
+        "from": "compatible-list",
+        "control": "Load"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/plugins",
+      "state": "bypass",
+      "orientation": "portrait",
+      "via": {
+        "from": "loaded",
+        "control": "Bypass"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/plugins",
+      "state": "bypass",
+      "orientation": "landscape",
+      "via": {
+        "from": "loaded",
+        "control": "Bypass"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/plugins",
+      "state": "parameters",
+      "orientation": "portrait",
+      "via": {
+        "from": "loaded",
+        "control": "Parameters"
+      },
+      "pass": true
+    },
+    {
+      "screen": "system/plugins",
+      "state": "parameters",
+      "orientation": "landscape",
+      "via": {
+        "from": "loaded",
+        "control": "Parameters"
+      },
+      "pass": true
+    },
+    {
       "screen": "system/backup",
       "state": "in-progress-unknown",
       "orientation": "portrait",
@@ -2695,66 +2755,6 @@
       "via": {
         "from": "restore-conflicts",
         "control": "Keep mine"
-      },
-      "pass": true
-    },
-    {
-      "screen": "system/plugins",
-      "state": "loaded",
-      "orientation": "portrait",
-      "via": {
-        "from": "compatible-list",
-        "control": "Load"
-      },
-      "pass": true
-    },
-    {
-      "screen": "system/plugins",
-      "state": "loaded",
-      "orientation": "landscape",
-      "via": {
-        "from": "compatible-list",
-        "control": "Load"
-      },
-      "pass": true
-    },
-    {
-      "screen": "system/plugins",
-      "state": "bypass",
-      "orientation": "portrait",
-      "via": {
-        "from": "loaded",
-        "control": "Bypass"
-      },
-      "pass": true
-    },
-    {
-      "screen": "system/plugins",
-      "state": "bypass",
-      "orientation": "landscape",
-      "via": {
-        "from": "loaded",
-        "control": "Bypass"
-      },
-      "pass": true
-    },
-    {
-      "screen": "system/plugins",
-      "state": "parameters",
-      "orientation": "portrait",
-      "via": {
-        "from": "loaded",
-        "control": "Parameters"
-      },
-      "pass": true
-    },
-    {
-      "screen": "system/plugins",
-      "state": "parameters",
-      "orientation": "landscape",
-      "via": {
-        "from": "loaded",
-        "control": "Parameters"
       },
       "pass": true
     },
