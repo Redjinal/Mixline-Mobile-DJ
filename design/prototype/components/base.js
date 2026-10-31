@@ -144,7 +144,7 @@ export const fmt = {
   bytes(n) {
     if (n == null) return 'unknown';
     const u = ['B', 'KB', 'MB', 'GB']; let i = 0;
-    while (n >= 1024 && i < u.length - 1) { n /= 1024; i++; }
+    while (n >= 1000 && i < u.length - 1) { n /= 1000; i++; }  // decimal units, as Android reports storage
     return `${n.toFixed(i ? 1 : 0)} ${u[i]}`;
   },
 };

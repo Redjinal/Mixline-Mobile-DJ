@@ -93,7 +93,7 @@
       },
       "crossfader": 0.1, "master": { "levelL": 0.6, "levelR": 0.58, "peakHold": 0.7, "clip": false },
       "cue": { "deck": "B", "mix": 0.5, "gainDb": -3 }, "route": "speaker",
-      "recording": { "state": "recording", "elapsedSec": 754, "bytes": 125829120, "format": "FLAC 44.1 kHz", "estimateRemainingSec": 21600, "markers": 2 },
+      "recording": { "state": "recording", "elapsedSec": 754, "bytes": 125829120, "format": "FLAC 44.1 kHz", "estimateRemainingSec": 277000, "markers": 2 },
       "parday": { "state": "ready" }, "thermal": "normal",
       "storage": { "freeBytes": 48300000000, "totalBytes": 512000000000 }, "network": "online"
     },
@@ -150,11 +150,12 @@
     }
   },
   "sessions": {
-    "sess-1": { "id": "sess-1", "name": "Saturday practice", "savedAt": "2026-10-24T21:12:00", "decks": ["aurora", "copper"], "queue": ["drift", "glasswork", "calypso"], "route": "speaker", "durationSec": 3120, "recording": null },
+    "sess-1": { "id": "sess-1", "name": "Saturday practice", "savedAt": "2026-10-24T21:12:00", "decks": ["aurora", "copper"], "queue": ["drift", "glasswork", "calypso"], "route": "speaker", "durationSec": 3120, "recording": "rec-3" },
     "sess-2": { "id": "sess-2", "name": "Four-deck test", "savedAt": "2026-10-26T19:40:00", "decks": ["drift", "copper", "calypso", "glasswork"], "queue": [], "route": "usb-4ch", "durationSec": 1480, "recording": "rec-2" },
     "sess-3": { "id": "sess-3", "name": "Rooftop warm-up", "savedAt": "2026-10-18T17:05:00", "decks": ["brass", "drift"], "queue": ["tide"], "route": "speaker", "durationSec": 2650, "recording": "rec-1", "missing": ["brass"] }
   },
   "recordings": {
+    "rec-3": { "id": "rec-3", "name": "Saturday practice", "createdAt": "2026-10-24T21:12:00", "durationSec": 3120, "format": "FLAC 44.1 kHz", "bytes": 520700000, "state": "complete", "markers": 3 },
     "rec-1": { "id": "rec-1", "name": "Rooftop warm-up", "createdAt": "2026-10-18T17:05:00", "durationSec": 2650, "format": "FLAC 44.1 kHz", "bytes": 745000000, "state": "complete", "markers": 4 },
     "rec-2": { "id": "rec-2", "name": "Four-deck test", "createdAt": "2026-10-26T19:40:00", "durationSec": 1480, "format": "FLAC 44.1 kHz", "bytes": 410000000, "state": "incomplete", "note": "Writer stopped at 24:40 when storage ran low; 3 recoverable segments.", "markers": 1 }
   }

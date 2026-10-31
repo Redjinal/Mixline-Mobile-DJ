@@ -5,7 +5,7 @@
     { "id": "wav", "label": "WAV", "detail": "Uncompressed · 44.1 kHz · 24-bit", "bytesPerSec": 264600, "rateNote": "Fixed size per second" },
     { "id": "aac", "label": "AAC", "detail": "Compressed · 256 kbps · 44.1 kHz", "bytesPerSec": 32000, "rateNote": "Smallest files; not lossless" }
   ],
-  "safetyMarginBytes": 2147483648,
+  "safetyMarginBytes": 2000000000,
   "safetyMarginNote": "Recording stops before free space falls below this reserve, so Android, the library and session checkpoints keep working.",
   "chunkSec": 15,
   "segmentSec": 900,
