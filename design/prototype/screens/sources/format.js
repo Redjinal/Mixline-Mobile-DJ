@@ -122,7 +122,7 @@ function mount(ctx, root, key) {
     opts, detail, dest,
     h('div', { class: 'sources-actions sources-actions--sticky' }, [
       button({ label: 'Download', icon: 'download', hit: 56, cls: 'btn--primary sources-download', fr: ['FR-049'], on: { click: () => ctx.navigate('sources/queue', { state: 'active' }) } }),
-      h('p', { class: 'sources-hint', text: 'Download adds a job to the queue. The file joins the library only after it is verified; it never loads onto a deck by itself.' }),
+      h('p', { class: 'sources-hint', text: 'Adds a job to the queue. The file joins the library only after verification and never loads a deck by itself.' }),
     ]),
   ]);
 

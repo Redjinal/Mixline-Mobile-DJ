@@ -144,7 +144,7 @@ function candidate(ctx, r, c, req, live) {
   const actions = [];
   const previewOut = h('p', { class: 'sources-hint sources-cand__out', role: 'status' });
   if (c.class !== 'different') {
-    actions.push(button({ label: 'Preview', icon: 'preview', cls: 'btn--secondary', fr: ['FR-049'], attrs: { 'aria-label': `Preview ${c.title}` }, on: { click: () => { previewOut.textContent = `Preview would stream 30 s of ${c.title} from ${c.source} without saving it. This prototype has no audio.`; } } }));
+    actions.unshift(button({ label: 'Preview', icon: 'preview', cls: 'btn--secondary', fr: ['FR-049'], attrs: { 'aria-label': `Preview ${c.title}` }, on: { click: () => { previewOut.textContent = `Preview would stream 30 s of ${c.title} from ${c.source} without saving it. This prototype has no audio.`; } } }));
   }
   if (r.class === 'ambiguous') {
     actions.push(button({ label: `Choose ${short}`, icon: 'check', cls: 'btn--primary', fr: ['FR-049'], on: { click: () => { handoff.format = null; ctx.navigate('sources/format', { state: 'options' }); } } }));
@@ -153,6 +153,7 @@ function candidate(ctx, r, c, req, live) {
   } else if (r.class === 'probable' && c.class === 'probable') {
     actions.push(button({ label: 'Confirm this recording', icon: 'check', cls: 'btn--primary', fr: ['FR-049'], on: { click: () => { handoff.format = 'marlin'; live.textContent = 'Recording confirmed. Choose a format next.'; ctx.navigate('sources/format', { state: 'options' }); } } }));
   }
+  actions.reverse(); // the choice first, Preview second
   return h('article', { class: `sources-cand raised sources-cand--${c.class}`, role: 'listitem', 'aria-labelledby': `sources-cand-${c.id}` }, [
     h('div', { class: 'sources-cand__top' }, [classFlag(c.class)]),
     h('h3', { id: `sources-cand-${c.id}`, class: 'title sources-cand__title wrap-2', text: c.title }),
