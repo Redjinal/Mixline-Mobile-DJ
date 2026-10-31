@@ -261,8 +261,8 @@ register({
     }
 
     // ---- waveforms ----
-    const overview = h('mdj-waveform', { track: m.wave, mode: 'overview', position: m.cursor, height: landscape ? 34 : 40, markers: 'cues loops phrases', 'no-head': true, fixture: `wave:${m.trackId}` });
-    const detailed = h('mdj-waveform', { track: m.wave, mode: 'detailed', position: m.cursor, zoom: 8, height: landscape ? 64 : 80, markers: 'cues loops phrases grid', fixture: `wave:${m.trackId}` });
+    const overview = h('mdj-waveform', { track: m.wave, mode: 'overview', position: m.cursor, height: 48, markers: 'cues loops phrases', 'no-head': true, fixture: `wave:${m.trackId}` });
+    const detailed = h('mdj-waveform', { track: m.wave, mode: 'detailed', position: m.cursor, zoom: 8, height: landscape ? 60 : 80, markers: 'cues loops phrases grid', fixture: `wave:${m.trackId}` });
     const zoom = h('mdj-zoom-controls', { zoom: 8, min: 1, max: 64, fit: 16 });
     const cursorText = h('span', { class: 'preparation-cursor__val numeral' });
     const beatInfo = (sec) => {
@@ -466,7 +466,13 @@ register({
       root.append(top, summary, waves, h('div', { class: 'preparation-body' }, [banner, ...ordered].filter(Boolean)),
         h('footer', { class: 'preparation-save' }, [saveText, saveActions]));
     }
-    if (sheet) root.appendChild(h('div', { class: 'preparation-sheet-layer' }, [sheet]));
+    if (sheet) {
+      // A modal choice: the editor behind it is inert and hidden (its controls are not reachable while the
+      // dialog is open); the top bar stays visible so the track and the revision remain in view.
+      root.classList.add('preparation--modal');
+      for (const el of root.querySelectorAll(':scope > .preparation-summary, :scope > .preparation-waves, :scope > .preparation-body')) { el.inert = true; el.setAttribute('aria-hidden', 'true'); }
+      root.appendChild(h('div', { class: 'preparation-sheet-layer' }, [sheet]));
+    }
     return root;
   },
 });

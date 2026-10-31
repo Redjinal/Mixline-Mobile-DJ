@@ -9,7 +9,7 @@
 // Gesture: taps on three real 48 dp <button>s plus a live readout; this is the accessible alternative to
 // the detailed waveform's pinch (Document 03 §4). Keyboard: the buttons are ordinary buttons.
 // Pending vs acknowledged: n/a (view state). At the bounds the matching button is disabled and the
-// readout says "closest" / "widest"; `disabled` (no track) greys all three with the reason.
+// readout says "closest" / "widest"; `disabled` (no track) greys all three with the reason (`reason` attribute, default "no track").
 // Cancellation: n/a. Accessible: "Zoom in, deck A waveform, now 8 bars" / "Fit 16 bars".
 import { MdjElement, define, h, icon } from './base.js';
 
@@ -21,7 +21,7 @@ export class MdjZoomControls extends MdjElement {
   static fr = ['FR-009'];
   static hit = 48;
   static fixture = false;
-  static observed = ['zoom', 'min', 'max', 'fit', 'deck'];
+  static observed = ['zoom', 'min', 'max', 'fit', 'deck', 'reason'];
   static samples = {
     default: { zoom: 8, min: 1, max: 64, fit: 16, deck: 'A' },
     variants: [{}],
@@ -48,14 +48,14 @@ export class MdjZoomControls extends MdjElement {
     const btn = (label, ic, cls, off, fn, text = null) => h('button', {
       type: 'button', class: `zoom__btn ${cls}`.trim(), 'aria-label': label, disabled: off ? true : null, dataset: { hit: '48' }, on: { click: fn },
     }, [icon(ic, { size: 18 }), text ? h('span', { class: 'zoom__btn-text label', text }) : null]);
-    const reason = disabled ? ' (no track)' : '';
+    const reason = disabled ? ` (${this.attr('reason', 'no track')})` : '';
     const outBtn = btn(`Zoom out, ${deckWord}, now ${bars(zoom)}${state === 'max' ? ', widest' : ''}${reason}`, 'minus', 'zoom__out', disabled || zoom >= max, () => set(zoom * 2, 'button'));
     const inBtn = btn(`Zoom in, ${deckWord}, now ${bars(zoom)}${state === 'min' ? ', closest' : ''}${reason}`, 'plus', 'zoom__in', disabled || zoom <= min, () => set(zoom / 2, 'button'));
     const fitBtn = btn(`Fit ${bars(fit)}, ${deckWord}${zoom === fit ? ', current' : ''}${reason}`, 'grid', 'zoom__fit', disabled, () => set(fit, 'fit'), 'Fit');
     if (zoom === fit) fitBtn.setAttribute('aria-pressed', 'true');
     const readout = h('span', { class: 'zoom__readout numeral ink-backing', 'aria-live': 'polite', 'aria-atomic': 'true' }, [
       h('span', { class: 'zoom__value', text: disabled ? '—' : String(zoom) }),
-      h('span', { class: 'zoom__unit label', text: disabled ? 'no track' : `bar${zoom === 1 ? '' : 's'}${state === 'min' ? ' · closest' : state === 'max' ? ' · widest' : ''}` }),
+      h('span', { class: 'zoom__unit label', text: disabled ? this.attr('reason', 'no track') : `bar${zoom === 1 ? '' : 's'}${state === 'min' ? ' · closest' : state === 'max' ? ' · widest' : ''}` }),
     ]);
     const group = h('div', { class: 'zoom__group', role: 'group', 'aria-label': `Zoom, ${deckWord}` }, [outBtn, readout, inBtn, fitBtn]);
     this.replaceChildren(group);

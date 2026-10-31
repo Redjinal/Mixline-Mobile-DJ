@@ -93,7 +93,7 @@
 .preparation-section--editing { border: 2px solid var(--ink); box-shadow: 0 0 0 2px var(--brass); }
 .preparation-tools { display: flex; flex-wrap: wrap; gap: 6px; }
 .preparation-tool { padding: 0 10px; font-size: var(--fs-xs); flex: 0 1 auto; }
-.preparation-tool[aria-disabled='true'] { opacity: 1; color: var(--ink-3); border-style: dashed; background: var(--sunken); box-shadow: none; }
+.preparation-tool[aria-disabled='true'] { opacity: 1; color: var(--ink-2); border-style: dashed; background: var(--sunken); box-shadow: none; }
 .preparation-tool[aria-pressed='true'] { box-shadow: inset 0 0 0 2px var(--ink); }
 .preparation-tool.btn--danger { background: var(--raised); }
 .preparation-why { display: flex; gap: 6px; align-items: flex-start; margin: 0; font-size: var(--fs-xs); line-height: 1.35; color: var(--ink-2); }
@@ -148,11 +148,13 @@
 .preparation-save__note:empty { display: none; }
 .preparation-save__actions { display: flex; gap: 6px; flex: none; margin-left: auto; }
 
-/* ---------- sheet layer: over the scrolled body, never over the save strip ---------- */
+/* ---------- sheet layer: a modal over the editor; never over the save strip ---------- */
+.preparation--modal > .preparation-summary,
+.preparation--modal > .preparation-waves,
+.preparation--modal > .preparation-body { visibility: hidden; }
 .preparation-sheet-layer {
-  grid-area: auto; grid-column: 1; grid-row: 2 / -2; align-self: end; z-index: 6; min-height: 0; max-height: 100%; overflow-y: auto;
-  padding-top: var(--space-4);
-  background: linear-gradient(to bottom, transparent, var(--stage) var(--space-4));
+  grid-area: auto; grid-column: 1; grid-row: 2 / -2; align-self: stretch; z-index: 6; min-height: 0; overflow-y: auto;
+  display: flex; flex-direction: column; justify-content: flex-start;
 }
 .preparation-sheet .sheet__body { font-size: var(--fs-xs); line-height: 1.4; }
 .preparation-sheet .sheet__body p { margin: 0; }
@@ -184,7 +186,7 @@
 :root[data-orientation='landscape'] .preparation-top .preparation-save__actions { margin-left: auto; }
 :root[data-orientation='landscape'] .preparation-top .preparation-preview { margin-left: 0; }
 :root[data-orientation='landscape'] .preparation-wavebar .preparation-save__text { flex: none; }
-:root[data-orientation='landscape'] .preparation-sheet-layer { grid-row: 1 / -1; justify-self: end; align-self: stretch; display: flex; flex-direction: column; width: min(100%, 680px); padding-top: 0; background: none; }
+:root[data-orientation='landscape'] .preparation-sheet-layer { grid-row: 2 / -1; justify-self: center; width: min(100%, 760px); }
 :root[data-orientation='landscape'] .preparation-sheet__list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
 
 /* ---------- 200 % text: one scrolled column; the save strip stays pinned ---------- */
@@ -192,7 +194,10 @@
 :root[data-fontscale='200'] .preparation > * { flex: none; }
 :root[data-fontscale='200'] .preparation-top { order: 1; }
 :root[data-fontscale='200'] .preparation-summary { order: 2; }
-:root[data-fontscale='200'] .preparation-sheet-layer { order: 3; max-height: none; overflow: visible; padding-top: 0; background: none; width: auto; }
+:root[data-fontscale='200'] .preparation-sheet-layer { order: 3; max-height: none; overflow: visible; width: auto; }
+:root[data-fontscale='200'] .preparation--modal > .preparation-summary,
+:root[data-fontscale='200'] .preparation--modal > .preparation-waves,
+:root[data-fontscale='200'] .preparation--modal > .preparation-body { display: none; }
 :root[data-fontscale='200'] .preparation-waves { order: 4; }
 :root[data-fontscale='200'] .preparation-body { order: 5; overflow: visible; }
 :root[data-fontscale='200'] .preparation-save { order: 6; position: sticky; bottom: 0; z-index: 5; }
@@ -208,5 +213,6 @@
 /* ---------- themes / tiers ---------- */
 :root[data-theme='contrast'] .preparation-section,
 :root[data-theme='contrast'] .preparation-wave { border: 1.5px solid var(--line-strong); }
-:root[data-theme='contrast'] .preparation-tool[aria-disabled='true'] { color: var(--ink-2); }
-:root[data-orientation='landscape'] .preparation-sheet-layer > .preparation-sheet { margin-top: auto; }
+/* Bottom-anchored within reach of the thumb; margin-top:auto collapses safely when the dialog is taller. */
+.preparation-sheet-layer > .preparation-sheet { margin-top: auto; }
+:root[data-fontscale='200'] .preparation-sheet-layer > .preparation-sheet { margin-top: 0; }
