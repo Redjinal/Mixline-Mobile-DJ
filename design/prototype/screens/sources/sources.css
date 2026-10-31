@@ -183,11 +183,11 @@
 .sources-cands--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 :root[data-fontscale='200'] .sources-cands--2 { grid-template-columns: minmax(0, 1fr); }
 .sources-cand__key { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px; }
-.sources-cand__actions { display: grid; gap: 6px; }
-.sources-cand__actions > .btn { width: 100%; }
+.sources-cand__actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.sources-cand__actions > .btn { flex: 1 1 130px; }
+.sources-cand__src { display: flex; gap: 4px; align-items: flex-start; }
+.sources-cand__src .icon { width: 12px; height: 12px; flex: none; margin-top: 2px; }
 .sources-cand__actions .btn .icon { width: 18px; height: 18px; flex: none; }
-.sources-cands--1 .sources-cand__actions { display: flex; flex-wrap: wrap; }
-.sources-cands--1 .sources-cand__actions > .btn { flex: 1 1 140px; width: auto; }
 .sources-cand__facts { display: grid; gap: 4px; padding: 6px 8px; border-radius: 8px; background: var(--control); }
 .sources-cand__facts .sources-facts__row { grid-template-columns: minmax(0, 1fr); gap: 1px; }
 .sources-cand__facts dd { font-size: var(--fs-sm); color: var(--ink); overflow-wrap: anywhere; }

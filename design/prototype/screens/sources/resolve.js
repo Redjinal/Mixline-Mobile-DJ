@@ -66,7 +66,7 @@ function build(ctx) {
   const right = h('div', { class: 'sources-col sources-col--side' });
   const body = { matching, exact: candidatesView, probable: candidatesView, ambiguous: candidatesView, 'no-match': noMatch, 'adapter-unavailable': unavailable, 'blocked-access': blocked }[ctx.state];
   right.append(...body(ctx, r, req, live));
-  if (r?.explanation && ctx.state !== 'no-match') left.append(note('info', [h('strong', { text: 'Why: ' }), r.explanation]));
+  if (r?.explanation && ctx.state !== 'no-match') (ctx.orientation === 'landscape' ? left : right).append(note('info', [h('strong', { text: 'Why: ' }), r.explanation]));
   if (r?.explanation && ctx.state === 'no-match') right.firstElementChild?.insertBefore(note('info', [h('strong', { text: 'Why: ' }), r.explanation]), right.firstElementChild.children[2] || null);
   return [head, h('div', { class: 'sources-body sources-resolve__body' }, [left, right]), live];
 }
@@ -154,12 +154,12 @@ function candidate(ctx, r, c, req, live) {
     actions.push(button({ label: 'Confirm this recording', icon: 'check', cls: 'btn--primary', fr: ['FR-049'], on: { click: () => { handoff.format = 'marlin'; live.textContent = 'Recording confirmed. Choose a format next.'; ctx.navigate('sources/format', { state: 'options' }); } } }));
   }
   return h('article', { class: `sources-cand raised sources-cand--${c.class}`, role: 'listitem', 'aria-labelledby': `sources-cand-${c.id}` }, [
-    h('div', { class: 'sources-cand__top' }, [classFlag(c.class), h('span', { class: 'flag label tone-neutral' }, [icon('video', { size: 11 }), h('span', { text: c.source })])]),
+    h('div', { class: 'sources-cand__top' }, [classFlag(c.class)]),
     h('h3', { id: `sources-cand-${c.id}`, class: 'title sources-cand__title wrap-2', text: c.title }),
     h('p', { class: 'sources-cand__key' }, [h('span', { class: 'numeral sources-cand__dur', text: dur(c.durationSec) }), diffText ? h('span', { class: 'sources-hint', text: ` ${diffText}` }) : null]),
-    h('p', { class: 'sources-hint', text: c.uploader }),
     actions.length ? h('div', { class: 'sources-cand__actions' }, actions) : null,
     previewOut,
+    h('p', { class: 'sources-hint sources-cand__src' }, [icon('video', { size: 12 }), h('span', { text: `${c.source} · ${c.uploader}` })]),
     h('dl', { class: 'sources-cand__facts' }, [
       fact('Explicit / clean', c.explicit),
       fact('Media ID', h('span', { class: 'sources-mono', text: c.mediaId })),

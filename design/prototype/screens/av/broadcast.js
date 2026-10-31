@@ -226,8 +226,10 @@ function render(ctx) {
   const state = ctx.state in COMPONENT_STATE ? ctx.state : 'setup';
   const [word, tone, ic] = STATUS[state];
   const tested = !['setup', 'rehearsal-not-published'].includes(state);
+  const urgent = ['connecting', 'congested', 'disconnected-reconnecting', 'restricted-source-blocked'].includes(state);
+  const extras = stateExtras(ctx);
   const main = [
-    ...stateExtras(ctx),
+    ...(urgent ? [] : extras),
     tested ? testReport() : null,
     destination(ctx),
     eligibility(ctx),
@@ -236,7 +238,7 @@ function render(ctx) {
   ];
   return avLayout(ctx, {
     screen: 'broadcast', current: 'broadcast', title: 'Broadcast', status: avStatus(word, tone, ic), lead: LEAD[state],
-    hero: [recVsBroadcast(ctx), ...stateBlock(ctx)], main,
+    hero: [...(urgent ? extras : []), recVsBroadcast(ctx), ...stateBlock(ctx)], main,
   });
 }
 

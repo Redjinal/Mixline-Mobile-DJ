@@ -143,8 +143,14 @@ function stepper(ctx, { id, kind, value, unit, min, max, step, fmt }) {
   ]);
 }
 
+// The deck that holds a singer's song in the scenario (A when the song is not on a deck).
+function deckOf(ctx, trackId) {
+  return ['A', 'B', 'C', 'D'].find((L) => ctx.session.decks[L]?.enabled && ctx.session.decks[L]?.track?.id === trackId) || 'A';
+}
+
 function nowCard(ctx, id, state) {
   const q = byId(id);
+  const L = deckOf(ctx, q.trackId);
   const t = ctx.fixtures.track(q.trackId);
   const key = view.key[id] ?? q.keyShift;
   const tempo = view.tempo[id] ?? q.tempo;
@@ -155,7 +161,7 @@ function nowCard(ctx, id, state) {
       h('span', { class: 'av-now__name title wrap-2', text: q.stageName }),
       h('span', { class: 'av-now__local label' }, [icon('lock', { size: 10 }), h('span', { text: 'Local' })]),
     ]),
-    h('div', { class: 'av-now__song deck-a' }, [avDeck('A'), h('span', { class: 'av-now__title truncate', text: t?.title || q.trackId }), h('span', { class: 'av-now__version label', text: q.version })]),
+    h('div', { class: `av-now__song deck-${L.toLowerCase()}` }, [avDeck(L), h('span', { class: 'av-now__title truncate', text: t?.title || q.trackId }), h('span', { class: 'av-now__version label', text: `${q.version} · deck ${L}` })]),
     h('div', { class: 'av-now__steppers' }, [
       stepper(ctx, { id, kind: 'key', value: key, unit: 'semitones', min: -6, max: 6, step: 1, fmt: keyText }),
       stepper(ctx, { id, kind: 'tempo', value: tempo, unit: 'BPM', min: tempo - 8, max: tempo + 8, step: 0.5, fmt: (v) => v.toFixed(1) }),
@@ -167,7 +173,7 @@ function nowCard(ctx, id, state) {
 function program(ctx, id, { caption = true } = {}) {
   const q = id ? byId(id) : null;
   const lines = AV.karaoke.captions.lines;
-  const attrs = { kind: 'program', deck: 'A', track: q ? q.trackId : 'aurora', mode: 'follow', state: 'playing' };
+  const attrs = { kind: 'program', deck: q ? deckOf(ctx, q.trackId) : 'A', track: q ? q.trackId : 'aurora', mode: 'follow', state: 'playing' };
   if (caption && q && q.trackId === AV.karaoke.captions.trackId) attrs.caption = lines.find((l) => l.active)?.text;
   return h('mdj-video-frame', attrs);
 }

@@ -122,7 +122,7 @@ export function avLayout(ctx, { screen, title, status, lead = null, hero = null,
 // ---------------------------------------------------------------- video view state
 
 // Prototype view state only (no compositor): kept for the page so choices survive a state change.
-const view = { previewDeck: null, transition: AV.video.program.transition || 'dissolve', policy: 'freeze', captionOffset: AV.karaoke.captions.offsetMs, captionVis: 'both', visual: AVS.video.unlinkedVisual };
+const view = { transition: AV.video.program.transition || 'dissolve', policy: 'freeze', captionOffset: AV.karaoke.captions.offsetMs, captionVis: 'both', visual: AVS.video.unlinkedVisual };
 
 const FR = ['FR-045'];
 const MODE_TEXT = { follow: 'Follows audio', independent: 'Independent', 'audio-only': 'Audio only' };
