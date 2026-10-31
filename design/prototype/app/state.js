@@ -42,6 +42,8 @@ function systemPreferences() {
   try {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) out.motion = 'reduced';
     if (matchMedia('(prefers-contrast: more)').matches) out.theme = 'contrast';
+    // On a phone, show the real screen: 1 CSS px = 1 dp, no drawn bezel.
+    if (matchMedia('(max-width: 600px)').matches) { out.viewport = 'fill'; out.frame = 'off'; }
   } catch { /* no matchMedia */ }
   return out;
 }
@@ -59,6 +61,13 @@ export function init() {
   state = { ...DEFAULTS, ...systemPreferences(), ...readStorage(), ...fromQuery() };
   for (const [k, allowed] of Object.entries(VALID)) if (!allowed.includes(state[k])) state[k] = DEFAULTS[k];
   apply();
+  // A host page (for example an artifact viewer) may write its own light/dark value to the root
+  // data-theme attribute. The prototype owns that attribute, so restore its own theme when that happens.
+  try {
+    new MutationObserver(() => {
+      if (document.documentElement.dataset.theme !== state.theme) document.documentElement.dataset.theme = state.theme;
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  } catch { /* no MutationObserver */ }
 }
 
 export function get() { return { ...state }; }

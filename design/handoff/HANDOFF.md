@@ -11,29 +11,26 @@ Branch: `design/crystal-current-prototype`. Read `CLAUDE.md`, then `design/proto
 - Commit and push every step so other agents can see the work. No PR unless the owner asks.
 - The old remote branch `ccr-7ccfe905-r17l7y` may be deleted by the owner; agents must not delete it.
 
-## Done
+## Status (31 October 2026)
+
+All five steps of the original plan are done on this branch. Nothing is `verified` in the planning-pack sense.
 
 | Area | Status |
 |---|---|
-| Foundation: tokens, materials, base, shell, router, switcher, walkthrough, fixtures | implemented, smoke-rendered |
-| Tools: serve, smoke, audit, export_previews, build_spec | implemented |
-| Component families: controls, transport-pads, waveform, data, parday, routing-av | authored and self-checked by their authors |
-| Icon sprite extended (Lucide subset, `assets/NOTICES.md`) and `#/s/foundation/icons` | authored |
+| Foundation, tools, tokens, fixtures | implemented, checked |
+| Six component families and the icon sprite | implemented; checked by their authors and by the integrated audit; the planned independent refuting review did not run |
+| Twelve screen families, 36 screens, portrait and landscape | implemented; each author ran smoke renders in four variants and the click-through checker |
+| Integration audit | clean: 1,584 renders, no small/overlapping/unmarked targets, no contrast failures, no unmarked fixture data, no console errors, no overflow; required states present in all 12 families |
+| Click-through | 272 of 272 declared paths, 11 of 11 walkthrough scenes |
+| Previews and spec | `design/previews/` (144 PNGs and a contact sheet), `design/spec/` (state index, control map, component reference, interaction notes, asset manifest updates, verification report) |
+| Private preview for the owner | https://claude.ai/artifact/C7KovRdPGxC9TPMpEuh35R (owner-only; opens in "Fill this window" on a phone) |
 
-None of this is `verified` in the planning-pack sense. No engine exists; every level, waveform and progress value is a fixture.
+## Open, in priority order
 
-## Not done, in order
-
-1. **Refuting review of each component family.** The reviewers never ran because of usage limits. Use the review prompt in the workflow script referenced below, or review by hand: render `#/s/foundation/gallery`, check hit bounds, contrast, 200 % font scale, fixture marks.
-2. **Shared change requests from component authors** — resolved by commits `588c44c` and `be175b9` except the optional moves noted below:
-   - `app/app.css`: `:root[data-insets='off'] .device` collapses the outlet to 0 px; use rows that keep `1fr` for the outlet.
-   - `tools/smoke.mjs`: include tier and hit-bounds in the output filename so renders do not overwrite each other.
-   - `screens/foundation/gallery.js`: support per-state `variants`; consider splitting the gallery per family (it is ~30 000 dp tall).
-   - `app/app.css` deck tab letter at 200 % font scale (use min sizes, not fixed).
-   - Optional: move `.parday-btn` styles from app.css into `families/parday.css`; move icon-screen inline styles into `foundation.css`.
-3. **Screens, wave 1** (launch, preparation, routing, performance, recording, system), then **wave 2** (pads, sampler, queue, sources, parday, av). Full briefs, ownership, ports and required states are in `design/handoff/briefs/` (one file per family plus `00_preamble.md`) and in `design/handoff/build-screens.workflow.js` (a Workflow script; run with `args: {wave: 1}` then `{wave: 2}`, or use the briefs by hand). Screen stubs already exist under `screens/<family>/`.
-4. **Integration:** walkthrough scenes resolve, `node design/tools/audit.mjs` clean, `export_previews.mjs`, `build_spec.mjs`, hand-written `design/spec/` docs (interaction notes, asset manifest updates AS-xx, verification report separating functional, visual, device and asset-rights status).
-5. **Publish** the prototype as a private artifact the owner can open on the phone, then commit and push.
+1. Independent refuting review of the component families (never ran).
+2. Component changes listed under "Open component changes" in `design/spec/interaction-notes.md`; each has a screen-level stand-in.
+3. Device work: measure the S26 Ultra and walk the first-mix journey with a DJ. See "What would make any of this verified" in `design/spec/verification-report.md`.
+4. To republish the private preview after changes, publish a page made from `design/prototype/index.html` without its outer document tags, with every file under `design/prototype/` except `index.html` and Markdown as supporting files, to the URL above.
 
 ## Check commands
 
