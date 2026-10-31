@@ -63,13 +63,14 @@ export function pageAudit() {
   const targets = [];
   for (const el of device.querySelectorAll('[data-hit]')) {
     if (!visible(el)) continue;
+    if (el.closest('[inert]')) continue; // behind a modal: not hittable
     const hit = parseInt(el.dataset.hit, 10) || 0;
     if (!hit) continue;
     const c = clipRect(el);
     if (c.clippedW < 1 || c.clippedH < 1) continue; // fully scrolled out of view: not hittable
     const r = c.full;
     const comp = el.closest('[data-component]');
-    targets.push({ hit, x: c.x1 - dRect.left, y: c.y1 - dRect.top, w: c.clippedW, h: c.clippedH, fullW: r.width, fullH: r.height, tag: el.tagName.toLowerCase(), comp: comp?.dataset.component || null, label: (el.getAttribute('aria-label') || el.textContent || '').trim().slice(0, 60), el });
+    targets.push({ layer: el.closest('[role="dialog"], [role="alertdialog"]'), hit, x: c.x1 - dRect.left, y: c.y1 - dRect.top, w: c.clippedW, h: c.clippedH, fullW: r.width, fullH: r.height, tag: el.tagName.toLowerCase(), comp: comp?.dataset.component || null, label: (el.getAttribute('aria-label') || el.textContent || '').trim().slice(0, 60), el });
   }
   // Size is judged on the element's full box (a partially scrolled cell is still a 48 dp cell).
   const small = targets.filter((t) => t.fullW + 0.5 < t.hit || t.fullH + 0.5 < t.hit).map(({ el, ...t }) => t);
@@ -77,6 +78,8 @@ export function pageAudit() {
   for (let i = 0; i < targets.length; i++) for (let j = i + 1; j < targets.length; j++) {
     const a = targets[i], b = targets[j];
     if (a.el.contains(b.el) || b.el.contains(a.el)) continue;
+    // A sheet or dialog sits above the page: a tap there reaches the sheet, so only same-layer pairs can clash.
+    if (a.layer !== b.layer) continue;
     const ix = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
     const iy = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
     if (ix > 2 && iy > 2) overlaps.push({ a: `${a.tag}${a.comp ? `(${a.comp})` : ''} "${a.label}"`, b: `${b.tag}${b.comp ? `(${b.comp})` : ''} "${b.label}"`, ix: Math.round(ix), iy: Math.round(iy) });

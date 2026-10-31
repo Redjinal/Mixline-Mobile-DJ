@@ -75,7 +75,7 @@ export class MdjCrateRow extends MdjElement {
       ? h('span', { class: 'crate-row__edit' }, [
           h('label', { class: 'crate-row__edit-label label', for: `${this.constructor.tag}-${id || 'new'}-name`, text: 'Crate name' }),
           h('input', {
-            id: `${this.constructor.tag}-${id || 'new'}-name`, class: 'crate-row__input raised', type: 'text', value: name, 'aria-label': `Crate name, editing ${name}`,
+            id: `${this.constructor.tag}-${id || 'new'}-name`, class: 'crate-row__input raised', type: 'text', dataset: { hit: '48' }, value: name, 'aria-label': `Crate name, editing ${name}`,
             on: {
               keydown: (e) => {
                 if (e.key === 'Enter') { e.preventDefault(); this.emit('mdj:crate-rename', { id, name: e.target.value.trim() }); }

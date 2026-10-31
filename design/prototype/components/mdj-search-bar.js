@@ -56,7 +56,7 @@ export class MdjSearchBar extends MdjElement {
     const keepFocus = this.contains(document.activeElement);
 
     const input = h('input', {
-      id: inputId, class: 'search-bar__input', type: 'search', value, placeholder, inputmode: 'search', enterkeyhint: 'search', autocomplete: 'off', spellcheck: 'false',
+      id: inputId, class: 'search-bar__input', dataset: { hit: '48' }, type: 'search', value, placeholder, inputmode: 'search', enterkeyhint: 'search', autocomplete: 'off', spellcheck: 'false',
       'aria-label': `Search ${scope}`, 'aria-describedby': `${inputId}-status`,
       on: {
         input: (e) => this.emit('mdj:search', { value: e.target.value }),

@@ -156,7 +156,7 @@ section.av-fixture-box > mdj-fixture-mark { top: 4px; right: 6px; }
 .av-now__title { font-weight: 600; color: var(--ink); }
 .av-now__version { grid-column: 2; }
 .av-now__steppers { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
-:root[data-orientation='landscape'] .av-now__steppers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+:root[data-orientation='landscape'] .av-now__steppers { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* wraps before the two steppers can collide */ }
 .av-queue { display: grid; gap: 6px; min-width: 0; }
 .av-queue mdj-singer-row { min-width: 0; }
 .av-lyrics { display: grid; gap: 8px; padding-top: 22px; min-width: 0; }

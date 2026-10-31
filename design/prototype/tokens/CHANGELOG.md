@@ -11,7 +11,7 @@ Daylight C role colours (`stage`, `control_surface` → `control`, `raised_surfa
 | Token | Value (daylight) | Why |
 | --- | --- | --- |
 | `stage_deep`, `sunken` | `#CBD8DE`, `#D3DEE3` | A second stage tone for the mineral vignette and an inset surface for rails and meters. |
-| `ink_3` | `#6B8591` | Tertiary text for de-emphasised metadata; still ≥ 4.5:1 on `control`. |
+| `ink_3` | `#546972` (low-light `#8A9CA5`) | Tertiary text for de-emphasised metadata. Measured ≥ 4.5:1 on `stage`, `control` and `raised` in daylight (4.55 / 5.26 / 5.77) and on every low-light surface. The first value, `#6B8591`, measured only 3.07–3.9 and failed the audit on 10 sp labels. |
 | `line`, `line_strong` | `rgba(21,37,46,0.12/0.28)` | Panel borders and separators derived from ink, not grey. |
 | `glass`, `glass_edge`, `glass_shadow` | see `tokens.json` | The frosted panel recipe needs explicit alpha fill, edge highlight and shadow values. |
 | `titanium_hi/lo`, `brass_hi/lo` | see `tokens.json` | Gradient stops for brushed titanium and brass rims; the pack gave one value per metal. |

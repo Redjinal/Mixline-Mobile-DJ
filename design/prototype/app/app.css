@@ -283,3 +283,9 @@ mdj-fixture-mark[inline] { position: static; }
 
 /* Keep the dock's Master label on one line at 200 % font scale. */
 .shell__master-btn .btn-label { white-space: nowrap; }
+
+/* Landscape dock: the slim vertical meter has no room for every flag. Print the most severe one
+   (CLIP, else LATCHED, else LIM, else MUTED), anchored to the meter's right edge so it never runs
+   off the device; the full list stays in the meter's aria-valuetext and on the Master screen. */
+.meter--compact.meter--vertical .meter__flags { left: auto; right: 0; flex-direction: column; align-items: flex-end; }
+.meter--compact.meter--vertical .meter__flags > span:not(:first-child) { display: none; }

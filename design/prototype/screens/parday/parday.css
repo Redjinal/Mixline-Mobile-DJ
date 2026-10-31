@@ -90,6 +90,8 @@
 .parday-plan { display: grid; gap: var(--space-2); padding: var(--space-3); border-radius: var(--radius-panel); border: 2px solid var(--brass); min-width: 0; }
 .parday-plan > mdj-fixture-mark { top: 8px; right: 8px; }
 .parday-plan__head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding-right: 76px; }
+/* The plan sits on a brushed face; its kind label needs its own opaque backing (it was ~1.5:1 in low-light). */
+.parday-plan__kind { background: var(--raised); color: var(--ink); padding: 3px 8px; border-radius: 6px; border: 1px solid var(--line); }
 .parday-plan__id { padding: 2px 8px; border-radius: 6px; background: var(--raised); border: 1px solid var(--line-strong); font-weight: 700; }
 .parday-plan__route { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; align-items: stretch; }
 .parday-plan__cell { display: grid; gap: 3px; align-content: start; padding: 8px; border-radius: var(--radius-control); background: var(--raised); border: 1px solid var(--line); min-width: 0; }
