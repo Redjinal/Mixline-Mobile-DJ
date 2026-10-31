@@ -1,0 +1,35 @@
+{
+  "_fixture": "Performance-family overlays. Each entry is applied on top of the state's shared scenario (fixtures/sessions.json) for one screen state so the shell dock and the screen content agree. Every position, level, gain-reduction and pending value here is invented prototype data; nothing is measured audio or an engine acknowledgement.",
+  "overlays": {
+    "perform/ab:playing": { "decks": { "B": { "trackId": null, "state": "empty", "positionSec": 0, "cueSelected": false, "sync": false } }, "cue": { "deck": "A" } },
+    "perform/ab:protected-load": { "decks": { "B": { "trackId": null, "state": "empty", "positionSec": 0, "cueSelected": false, "sync": false } }, "cue": { "deck": "A" } },
+    "perform/ab:b-loaded": { "decks": { "B": { "trackId": "copper", "state": "paused", "positionSec": 15.48, "cueSelected": true, "sync": true } } },
+    "perform/ab:seek-preview": { "decks": { "B": { "trackId": null, "state": "empty", "positionSec": 0, "cueSelected": false, "sync": false } }, "cue": { "deck": "A" } },
+    "perform/ab:seeked": { "decks": { "A": { "positionSec": 161.0 }, "B": { "trackId": null, "state": "empty", "positionSec": 0, "cueSelected": false, "sync": false } }, "cue": { "deck": "A" } },
+    "perform/ab:pending-quantized": { "decks": { "B": { "trackId": null, "state": "empty", "positionSec": 0, "cueSelected": false, "sync": false } }, "cue": { "deck": "A" } },
+    "perform/ab:held-scratch": { "decks": { "A": { "slip": true } } },
+    "perform/ab:loading": { "decks": { "B": { "trackId": "copper", "state": "loading", "positionSec": 0, "cueSelected": false, "sync": false } } },
+    "perform/ab:four-deck-cd": { "focus": ["C", "D"] },
+    "perform/ab:four-deck-ac": { "focus": ["A", "C"] },
+    "perform/ab:four-deck-bd": { "focus": ["B", "D"] },
+
+    "perform/focus-map:four-deck": { "decks": { "D": { "state": "paused", "positionSec": 0 } } },
+    "perform/focus-map:held-gesture-deferred": { "decks": { "D": { "state": "paused", "positionSec": 0 } } },
+    "perform/focus-map:missing-c": { "decks": { "C": { "trackId": "brass", "state": "missing", "positionSec": 24.5, "levelL": 0, "levelR": 0, "loop": null }, "D": { "state": "paused", "positionSec": 0 } } },
+
+    "perform/mixer:normal": { "route": "usb-4ch", "cue": { "deck": null } , "decks": { "B": { "cueSelected": false } } },
+    "perform/mixer:cue-selected": { "route": "usb-4ch", "cue": { "deck": "B", "mix": 0.5, "gainDb": -3 }, "decks": { "B": { "cueSelected": true } } },
+    "perform/mixer:muted-channel": { "route": "usb-4ch", "cue": { "deck": null }, "decks": { "B": { "muted": true, "levelL": 0, "levelR": 0 } } },
+    "perform/mixer:bypass-crossfader": { "route": "usb-4ch", "cue": { "deck": null }, "decks": { "A": { "xf": "thru" } } },
+    "perform/mixer:four-channel": { "cue": { "deck": "B" } },
+
+    "perform/master:normal": { "route": "usb-4ch", "cue": { "deck": "B", "mix": 0.4, "gainDb": -3 }, "master": { "levelDb": 0, "limiterGrDb": 0 } },
+    "perform/master:limiter-active": { "route": "usb-4ch", "cue": { "deck": "B", "mix": 0.5, "gainDb": -3 }, "master": { "levelL": 0.93, "levelR": 0.91, "peakHold": 0.97, "clip": false, "limiterGrDb": -1.8, "levelDb": 0 } },
+    "perform/master:clipping": { "master": { "levelDb": 0, "clipLatched": true } },
+    "perform/master:cue-unavailable": { "master": { "levelDb": 0, "limiterGrDb": 0 } },
+    "perform/master:split-cue": { "route": "usb-4ch", "cue": { "deck": "B", "mix": 0.5, "gainDb": -3, "split": true }, "master": { "levelDb": 0, "limiterGrDb": 0 } }
+  },
+  "seek": { "deck": "A", "targetSec": 161.0, "_note": "Seek-lock preview target used by the 'Preview seek' accessible action; a drag on the overview sets its own target." },
+  "nextLoad": { "trackId": "copper", "_note": "The library selection the 'Load next' action carries. Load is never a row tap; it names its destination." },
+  "heldScratch": { "deck": "A", "slipMarker": 0.29, "positionFraction": 0.26, "_note": "Held scratch on A with Slip on: the jog shows where the slipped timeline continues. Positions are fixtures." }
+}

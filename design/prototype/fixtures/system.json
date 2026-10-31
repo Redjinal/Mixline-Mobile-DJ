@@ -1,0 +1,125 @@
+{
+  "_fixture": "Invented data for the system screen family (plugin rack parameters, settings drafts, diagnostics readings, backup archives and recovery checkpoints). Nothing here was measured, saved, backed up, restored or read from a device: battery, thermal, storage budgets, versions, archive sizes, validation results and checkpoint positions are drawn to exercise the screens' states. Acknowledgements printed by the screens ('the store confirmed', 'the host reported') are fixture acknowledgements, not working functionality.",
+  "plugins": {
+    "chainName": "Master insert chain",
+    "slots": 3,
+    "qualifiedNote": "Loads at a qualified time: prepare and state parsing run off the audio callback, never during an armed or running transition.",
+    "parameters": {
+      "glassverb": [
+        { "id": "mix", "label": "Mix", "value": 32, "min": 0, "max": 100, "unit": "%", "default": 25 },
+        { "id": "decay", "label": "Decay", "value": 2.8, "min": 0.2, "max": 12, "unit": "s", "default": 2.0 },
+        { "id": "predelay", "label": "Pre-delay", "value": 12, "min": 0, "max": 120, "unit": "ms", "default": 0 },
+        { "id": "lowcut", "label": "Low cut", "value": 180, "min": 20, "max": 1000, "unit": "Hz", "default": 120 }
+      ]
+    },
+    "presets": {
+      "glassverb": [
+        { "id": "hall-short", "name": "Hall · short", "current": true },
+        { "id": "plate", "name": "Bright plate" },
+        { "id": "room", "name": "Small room" }
+      ]
+    }
+  },
+  "settings": {
+    "categories": [
+      { "id": "audio", "label": "Audio & routing", "icon": "route", "rows": [
+        { "kind": "nav", "name": "routes", "label": "Output route", "value": "Phone speaker", "detail": "Master and cue pairs, sample rate, isolation check", "icon": "route" },
+        { "kind": "select", "name": "xf-curve", "label": "Crossfader curve", "value": "Equal power", "detail": "Linear · Equal power · Cut", "icon": "crossfader" },
+        { "kind": "value", "name": "cue-gain", "label": "Headphone cue gain", "value": "-3.0", "unit": "dB", "detail": "−12 to +6 dB · only on routes with a verified cue pair", "icon": "headphones" },
+        { "kind": "toggle", "name": "limiter", "label": "Master limiter", "value": "on", "detail": "Protects the master output; latency is printed on the Master screen", "icon": "master" }
+      ] },
+      { "id": "library", "label": "Library & import", "icon": "library", "rows": [
+        { "kind": "nav", "name": "folders", "label": "Music folders", "value": "2 folders", "detail": "Files stay where they are; the app keeps references", "icon": "folder" },
+        { "kind": "toggle", "name": "auto-analyse", "label": "Analyse on import", "value": "on", "detail": "Pauses automatically under thermal pressure", "icon": "analysis-pending" },
+        { "kind": "toggle", "name": "protect-edits", "label": "Protect corrected grids and cues", "value": "on", "detail": "Reanalysis never overwrites a locked edit", "icon": "grid-locked" }
+      ] },
+      { "id": "performance", "label": "Performance", "icon": "deck-focus", "rows": [
+        { "kind": "toggle", "name": "seek-lock", "label": "Seek lock", "value": "on", "detail": "Default on. Taps on a playing waveform do not jump; use the Seek control.", "icon": "seek-lock" },
+        { "kind": "toggle", "name": "jump-to-touch", "label": "Jump-to-touch", "value": "off", "detail": "Advanced. A tap on the waveform seeks a playing deck immediately.", "icon": "seek" },
+        { "kind": "select", "name": "quantize", "label": "Quantize", "value": "1/4 beat", "detail": "Default for cues, loops and pads: Off · 1/8 · 1/4 · 1/2 · 1 beat · 1 bar", "icon": "quantize" },
+        { "kind": "select", "name": "cue-behaviour", "label": "Cue behaviour", "value": "Hold to preview", "detail": "Hold to preview · Tap to set and return · Stutter", "icon": "cue" },
+        { "kind": "toggle", "name": "protected-load", "label": "Ask before replacing an audible deck", "value": "on", "detail": "Always on while a deck is audible on the master", "icon": "lock" }
+      ] },
+      { "id": "parday", "label": "ParDay", "icon": "parday", "rows": [
+        { "kind": "nav", "name": "parday-provider", "label": "Provider", "value": "Not configured", "detail": "Local proposals work without a provider. Cloud models need a provider and your own key.", "icon": "cloud" },
+        { "kind": "nav", "name": "parday-cost", "label": "Monthly cost limit", "value": "Not set", "detail": "Required before any paid use. Separate from any later AWS budget.", "icon": "cost-limit" },
+        { "kind": "nav", "name": "parday-data", "label": "Data policy", "value": "Metadata only", "detail": "No audio, no provider-restricted content, no Spotify content is sent to a model", "icon": "lock" },
+        { "kind": "toggle", "name": "parday-voice", "label": "Voice (push to talk)", "value": "off", "detail": "Off. Separate from the mix microphone; never ambient listening.", "icon": "mic" }
+      ] },
+      { "id": "sources", "label": "Sources & downloads", "icon": "download", "rows": [
+        { "kind": "nav", "name": "adapter-local", "label": "Local files", "value": "Enabled", "detail": "Technical: verified (fixture) · Access: yours · Content: yours · Distribution: not applicable", "icon": "folder" },
+        { "kind": "nav", "name": "adapter-youtube", "label": "YouTube link adapter", "value": "Enabled · unverified", "detail": "Technical: unverified · Access: provider terms not reviewed · Content: per item · Distribution: not reviewed", "icon": "link" },
+        { "kind": "nav", "name": "adapter-spotify", "label": "Spotify link adapter", "value": "Off · unverified", "detail": "Technical: unverified · Access: not granted · Content: per item · Distribution: not reviewed", "icon": "link" },
+        { "kind": "toggle", "name": "wifi-only", "label": "Download on Wi-Fi only", "value": "on", "detail": "Downloads never compete with a running set for the network", "icon": "download" }
+      ] },
+      { "id": "recording", "label": "Recording", "icon": "rec", "rows": [
+        { "kind": "select", "name": "rec-format", "label": "Recording format", "value": "FLAC 44.1 kHz", "detail": "WAV · FLAC · AAC 256 kbps", "icon": "rec" },
+        { "kind": "value", "name": "rec-margin", "label": "Storage safety margin", "value": "2.0", "unit": "GB", "detail": "Recording will not start below this much free space", "icon": "storage" },
+        { "kind": "toggle", "name": "rec-segments", "label": "Recoverable segments", "value": "on", "detail": "Writes 5-minute segments so a crash keeps what was recorded", "icon": "segment" }
+      ] },
+      { "id": "display", "label": "Display", "icon": "display", "rows": [
+        { "kind": "select", "name": "theme", "label": "Theme", "value": "Daylight", "detail": "Daylight · Low-light · High contrast", "icon": "display" },
+        { "kind": "select", "name": "tier", "label": "Rendering tier", "value": "Balanced", "detail": "Essential · Balanced · Enhanced — every tier keeps every control", "icon": "grid" },
+        { "kind": "toggle", "name": "reduce-transparency", "label": "Reduce transparency", "value": "off", "detail": "Opaque panels instead of frosted glass", "icon": "display" },
+        { "kind": "toggle", "name": "reduce-motion", "label": "Reduce motion", "value": "on", "detail": "Follows the system setting", "icon": "display" },
+        { "kind": "select", "name": "font-scale", "label": "Font scale", "value": "System (100 %)", "detail": "Layouts are checked up to 200 %", "icon": "caption" }
+      ] },
+      { "id": "backup", "label": "Backup", "icon": "backup", "rows": [
+        { "kind": "nav", "name": "backup", "label": "Backup and restore", "value": "Last: 24 Oct 21:15", "detail": "Metadata, cues, grids, crates and settings; media copies are opt-in", "icon": "backup", "to": "system/backup" }
+      ] },
+      { "id": "diagnostics", "label": "Diagnostics", "icon": "info", "rows": [
+        { "kind": "nav", "name": "diagnostics", "label": "Diagnostics", "value": "Route, storage, thermal", "detail": "Export a redacted report; crash-report sharing is off", "icon": "info", "to": "system/diagnostics" },
+        { "kind": "nav", "name": "plugins", "label": "Plugin rack", "value": "2 compatible", "detail": "Third-party plugins, isolation model and compatibility", "icon": "plugin", "to": "system/plugins" }
+      ] },
+      { "id": "about", "label": "About & licences", "icon": "info", "rows": [
+        { "kind": "nav", "name": "version", "label": "Version", "value": "0.4.0 (fixture build 412)", "detail": "Personal build · not a store release", "icon": "info" },
+        { "kind": "nav", "name": "licences", "label": "Licences and notices", "value": "Fonts, icons, libraries", "detail": "Barlow and IBM Plex Mono (SIL OFL 1.1) and the icon sprite notices", "icon": "list" },
+        { "kind": "nav", "name": "aws", "label": "Later extensions — AWS acquisition service", "value": "Not configured", "detail": "Not required for this app. The local app does everything here without a server.", "icon": "cloud-off" }
+      ] }
+    ]
+  },
+  "diagnostics": {
+    "versions": [
+      ["App", "0.4.0 · build 412 (fixture)"],
+      ["Library schema", "v12"],
+      ["Settings schema", "v4"],
+      ["Plugin host", "AAP adapter 0.8 (pinned, fixture)"],
+      ["Android", "Reported by the device at runtime"]
+    ],
+    "storage": { "budgets": [["Media you imported", "18.4 GB"], ["Analysis and waveforms", "1.2 GB"], ["Artwork", "86 MB"], ["Prepared stems", "3.9 GB"], ["Provider caches", "0 B"], ["Recordings", "6.1 GB"]] },
+    "battery": { "levelPct": 64, "charging": false, "thermal": "Normal", "throttling": "None" },
+    "sources": [
+      ["Local files", "ok", "1,284 references · 5 missing"],
+      ["YouTube link adapter", "warning", "Enabled · technical status unverified"],
+      ["Spotify link adapter", "neutral", "Off"],
+      ["ParDay provider", "neutral", "Not configured · local proposals only"]
+    ],
+    "export": {
+      "file": "mobile-dj-diagnostics-2026-10-31.zip",
+      "included": ["Route history (device names, channel counts, sample rates)", "Storage budgets and free space", "Battery and thermal state", "Source adapter statuses (no tokens)", "App, schema and plugin-host versions", "The last 200 app log lines with paths replaced by placeholders"],
+      "excluded": ["Track contents and audio", "Track titles and file names (replaced by IDs)", "OAuth tokens, API keys and provider secrets", "Private folder paths — unless you include them below", "ParDay conversation text"]
+    },
+    "telemetry": ["App version and device model", "Crash stack trace (app code only)", "Route kind at crash time (speaker, USB, Bluetooth)", "No track titles, paths, tokens or audio"]
+  },
+  "backup": {
+    "lastBackup": "24 Oct 2026, 21:15",
+    "contents": [["Sessions", "3"], ["Crates", "6"], ["Cue points and loops", "412"], ["Corrected grids (locked)", "38"], ["Settings", "all sections"], ["Track references", "1,284"]],
+    "excluded": ["OAuth tokens and provider secrets", "Provider-restricted caches", "Regenerable caches (waveforms, analysis, stems)"],
+    "archives": [
+      { "id": "backup-2026-10-24", "date": "24 Oct 2026, 21:15", "app": "0.4.0", "schema": "v12", "size": "38.2 MB", "media": false },
+      { "id": "backup-2026-10-12", "date": "12 Oct 2026, 18:02", "app": "0.4.0", "schema": "v12", "size": "35.9 MB", "media": false },
+      { "id": "backup-tablet-0.5", "date": "29 Oct 2026, 10:44", "app": "0.5.0", "schema": "v13", "size": "41.0 MB", "media": false },
+      { "id": "shared-archive", "date": "unknown", "app": "unknown", "schema": "unknown", "size": "2.1 GB", "media": true }
+    ],
+    "validation": [["App version", "0.4.0 — matches this app"], ["Schema", "v12 — readable"], ["Paths", "All inside the archive root"], ["Size", "38.2 MB — under the 2 GB limit"], ["IDs", "No duplicates"], ["Media", "References only · 1,279 found on this phone, 5 missing"]],
+    "conflicts": [
+      { "id": "c1", "track": "tide", "what": "Grid", "mine": "Locked grid, corrected after the bridge · edited 30 Oct", "theirs": "Unlocked grid from analysis · 24 Oct" },
+      { "id": "c2", "track": "aurora", "what": "Cue 3", "mine": "Cue 3 at 2:41.5 · edited 28 Oct", "theirs": "Cue 3 at 2:40.0 · 24 Oct" }
+    ]
+  },
+  "recovery": {
+    "checkpoint": { "time": "21:12", "session": "Saturday practice", "decks": [["A", "aurora", 201.3], ["B", "copper", 48.0]], "queue": ["drift", "glasswork", "calypso"], "cues": 14 },
+    "pointerCancel": { "time": "21:46:12", "deck": "A", "slipSec": 92.0, "cause": "The system took the touch (gesture navigation)" },
+    "missingNext": { "track": "brass", "alternatives": ["drift", "longtitle"] }
+  }
+}

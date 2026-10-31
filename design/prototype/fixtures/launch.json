@@ -1,0 +1,62 @@
+{
+  "_fixture": "Launch-family fixtures (launch/open, launch/import, launch/library, launch/crates). Invented prototype data: checkpoint times, recovery notes, the in-progress file name, recent searches, crate entry order and the rename conflict exist only to exercise states. Nothing here was measured or read from a device.",
+  "interrupted": {
+    "sessionId": "sess-1",
+    "cause": "Android stopped the app while it was in the background (process death).",
+    "checkpointAt": "2026-10-29T22:41:05",
+    "recoveredAt": "2026-10-29T22:47:30",
+    "decks": {
+      "A": { "trackId": "aurora", "positionSec": 182.0, "state": "paused" },
+      "B": { "trackId": "copper", "positionSec": 15.48, "state": "paused" }
+    },
+    "preserved": [
+      "Deck assignments and positions at the checkpoint (A 3:02, B 0:15) — both decks are paused",
+      "Queue: DRIFT HOUR, GLASSWORK (Extended Mix), CALYPSO WIRE",
+      "Cues, grid edits and crate changes saved before the checkpoint",
+      "Play history for this set (4 tracks)"
+    ],
+    "lost": [
+      "A cue nudge on Deck B made after 22:41:05 was not saved"
+    ],
+    "needsAction": [
+      { "id": "recording", "text": "Recording stopped when the app was closed. 2 segments are recoverable.", "action": "Open recording history", "to": "rec/history" },
+      { "id": "route", "text": "The output was not reopened automatically. Check the route before playing.", "action": "Check output", "to": "route/check" }
+    ]
+  },
+  "importIndexing": {
+    "currentName": "Lavway Morning (Steelpan Version).mp3",
+    "readySoFar": 13,
+    "attentionSoFar": 1
+  },
+  "importComplete": {
+    "id": "imp-10",
+    "source": "Files: 3 selected (scoped access)",
+    "startedAt": "2026-10-29T10:41:00",
+    "state": "complete",
+    "items": [
+      { "name": "Calypso Wire.flac", "trackId": "calypso", "state": "ready", "note": "Indexed; analysis complete" },
+      { "name": "Drift Hour.flac", "trackId": "drift", "state": "ready", "note": "Indexed; analysis complete" },
+      { "name": "Everything We Said On The Way Back From The Harbour (Rooftop Dub Reprise, 2026 Remaster).flac", "trackId": "longtitle", "state": "ready", "note": "Indexed; analysis complete" }
+    ],
+    "counts": { "ready": 3, "pending": 0, "duplicate": 0, "unsupported": 0, "skipped": 0, "failed": 0 }
+  },
+  "recentSearches": ["co", "harbour", "zzz"],
+  "camelotCompatible": {
+    "8A": ["7A", "8A", "9A", "8B"]
+  },
+  "crateEntries": {
+    "crate-warmup": [
+      { "id": "w1", "trackId": "drift", "note": "Start quiet; long intro" },
+      { "id": "w2", "trackId": "aurora", "note": null },
+      { "id": "w3", "trackId": "tide", "note": "Live drums — check the grid after the bridge" },
+      { "id": "w4", "trackId": "longtitle", "note": null },
+      { "id": "w5", "trackId": "aurora", "note": "Intentional repeat: the reprise closes the warm-up", "intentionalDuplicate": true }
+    ]
+  },
+  "renameConflict": {
+    "crateId": "crate-warmup",
+    "attempted": "Peak",
+    "existingId": "crate-peak",
+    "suggestion": "Peak (2)"
+  }
+}

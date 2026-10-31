@@ -1,0 +1,87 @@
+{
+  "_fixture": "Recording/history family fixture. Hand-authored prototype data: byte rates, sizes, segment boundaries, marker times, writer errors, finalization and recovery states are invented. No recorder, encoder, journal or file system exists. Shared scenario values (elapsed, bytes, free space, segment count) come from fixtures/sessions.json; this file only adds what the recording screens need beyond them.",
+  "formats": [
+    { "id": "flac", "label": "FLAC", "detail": "Lossless · 44.1 kHz · 24-bit", "scenarioFormat": "FLAC 44.1 kHz", "bytesPerSec": 166900, "rateNote": "Size depends on the music; typical rate used", "default": true },
+    { "id": "wav", "label": "WAV", "detail": "Uncompressed · 44.1 kHz · 24-bit", "bytesPerSec": 264600, "rateNote": "Fixed size per second" },
+    { "id": "aac", "label": "AAC", "detail": "Compressed · 256 kbps · 44.1 kHz", "bytesPerSec": 32000, "rateNote": "Smallest files; not lossless" }
+  ],
+  "safetyMarginBytes": 2147483648,
+  "safetyMarginNote": "Recording stops before free space falls below this reserve, so Android, the library and session checkpoints keep working.",
+  "chunkSec": 15,
+  "segmentSec": 900,
+  "markers": [
+    { "n": 1, "atSec": 125, "name": "Intro blend", "state": "saved" },
+    { "n": 2, "atSec": 520, "name": "Blend into EVERYTHING WE SAID ON THE WAY BACK FROM THE HARBOUR (Rooftop Dub Reprise, 2026 Remaster)", "state": "saved", "note": "Long marker name kept in full (long-title check)" },
+    { "n": 3, "atSec": 754, "name": "Marker 3", "state": "saved", "new": true, "note": "Added just now · written to the journal (fixture acknowledgement)" }
+  ],
+  "restricted": {
+    "trackId": "soda-radio",
+    "position": "Next in the queue, after COPPER SKY on Deck B",
+    "plannedInSec": 214,
+    "capability": "unknown",
+    "reason": "The download adapter reported no recording grant for this source (actual source: YouTube, fixture). Unknown is treated as not allowed."
+  },
+  "storageFull": {
+    "stoppedAtSec": 2310,
+    "reason": "Free space reached the safety reserve while other apps kept writing",
+    "segments": [
+      { "n": 1, "fromSec": 0, "toSec": 900, "bytes": 148000000, "state": "valid" },
+      { "n": 2, "fromSec": 900, "toSec": 1800, "bytes": 148000000, "state": "valid" },
+      { "n": 3, "fromSec": 1800, "toSec": 2310, "bytes": 84000000, "state": "valid" }
+    ]
+  },
+  "writerFailure": {
+    "lastValidSec": 1480,
+    "failedAtSec": 1488,
+    "error": "Encoder returned an I/O error while writing chunk 100 (fixture)",
+    "segments": [
+      { "n": 1, "fromSec": 0, "toSec": 900, "bytes": 148000000, "state": "valid" },
+      { "n": 2, "fromSec": 900, "toSec": 1480, "bytes": 95300000, "state": "valid" },
+      { "n": 3, "fromSec": 1480, "toSec": 1488, "bytes": 1300000, "state": "invalid", "note": "Partial chunk after the last valid point; not offered" }
+    ]
+  },
+  "finalizing": {
+    "durationSec": 754,
+    "bytes": 125829120,
+    "steps": [
+      { "id": "flush", "label": "Write the last chunk", "state": "acknowledged" },
+      { "id": "index", "label": "Join segments and write the seek index", "state": "running" },
+      { "id": "verify", "label": "Verify the finished file", "state": "waiting" }
+    ]
+  },
+  "justSaved": {
+    "sessionId": "sess-1",
+    "savedNote": "Saved at 21:12 · checkpoint 14 · acknowledged by the session store (fixture)",
+    "recording": { "id": "rec-3", "name": "Saturday practice", "durationSec": 3120, "format": "FLAC 44.1 kHz", "bytes": 520700000, "state": "complete", "markers": 3, "note": "Finalized and verified (fixture acknowledgement)" }
+  },
+  "recoverable": {
+    "recordingId": "rec-2",
+    "lastValidSec": 1480,
+    "segments": [
+      { "n": 1, "fromSec": 0, "toSec": 600, "bytes": 166000000, "state": "valid" },
+      { "n": 2, "fromSec": 600, "toSec": 1200, "bytes": 166000000, "state": "valid" },
+      { "n": 3, "fromSec": 1200, "toSec": 1480, "bytes": 78000000, "state": "valid" }
+    ]
+  },
+  "recovery": {
+    "recordingId": "rec-2",
+    "segments": [
+      { "n": 1, "state": "verified", "text": "Readable to 10:00" },
+      { "n": 2, "state": "checking", "text": "Reading chunks" },
+      { "n": 3, "state": "waiting", "text": "Not started" }
+    ]
+  },
+  "export": {
+    "sessionId": "sess-1",
+    "formatVersion": "Session export format 1 (proposed)",
+    "included": [
+      "Session log: decks, load times, transitions and markers",
+      "Deck assignments, cue points and loops as they were saved",
+      "Queue order and the route configuration reference",
+      "Source references for every track (local path or provider ID, never a copy)",
+      "Recording reference: name, format, duration and finalization state"
+    ],
+    "excluded": "No tokens or restricted caches are exported: provider sign-in tokens, download-adapter credentials, analysis caches of restricted media and ParDay conversation history stay on this phone.",
+    "mediaCopies": { "default": false, "note": "Off by default. Only local files you imported can be copied; restricted provider media is never copied as a side effect." }
+  }
+}

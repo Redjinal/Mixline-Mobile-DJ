@@ -1,0 +1,78 @@
+{
+  "_fixture": "Invented preparation-store data for the prep/track screen. Saved revisions, analysis versions, methods, confidence notes, queue positions, drafts, write errors and export names are prototype fixtures. No analysis ran, nothing was written to storage and no revision was acknowledged by a real store.",
+  "tracks": {
+    "tide": {
+      "savedRevision": 4,
+      "rendition": "AAC 256 kbps · 44.1 kHz · 5:02",
+      "analysis": {
+        "status": "complete",
+        "version": "Analysis r2 · on this phone",
+        "method": "Onset + variable-tempo tracking",
+        "confidence": "low",
+        "confidenceText": "High before 2:19 · low after the bridge",
+        "tempoRange": "Tempo drifts 120.4–123.6 BPM (live drums)"
+      },
+      "comment": "Live take: let the drummer breathe before the bridge.",
+      "colorName": "Green"
+    },
+    "calypso": {
+      "savedRevision": 7,
+      "rendition": "MP3 320 kbps · 44.1 kHz · 3:58",
+      "analysis": {
+        "status": "complete",
+        "version": "Analysis r2 · on this phone",
+        "method": "Onset + tempo tracking, constant tempo",
+        "confidence": "medium",
+        "confidenceText": "Medium · half/double ambiguous",
+        "detectedBpm": 68.0,
+        "correctedBpm": 136.0
+      },
+      "comment": "Horn hit is the cleanest drop-in. Keep at 136 (detector says 68).",
+      "colorName": "Red"
+    },
+    "glasswork": {
+      "savedRevision": 0,
+      "rendition": "WAV 48 kHz 24-bit · 7:30",
+      "analysis": {
+        "status": "queued",
+        "version": "Not analysed yet",
+        "method": "BPM, downbeat, key, waveform and loudness",
+        "confidence": "unknown",
+        "confidenceText": "Unknown until analysis finishes",
+        "queueText": "2nd of 3 in the analysis queue · progress unknown"
+      },
+      "comment": "",
+      "colorName": "None"
+    },
+    "longtitle": {
+      "savedRevision": 2,
+      "rendition": "FLAC 96 kHz 24-bit · 8:12",
+      "analysis": {
+        "status": "complete",
+        "version": "Analysis r2 · on this phone",
+        "method": "Onset + tempo tracking, constant tempo",
+        "confidence": "high",
+        "confidenceText": "High throughout"
+      },
+      "comment": "Dub out at 4:03 is the exit; the reprise tail is 90 s of reverb.",
+      "colorName": "Purple"
+    }
+  },
+  "tideDraft": {
+    "_note": "The cue edit draft for TIDE SIGNAL: a tapped downbeat after the bridge and cue 2 renamed and moved onto it. Saved as revision 5 by Keep correction (fixture acknowledgement).",
+    "downbeatSec": 139.0,
+    "cue2": { "n": 2, "fromName": "Bridge", "name": "Bridge drop", "fromSec": 141.0, "sec": 139.0, "color": "purple" },
+    "revision": 5,
+    "changes": [
+      "Cue 2 renamed: Bridge → Bridge drop",
+      "Cue 2 moved: 2:21.0 → 2:19.0 (onto your downbeat)",
+      "Downbeat set at 2:19.0; the grid after the bridge follows it",
+      "Grid locked after your correction"
+    ]
+  },
+  "saveFailure": {
+    "error": "write error: the preparation store did not confirm revision 5",
+    "storageFree": "48.3 GB free, so this is not a full disk",
+    "exportName": "TIDE SIGNAL · preparation r5 draft.json"
+  }
+}
