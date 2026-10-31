@@ -1,0 +1,57 @@
+{
+  "_fixture": "Queue / automix screen data for queue/queue. FIXTURE: no engine or scheduler exists. Queue revisions, engine frames, bar counts, marker times, readiness checks and the pitch range are invented values that stand in for engine acknowledgements and preparation-store reads. Tracks resolve through fixtures/tracks.json; the deck world comes from fixtures/sessions.json scenario a-playing (Deck A playing AURORA DRIVE at 1:32, Deck B paused on COPPER SKY at its cue).",
+  "sampleRate": 48000,
+  "pitchRangePct": 8,
+  "currentExitSec": 320,
+  "barsToExit": 118,
+  "transition": { "type": "exit", "bars": 16, "tempoMatch": true },
+  "barOptions": [4, 8, 16, 32],
+  "revision": 42,
+  "queues": {
+    "ready": ["aurora", "copper", "drift", "glasswork", "calypso", "longtitle"],
+    "missing-next": ["aurora", "brass", "copper", "drift", "glasswork", "calypso"],
+    "tempo-mismatch": ["aurora", "calypso", "copper", "drift", "glasswork", "longtitle"]
+  },
+  "notReady": {
+    "glasswork": "analysis pending — no grid, so automix will not blend it; it plays when you load it",
+    "calypso-mismatch": "tempo 136 vs 124 — sync would exceed the pitch range; mix it manually"
+  },
+  "locked": { "longtitle": "pinned as the closer by you" },
+  "committed": { "bars": 8, "startSec": 107.5, "revision": 42, "proposal": null },
+  "expiredEdit": { "trackId": "drift", "attemptedTo": 2, "fromRevision": 41, "engineRevision": 42, "sentAt": "1:33", "rejectedAt": "1:33" },
+  "takeover": { "frame": 4419840, "atSec": 92.08, "crossfader": 0.08, "trigger": "Stop automation" },
+  "next": {
+    "copper": {
+      "deck": "B",
+      "loaded": true,
+      "cueSec": 15.48,
+      "introMarkerSec": 15.48,
+      "checks": [
+        { "ok": true, "text": "File on this phone · FLAC, local" },
+        { "ok": true, "text": "Analysis complete · grid confidence high" },
+        { "ok": true, "text": "Loaded on Deck B · paused at its cue 0:15" },
+        { "ok": true, "text": "Not audible · crossfader on the A side" },
+        { "ok": true, "text": "Intro marker 0:15 — the blend starts here" },
+        { "ok": true, "text": "AURORA DRIVE exit marked at 5:20" }
+      ]
+    },
+    "brass": {
+      "deck": "B",
+      "loaded": false,
+      "checks": [
+        { "ok": false, "text": "File missing · last seen in Music/Rooftop" },
+        { "ok": true, "text": "Cues and queue position are kept" },
+        { "ok": false, "text": "Cannot load: nothing to play" }
+      ]
+    },
+    "calypso": {
+      "deck": "B",
+      "loaded": false,
+      "checks": [
+        { "ok": true, "text": "File on this phone · grid locked" },
+        { "ok": false, "text": "Tempo 136.0 vs 124.0 · sync needs −8.8 % on Deck B; the pitch range is ±8 %" },
+        { "ok": true, "text": "Loads to Deck B at the exit, replacing COPPER SKY (paused, not audible)" }
+      ]
+    }
+  }
+}

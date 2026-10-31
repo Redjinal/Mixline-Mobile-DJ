@@ -238,6 +238,9 @@
 .stopauto--executing .stopauto__rim { background: conic-gradient(from 210deg, var(--brass-hi), var(--brass), var(--brass-lo), var(--brass), var(--brass-hi)); }
 .stopauto--executing .stopauto__rim::after { background: var(--critical); box-shadow: none; }
 .stopauto--executing .stopauto__face, .stopauto--executing .stopauto__label, .stopauto--executing .stopauto__sub { color: var(--raised); }
+/* The rim colour is painted by ::after, which contrast checks cannot see; repeat it under the text so the backing is explicit. */
+.stopauto--executing .stopauto__label, .stopauto--executing .stopauto__sub { background: var(--critical); }
+.stopauto--armed .stopauto__label, .stopauto--armed .stopauto__sub { background: var(--ink); }
 .stopauto--executing .stopauto__glyph { background: var(--raised); color: var(--critical); border-color: var(--raised); }
 :root[data-tier='essential'] .stopauto--armed .stopauto__rim, :root[data-tier='essential'] .stopauto--executing .stopauto__rim,
 :root[data-theme='contrast'] .stopauto--armed .stopauto__rim, :root[data-theme='contrast'] .stopauto--executing .stopauto__rim { background: var(--brass); box-shadow: none; }
