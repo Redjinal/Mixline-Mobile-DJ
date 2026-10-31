@@ -1,0 +1,61 @@
+{
+  "_fixture": "Sampler and sequencer fixtures for screens/sampler. Hand-authored: slot contents, voice counts, sounding positions, revisions and the clock leader are invented. No engine, no sample files and no audio exist; 'playing' / 'choked' / 'sounding' are acknowledged fixture states the screen stands in for. Slot objects use the mdj-sample-bank slots-json shape; lanes use the mdj-step-grid lanes shape.",
+  "pack": {
+    "name": "Harbour Kit 01",
+    "slots": "1–11, 13",
+    "licence": "CC BY 4.0 — attribution: Harbour Sound Club",
+    "provenance": "Imported by you from Files on 12 Oct · checksum kept with the bank",
+    "rightsNote": "Rights and provenance travel with the pack: they stay attached when the bank is saved, backed up or recorded. Recording or broadcasting a set that uses these samples carries the attribution in its history."
+  },
+  "maxVoices": 8,
+  "voiceStealing": [
+    "Choke group first: a new trigger in a group stops the sounding voice of that group.",
+    "Then the oldest one-shot voice.",
+    "Then the oldest gate voice that is no longer held.",
+    "Loops and held gates are stolen last.",
+    "Music decks are never stolen from: their capacity is reserved."
+  ],
+  "chokeGroups": { "1": "Drums", "2": "Vox", "3": "FX", "4": "Perc" },
+  "slots": [
+    { "n": 1, "name": "Kick", "trigger": "one-shot", "choke": 1, "level": 0.9, "state": "loaded", "file": "kick_909.wav" },
+    { "n": 2, "name": "Clap", "trigger": "one-shot", "choke": 1, "level": 0.8, "state": "loaded", "file": "clap_tight.wav" },
+    { "n": 3, "name": "Hat", "trigger": "one-shot", "choke": 4, "level": 0.7, "state": "loaded", "file": "hat_closed.wav" },
+    { "n": 4, "name": "Riser", "trigger": "loop", "choke": 3, "level": 0.6, "state": "loaded", "file": "riser_8bar.wav" },
+    { "n": 5, "name": "Vox hit", "trigger": "gate", "choke": 2, "level": 1, "state": "loaded", "file": "vox_hey.wav" },
+    { "n": 6, "name": "Sweep", "trigger": "loop", "choke": 3, "level": 0.75, "state": "loaded", "file": "sweep_down.wav" },
+    { "n": 7, "name": "Horn", "trigger": "one-shot", "choke": "none", "level": 0.85, "state": "loaded", "file": "air_horn_short.wav" },
+    { "n": 8, "name": "Crash", "trigger": "one-shot", "choke": "none", "level": 0.9, "state": "loaded", "file": "crash_wide.wav" },
+    { "n": 9, "name": "Shaker", "trigger": "loop", "choke": 4, "level": 0.7, "state": "loaded", "file": "shaker_16th.wav" },
+    { "n": 10, "name": "Stab", "trigger": "one-shot", "choke": "none", "level": 0.85, "state": "loaded", "file": "stab_minor.wav" },
+    { "n": 11, "name": "Air", "trigger": "gate", "choke": 3, "level": 0.5, "state": "loaded", "file": "air_noise.wav" },
+    { "n": 12, "name": "", "trigger": "one-shot", "choke": "none", "level": 1, "state": "empty" },
+    { "n": 13, "name": "Shout", "trigger": "gate", "choke": 2, "level": 1, "state": "loaded", "file": "shout_go.wav" },
+    { "n": 14, "name": "", "trigger": "one-shot", "choke": "none", "level": 1, "state": "empty" },
+    { "n": 15, "name": "", "trigger": "one-shot", "choke": "none", "level": 1, "state": "empty" },
+    { "n": 16, "name": "", "trigger": "one-shot", "choke": "none", "level": 1, "state": "empty" }
+  ],
+  "assignCandidates": [
+    { "id": "rim", "name": "Rim", "file": "rim_click.wav", "from": "Harbour Kit 01", "length": "0:00.4", "trigger": "one-shot" },
+    { "id": "tom", "name": "Tom", "file": "tom_low.wav", "from": "Harbour Kit 01", "length": "0:00.9", "trigger": "one-shot" },
+    { "id": "chant", "name": "Chant", "file": "chant_loop_4bar.wav", "from": "Harbour Kit 01", "length": "0:07.7", "trigger": "loop" }
+  ],
+  "sequencer": {
+    "clockNote": "Follows the master tempo clock — Deck A is the leader",
+    "patterns": [
+      { "id": "A1", "name": "Groove", "bars": 2 },
+      { "id": "A2", "name": "Break", "bars": 1 },
+      { "id": "A3", "name": "Fill", "bars": 1 },
+      { "id": "A4", "name": "", "bars": 0 },
+      { "id": "B1", "name": "Lift", "bars": 2 },
+      { "id": "B2", "name": "Half", "bars": 2 },
+      { "id": "B3", "name": "", "bars": 0 },
+      { "id": "B4", "name": "", "bars": 0 }
+    ],
+    "lanes": [
+      { "name": "Kick", "sample": "slot 1 · kick_909", "cells": [3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 2] },
+      { "name": "Clap", "sample": "slot 2 · clap_tight", "cells": [0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0] },
+      { "name": "Hat", "sample": "slot 3 · hat_closed", "cells": [1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 1] },
+      { "name": "Perc", "sample": "slot 9 · shaker_16th", "cells": [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0], "muted": [10] }
+    ]
+  }
+}

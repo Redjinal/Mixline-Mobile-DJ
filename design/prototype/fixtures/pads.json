@@ -1,0 +1,113 @@
+{
+  "_fixture": "Pads family fixtures (pads/pads, pads/loops, pads/fx, pads/stems). Prototype data only: no engine, no analysis, no separation model ran. Bank 1 hot cues mirror fixtures/tracks.json cues; bank 2 cue labels, slicer/pitch-play contents, saved-loop extras, FX slot settings and stem readiness are pad-family fixtures. Shapes match the `pads` (mdj-pad-bank) and `stems` (mdj-stem-strip) attributes.",
+  "cueBanks": {
+    "aurora": {
+      "1": [
+        { "label": "Intro", "color": "cyan", "state": "loaded" },
+        { "label": "Bass in", "color": "green", "state": "loaded" },
+        { "label": "Break", "color": "purple", "state": "loaded" },
+        { "label": "Exit", "color": "orange", "state": "loaded" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" }
+      ],
+      "2": [
+        { "label": "Vox 2", "color": "purple", "state": "loaded" },
+        { "label": "Fill", "color": "yellow", "state": "loaded" },
+        { "label": "Drop 2", "color": "red", "state": "loaded" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" }
+      ]
+    },
+    "copper": {
+      "1": [
+        { "label": "Intro", "color": "orange", "state": "loaded" },
+        { "label": "Drums", "color": "green", "state": "loaded" },
+        { "label": "Vocal", "color": "purple", "state": "loaded" },
+        { "label": "Drop", "color": "red", "state": "loaded" },
+        { "label": "Exit", "color": "orange", "state": "loaded" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" }
+      ],
+      "2": [
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" },
+        { "label": "", "color": "none", "state": "empty" }
+      ]
+    }
+  },
+  "slicer": {
+    "note": "Eight equal slices of the 8-beat window starting at the last downbeat (1 beat each). Slices are momentary: the deck returns on release (slip).",
+    "pads": [
+      { "label": "Slice 1", "color": "none", "state": "loaded" },
+      { "label": "Slice 2", "color": "none", "state": "loaded" },
+      { "label": "Slice 3", "color": "none", "state": "loaded" },
+      { "label": "Slice 4", "color": "none", "state": "held" },
+      { "label": "Slice 5", "color": "none", "state": "loaded" },
+      { "label": "Slice 6", "color": "none", "state": "loaded" },
+      { "label": "Slice 7", "color": "none", "state": "loaded" },
+      { "label": "Slice 8", "color": "none", "state": "loaded" }
+    ],
+    "window": "Bars 25–26 · 1:32.9 – 1:36.8"
+  },
+  "pitchPlay": {
+    "note": "Pitch play from hot cue 3 'Break' with key lock: each pad replays the cue shifted by semitones. Range −3 … +4 st on this device profile.",
+    "pads": [
+      { "label": "−3 st", "color": "none", "state": "loaded" },
+      { "label": "−2 st", "color": "none", "state": "loaded" },
+      { "label": "−1 st", "color": "none", "state": "loaded" },
+      { "label": "0 st", "color": "none", "state": "playing" },
+      { "label": "+1 st", "color": "none", "state": "loaded" },
+      { "label": "+2 st", "color": "none", "state": "loaded" },
+      { "label": "+3 st", "color": "none", "state": "loaded" },
+      { "label": "+4 st", "color": "none", "state": "loaded" }
+    ],
+    "root": "Hot cue 3 'Break' · 8A"
+  },
+  "savedLoops": {
+    "aurora": [
+      { "name": "Intro 8", "inSec": 0.0, "beats": 32, "source": "prepared" },
+      { "name": "Groove 8", "inSec": 92.9, "beats": 8, "source": "saved in this set" },
+      { "name": "Break roll 4", "inSec": 185.8, "beats": 4, "source": "saved in this set" }
+    ]
+  },
+  "fx": {
+    "effects": ["Echo", "Delay", "Reverb", "Filter", "Flanger", "Phaser", "Distortion", "Bitcrush"],
+    "tails": { "Echo": true, "Delay": true, "Reverb": true, "Filter": false, "Flanger": false, "Phaser": false, "Distortion": false, "Bitcrush": false },
+    "unavailableOnProfile": { "Bitcrush": "Effect unavailable on this device profile (Essential DSP profile: no bit-depth reducer)." },
+    "slots": [
+      { "n": 1, "effect": "Echo", "rateMode": "tempo", "rate": "1/2 beat", "freeRate": "242 ms", "wet": 35, "engaged": true },
+      { "n": 2, "effect": "Filter", "rateMode": "free", "rate": "—", "freeRate": "4.0 kHz", "wet": 100, "engaged": true },
+      { "n": 3, "effect": "Reverb", "rateMode": "free", "rate": "—", "freeRate": "2.4 s decay", "wet": 20, "engaged": false }
+    ],
+    "xy": { "effect": "Echo", "xLabel": "Time", "xUnit": "ms", "xMin": 20, "xMax": 1200, "yLabel": "Feedback", "yUnit": "%", "yMin": 0, "yMax": 95, "x": 0.19, "y": 0.42, "wet": 0.35, "releaseMs": 240 },
+    "macro": {
+      "name": "Wash out",
+      "value": 40,
+      "targets": [
+        { "slot": 1, "param": "Echo feedback", "from": "20 %", "to": "80 %" },
+        { "slot": 2, "param": "Filter cutoff (high-pass)", "from": "off", "to": "1.2 kHz" },
+        { "slot": 3, "param": "Reverb wet", "from": "0 %", "to": "40 %" }
+      ],
+      "reset": "Reset returns every target to its slot value and wet gain to the slot's wet/dry; nothing keeps hidden wet gain."
+    }
+  },
+  "stems": {
+    "aurora": { "state": "ready", "model": "v2", "stems": [{ "id": "vocals", "gain": 0 }, { "id": "drums", "gain": 0 }, { "id": "bass", "gain": -1.5 }, { "id": "other", "gain": 0 }] },
+    "copper": { "state": "unavailable", "reason": "" },
+    "drift": { "state": "ready", "model": "v2", "stems": [{ "id": "vocals", "gain": 0 }, { "id": "drums", "gain": 0 }, { "id": "bass", "gain": 0 }, { "id": "other", "gain": -3 }] },
+    "glasswork": { "state": "preparing", "progress": 0.38, "progressNote": "Fixture: 38 % of preparation work units (segments separated). Time remaining unknown." },
+    "soda-radio": { "state": "restricted", "reason": "Source does not permit separation" },
+    "calypso": { "state": "failed", "reason": "integrity check mismatch on the drums stem" }
+  }
+}

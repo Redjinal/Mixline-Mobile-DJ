@@ -1,0 +1,306 @@
+{
+  "_fixture": "Sources-family fixtures (sources/add, sources/resolve, sources/format, sources/queue). Invented prototype data for Document 14 / 16 states. No link was resolved, no extractor ran, no byte was downloaded and no service was contacted: every identity, candidate, duration, bitrate, byte count, error, clock time and status below exists only to draw the states. Track and artist names are fictional. Adapter statuses are planning positions (Document 16 §2, §10), not test results — no adapter is verified working.",
+  "clock": "21:30",
+  "statusKeys": [
+    { "id": "technical", "label": "Technical", "question": "Does the mechanism work?" },
+    { "id": "access", "label": "Service access", "question": "What access basis applies to the service?" },
+    { "id": "content", "label": "Content use", "question": "What use of this recording is covered?" },
+    { "id": "distribution", "label": "Distribution", "question": "Which release channel could accept it?" }
+  ],
+  "adapters": [
+    {
+      "id": "direct", "name": "Direct file link", "mechanism": "Direct HTTPS transfer", "official": "n/a", "enabled": true, "handles": "Links that point straight at an audio file",
+      "statuses": {
+        "technical": { "word": "Evaluation", "tone": "info", "why": "Not verified on a device yet (DLA-03 pending)" },
+        "access": { "word": "Depends on the host", "tone": "neutral", "why": "Checked per link; login pages are refused" },
+        "content": { "word": "User-managed", "tone": "neutral", "why": "Your file, your rights; no proof upload asked" },
+        "distribution": { "word": "Personal build", "tone": "neutral", "why": "Not reviewed for any store" }
+      }
+    },
+    {
+      "id": "spotify-catalog", "name": "Spotify link resolver", "mechanism": "Catalog metadata only", "official": "Official metadata", "enabled": true, "handles": "Spotify track, album and playlist links → a search for the recording elsewhere",
+      "statuses": {
+        "technical": { "word": "Evaluation", "tone": "info", "why": "Reads catalog metadata; never audio from Spotify" },
+        "access": { "word": "Restricted", "tone": "warning", "why": "Spotify terms restrict ripping; no audio is taken from Spotify" },
+        "content": { "word": "Metadata restricted", "tone": "warning", "why": "Catalog fields stay out of ParDay and logs" },
+        "distribution": { "word": "Not reviewed", "tone": "warning", "why": "Needs review before any public release" }
+      }
+    },
+    {
+      "id": "yt-device", "name": "YouTube extractor · on-device", "mechanism": "Unofficial extractor candidate", "official": "Unofficial", "enabled": true, "handles": "YouTube links and matches found for Spotify links",
+      "statuses": {
+        "technical": { "word": "Evaluation build", "tone": "info", "why": "Candidate library pinned; no fixture transfer passed yet" },
+        "access": { "word": "No permission", "tone": "critical", "why": "YouTube terms restrict downloading; unofficial gives no exception" },
+        "content": { "word": "Unknown", "tone": "warning", "why": "Depends on the recording; the app cannot decide it" },
+        "distribution": { "word": "Not eligible as-is", "tone": "critical", "why": "Store policy review needed; personal build only" }
+      }
+    },
+    {
+      "id": "yt-worker", "name": "YouTube extractor · controlled worker", "mechanism": "Unofficial extractor candidate", "official": "Unofficial", "enabled": false, "handles": "Deferred comparison path (Document 16 §13)",
+      "statuses": {
+        "technical": { "word": "Unverified — not enabled", "tone": "neutral", "why": "Deferred; no server is required for local use" },
+        "access": { "word": "No permission", "tone": "critical", "why": "Same service terms as on-device" },
+        "content": { "word": "Unknown", "tone": "warning", "why": "Depends on the recording" },
+        "distribution": { "word": "Not reviewed", "tone": "warning", "why": "Not part of the personal build" }
+      }
+    },
+    {
+      "id": "spotdown", "name": "Spotdown", "mechanism": "Vendor candidate", "official": "Third-party site", "enabled": false, "handles": "Spotify link conversion (vendor claim, not tested)",
+      "statuses": {
+        "technical": { "word": "Unverified — not enabled", "tone": "neutral", "why": "No documented integration interface found" },
+        "access": { "word": "No grant", "tone": "critical", "why": "Terms examined describe personal, noncommercial use only" },
+        "content": { "word": "Unknown", "tone": "warning", "why": "Actual media origin not established" },
+        "distribution": { "word": "Not reviewed", "tone": "warning", "why": "Vendor question not yet sent" }
+      }
+    },
+    {
+      "id": "y2mate", "name": "Y2Mate", "mechanism": "Vendor candidate", "official": "Third-party site", "enabled": false, "handles": "Browser conversion (vendor claim, not tested)",
+      "statuses": {
+        "technical": { "word": "Unverified — not enabled", "tone": "neutral", "why": "A WebView wrapper is not the chosen integration" },
+        "access": { "word": "No grant", "tone": "critical", "why": "Terms require written permission for framing or cloning" },
+        "content": { "word": "Unknown", "tone": "warning", "why": "Actual media origin not established" },
+        "distribution": { "word": "Not reviewed", "tone": "warning", "why": "No arrangement exists" }
+      }
+    }
+  ],
+  "requests": {
+    "spotify-soda": {
+      "kind": "Spotify track link", "service": "Spotify", "pasted": "https://open.spotify.com/track/5odaL1ghtsF1xtur3?si=8c1f02be77d4", "canonical": "spotify:track:5odaL1ghtsF1xtur3",
+      "removed": "Share-tracking parameter (si=…) removed before resolving", "adapter": "spotify-catalog",
+      "catalog": { "title": "SODA LIGHTS", "artist": "Pell Avenue", "album": "Soda Lights", "durationSec": 204, "explicit": "Clean (catalog says)", "version": "No version label in the catalog title" }
+    },
+    "youtube-halcyon": {
+      "kind": "YouTube video link", "service": "YouTube", "pasted": "https://youtu.be/hALcy0nF3rry?t=12", "canonical": "youtube:hALcy0nF3rry",
+      "removed": "Start-time parameter (t=12) removed; the whole recording is requested", "adapter": "yt-device",
+      "shareText": "HALCYON FERRY (Official Audio) https://youtu.be/hALcy0nF3rry", "shareFrom": "YouTube app · Share → Mobile DJ"
+    },
+    "direct-glass": { "kind": "Direct file link", "service": "files.example.net", "pasted": "https://files.example.net/sets/glass-stair-club-master.flac", "canonical": "https://files.example.net/sets/glass-stair-club-master.flac", "adapter": "direct" },
+    "unsupported": {
+      "kind": "Apple Music song link", "service": "Apple Music", "pasted": "https://music.apple.com/album/harbour-lights/1700000000?i=1700000003",
+      "reason": "No adapter handles Apple Music links. Its songs play only inside Apple's own protected player, so there is no file the app can make or check.",
+      "alternatives": ["Import a file you already have", "Search your library by title", "Paste a link from Spotify, YouTube or a direct file"]
+    },
+    "spotify-playlist": {
+      "kind": "Spotify playlist link", "service": "Spotify", "pasted": "https://open.spotify.com/playlist/50caS3tAdd1t10ns?si=a71e", "canonical": "spotify:playlist:50caS3tAdd1t10ns",
+      "removed": "Share-tracking parameter removed", "adapter": "spotify-catalog", "name": "Soca set additions", "owner": "you", "count": 6
+    }
+  },
+  "matching": {
+    "requestId": "spotify-soda", "jobState": "RESOLVING", "startedAt": "21:29:41",
+    "steps": [
+      { "label": "Read the link", "mark": "done", "detail": "Spotify track · ID 5odaL1ghtsF1xtur3" },
+      { "label": "Catalog lookup", "mark": "done", "detail": "Title, artist, duration 3:24 (catalog)" },
+      { "label": "Search the YouTube extractor", "mark": "current", "detail": "Looking for recordings with this title and artist" },
+      { "label": "Compare duration, version and uploader", "mark": "todo", "detail": "Deterministic checks, no AI" }
+    ]
+  },
+  "resolutions": {
+    "exact": {
+      "requestId": "youtube-halcyon", "jobState": "READY", "class": "exact",
+      "requested": { "service": "YouTube", "title": "HALCYON FERRY (Official Audio)", "artist": "Orrin Vale", "durationSec": 287, "explicit": "Not stated by the source", "version": "Official Audio" },
+      "candidates": [
+        { "id": "halcyon", "title": "HALCYON FERRY (Official Audio)", "artist": "Orrin Vale", "source": "YouTube", "uploader": "Orrin Vale · artist channel", "mediaId": "hALcy0nF3rry", "durationSec": 287, "explicit": "Not stated", "class": "exact",
+          "evidence": ["Same media ID as your link", "Uploaded by the artist's own channel", "Title carries the label 'Official Audio'"], "format": "unknown-bitrate" }
+      ],
+      "explanation": "Your link names this exact media. Nothing was searched for or substituted, so the downloaded file is the recording you linked."
+    },
+    "probable": {
+      "requestId": "spotify-marlin", "jobState": "AWAITING_SELECTION", "class": "probable",
+      "requestedLink": "https://open.spotify.com/track/MarL1nStat1c0",
+      "requested": { "service": "Spotify", "title": "MARLIN STATIC", "artist": "Juno Pell", "durationSec": 238, "explicit": "Explicit (catalog says)", "version": "No version label" },
+      "candidates": [
+        { "id": "marlin", "title": "MARLIN STATIC (Audio)", "artist": "Juno Pell", "source": "YouTube", "uploader": "Juno Pell · artist channel", "mediaId": "mARl1nSt4t1c", "durationSec": 239, "explicit": "Explicit (title says)", "class": "probable",
+          "evidence": ["Title and artist agree after normalising", "Duration differs by 1 s", "No shared recording identifier — the services do not link the two"] },
+        { "id": "marlin-live", "title": "MARLIN STATIC (Live Session)", "artist": "Juno Pell", "source": "YouTube", "uploader": "Harbourline Sessions", "mediaId": "mARl1nL1v3", "durationSec": 301, "explicit": "Not stated", "class": "different",
+          "evidence": ["Live performance — a different recording", "Duration differs by 63 s"] }
+      ],
+      "explanation": "The audio upload is probably the same recording, but nothing proves it. Confirm it before any cue, grid or saved loop is attached; a live performance is a different recording and is never offered as a substitute."
+    },
+    "ambiguous": {
+      "requestId": "spotify-soda", "jobState": "AWAITING_SELECTION", "class": "ambiguous",
+      "requested": { "service": "Spotify", "title": "SODA LIGHTS", "artist": "Pell Avenue", "durationSec": 204, "explicit": "Clean (catalog says)", "version": "No version label in the catalog title" },
+      "candidates": [
+        { "id": "soda-radio", "title": "SODA LIGHTS (Radio Edit)", "artist": "Pell Avenue", "source": "YouTube", "uploader": "PellAvenueFan · re-upload, not the artist", "mediaId": "s0daR4d10", "durationSec": 201, "explicit": "Not stated", "class": "ambiguous",
+          "evidence": ["Duration within 3 s of the catalog", "Version label: Radio Edit", "Uploaded by a fan account, not the artist"] },
+        { "id": "soda-ext", "title": "SODA LIGHTS (Extended Mix)", "artist": "Pell Avenue", "source": "YouTube", "uploader": "Pell Avenue · artist channel", "mediaId": "s0daExt3nd", "durationSec": 365, "explicit": "Not stated", "class": "ambiguous",
+          "evidence": ["Artist's own channel", "Duration 2:41 longer than the catalog", "Version label: Extended Mix"] }
+      ],
+      "explanation": "Two recordings share the title. The duration points to the Radio Edit; the artist's channel only has the Extended Mix. A matching title alone cannot approve a substitute — choose the recording you want."
+    },
+    "no-match": {
+      "requestId": "spotify-velvet", "jobState": "FAILED", "class": "none",
+      "requestedLink": "https://open.spotify.com/track/Ve1vetD0ck9",
+      "requested": { "service": "Spotify", "title": "VELVET ROTOR (Live at Dock 9)", "artist": "Ode Marrow", "durationSec": 432, "explicit": "Explicit (catalog says)", "version": "Live at Dock 9" },
+      "checked": [
+        { "title": "VELVET ROTOR", "uploader": "Ode Marrow · artist channel", "durationSec": 355, "why": "Studio recording — a different performance" },
+        { "title": "VELVET ROTOR (Lyric Video)", "uploader": "Ode Marrow · artist channel", "durationSec": 355, "why": "Studio recording with lyrics" },
+        { "title": "Velvet Rotor live 2019 (phone)", "uploader": "dockside_crowd", "durationSec": 268, "why": "Partial audience recording, 2:44 shorter" }
+      ],
+      "explanation": "None of the 3 candidates is the live recording you linked. The studio version is a different recording, so it is not offered in its place."
+    },
+    "adapter-unavailable": {
+      "requestId": "youtube-copper", "jobState": "BLOCKED", "class": "none",
+      "requestedLink": "https://www.youtube.com/watch?v=c0pp3rSkyL1v",
+      "requested": { "service": "YouTube", "title": "Title not read — the extractor is off", "artist": "unknown", "durationSec": null, "explicit": "unknown", "version": "unknown" },
+      "adapterLine": "YouTube extractor adapter: unverified — not enabled",
+      "why": "In this build the on-device YouTube extractor is switched off: its update failed the fixture check, so it was rolled back and disabled. Your library and any playing decks are unaffected.",
+      "alternatives": ["Import a file you already have", "Open the link in the browser (handoff — does not download in the app)", "Keep the link and try again when the adapter is re-enabled"]
+    },
+    "blocked-access": {
+      "requestId": "youtube-north", "jobState": "BLOCKED", "class": "none",
+      "requestedLink": "https://www.youtube.com/watch?v=n0rthB0undMbr",
+      "requested": { "service": "YouTube", "title": "NORTHBOUND (Members Session)", "artist": "Kestrel Row", "durationSec": 312, "explicit": "Not stated", "version": "Members-only session" },
+      "blockedLine": "Blocked · login required",
+      "why": "The source only serves this video to signed-in channel members. The app does not ask for your YouTube password or browser cookies, and it does not try to get around the sign-in.",
+      "rateLimited": { "title": "CORAL SIGNAL", "line": "Rate limited by the source (HTTP 429)", "detail": "Automatic retry 2 of 3 at 21:42. The app waits; it never retries in a loop.", "jobState": "RETRY_WAIT" }
+    }
+  },
+  "collection": {
+    "requestId": "spotify-playlist", "name": "Soca set additions", "count": 6, "enumerated": "All 6 tracks listed — a playlist link never becomes an artist's whole catalogue",
+    "items": [
+      { "n": 1, "title": "CARNIVAL RELAY", "artist": "Dionne Ferrier", "durationSec": 224, "class": "probable", "candidate": "YouTube · artist channel · 3:45", "outcome": "completed" },
+      { "n": 2, "title": "HIBISCUS WIRE", "artist": "Kaya Trent", "durationSec": 242, "class": "probable", "candidate": "YouTube · artist channel · 4:02", "outcome": "completed" },
+      { "n": 3, "title": "SALT ROAD RIDDIM", "artist": "Marlo Ince", "durationSec": 211, "class": "probable", "candidate": "YouTube · label channel · 3:31", "outcome": "failed", "outcomeWhy": "Server sent a web page instead of audio" },
+      { "n": 4, "title": "LANTERN PARADE", "artist": "The Lantern Co.", "durationSec": 250, "class": "ambiguous", "candidate": "Radio Edit 4:09 or Live 5:48 — choose", "choices": ["Radio Edit 4:09", "Live 5:48"], "outcome": "completed", "outcomeNote": "Radio Edit 4:09 chosen" },
+      { "n": 5, "title": "BLUE MAS", "artist": "Oriel Sands", "durationSec": 237, "class": "probable", "candidate": "YouTube · artist channel · 3:57", "outcome": "unavailable", "outcomeWhy": "Source said: video unavailable in your region" },
+      { "n": 6, "title": "FERRY HORNS", "artist": "Kaya Trent", "durationSec": 200, "class": "probable", "candidate": "YouTube · artist channel · 3:20", "outcome": "completed" }
+    ],
+    "completionOrder": [2, 1, 6, 4],
+    "summary": "4 of 6 completed · 1 failed · 1 unavailable"
+  },
+  "formats": {
+    "soda-radio": {
+      "title": "SODA LIGHTS (Radio Edit)", "source": "YouTube · PellAvenueFan re-upload",
+      "facts": { "codec": "Opus", "container": "WebM", "bitrate": "160 kbps", "bitrateBasis": "reported by the source, not measured", "sampleRate": "48 kHz", "channels": "Stereo", "durationSec": 201 },
+      "options": [
+        { "id": "keep", "label": "Keep source format", "output": "Opus 160 kbps in Ogg · no re-encoding (remux only)", "storageBytes": 4020000, "note": "Best fidelity available from this source. Plays in the app." },
+        { "id": "mp3", "label": "MP3 for compatibility", "output": "MP3 320 kbps CBR · re-encoded from Opus", "storageBytes": 8040000, "note": "For other players. 320 kbps output does not mean a 320 kbps original." },
+        { "id": "aac", "label": "Supported rendition: AAC audio", "output": "AAC 128 kbps in M4A · a separate stream the source offers", "storageBytes": 3220000, "note": "Smaller, lower bitrate than the Opus stream." },
+        { "id": "flac", "label": "FLAC — lossless container", "output": "FLAC 16-bit 48 kHz · decoded from Opus", "storageBytes": 23200000, "estimateNote": "estimate", "note": "Bigger file, same sound as the Opus source." }
+      ],
+      "destination": "Phone library › Downloads (app storage)", "free": "48.3 GB free"
+    },
+    "halcyon": {
+      "title": "HALCYON FERRY (Official Audio)", "source": "YouTube · Orrin Vale artist channel",
+      "facts": { "codec": "Opus", "container": "WebM", "bitrate": "unknown", "bitrateBasis": "the source did not report it; it is measured from the file after transfer", "sampleRate": "48 kHz", "channels": "Stereo", "durationSec": 287 },
+      "options": [
+        { "id": "keep", "label": "Keep source format", "output": "Opus · bitrate unknown until measured · no re-encoding", "storageBytes": null, "note": "Storage unknown until the source reports a size." },
+        { "id": "mp3", "label": "MP3 for compatibility", "output": "MP3 320 kbps CBR · re-encoded from Opus", "storageBytes": 11480000, "note": "Output size is known; source quality is not." },
+        { "id": "flac", "label": "FLAC — lossless container", "output": "FLAC 16-bit 48 kHz · decoded from Opus", "storageBytes": 33100000, "estimateNote": "estimate", "note": "Bigger file, same sound as the Opus source." }
+      ],
+      "destination": "Phone library › Downloads (app storage)", "free": "48.3 GB free"
+    },
+    "marlin": {
+      "title": "MARLIN STATIC (Audio)", "source": "YouTube · Juno Pell artist channel · probable match you confirmed",
+      "facts": { "codec": "Opus", "container": "WebM", "bitrate": "160 kbps", "bitrateBasis": "reported by the source, not measured", "sampleRate": "48 kHz", "channels": "Stereo", "durationSec": 239 },
+      "options": [
+        { "id": "keep", "label": "Keep source format", "output": "Opus 160 kbps in Ogg · no re-encoding (remux only)", "storageBytes": 4780000, "note": "Best fidelity available from this source." },
+        { "id": "mp3", "label": "MP3 for compatibility", "output": "MP3 320 kbps CBR · re-encoded from Opus", "storageBytes": 9560000, "note": "320 kbps output does not mean a 320 kbps original." },
+        { "id": "flac", "label": "FLAC — lossless container", "output": "FLAC 16-bit 48 kHz · decoded from Opus", "storageBytes": 27600000, "estimateNote": "estimate", "note": "Bigger file, same sound as the Opus source." }
+      ],
+      "destination": "Phone library › Downloads (app storage)", "free": "48.3 GB free"
+    },
+    "collection": {
+      "title": "Soca set additions · 6 tracks", "source": "6 YouTube candidates · one format choice applies to every track",
+      "facts": { "codec": "Opus (all 6)", "container": "WebM", "bitrate": "160 kbps ×5 · unknown ×1", "bitrateBasis": "reported by the source for 5 tracks; LANTERN PARADE reports none", "sampleRate": "48 kHz", "channels": "Stereo", "durationSec": 1364 },
+      "options": [
+        { "id": "keep", "label": "Keep source format", "output": "Opus in Ogg for each track · no re-encoding", "storageBytes": null, "storageText": "about 22.3 MB for 5 tracks + 1 unknown", "note": "Each file keeps its own source quality." },
+        { "id": "mp3", "label": "MP3 for compatibility", "output": "MP3 320 kbps CBR for each track · re-encoded", "storageBytes": 54560000, "note": "320 kbps output does not mean a 320 kbps original." },
+        { "id": "flac", "label": "FLAC — lossless container", "output": "FLAC 16-bit 48 kHz for each track · decoded from Opus", "storageBytes": 157000000, "estimateNote": "estimate", "note": "Much bigger files, same sound as the sources." }
+      ],
+      "destination": "Phone library › Downloads › Soca set additions (playlist order kept)", "free": "48.3 GB free"
+    },
+    "retention": [
+      "Artwork: the source's thumbnail is kept as the source allows; a procedural placeholder is used otherwise. Spotify artwork is not copied.",
+      "Title and artist come from the file's own evidence. Spotify catalog fields are kept as a restricted reference and never sent to ParDay.",
+      "Processing history is saved with the file: source codec, output codec, re-encoding yes/no, extractor version."
+    ],
+    "honesty": "Converting a lossy source to WAV/FLAC does not recover detail."
+  },
+  "jobs": {
+    "soda": {
+      "title": "SODA LIGHTS (Radio Edit)", "jobId": "acq-0412", "revision": 2,
+      "requested": "Spotify link · SODA LIGHTS (catalog)", "actual": "YouTube · PellAvenueFan re-upload · Radio Edit 3:21",
+      "format": "Keep source · Opus 160 kbps (reported)", "destination": "Phone library › Downloads", "total": 4020000, "totalBasis": "size from the server's Content-Length",
+      "adapter": "yt-device",
+      "variants": {
+        "active": { "jobState": "TRANSFERRING", "row": "transferring", "bytes": 1610000, "ready": "No — not published yet", "analyzed": "No — runs after publishing" },
+        "cancelling": { "jobState": "CANCEL_REQUESTED", "row": "transferring", "bytes": 1610000, "sent": true, "ready": "No — will not be published", "analyzed": "No" },
+        "cancelled": { "jobState": "CANCELLED", "row": "cancelled", "bytes": 1610000, "ready": "No — nothing was published", "analyzed": "No" },
+        "paused": { "jobState": "PAUSED", "row": "paused", "bytes": 1610000, "ready": "No — not published yet", "analyzed": "No" },
+        "completed-ready": { "jobState": "COMPLETED", "row": "complete", "bytes": 4020000, "ready": "Yes — in the library, playable", "analyzed": "Pending — queued, progress unknown" }
+      }
+    },
+    "halcyon": {
+      "title": "HALCYON FERRY", "jobId": "acq-0413", "revision": 1, "requested": "YouTube link (shared)", "actual": "YouTube · same media ID (exact)",
+      "format": "Keep source · Opus, bitrate unknown", "destination": "Phone library › Downloads", "adapter": "yt-device",
+      "jobState": "TRANSFERRING", "row": "transferring", "bytes": 2310000, "total": null, "totalBasis": "the server sends no total size (chunked response)",
+      "ready": "No — not published yet", "analyzed": "No — runs after publishing"
+    },
+    "glass": {
+      "title": "GLASS STAIR (club master)", "jobId": "acq-0409", "revision": 1, "requested": "Direct file link · files.example.net", "actual": "Same file · FLAC",
+      "format": "Keep source · FLAC 24-bit 44.1 kHz (measured from header)", "destination": "Phone library › Downloads", "adapter": "direct",
+      "jobState": "VERIFYING", "row": "verifying", "bytes": 31800000, "total": 31800000, "ready": "No — checking the final file", "analyzed": "No"
+    },
+    "marlin": {
+      "title": "MARLIN STATIC", "jobId": "acq-0410", "revision": 3, "requested": "Spotify link · MARLIN STATIC (catalog)", "actual": "YouTube · Juno Pell artist channel (confirmed probable)",
+      "format": "MP3 320 kbps · re-encoded from Opus", "destination": "Phone library › Downloads", "adapter": "yt-device",
+      "jobState": "CONVERTING", "row": "converting", "bytes": null, "total": null, "ready": "No", "analyzed": "No"
+    },
+    "portside": {
+      "title": "PORTSIDE", "jobId": "acq-0408", "revision": 1, "requested": "YouTube link", "actual": "YouTube · same media ID (exact)",
+      "format": "Keep source · Opus", "destination": "Phone library › Downloads", "adapter": "yt-device",
+      "jobState": "PUBLISHING", "row": "publishing", "bytes": 5100000, "total": 5100000, "ready": "Not yet — publishing", "analyzed": "No"
+    },
+    "kite": {
+      "title": "KITE LINES", "jobId": "acq-0414", "revision": 1, "requested": "YouTube link", "actual": "YouTube · same media ID (exact)",
+      "format": "Keep source · Opus", "destination": "Phone library › Downloads", "adapter": "yt-device",
+      "jobState": "QUEUED", "row": "queued", "bytes": null, "total": null, "note": "Waiting: one transfer runs at a time", "ready": "No", "analyzed": "No"
+    },
+    "salt": {
+      "title": "SALT ROAD RIDDIM", "jobId": "acq-0402-3", "revision": 1, "parent": "Soca set additions · item 3 of 6", "requested": "Spotify playlist item", "actual": "YouTube · label channel (probable, confirmed)",
+      "format": "Keep source · Opus", "destination": "Phone library › Downloads", "adapter": "yt-device",
+      "jobState": "FAILED", "row": "failed", "phase": "transferring", "bytes": 18400, "total": null,
+      "error": "The server sent a web page (text/html, 18.4 KB), not audio",
+      "detail": "Checked the bytes, not just the file name: the response was an HTML page. Nothing was published and the staged bytes were removed.",
+      "ready": "No — nothing was published", "analyzed": "No"
+    },
+    "north": {
+      "title": "NORTHBOUND (Members Session)", "jobId": "acq-0411", "revision": 1, "requested": "YouTube link", "actual": "YouTube · members-only video",
+      "format": "not chosen", "destination": "—", "adapter": "yt-device",
+      "jobState": "BLOCKED", "row": "failed", "phase": "resolving", "bytes": null, "total": null,
+      "error": "Blocked · login required",
+      "detail": "The source serves this video only to signed-in members. The app does not ask for passwords or browser cookies and will not bypass the sign-in.",
+      "ready": "No", "analyzed": "No",
+      "statuses": { "access": { "word": "Blocked · login required", "tone": "critical", "why": "Members-only; no credential is requested" } }
+    },
+    "coral": {
+      "title": "CORAL SIGNAL", "jobId": "acq-0407", "revision": 1, "requested": "YouTube link", "actual": "YouTube · same media ID (exact)",
+      "format": "Keep source · Opus", "destination": "Phone library › Downloads", "adapter": "yt-device",
+      "jobState": "RETRY_WAIT", "row": "paused", "phase": "transferring", "bytes": 700000, "total": 3900000,
+      "retry": { "attempt": 2, "max": 3, "at": "21:42", "line": "Rate limited by the source (HTTP 429)" },
+      "detail": "The source asked the app to slow down. Retry 2 of 3 starts at 21:42 from the verified 0.7 MB; after attempt 3 the job stops and asks you.",
+      "ready": "No", "analyzed": "No",
+      "statuses": { "access": { "word": "Rate limited", "tone": "warning", "why": "Waiting until 21:42; no bypass" } }
+    }
+  },
+  "stateReference": [
+    { "id": "CREATED", "text": "Request saved from your link or share" },
+    { "id": "RESOLVING", "text": "Finding the requested recording and the actual source" },
+    { "id": "AWAITING_SELECTION", "text": "Probable or ambiguous match — you choose" },
+    { "id": "READY", "text": "Recording and format chosen; no audio on the phone yet" },
+    { "id": "QUEUED", "text": "Waiting for a transfer slot" },
+    { "id": "TRANSFERRING", "text": "Bytes arriving into private staging" },
+    { "id": "SOURCE_VALIDATING", "text": "Checking source bytes before a conversion" },
+    { "id": "CONVERTING", "text": "Re-encoding or remuxing to the chosen format" },
+    { "id": "VERIFYING", "text": "Checking the exact final file: type, codec, duration, hash" },
+    { "id": "PUBLISHING", "text": "Adding the verified file to the library" },
+    { "id": "COMPLETED", "text": "In the library and playable; analysis is separate" },
+    { "id": "PAUSED", "text": "Stopped at a safe checkpoint; Resume continues" },
+    { "id": "RETRY_WAIT", "text": "Waiting for a bounded retry (rate limit, network)" },
+    { "id": "CANCEL_REQUESTED", "text": "Cancel sent; the worker is stopping" },
+    { "id": "CANCELLED", "text": "Stopped; nothing was published" },
+    { "id": "FAILED", "text": "Stopped with a specific reason" },
+    { "id": "BLOCKED", "text": "The source or adapter refuses access; nothing is bypassed" }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "_fixture": "Invented screen data for the parday screen family (parday/prepare, parday/perform, parday/arm). No model was called, no engine ran, no limit was measured. It only adds what fixtures/parday.json (read-only, owned by the parday component family) does not carry: the Prepare welcome and context disclosure, the undo acknowledgement, the monthly limit, the thermal pause, the Stop automation acknowledgement and the cancelled-before-start receipt. Times continue the parday.json timeline (now 21:21:48 in Perform).",
+  "prepare": {
+    "welcome": {
+      "at": "20:59:40",
+      "text": "Ask me to build a crate, draft cues or explain a route. I propose; nothing is saved until you choose Apply to preparation, and saved changes can be undone. In Perform I only read and propose until you arm a specific plan."
+    },
+    "context": {
+      "title": "What ParDay can see",
+      "lead": "Only the fields below go into a request, and only for the task you ask about. No audio, artwork, lyrics, file paths or credentials are sent.",
+      "included": [
+        { "text": "BPM, key, duration and grid confidence of eligible local tracks", "provenance": "measured", "label": "Measured · analysis" },
+        { "text": "Your tags, ratings, cue names and crate names", "provenance": "user" },
+        { "text": "Release year and label for tracks you looked up", "provenance": "retrieved", "source": "MusicBrainz (fixture)" }
+      ],
+      "excluded": [
+        { "text": "SODA LIGHTS (Radio Edit) — title, artist, album and popularity from Spotify", "provenance": "restricted", "label": "Spotify fields excluded" },
+        { "text": "SODA LIGHTS (Extended) — candidate match and release date from Spotify", "provenance": "restricted", "label": "Spotify fields excluded" }
+      ],
+      "rule": "Spotify-derived fields are excluded from ParDay’s context by default — from prompts, ranking and memory. They stay visible in your library; ParDay simply does not use them. A track you imported yourself is eligible by its own measured fields.",
+      "provider": "Requests go to your direct API key (fixture provider). Retention follows that provider’s settings; this app does not promise zero retention."
+    },
+    "undone": {
+      "at": "21:04:40",
+      "text": "Undone 21:04:40 — crate “Warm-up 30” removed (crate revision r2). Nothing audible changed. The proposal below is reviewable again; applying it saves a new crate."
+    },
+    "costLimit": {
+      "headline": "Monthly AI limit reached — set in Settings; preparation continues manually.",
+      "detail": "US$15.00 of the US$15.00 monthly limit you set. New model requests stop until 1 November or until you raise the limit. Local search, saved proposals, readiness checks and every manual edit keep working.",
+      "monthEstimatedUsd": 15.0,
+      "monthLimitUsd": 15.0,
+      "requestsToday": 14,
+      "requestLimit": 40
+    },
+    "thermal": {
+      "headline": "ParDay is paused under thermal pressure.",
+      "detail": "The phone is hot, so optional conversational work stopped first. Playback, analysis already saved, your crates and every manual control are unaffected. ParDay resumes when the phone cools; nothing queued will run by itself."
+    },
+    "offline": {
+      "works": ["Local library search and filters", "Measured analysis (BPM, key, grid)", "Saved proposals and crates", "Route explanation and readiness checks", "App help"],
+      "waits": ["Building a crate", "Drafting cues", "Lookups and links"]
+    },
+    "sentNoFixture": "Sent to ParDay. This prototype only carries a fixture answer for “Build a 30-minute crate”; no other request is answered here."
+  },
+  "perform": {
+    "now": "21:21:48",
+    "preview": {
+      "text": "Previewing Deck B COPPER SKY from Drums on your headphones (cue route). The master is unchanged; preview is an audition, not an arm.",
+      "route": "USB-C stereo · cue isolated"
+    },
+    "stopped": {
+      "at": "21:22:08",
+      "effectiveFrame": 571392,
+      "bar": 6,
+      "text": "Stop automation acknowledged by the engine at 21:22:08. No event of P42 can run after engine frame 571 392 (bar 6 of 16).",
+      "remains": [
+        "Crossfader holds at 0.37 — it does not jump back",
+        "Deck B keeps playing at 124.0 BPM from Drums",
+        "Deck A keeps playing · channel fader unchanged",
+        "B low EQ holds at −4.3 dB (not reset)"
+      ]
+    },
+    "sentNoFixture": "Sent to ParDay. In Perform the answer would arrive as a proposal card; this prototype has no fixture answer for that request.",
+    "refreshSent": "Refresh sent. A new proposal would be bound to the current decks and revisions; this prototype has no fixture for it."
+  },
+  "arm": {
+    "expired": {
+      "now": "21:26:20",
+      "agoSec": 20,
+      "headline": "Proposal expired 20 s ago — Refresh"
+    },
+    "cancelledBeforeStart": {
+      "at": "21:21:58",
+      "effectiveFrame": 0,
+      "text": "You cancelled P42 at 21:21:58, before Deck A reached Exit. The engine acknowledged: automation 7 rev 2 invalidated; zero events had run.",
+      "remains": [
+        "Nothing was scheduled or heard",
+        "Deck A keeps playing · Deck B stays cued at Drums",
+        "Crossfader, faders and EQ are where you left them"
+      ]
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "_fixture": "Screen-level fixtures for the av screen family (av/video, av/karaoke, av/broadcast, av/mic). Invented for the design prototype; nothing here was measured, decoded, transmitted or heard. The shared component data stays in fixtures/av.json (read-only for this family). Values below are what each drawn state needs beyond that file: the visual crossfader position when unlinked, the late-decoding / scratch example, the test-receiver report, the broadcast restriction example and the karaoke transport acknowledgements.",
+  "video": {
+    "audioCrossfader": 0.58,
+    "unlinkedVisual": 0.3,
+    "transitions": [
+      {
+        "id": "cut",
+        "label": "Cut",
+        "detail": "Switches the program picture at once."
+      },
+      {
+        "id": "dissolve",
+        "label": "Dissolve",
+        "detail": "Blends program pictures over the transition length."
+      },
+      {
+        "id": "crossfade",
+        "label": "Video crossfade",
+        "detail": "Picture follows a crossfader position (linked or unlinked)."
+      }
+    ],
+    "scratch": {
+      "deck": "A",
+      "behindFrames": 3,
+      "note": "Deck A is being scratched; exact reverse / scratch video is not certified on this device profile."
+    },
+    "unsupported": {
+      "trackId": "zinc",
+      "file": "zinc-harbour-hdr10.mp4 (fixture)",
+      "colour": "HDR10 · BT.2020 PQ",
+      "reason": "HDR-to-SDR conversion is not handled on this device profile."
+    },
+    "display": {
+      "reported": "1920 × 1080 · 60 Hz",
+      "connector": "USB-C DisplayPort alt mode (reported, fixture)"
+    }
+  },
+  "karaoke": {
+    "keyAckMs": 450,
+    "missingCaptions": {
+      "singer": "s2",
+      "note": "No timed-text file is attached to COPPER SKY · Instrumental. The picture and the music continue; nothing is scraped or generated."
+    },
+    "returnToDj": {
+      "pausedAt": "1:44",
+      "note": "Marla V.'s song is paused on deck A at 1:44 (fixture). The queue is kept on this phone."
+    }
+  },
+  "broadcast": {
+    "audienceLabel": "Friday practice-room stream (private test audience)",
+    "testReceiver": {
+      "checkedAt": "21:12:40",
+      "heard": [
+        "Master",
+        "Microphone"
+      ],
+      "absent": [
+        "Cue",
+        "ParDay speech"
+      ],
+      "videoFrames": "720p30 test pattern received",
+      "roundTripMs": 640,
+      "note": "Fixture test receiver report. It shows what arrived at the test receiver, not what an audience will hear."
+    },
+    "restricted": {
+      "trackId": "soda-radio",
+      "position": "Next in the queue, after COPPER SKY on deck B",
+      "reason": "The download adapter reported no broadcast grant for this source (actual source: YouTube, fixture). Unknown is treated as not allowed: it may play to the room, but it is not sent to the stream.",
+      "startsInSec": 95,
+      "capability": "unknown"
+    }
+  },
+  "mic": {
+    "armedInput": "quadra-in2",
+    "levels": {
+      "armed": 0.18,
+      "live": 0.56,
+      "feedback": 0.86
+    },
+    "gainAckMs": 450
+  }
+}
