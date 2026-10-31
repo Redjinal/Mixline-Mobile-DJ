@@ -119,6 +119,38 @@ export function standInTransport(target, { exclude = () => false } = {}) {
   });
 }
 
+// mdj:inspect host: a dial / fader readout opens <mdj-value-inspector> in a sheet (the accessible
+// alternative Document 03 §4 requires: enlarged numeral, fine −/+, numeric entry, Reset). The
+// inspector's increments are forwarded to the source control, which then shows SENT and is
+// acknowledged by the stand-in like any other change.
+export function inspectorHost(root) {
+  root.addEventListener('mdj:inspect', (e) => {
+    const src = e.target.closest('mdj-dial, mdj-fader, mdj-pitch-rail');
+    const d = e.detail || {};
+    if (!src) return;
+    root.querySelector(':scope > .performance-scrim--inspect')?.remove();
+    const fader = src.tagName === 'MDJ-FADER';
+    const insp = h('mdj-value-inspector', { label: d.label, deck: d.deck || null, value: d.value, unit: d.unit || '', min: d.min, max: d.max, step: d.step, fine: d.step ? d.step / 5 : 0.1, default: d.default ?? 0, state: 'idle' });
+    const sheet = h('mdj-sheet', { variant: 'sheet', title: `${d.label}${d.deck ? `, deck ${d.deck}` : ''}`, state: 'open', 'dismiss-label': 'Close' }, [insp]);
+    const scrim = h('div', { class: 'performance-scrim performance-scrim--inspect' }, [wrapC('performance-sheet', sheet)]);
+    const close = () => scrim.remove();
+    sheet.addEventListener('mdj:sheet-dismiss', close);
+    insp.addEventListener('mdj:discard', close);
+    const forward = (ev) => {
+      ev.stopPropagation();
+      const v = ev.detail?.value;
+      if (v == null) return;
+      insp.setAttribute('value', String(v)); insp.removeAttribute('draft'); insp.setAttribute('state', 'idle');
+      const sent = fader ? v / 100 : v;
+      src.setAttribute('pending-value', String(sent)); src.setAttribute('state', 'pending');
+      setTimeout(() => { if (!src.isConnected) return; src.setAttribute('value', String(sent)); src.removeAttribute('pending-value'); src.removeAttribute('state'); }, ACK_MS);
+    };
+    insp.addEventListener('mdj:value', forward);
+    insp.addEventListener('mdj:reset', forward);
+    root.appendChild(scrim);
+  });
+}
+
 export const WORKSPACE_ROUTES = { library: 'launch/library', pads: 'pads/pads', fx: 'pads/fx', stems: 'pads/stems', queue: 'queue/queue', sampler: 'sampler/banks' };
 export function workspaceNav(ctx, node) {
   node.addEventListener('mdj:workspace', (e) => { const id = e.detail?.id; if (WORKSPACE_ROUTES[id]) ctx.navigate(WORKSPACE_ROUTES[id]); });
@@ -608,6 +640,7 @@ function secondaryBand(v) {
 function wireAB(root, v) {
   const { ctx, st } = v;
   standInEngine(root);
+  inspectorHost(root);
   // Declared paths: Play deck A from set-ready, Play deck B from b-loaded (content transport in
   // landscape, the dock in portrait). Every other transport gets the SENT → acknowledged stand-in.
   const transportPath = (d) => (d.kind === 'play' && ((st === 'set-ready' && d.deck === 'A') || (st === 'b-loaded' && d.deck === 'B')));
