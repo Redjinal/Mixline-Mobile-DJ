@@ -222,7 +222,7 @@
       "title": "SODA LIGHTS (Radio Edit)", "jobId": "acq-0412", "revision": 2,
       "requested": "Spotify link · SODA LIGHTS (catalog)", "actual": "YouTube · PellAvenueFan re-upload · Radio Edit 3:21",
       "format": "Keep source · Opus 160 kbps (reported)", "destination": "Phone library › Downloads", "total": 4020000, "totalBasis": "size from the server's Content-Length",
-      "adapter": "yt-device",
+      "adapter": "yt-device", "phase": "transferring",
       "variants": {
         "active": { "jobState": "TRANSFERRING", "row": "transferring", "bytes": 1610000, "ready": "No — not published yet", "analyzed": "No — runs after publishing" },
         "cancelling": { "jobState": "CANCEL_REQUESTED", "row": "transferring", "bytes": 1610000, "sent": true, "ready": "No — will not be published", "analyzed": "No" },

@@ -116,20 +116,33 @@ function mount(ctx, root, key) {
   }
   paint();
 
-  const choose = h('section', { class: 'sources-panel raised sources-choose', 'aria-labelledby': 'sources-opts-t' }, [
-    h('h2', { id: 'sources-opts-t', class: 'label sources-label', text: 'Output format' }),
-    h('p', { class: 'sources-srcline' }, [h('span', { class: 'label', text: 'Source ' }), h('span', { class: 'numeral', text: `${f.facts.codec} · ${f.facts.bitrate}` }), h('span', { class: 'sources-hint', text: ` (${unknownRate ? 'not reported' : 'reported, not measured'}) · ${f.facts.sampleRate} · ${dur(f.facts.durationSec)}` })]),
-    opts, detail, dest,
-    h('div', { class: 'sources-actions sources-actions--sticky' }, [
-      button({ label: 'Download', icon: 'download', hit: 56, cls: 'btn--primary sources-download', fr: ['FR-049'], on: { click: () => ctx.navigate('sources/queue', { state: 'active' }) } }),
-      h('p', { class: 'sources-hint', text: 'Adds a job to the queue. The file joins the library only after verification and never loads a deck by itself.' }),
-    ]),
+  const srcline = h('p', { class: 'sources-srcline' }, [h('span', { class: 'label', text: 'Source ' }), h('span', { class: 'numeral', text: `${f.facts.codec} · ${f.facts.bitrate}` }), h('span', { class: 'sources-hint', text: ` (${unknownRate ? 'not reported' : 'reported, not measured'}) · ${f.facts.sampleRate} · ${dur(f.facts.durationSec)}` })]);
+  const actions = h('div', { class: 'sources-actions sources-format__actions' }, [
+    button({ label: 'Download', icon: 'download', hit: 56, cls: 'btn--primary sources-download', fr: ['FR-049'], on: { click: () => ctx.navigate('sources/queue', { state: 'active' }) } }),
+    h('p', { class: 'sources-hint', text: 'Adds a job to the queue. The file joins the library only after verification and never loads a deck by itself.' }),
   ]);
+  const title = h('h2', { id: 'sources-opts-t', class: 'label sources-label', text: 'Output format' });
 
-  // Portrait leads with the decision (a one-line source summary sits in it); landscape puts the full
-  // source facts beside the options.
-  const cols = [h('div', { class: 'sources-col sources-col--main' }, [source]), h('div', { class: 'sources-col sources-col--side' }, [choose])];
-  if (ctx.orientation !== 'landscape') cols.reverse();
+  let cols;
+  if (ctx.orientation === 'landscape') {
+    // Landscape: the options scroll on the left; the decision (size, destination, Download) stays at the
+    // top of the right column with the full source facts under it.
+    const choose = h('section', { class: 'sources-panel raised sources-choose', 'aria-labelledby': 'sources-opts-t' }, [title, opts]);
+    const decide = h('section', { class: 'sources-panel raised sources-decide', 'aria-label': 'Download' }, [detail, actions, dest]);
+    const main = h('div', { class: 'sources-col sources-col--main' }, [choose]);
+    cols = [main, h('div', { class: 'sources-col sources-col--side' }, [decide, source])];
+    // Keep the selected option in view inside its own scroller (FLAC sits last in the list).
+    requestAnimationFrame(() => {
+      const sel = opts.querySelector('.sources-opt.is-selected');
+      if (sel && sel !== opts.firstElementChild) main.scrollTop = Math.max(0, sel.offsetTop - main.offsetTop - 48);
+    });
+  } else {
+    // Portrait leads with the decision; a one-line source summary sits in it and Download stays pinned
+    // to the bottom of the content while the options scroll.
+    actions.classList.add('sources-actions--sticky');
+    const choose = h('section', { class: 'sources-panel raised sources-choose', 'aria-labelledby': 'sources-opts-t' }, [title, srcline, opts, detail, dest, actions]);
+    cols = [h('div', { class: 'sources-col sources-col--main' }, [choose]), h('div', { class: 'sources-col sources-col--side' }, [source])];
+  }
   root.replaceChildren(head, h('div', { class: 'sources-body sources-format__body' }, cols), live);
 }
 

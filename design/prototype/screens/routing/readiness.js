@@ -170,7 +170,7 @@ register({
       const body = inSet
         ? [h('p', { class: 'body' }, [h('strong', { text: data.restriction.text })]), h('p', { class: 'body muted', text: data.restriction.detail })]
         : [h('p', { class: 'body', text: 'Every track in this set is a local file you imported; recording is allowed.' }), h('p', { class: 'body muted', text: `Elsewhere in the library: ${data.restriction.text}` })];
-      rows.push(row({ id: 'sources', icon: 'blocked', title: 'Source restrictions', fr: 'FR-031', status: st, body, actions: inSet ? [button({ label: 'Review source', icon: 'link', fr: ['FR-031'], cls: 'btn--primary', on: { click: () => ctx.navigate('sources/resolve') } })] : [] }));
+      rows.push(row({ id: 'sources', icon: 'blocked', title: 'Source restrictions', fr: 'FR-031', status: st, body, actions: inSet ? [button({ label: 'Review source', icon: 'link', fr: ['FR-031'], cls: 'btn--primary', on: { click: () => ctx.navigate('sources/resolve', { state: 'probable' }) } })] : [] }));
     }
 
     // Lead with what needs attention in this state.
