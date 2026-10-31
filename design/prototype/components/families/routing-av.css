@@ -123,7 +123,7 @@
 .route-diagram__caption { margin: 0; font-size: var(--fs-xs); }
 .route-diagram__rows { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2px 12px; }
 .route-diagram__row { display: flex; align-items: center; gap: 6px; font-size: var(--fs-xs); min-height: 20px; }
-.route-diagram__ch { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 4px; border-radius: 4px; background: var(--raised); border: 1px solid var(--brass); font-size: var(--rav-fs-11); }
+.route-diagram__ch { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 4px; border-radius: 4px; background: var(--raised); border: 1px solid var(--brass); font-size: var(--rav-fs-11); white-space: nowrap; }
 .route-diagram__row--cue .route-diagram__ch { border-color: var(--info); color: var(--info); }
 .route-diagram__row--unknown .route-diagram__ch { border-style: dashed; border-color: var(--ink-3); color: var(--ink-2); }
 .route-diagram__arrow { color: var(--ink-3); }

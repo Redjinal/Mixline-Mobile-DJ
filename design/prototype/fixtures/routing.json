@@ -1,0 +1,34 @@
+{
+  "_fixture": "Routing-family screen data. Invented for the design prototype: no device was queried, no battery, thermal, storage or isolation measurement was taken, and no route is certified. Set lists extend fixtures/sessions.json sessions for display only; the recording rate is a planning estimate, not a measured encoder figure.",
+  "sets": {
+    "sess-1": { "name": "Saturday practice", "trackIds": ["aurora", "copper", "drift", "glasswork", "calypso", "longtitle"], "note": "Decks A/B plus queue; one long title kept in for layout testing." },
+    "sess-2": { "name": "Four-deck test", "trackIds": ["drift", "copper", "calypso", "glasswork"], "note": "All four decks loaded." },
+    "sess-3": { "name": "Rooftop warm-up", "trackIds": ["brass", "drift", "tide"], "note": "BRASS CANYON was loaded on deck A when the session was saved." },
+    "restricted": { "name": "Saturday practice + request", "trackIds": ["aurora", "copper", "soda-radio", "drift", "glasswork", "calypso", "longtitle"], "note": "A guest request was queued third." }
+  },
+  "device": {
+    "batteryPct": 64,
+    "charging": false,
+    "recordingFormat": "FLAC 44.1 kHz 16-bit",
+    "recordingBytesPerMin": 25000000,
+    "_note": "batteryPct is a fixture value (no BatteryManager read). recordingBytesPerMin is a planning estimate for stereo FLAC; actual size depends on the material."
+  },
+  "restriction": {
+    "trackId": "soda-radio",
+    "text": "SODA LIGHTS (Radio Edit): recording eligibility unknown — treated as not allowed.",
+    "detail": "Downloaded from YouTube (fixture) for a Spotify request; the provider grant does not say whether a mix containing it may be recorded. Playback is unaffected; Record stays unavailable while this track is audible."
+  },
+  "isolation": {
+    "steps": [
+      { "id": "tone", "text": "A quiet test tone plays on the cue pair only." },
+      { "id": "listen", "text": "You confirm it is in the headphones and not in the speakers." },
+      { "id": "confirm", "text": "The app records the result against this route epoch." }
+    ],
+    "_note": "The app cannot measure acoustic leakage here; QA-06 separation is a certification measurement, not this check."
+  },
+  "cueWays": [
+    { "route": "usbc-stereo", "label": "USB-C headphones / DAC", "result": "Stereo master in your headphones. Still no separate cue." },
+    { "route": "splitter", "label": "DJ splitter cable", "result": "Mono master on one side, mono cue on the other. Stereo is given up." },
+    { "route": "usb-4ch", "label": "4-output USB interface", "result": "Stereo master on 1–2 and stereo cue on 3–4, on one device clock." }
+  ]
+}

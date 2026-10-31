@@ -143,7 +143,7 @@ export class MdjRouteCard extends MdjElement {
       actions.push(this.btn(m, 'Choose another route', { primary: true, ic: 'route', action: 'choose' }));
       actions.push(this.btn(m, 'Resume', { ic: 'play', action: 'resume', disabled: true, why: 'no verified route yet' }));
     } else {
-      if (m.hasCuePath || m.effective === 'unsupported') actions.push(this.btn(m, 'Run isolation check', { primary: m.effective !== 'unsupported', ic: 'isolation-check', action: 'isolation-check', disabled: m.effective === 'unsupported' && !m.compact ? false : false }));
+      if (m.hasCuePath || m.effective === 'unsupported') actions.push(this.btn(m, 'Run isolation check', { primary: m.effective !== 'unsupported', ic: 'isolation-check', action: 'isolation-check' }));
       if (!m.current && m.effective === 'ok') actions.push(this.btn(m, 'Use this route', { primary: !m.hasCuePath, ic: 'check', action: 'select' }));
       if (!m.compact) for (const a of (r.nextActions || []).slice(0, m.hasCuePath ? 2 : 3)) if (!/isolation/i.test(a)) actions.push(this.btn(m, a, { action: ACTION_ID(a) }));
     }
