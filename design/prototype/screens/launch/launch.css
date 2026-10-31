@@ -306,7 +306,7 @@ mdj-shell:has(.launch-lib--keyboard-open)::after {
 :root[data-orientation='landscape'] .launch-page { height: 100%; min-height: 0; display: grid; grid-template-rows: auto minmax(0, 1fr); padding-bottom: 0; }
 :root[data-orientation='landscape'] .launch-open__grid, :root[data-orientation='landscape'] .launch-import__grid { min-height: 0; height: 100%; align-items: stretch; }
 :root[data-orientation='landscape'] .launch-open__grid > *, :root[data-orientation='landscape'] .launch-import__grid > * { min-height: 0; overflow-y: auto; align-content: start; padding-bottom: var(--space-3); box-sizing: border-box; }
-:root[data-orientation='landscape'] .launch-open__hero, :root[data-orientation='landscape'] .launch-import__explain, :root[data-orientation='landscape'] .launch-import__status, :root[data-orientation='landscape'] .launch-import__summary { align-self: start; max-height: 100%; }
+:root[data-orientation='landscape'] .launch-open__hero, :root[data-orientation='landscape'] .launch-import__explain, :root[data-orientation='landscape'] .launch-import__status, :root[data-orientation='landscape'] .launch-import__summary { align-self: start; }
 :root[data-orientation='landscape'] .launch-open__brand { gap: var(--space-2); }
 :root[data-orientation='landscape'] .launch-open__name { font-size: var(--fs-md); }
 :root[data-orientation='landscape'] .launch-open__need { grid-template-columns: minmax(0, 1fr) auto; align-items: center; padding: var(--space-2) var(--space-3); }
@@ -341,3 +341,7 @@ mdj-shell:has(.launch-lib--keyboard-open)::after {
 .launch-rule__count > .body { flex: 1 1 180px; }
 :root[data-orientation='landscape'] .launch-head__title { font-size: var(--fs-md); }
 :root[data-orientation='landscape'] .launch-import__sumtitle { font-size: var(--fs-md); }
+/* Columns have a fixed height in landscape: keep every row at its content height (never squeeze a 72 dp
+   choice or a card below its text at 200 % font scale); the column scrolls instead. */
+:root[data-orientation='landscape'] .launch-open__grid > *, :root[data-orientation='landscape'] .launch-import__grid > * { grid-auto-rows: max-content; }
+.launch-choice, .launch-item__main, .launch-kbdrow { height: auto; }

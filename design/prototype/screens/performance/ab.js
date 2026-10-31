@@ -323,9 +323,9 @@ export function deckBlock(d, { lock = false, remaining = true, extra = null } = 
       h('span', { class: 'performance-id__meta' }, t ? [
         h('span', { class: 'numeral', text: fmt.bpm(bpm) }),
         h('span', { class: 'numeral performance-id__key', text: t.key }),
+        h('span', { class: `performance-id__state performance-id__state--${d.interrupted ? 'interrupted' : d.state}` }, [icon(d.interrupted ? 'route-lost' : d.state === 'playing' ? 'play' : d.state === 'missing' ? 'missing' : 'pause', { size: 12 })]),
         h('span', { class: 'numeral', text: remaining ? fmt.time(d.remainingSec, { remaining: true }) : fmt.time(d.positionSec) }),
-        h('span', { class: `label performance-id__state performance-id__state--${d.state}`, text: [stateWord(d), ...flags, lock ? 'Seek lock' : null].filter(Boolean).join(' · ') }),
-      ] : [h('span', { class: 'label performance-id__state', text: d.state === 'loading' ? 'Loading · not acknowledged' : 'Empty · load from Library' })]),
+      ] : [h('span', { class: 'label performance-id__state', text: d.state === 'loading' ? 'Loading · not acknowledged' : 'Empty · use Library' })]),
     ]),
     extra,
   ]);
@@ -399,7 +399,7 @@ function focusArea(v, d) {
       toggle({ label: 'Slip', name: `Slip, deck ${L}`, pressed: d.slip, deck: L, fr: ['FR-019'], iconName: 'slip', disabled: !loaded, reason: 'no track' }),
       toggle({ label: `Q ${d.quantize || '1/4'}`, name: `Quantize ${d.quantize || '1/4'} beat, deck ${L}`, pressed: true, deck: L, fr: ['FR-017'], iconName: 'quantize' }),
     ]),
-    phaseFor(v, d),
+    phaseLine(v, d),
   ]);
   area.appendChild(h('div', { class: 'performance-jogrow' }, [wrapC('performance-jogbox', jogFor(v, d, 160)), side]));
 
@@ -464,6 +464,19 @@ function phaseFor(v, d) {
   });
 }
 
+// One-line leader / phase readout for the portrait focus area (FR-016). mdj-beat-phase is ~130 dp
+// tall and does not fit beside the jog in 542 dp; it is used in the landscape band instead.
+function phaseLine(v, d) {
+  if (!d.track || ['loading', 'empty', 'missing'].includes(d.state)) return h('p', { class: 'performance-phase label', text: 'Phase: no track' });
+  const other = v.s.decks[d.letter === v.pair[0] ? v.pair[1] : v.pair[0]];
+  const leader = d.sync && other?.state === 'playing' ? other.letter : null;
+  const beat = Math.floor((d.positionSec * d.track.bpm) / 60);
+  const word = d.track.gridConfidence === 'low' ? 'Grid uncertain' : leader ? `Synced to ${leader} · +0.02 beat` : d.sync ? 'Sync on · leads' : 'Free · no sync';
+  return h('p', { class: 'performance-phase label', role: 'img', 'aria-label': `Beat phase, deck ${d.letter}: beat ${(beat % 4) + 1} of 4, bar ${Math.floor(beat / 4) + 1}, ${word}. Fixture.` }, [
+    icon('phase', { size: 12 }), h('span', { class: 'numeral', text: `Bar ${Math.floor(beat / 4) + 1}.${(beat % 4) + 1}` }), h('span', { text: word }), h('span', { class: 'performance-phase__fx', text: 'Fixture' }),
+  ]);
+}
+
 function workspaceLinks(v, items, compact = true) {
   const ws = h('mdj-workspace-switcher', { items, current: 'perform', max: 5, compact: compact ? true : null });
   return wrapC('performance-ws', workspaceNav(v.ctx, ws));
@@ -514,7 +527,7 @@ function deckWorkspace(v, d, side) {
   if (st === 'seek-preview' && L === perfData.seek.deck) {
     ws.appendChild(h('div', { class: 'performance-deck__seek', role: 'group', 'aria-label': 'Seek preview, deck A' }, [
       button({ label: `Seek to ${fmt.time(perfData.seek.targetSec)}`, icon: 'seek', cls: 'btn--primary', fr: ['FR-014'], on: { click: () => v.ctx.setState('seeked') } }),
-      button({ label: 'Cancel preview', fr: ['FR-014'], on: { click: () => v.ctx.setState('playing') } }),
+      button({ label: 'Cancel', fr: ['FR-014'], attrs: { 'aria-label': 'Cancel preview' }, on: { click: () => v.ctx.setState('playing') } }),
     ]));
   } else {
     ws.appendChild(h('div', { class: 'performance-deck__pads', role: 'group', 'aria-label': `Hot cues, deck ${L}, bank 1 of 2` }, padModels(v, d)));
@@ -538,7 +551,7 @@ function miniMixer(v) {
     const L = d.letter;
     return {
       meter: wrapC('performance-mix__meter', h('mdj-meter', { kind: 'channel', deck: L, l: d.levelL, r: d.levelR, orientation: 'vertical', scale: 'compact', label: `Ch ${L}`, clip: d.levelL >= 0.97 ? true : null, state: lost ? 'muted' : d.levelL >= 0.97 ? 'clipping' : d.levelL > 0 ? 'active' : 'idle' })),
-      fader: h('mdj-fader', { deck: L, value: d.fader ?? 1, label: `CH ${L}`, height: 100, scale: 'off', state: lost ? 'disabled' : d.muted ? 'muted' : null }),
+      fader: h('mdj-fader', { deck: L, value: d.fader ?? 1, label: `CH ${L}`, height: 96, scale: 'off', state: lost ? 'disabled' : d.muted ? 'muted' : null }),
       filter: h('mdj-dial', { kind: 'filter', deck: L, label: 'Filter', value: d.filter || 0, size: 40, state: lost ? 'disabled' : null }),
     };
   };

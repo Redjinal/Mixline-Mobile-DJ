@@ -17,7 +17,7 @@
     ] }
   ],
   "smartRules": [
-    { "id": "sr-compatible", "name": "Compatible with A", "rules": [ { "field": "bpm", "op": "between", "value": [120, 128] }, { "field": "key", "op": "compatible", "value": "8A" }, { "field": "availability", "op": "is", "value": "ready" } ], "resultIds": ["drift", "aurora", "copper", "glasswork", "north", "longtitle"] }
+    { "id": "sr-compatible", "name": "Compatible with A", "rules": [ { "field": "bpm", "op": "between", "value": [120, 128] }, { "field": "key", "op": "compatible", "value": "8A" }, { "field": "availability", "op": "is", "value": "ready" } ], "resultIds": ["drift", "aurora", "copper", "tide"] }
   ],
   "history": [
     { "trackId": "drift", "playedAt": "2026-10-24T20:12:00", "deck": "A", "sessionId": "sess-1" },

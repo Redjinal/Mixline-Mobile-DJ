@@ -132,10 +132,11 @@
 :root[data-orientation='landscape'] .system-plugins__row { min-height: 48px; padding-top: 2px; padding-bottom: 2px; }
 :root[data-fontscale='200'][data-orientation='landscape'] .system-plugins .system-scroll { overflow: auto; grid-template-rows: auto auto; }
 :root[data-fontscale='200'][data-orientation='landscape'] .system-plugins__cols, :root[data-fontscale='200'][data-orientation='landscape'] .system-plugins__col { height: auto; overflow: visible; }
-.system-plugins__params { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: var(--space-2); justify-items: center; padding: var(--space-2) 0; }
+.system-plugins__params { display: grid; grid-template-columns: repeat(auto-fit, minmax(76px, 1fr)); gap: var(--space-2); justify-items: center; padding: var(--space-2) 0; }
 .system-plugins__param { display: grid; justify-items: center; }
-.system-plugins__presets { display: grid; gap: 6px; padding-top: var(--space-2); border-top: 1px solid var(--line); }
-.system-plugins__preset { justify-content: flex-start; width: 100%; }
+.system-plugins__presets { display: flex; flex-wrap: wrap; gap: 6px; padding-top: var(--space-2); border-top: 1px solid var(--line); }
+.system-plugins__preset { flex: 1 1 auto; }
+.system-plugins__presets > p { flex: 1 1 100%; }
 .system-plugins__preset.is-current { border: 2px solid var(--ink); box-shadow: inset 4px 0 0 var(--brass); }
 .system-plugins__sheet-note { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 
@@ -237,3 +238,11 @@
 .system-recovery__alts { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .system-recovery__alt { width: 100%; justify-content: flex-start; text-align: left; }
 .system-recovery__alt .btn-label { overflow-wrap: anywhere; }
+
+/* Landscape: the save bar is one row (status beside the actions) so the settings list keeps its height.
+   Placement only; the bar's own styles stay in components/families/data.css. */
+:root[data-orientation='landscape'] .system-settings__foot .save-bar { grid-template-columns: minmax(0, 1fr) auto; align-items: center; padding: 4px 8px; }
+:root[data-orientation='landscape'] .system-settings__foot .save-bar__row { flex-wrap: nowrap; }
+:root[data-orientation='landscape'] .system-settings__foot .save-bar__spacer { display: none; }
+:root[data-fontscale='200'][data-orientation='landscape'] .system-settings__foot .save-bar { grid-template-columns: minmax(0, 1fr); }
+:root[data-fontscale='200'][data-orientation='landscape'] .system-settings__foot .save-bar__row { flex-wrap: wrap; }

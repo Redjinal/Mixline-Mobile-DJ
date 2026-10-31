@@ -33,7 +33,7 @@ try {
           await renderScreen(page, { ...source, o: orientation });
           const device = page.locator('#device');
           let control = device.getByRole('button', { name: def.via.control, exact: true });
-          for (const role of ['link', 'tab', 'checkbox', 'switch', 'radio']) control = control.or(device.getByRole(role, { name: def.via.control, exact: true }));
+          for (const role of ['link', 'tab', 'checkbox', 'switch', 'radio', 'option']) control = control.or(device.getByRole(role, { name: def.via.control, exact: true }));
           if (await control.count() !== 1) throw new Error(`Expected one named control, found ${await control.count()}`);
           await control.click({ timeout: 4000 });
           await page.waitForFunction(({ id, state }) => window.mdj.current?.id === id && window.mdj.current?.state === state, { id: sc.id, state }, { timeout: 3000 });

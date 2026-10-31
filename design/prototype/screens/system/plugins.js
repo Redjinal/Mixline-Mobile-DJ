@@ -72,7 +72,7 @@ register({
         h('h1', { class: 'title system-plugins__title', text: 'Plugin rack' }),
         h('p', { class: 'label', text: `${SYS.plugins.chainName} · ${SYS.plugins.slots} slots` }),
       ]),
-      h('p', { class: 'system-plugins__qualified body' }, [icon('clock', { size: 14 }), h('span', { text: ctx.orientation === 'landscape' ? 'Loads at a qualified time — never during a transition.' : SYS.plugins.qualifiedNote })]),
+      h('p', { class: 'system-plugins__qualified body' }, [icon('clock', { size: 14 }), h('span', { text: 'Loads at a qualified time — never during a transition.' })]),
       h('div', { class: 'system-plugins__legend', role: 'list', 'aria-label': 'Isolation models' }, Object.entries(FX.isolationModels).map(([k, m]) =>
         h('span', { class: `system-plugins__iso system-plugins__iso--${k} label`, role: 'listitem', title: m.detail }, [icon(k === 'process' ? 'lock' : 'unlock', { size: 12 }), h('span', { text: m.label })]))),
     ]);
@@ -99,6 +99,7 @@ register({
         h('span', { class: 'body muted', text: `${range} empty${plan.chain.length ? '' : ' — choose a compatible plugin from the list'}. Audio passes through unchanged.` }),
       ]));
     }
+    chain.appendChild(h('p', { class: 'body muted system-plugins__chain-note', text: SYS.plugins.qualifiedNote }));
 
     // ---- catalogue + detail ----
     const cat = h('section', { class: 'system-plugins__catalogue', 'aria-label': 'Plugins on this device' });
