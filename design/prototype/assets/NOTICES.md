@@ -1,6 +1,6 @@
 # Notices for `design/prototype/assets/icons.svg`
 
-This file records the provenance and licences of every symbol in the prototype icon sprite (asset work orders AS-04 "general icons" and AS-05 "DJ symbols" in `docs/planning/v1_0/sources/08_Asset_Creation_and_Sourcing.md`). It covers the sprite only; fonts (Barlow, IBM Plex Mono) are loaded by `index.html` from Google Fonts and are not packaged here.
+This file records the provenance and licences of every symbol in the prototype icon sprite (asset work orders AS-04 "general icons" and AS-05 "DJ symbols" in `docs/planning/v1_0/sources/08_Asset_Creation_and_Sourcing.md`). The sprite notices appear below. Barlow and IBM Plex Mono are packaged locally under `fonts/` so the prototype does not require an external font service.
 
 Status: **implemented in the design prototype, proposed as production assets**. The DJ-comprehension review that AS-05 requires and the native vector conversion that AS-04 requires have not been done. Nothing here is a claim that the icons have been accepted for release.
 
@@ -143,3 +143,7 @@ SOFTWARE.
 - Add a symbol on its own line inside one of the `<!-- group: … -->` sections of `icons.svg`; set `data-source` and, for Lucide, `data-src`. Update the table or the id list above in the same change.
 - When upgrading Lucide, record the new version and checksums here and re-copy every `data-source="lucide"` symbol from the new package rather than editing paths by hand.
 - Keep ids stable: components reference them by name, and `mdj-marker.js` exposes `iconId(preferred, fallback)` for ids that may not exist yet.
+
+## 5. Local fonts (AS-02 / AS-03)
+
+Unmodified Barlow Regular/Medium/SemiBold/Bold and IBM Plex Mono Regular/Medium/SemiBold TTF files were retrieved from the Google Fonts repository on 31 October 2026. Exact source URLs, byte counts and SHA-256 hashes are recorded in `fonts/provenance.json`. Their complete SIL Open Font License 1.1 notices are retained as `fonts/Barlow-OFL.txt` and `fonts/IBMPlexMono-OFL.txt`. No font was subsetted or renamed. System sans-serif/monospace remain fallbacks. These files are acquired for the prototype; native typography and device acceptance remain unverified.

@@ -152,6 +152,31 @@ async function main() {
         const before = errors.length;
         await renderScreen(page, { screen: sc.id, state, o, theme, fontscale: args.fontscale || '100', tier: args.tier || 'balanced', hitbounds: args.hitbounds || 'off' });
         const m = await page.evaluate(pageAudit);
+        // Optional full vertical pass: controls below the initial viewport must also meet the contract.
+        if (args.scroll === 'all') {
+          const positions = await page.evaluate(() => {
+            const el = document.querySelector('.shell__content') || document.querySelector('#outlet > .screen-root');
+            if (!el) return [];
+            const max = el.scrollHeight - el.clientHeight;
+            const step = Math.max(1, el.clientHeight * 0.85);
+            const positions = [];
+            for (let y = step; y < max; y += step) positions.push(y);
+            if (max > 0) positions.push(max);
+            return positions;
+          });
+          for (const y of positions) {
+            await page.evaluate(y => {
+              const el = document.querySelector('.shell__content') || document.querySelector('#outlet > .screen-root');
+              if (el) el.scrollTop = y;
+            }, y);
+            const extra = await page.evaluate(pageAudit);
+            for (const field of ['small', 'overlaps', 'missingHit', 'contrast', 'fixtureGaps', 'frs']) {
+              const merged = [...m[field], ...extra[field]];
+              m[field] = [...new Map(merged.map(item => [JSON.stringify(item), item])).values()];
+            }
+            m.overflowX ||= extra.overflowX;
+          }
+        }
         const unknownFr = [...m.frs, ...sc.fr].filter((id) => !FR_IDS.has(id));
         results.push({ screen: sc.id, family: sc.family, state: state || sc.states[Object.keys(sc.states)[0]] && Object.keys(sc.states)[0], orientation: o, theme, ...m, unknownFr, consoleErrors: errors.slice(before) });
         const issues = m.small.length + m.overlaps.length + m.missingHit.length + m.contrast.length + m.fixtureGaps.length + unknownFr.length + errors.slice(before).length + (m.overflowX ? 1 : 0);

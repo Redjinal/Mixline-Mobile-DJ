@@ -73,9 +73,17 @@ function render() {
   panel.appendChild(simple('insets', 'Inset guides'));
   panel.appendChild(simple('frame', 'Device frame'));
 
-  const link = location.href;
+  const link = new URL(location.href);
+  const [path, query = ''] = link.hash.slice(1).split('?');
+  const params = new URLSearchParams(query);
+  for (const [key, value] of Object.entries(st)) params.set(key === 'orientation' ? 'o' : key, value);
+  link.hash = `${path}?${params}`;
   panel.appendChild(h('div', { class: 'sw__foot' }, [
-    h('button', { type: 'button', class: 'btn', dataset: { hit: '48' }, on: { click: () => { try { navigator.clipboard.writeText(link); } catch { /* ignore */ } } } }, ['Copy link to this state']),
+    h('button', { type: 'button', class: 'btn', dataset: { hit: '48' }, on: { click: async (event) => {
+      const button = event.currentTarget;
+      try { await navigator.clipboard.writeText(String(link)); button.textContent = 'Link copied'; }
+      catch { button.textContent = 'Copy unavailable — use the address bar'; }
+    } } }, ['Copy link to this state']),
     h('p', { class: 'body muted sw__note', text: 'Prototype only. 1 CSS px = 1 dp in a phone browser. Viewport sizes are assumptions until the S26 Ultra is measured.' }),
   ]));
 

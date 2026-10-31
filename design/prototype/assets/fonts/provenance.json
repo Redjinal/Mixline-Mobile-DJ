@@ -1,0 +1,74 @@
+[
+  {
+    "file": "Barlow-Regular.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/barlow/Barlow-Regular.ttf",
+    "sha256": "95aa02c7c43096e0dd44d787ba6216864a67157e402adab59b35572e0c1577ea",
+    "bytes": 104068,
+    "retrieved": "2026-10-31",
+    "modified": false
+  },
+  {
+    "file": "Barlow-Medium.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/barlow/Barlow-Medium.ttf",
+    "sha256": "f8906f762cb73dca441da034bc363b2d8e2e68bc10d5c05e58717646c20cc4b4",
+    "bytes": 103536,
+    "retrieved": "2026-10-31",
+    "modified": false
+  },
+  {
+    "file": "Barlow-SemiBold.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/barlow/Barlow-SemiBold.ttf",
+    "sha256": "86577cb32f8abe3673db53ca0f4221e6856751a4f6730c867e00f720f8bb1fc5",
+    "bytes": 108348,
+    "retrieved": "2026-10-31",
+    "modified": false
+  },
+  {
+    "file": "Barlow-Bold.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/barlow/Barlow-Bold.ttf",
+    "sha256": "84e6a4d61e7c3e21f3c50ea6a4f7e5303a3467864c038be6ea3759bab8d547f9",
+    "bytes": 108220,
+    "retrieved": "2026-10-31",
+    "modified": false
+  },
+  {
+    "file": "Barlow-OFL.txt",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/barlow/OFL.txt",
+    "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+    "bytes": 4377,
+    "retrieved": "2026-10-31",
+    "modified": false
+  },
+  {
+    "file": "IBMPlexMono-Regular.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexmono/IBMPlexMono-Regular.ttf",
+    "sha256": "6a3412f058c7d8dfd9170c41e85ade48e5156ecb89356110ca57a0a27734af46",
+    "bytes": 135580,
+    "retrieved": "2026-10-31",
+    "modified": false
+  },
+  {
+    "file": "IBMPlexMono-Medium.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexmono/IBMPlexMono-Medium.ttf",
+    "sha256": "a9b4c49bb299e05b5f6c481e7fb5e78943d2793249a0c8874ab574a2d1ea6755",
+    "bytes": 136704,
+    "retrieved": "2026-10-31",
+    "modified": false
+  },
+  {
+    "file": "IBMPlexMono-SemiBold.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexmono/IBMPlexMono-SemiBold.ttf",
+    "sha256": "d3c38e55c78f5b0f28009fddba4834ec503278936a5986032424c9bd2d23aa46",
+    "bytes": 140216,
+    "retrieved": "2026-10-31",
+    "modified": false
+  },
+  {
+    "file": "IBMPlexMono-OFL.txt",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexmono/OFL.txt",
+    "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+    "bytes": 4456,
+    "retrieved": "2026-10-31",
+    "modified": false
+  }
+]

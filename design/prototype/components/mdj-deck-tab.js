@@ -26,7 +26,6 @@ export class MdjDeckTab extends MdjElement {
     const level = Math.min(1, Math.max(0, this.num('level', 0)));
     const compact = this.bool('compact');
     this.className = `deck-tab deck-${deck.toLowerCase()} deck-tab--${state} ${focused ? 'deck-tab--focused' : ''} ${compact ? 'deck-tab--compact' : ''}`.trim();
-    this.removeAttribute('title');
     const name = `Deck ${deck}: ${title || 'empty'}, ${STATE_TEXT[state] || state}${focused ? ', in focus' : ''}`;
     const btn = h('button', {
       type: 'button', role: 'tab', 'aria-selected': String(focused), 'aria-label': name, class: 'deck-tab__btn', dataset: { hit: '56' },
