@@ -91,21 +91,17 @@ function progressRow(j, extra = {}) {
 function mount(ctx, root) {
   const [focusId, variant] = FOCUS[ctx.state] || FOCUS.active;
   const live = h('p', { class: 'sources-sr', role: 'status', 'aria-live': 'polite' });
-  const all = LIST_ORDER.filter((id) => id !== 'collection').map((id) => job(id));
+  const all = LIST_ORDER.filter((id) => id !== 'collection').map((id) => job(id, id === focusId ? variant : 'active'));
   const inProgress = all.filter((j) => !['COMPLETED', 'CANCELLED', 'FAILED', 'BLOCKED'].includes(j.jobState)).length;
   const attention = all.filter((j) => ['FAILED', 'BLOCKED'].includes(j.jobState)).length;
-  const summary = h('p', { class: 'sources-qsum', role: 'status' }, [
-    h('span', { class: 'flag label tone-info', text: `${inProgress} in progress or waiting` }),
-    h('span', { class: 'flag label tone-critical', text: `${attention} need attention` }),
-    h('span', { class: 'flag label tone-neutral', text: '1 playlist' }),
-  ]);
+  const summary = `${inProgress} in progress or waiting · ${attention} need attention · 1 playlist`;
   const head = sourcesHead(ctx, { title: 'Download queue', step: 'queue', back: () => ctx.navigate('sources/add', { state: 'idle' }), backName: 'Back to Add music' });
 
   const focus = focusId === 'collection' ? collectionCard(ctx, live) : focusCard(ctx, job(focusId, variant), live);
-  const list = jobList(ctx, focusId, live);
+  const list = (summary) => jobList(ctx, focusId, summary);
   root.replaceChildren(head, h('div', { class: 'sources-body sources-queue__body' }, [
     h('div', { class: 'sources-col sources-col--main' }, [focus]),
-    h('div', { class: 'sources-col sources-col--side' }, [summary, ...list]),
+    h('div', { class: 'sources-col sources-col--side' }, list(summary)),
   ]), live);
 
   // List rows: component buttons stand in for the worker with SENT until acknowledged.
@@ -244,7 +240,7 @@ function collectionCard(ctx, live) {
 }
 
 // ---------- every other job + state reference ----------
-function jobList(ctx, focusId) {
+function jobList(ctx, focusId, summary) {
   const ids = LIST_ORDER.filter((id) => id !== focusId);
   const rows = ids.map((id) => {
     if (id === 'collection') {
@@ -252,7 +248,7 @@ function jobList(ctx, focusId) {
       return h('li', { class: 'sources-job sources-job--parent raised' }, [
         h('div', { class: 'sources-job__line' }, [h('span', { class: 'title sources-job__t', text: col.name }), h('span', { class: 'flag label tone-warning', text: 'Playlist · partly completed' })]),
         h('p', { class: 'sources-hint numeral', text: col.summary }),
-        button({ label: `Details for ${col.name}`, icon: 'chevron-right', cls: 'btn--ghost sources-job__details', fr: ['FR-049'], on: { click: () => ctx.navigate('sources/queue', { state: 'collection-partial' }) } }),
+        button({ label: 'Details', icon: 'chevron-right', cls: 'btn--ghost sources-job__details', fr: ['FR-049'], attrs: { 'aria-label': `Details for ${col.name}` }, on: { click: () => ctx.navigate('sources/queue', { state: 'collection-partial' }) } }),
       ]);
     }
     const j = job(id);
@@ -262,7 +258,7 @@ function jobList(ctx, focusId) {
       h('div', { class: 'sources-job__line' }, [
         stateTag(j.jobState, TONE[j.jobState] || 'info'),
         h('span', { class: 'sources-hint sources-job__plain', text: plain(j.jobState) }),
-        st ? button({ label: `Details for ${j.title}`, icon: 'chevron-right', cls: 'btn--ghost sources-job__details', fr: ['FR-049'], on: { click: () => ctx.navigate('sources/queue', { state: st }) } }) : null,
+        st ? button({ label: 'Details', icon: 'chevron-right', cls: 'btn--ghost sources-job__details', fr: ['FR-049'], attrs: { 'aria-label': `Details for ${j.title}` }, on: { click: () => ctx.navigate('sources/queue', { state: st }) } }) : null,
       ]),
       h('p', { class: 'sources-hint sources-job__out', role: 'status' }),
     ]);
@@ -272,7 +268,7 @@ function jobList(ctx, focusId) {
     h('dl', { class: 'sources-ref__list' }, AQ.stateReference.map((r) => h('div', { class: 'sources-ref__row' }, [h('dt', { class: 'sources-mono', text: r.id }), h('dd', { class: 'sources-hint', text: r.text })]))),
   ]);
   return [
-    h('mdj-section-header', { title: 'All downloads', count: String(ids.length), note: 'In request order', level: '2' }),
+    h('mdj-section-header', { title: 'All downloads', count: String(ids.length), note: `In request order · ${summary}`, level: '2' }),
     h('ul', { class: 'sources-jobs' }, rows),
     ref,
   ];
