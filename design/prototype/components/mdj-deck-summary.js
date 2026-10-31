@@ -90,7 +90,7 @@ export class MdjDeckSummary extends MdjElement {
         h('span', { class: 'deck-summary__big numeral', text: hasTrack ? track.key : '—' }),
         hasTrack && size === 'full' ? h('span', { class: 'deck-summary__sub numeral', text: keylock ? 'locked' : pitch !== 0 ? 'shifts with pitch' : 'unlocked' }) : null,
       ]),
-      h('mdj-time-display', { deck, elapsed: hasTrack ? position : null, remaining: hasTrack ? remaining : null, mode: 'elapsed', secondary: size === 'full' ? true : null, state: hasTrack ? 'idle' : 'unknown' }),
+      h('mdj-time-display', { deck, elapsed: hasTrack ? position : null, remaining: hasTrack ? remaining : null, mode: 'elapsed', size: size === 'compact' ? 'sm' : 'md', secondary: size === 'full' ? true : null, state: hasTrack ? 'idle' : 'unknown' }),
     ]);
 
     // flags
@@ -126,8 +126,8 @@ export class MdjDeckSummary extends MdjElement {
       if (aText) parts.push(aText.replace(/ · /g, ', '));
     }
     this.setAttribute('role', 'region');
-    this.setAttribute('aria-label', parts.join(': ').replace(': ', ': ').replace(/: (.*)/, (_, rest) => `: ${rest.replace(/: /g, ', ')}`));
-    this.replaceChildren(head, readouts, flags, analysisEl);
+    this.setAttribute('aria-label', `${parts[0]}: ${parts.slice(1).join(', ')}`);
+    this.replaceChildren(...[head, readouts, flags, analysisEl].filter(Boolean));
   }
 }
 define(MdjDeckSummary);

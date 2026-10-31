@@ -7,5 +7,9 @@
 .gallery__state { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: var(--space-2); align-items: center; padding: var(--space-2); border: 1px dashed var(--line); border-radius: var(--radius-control); position: relative; min-height: 64px; }
 .gallery__state-name { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--ink-2); }
 .gallery__sample { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; min-height: 48px; max-width: 100%; overflow-x: auto; }
+/* Portrait: the 96 px name column would leave ~230 px for samples, so full-width compositions
+   (waveform, deck summary, ParDay card) stack under their state name and get the real 380 dp. */
+:root[data-orientation='portrait'] .gallery__state { grid-template-columns: minmax(0, 1fr); align-items: start; }
+:root[data-orientation='portrait'] .gallery__state-name { order: -1; }
 .shell-demo { padding: var(--space-4) var(--gutter); display: grid; gap: var(--space-3); }
 .shell-demo__panel { padding: var(--space-3); display: grid; gap: var(--space-2); }

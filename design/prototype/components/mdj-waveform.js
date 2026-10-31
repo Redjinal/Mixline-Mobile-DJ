@@ -1,5 +1,5 @@
 // <mdj-waveform track="aurora" deck="A" mode="overview|detailed" position="92" zoom="8" height="64"
-//               seek-lock seek-target="161" markers="cues loops phrases grid"
+//               seek-lock seek-target="161" markers="cues loops phrases grid" no-head
 //               state="empty|loading|idle|playing|seek-preview|held-scratch|uncertain|missing">
 //
 // Engine binding: the waveform READS the engine snapshot (deck generation, position in seconds, playing
@@ -26,7 +26,11 @@
 // engine-aligned playhead fixed at the centre, beat lines with downbeat emphasis and bar numerals,
 // dashed lines plus warning hatch and an "Uncertain grid" tag after uncertainAfterSec. Cue markers
 // (<mdj-marker>: shape + number + colour), loop marker, phrase labels, bar numerals, the seek caption
-// and the state chips are DOM overlays on opaque backing so text scales with the font scale.
+// and the state chips are DOM overlays on opaque backing so text scales with the font scale. Overlay
+// glyphs that would collide are nudged sideways (their marker lines stay at the true position) or
+// hidden when the nudge would mislead. Peaks are normalised per track so the loudest bin fills the
+// lane (display gain only; the fixture arrays are not changed). `no-head` hides the header row for
+// slim dock lanes (the lane keeps its accessible name).
 // Pending vs acknowledged: the playhead and the played / unplayed split follow `position`, i.e. the
 // ACKNOWLEDGED engine position; a seek preview is a dashed deck-coloured target line with a "Seek to
 // 2:41" caption and never moves the playhead; a held scratch prints HELD · SCRATCH. Nothing animates
@@ -52,7 +56,7 @@ export class MdjWaveform extends MdjElement {
   static fr = ['FR-009', 'FR-014', 'FR-007'];
   static hit = 48;
   static fixture = true;
-  static observed = ['track', 'deck', 'mode', 'position', 'zoom', 'height', 'seek-lock', 'seek-target', 'markers'];
+  static observed = ['track', 'deck', 'mode', 'position', 'zoom', 'height', 'seek-lock', 'seek-target', 'markers', 'no-head'];
   static samples = {
     default: { track: 'aurora', deck: 'A', position: 92, mode: 'overview', style: 'width:100%' },
     variants: [{ mode: 'overview' }, { mode: 'detailed', zoom: 8 }],
@@ -113,7 +117,7 @@ export class MdjWaveform extends MdjElement {
     this._model = m;
     this._preview = null; this._offset = 0; this._pinchZoom = null; this._drag = null; this._pinch = null; this._pointers.clear();
     const deckClass = m.deck ? `deck-${m.deck.toLowerCase()}` : 'deck-none';
-    this.className = `waveform waveform--${m.mode} waveform--${m.state} ${deckClass}${m.seekLock ? ' waveform--seek-lock' : ''}`;
+    this.className = `waveform waveform--${m.mode} waveform--${m.state} ${deckClass}${m.seekLock ? ' waveform--seek-lock' : ''}${this.bool('no-head') ? ' waveform--no-head' : ''}`;
     this.setAttribute('fixture', `wave:${m.id || 'none'}`);
     const dataOk = !['empty', 'loading'].includes(m.state) && m.wave;
 
@@ -201,7 +205,7 @@ export class MdjWaveform extends MdjElement {
         overlay.appendChild(h('span', { class: `waveform__bar numeral${m.uncertainAfter != null && sec >= m.uncertainAfter ? ' waveform__bar--uncertain' : ''}`, dataset: { sec: String(sec) }, text: String(i + 1) }));
       });
     }
-    for (const [a, b] of m.silence) overlay.appendChild(h('span', { class: 'waveform__silence label', dataset: { sec: String(a), until: String(b) }, text: 'Silence' }));
+    for (const [a, b] of m.silence) overlay.appendChild(h('span', { class: 'waveform__silence', dataset: { sec: String(a), until: String(b) } }, [h('span', { class: 'waveform__silence-text label', text: 'Silence' })]));
     overlay.appendChild(h('span', { class: 'waveform__seek ink-backing', dataset: { sec: m.seekTarget == null ? '' : String(m.seekTarget) }, hidden: m.seekTarget == null ? true : null }, [
       icon(iconId('seek', 'marker'), { size: 12 }), h('span', { class: 'waveform__seek-text numeral', text: m.seekTarget == null ? '' : `Seek to ${fmt.time(m.seekTarget)}` }),
     ]));
@@ -219,12 +223,43 @@ export class MdjWaveform extends MdjElement {
       el.hidden = !visible;
       if (!visible) continue;
       el.style.left = `${(x * 100).toFixed(3)}%`;
-      if (el.classList.contains('waveform__seek')) el.classList.toggle('waveform__seek--flip', x > 0.62);
+      if (el.classList.contains('waveform__seek')) {
+        // Caption placement is measured: right of the target line, else left of it, else centred in the lane.
+        const w = el.offsetWidth, px = x * W;
+        const fitsRight = px + 7 + w <= W - 2, fitsLeft = px - 7 - w >= 2;
+        el.classList.toggle('waveform__seek--flip', !fitsRight && fitsLeft);
+        if (!fitsRight && !fitsLeft) el.style.left = '50%';
+        el.classList.toggle('waveform__seek--centre', !fitsRight && !fitsLeft);
+      }
       if (el.classList.contains('waveform__silence')) {
         const until = parseFloat(el.dataset.until);
         const w = ((until - sec) / span) * W;
+        el.style.width = `${Math.max(0, w).toFixed(2)}px`;
         el.hidden = w < 34;
       }
+    }
+    // Collision pass per band: top = cue glyphs, bottom = loop glyph, phrase labels, bar numerals.
+    this.nudgeBand(overlay, '.waveform__cue', W, (el) => el.querySelector('.marker'));
+    this.nudgeBand(overlay, '.waveform__loopmark, .waveform__phrase, .waveform__bar', W, (el) => el);
+  }
+
+  // Sort a band's visible items by position; push a glyph right when it would overlap the previous
+  // one, and hide it when the push exceeds 40 px (a glyph far from its position would mislead).
+  nudgeBand(overlay, selector, W, glyphOf) {
+    const items = [...overlay.querySelectorAll(selector)].filter((el) => !el.hidden);
+    items.sort((a, b) => parseFloat(a.style.left) - parseFloat(b.style.left));
+    let edge = 1; // glyphs never clip at the lane edges: the first may be pushed right, the last pulled left
+    for (const el of items) {
+      const glyph = glyphOf(el); if (!glyph) continue;
+      glyph.style.setProperty('--nudge', '0px');
+      const x = (parseFloat(el.style.left) / 100) * W;
+      const w = glyph.offsetWidth || 16;
+      const start = el.classList.contains('waveform__cue') ? x - w / 2 : x + 3;
+      let nudge = start < edge ? edge - start : 0;
+      if (start + nudge + w > W - 1) nudge = W - 1 - w - start;
+      if (nudge > 40 || start + nudge < edge - 0.5) { el.hidden = true; continue; }
+      glyph.style.setProperty('--nudge', `${nudge.toFixed(1)}px`);
+      edge = start + nudge + w + 2;
     }
   }
 
@@ -277,7 +312,11 @@ export class MdjWaveform extends MdjElement {
 
     // envelope columns
     const w = m.wave, bins = w.bins || w.peaks.length;
-    const secPerCol = span / pw, amp = mid - px(2), muted = m.state === 'missing';
+    // Display gain: the loudest fixture bin reaches ~92 % of the lane; a quiet track is not drawn as a
+    // hairline. This is a view transform, not a measurement of anything.
+    let maxPeak = 0; for (let i = 0; i < bins; i++) if (w.peaks[i] > maxPeak) maxPeak = w.peaks[i];
+    const gain = clamp(0.92 / (maxPeak || 1), 1, 3.5);
+    const secPerCol = span / pw, amp = (mid - px(2)) * gain, muted = m.state === 'missing';
     const sample = (arr, ba, bb) => {
       if (bb - ba >= 1) { let v = 0; for (let i = Math.max(0, Math.floor(ba)); i < Math.min(bins, Math.ceil(bb)); i++) if (arr[i] > v) v = arr[i]; return v; }
       const f = clamp((ba + bb) / 2, 0, bins - 1), i = Math.floor(f), t = f - i;
@@ -344,7 +383,7 @@ export class MdjWaveform extends MdjElement {
       for (; i < beats.length && beats[i] <= t1; i++) {
         const b = beats[i], x = Math.round(xOf(b)), isDown = down.has(Math.round(b * 1000));
         const unc = m.uncertainAfter != null && b >= m.uncertainAfter;
-        ctx.fillStyle = isDown ? C.ink : C.line; ctx.globalAlpha = isDown ? (unc ? 0.5 : 0.8) : (unc ? 0.45 : 0.9);
+        ctx.fillStyle = isDown ? C.ink2 : C.ink3; ctx.globalAlpha = isDown ? (unc ? 0.45 : 0.75) : (unc ? 0.3 : 0.45);
         const wdt = px(isDown ? 1.5 : 1);
         if (unc) for (let y = 0; y < ph; y += px(5)) ctx.fillRect(x, y, wdt, px(2.5));
         else ctx.fillRect(x, 0, wdt, ph);

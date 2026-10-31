@@ -31,7 +31,8 @@ register({
         const row = h('div', { class: 'gallery__state' }, [h('span', { class: 'gallery__state-name', text: state })]);
         const sample = h('div', { class: 'gallery__sample' });
         for (const variant of variants) {
-          const attrs = { ...(samples.default || {}), ...variant, ...(samples[state] || {}), state };
+          const stateSample = state === 'default' ? {} : (samples[state] || {});
+          const attrs = { ...(samples.default || {}), ...variant, ...stateSample, state };
           const el = document.createElement(cls.tag);
           for (const [k, v] of Object.entries(attrs)) if (v !== null && v !== undefined && v !== false) el.setAttribute(k, v === true ? '' : String(v));
           sample.appendChild(el);

@@ -60,6 +60,8 @@ static samples = { default: { value: 0, min: -12, max: 12, unit: 'dB' }, variant
 - `state` attribute mirrors to `data-state`; CSS uses `[data-state='pending']`. Pending/acknowledged visuals must differ. Nothing animates to imply a command succeeded.
 - Fixture mark: `static fixture = true` appends `<mdj-fixture-mark>` automatically; keep the host `position: relative` so the mark sits inside it.
 - Events: `this.emit('mdj:<verb>', detail)`; screens listen and change state through `ctx.setState`.
+- Icons: `app/app.css` sizes every `.icon` at `1em`, which overrides the `width`/`height` attributes `icon()` writes. An icon inside a fixed-size disc, rim or chip needs an explicit `width`/`height` in your family CSS, or it grows with the font scale and overflows at 200 %.
+- Family manifests load independently (`components/index.js` imports each `families/<f>.js` with a catch); a module error breaks only that family and is printed on the console, which the smoke run reports.
 
 ## 5. Screens
 

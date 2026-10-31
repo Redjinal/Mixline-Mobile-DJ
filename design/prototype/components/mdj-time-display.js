@@ -1,4 +1,4 @@
-// <mdj-time-display elapsed="92" remaining="280" mode="elapsed|remaining" deck="A" size="md|lg" secondary
+// <mdj-time-display elapsed="92" remaining="280" mode="elapsed|remaining" deck="A" size="sm|md|lg" secondary
 //                   state="idle|unknown">
 //
 // Engine binding: none for the readout — elapsed / remaining come from the engine snapshot's
@@ -31,7 +31,8 @@ export class MdjTimeDisplay extends MdjElement {
   render() {
     const deck = this.attr('deck', '').toUpperCase();
     const mode = this.attr('mode', 'elapsed') === 'remaining' ? 'remaining' : 'elapsed';
-    const size = this.attr('size', 'md') === 'lg' ? 'lg' : 'md';
+    const sizeAttr = this.attr('size', 'md');
+    const size = ['sm', 'md', 'lg'].includes(sizeAttr) ? sizeAttr : 'md';
     const secondary = this.bool('secondary');
     const hasE = this.hasAttribute('elapsed') && Number.isFinite(parseFloat(this.getAttribute('elapsed')));
     const hasR = this.hasAttribute('remaining') && Number.isFinite(parseFloat(this.getAttribute('remaining')));

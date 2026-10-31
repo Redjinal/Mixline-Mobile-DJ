@@ -9,8 +9,10 @@
 // explicit "Reset clip" action (screen), not a tap on the meter. ALWAYS renders a FIXTURE mark.
 // Units / range: l, r, peak are 0..1 of full scale (linear), printed as dBFS with marks at the
 // −12 / −6 / −3 / 0 dBFS equivalents (0.25 / 0.5 / 0.71 / 1.0); gr is limiter gain reduction in dB.
-// `clip` = clipping now (state → clipping); `clip-latched` = a clip happened since the last reset and the
-// latch block at the top of each bar stays filled with the word "latched" in the flags.
+// `clip` = clipping now (state → clipping, CLIP chip); `clip-latched` = a clip happened since the last reset:
+// the latch block at the top of each bar stays filled and the LATCHED chip is printed (never colour alone).
+// Vertical full meters are 72 px wide by default (a screen may set a width); the FIXTURE mark takes a 12 px
+// strip above the latch blocks so it never covers a value.
 // Variants: scale=compact (the persistent dock, unchanged: 8 px bars, no scale text) · scale=full (mixer /
 // master: dB labels at −12 / −6 / −3 / 0, peak-hold line with its dB value, clip latch blocks) ·
 // kind=cue (the headphone / PFL bus: headphones icon in the label; state=unavailable prints "No cue
@@ -36,9 +38,9 @@ export class MdjMeter extends MdjElement {
     default: { l: 0.6, r: 0.57, peak: 0.71, label: 'Master', scale: 'full', style: 'width:220px' },
     variants: [
       { orientation: 'horizontal' },
-      { orientation: 'vertical', style: 'height:168px' },
-      { orientation: 'vertical', kind: 'channel', deck: 'B', label: 'Ch B', style: 'height:168px' },
-      { orientation: 'vertical', kind: 'cue', label: 'Cue', style: 'height:168px' },
+      { orientation: 'vertical', style: 'height:224px' },
+      { orientation: 'vertical', kind: 'channel', deck: 'B', label: 'Ch B', style: 'height:224px' },
+      { orientation: 'vertical', kind: 'cue', label: 'Cue', style: 'height:224px' },
       { scale: 'compact', orientation: 'horizontal', style: 'width:150px' },
     ],
     idle: { l: 0, r: 0, peak: null },
@@ -69,7 +71,9 @@ export class MdjMeter extends MdjElement {
     const wrap = h('div', { class: 'meter__wrap', role: 'meter', 'aria-label': label, 'aria-valuemin': 0, 'aria-valuemax': 100, 'aria-valuenow': Math.round(Math.max(l, r) * 100), 'aria-valuetext': valuetext });
     if (scale === 'full') {
       const sc = h('div', { class: 'meter__scale numeral', 'aria-hidden': 'true' });
-      for (const [pos, text] of MARKS) sc.appendChild(h('span', { class: `meter__scale-mark${pos >= 1 ? ' meter__scale-mark--zero' : ''}`, style: { [orientation === 'horizontal' ? 'left' : 'bottom']: `${pos * 100}%` }, text }));
+      const track = h('div', { class: 'meter__scale-track' });
+      for (const [pos, text] of MARKS) track.appendChild(h('span', { class: `meter__scale-mark${pos >= 1 ? ' meter__scale-mark--zero' : ''}`, style: { [orientation === 'horizontal' ? 'left' : 'bottom']: `${pos * 100}%` }, text }));
+      sc.appendChild(track);
       wrap.appendChild(sc);
     }
     for (const [ch, val] of [['L', l], ['R', r]]) {
@@ -85,14 +89,15 @@ export class MdjMeter extends MdjElement {
       ]);
       wrap.appendChild(channel);
     }
+    // Flags are words, never colour alone: CLIP = clipping now · LATCHED = a clip since the last reset
+    // (cleared by the Master panel's explicit Reset clip) · LIM = limiter gain reduction · MUTED · No cue route.
     const flags = h('div', { class: 'meter__flags' }, [
       clip ? h('span', { class: 'meter__clip tone-critical label', text: 'CLIP' }) : null,
-      latched && !clip ? h('span', { class: 'meter__clip meter__clip--latched tone-critical label', text: 'CLIP · latched' }) : null,
-      latched && clip ? h('span', { class: 'meter__latched tone-critical label', text: 'latched' }) : null,
+      latched ? h('span', { class: `meter__latched${clip ? '' : ' meter__clip--latched'} tone-critical label`, text: 'LATCHED' }) : null,
       gr != null ? h('span', { class: 'meter__gr tone-warning label', text: `LIM ${gr.toFixed(1)} dB` }) : null,
       state === 'muted' ? h('span', { class: 'meter__muted tone-neutral label', text: 'MUTED' }) : null,
       unavailable ? h('span', { class: 'meter__unavailable tone-warning label', text: 'No cue route' }) : null,
-      scale === 'full' && peak != null && !unavailable ? h('span', { class: 'meter__peakval numeral', text: `peak ${db(peak)} dB` }) : null,
+      scale === 'full' && peak != null && !unavailable ? h('span', { class: 'meter__peakval numeral', text: orientation === 'vertical' ? `peak ${db(peak)}` : `peak ${db(peak)} dB` }) : null,
     ]);
     const labelEl = h('span', { class: 'meter__label label' }, [kind === 'cue' ? icon('headphones', { size: 12 }) : null, h('span', { text: label })]);
     this.replaceChildren(labelEl, wrap, flags);

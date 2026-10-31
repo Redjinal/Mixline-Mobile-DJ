@@ -7,9 +7,13 @@ import './mdj-meter.js';
 import './mdj-deck-tab.js';
 import './mdj-parday-button.js';
 import './mdj-route-chip.js';
-import './families/controls.js';
-import './families/transport-pads.js';
-import './families/waveform.js';
-import './families/data.js';
-import './families/parday.js';
-import './families/routing-av.js';
+
+// Each family loads on its own so one broken or half-written module degrades only that family's
+// components instead of failing the whole import graph (and with it every screen). The failure is
+// still reported loudly on the console, which the smoke run treats as an error.
+export const FAMILIES = ['controls', 'transport-pads', 'waveform', 'data', 'parday', 'routing-av'];
+export const familyLoadErrors = {};
+await Promise.all(FAMILIES.map((f) => import(`./families/${f}.js`).catch((e) => {
+  familyLoadErrors[f] = e;
+  console.error(`component family "${f}" failed to load`, e);
+})));

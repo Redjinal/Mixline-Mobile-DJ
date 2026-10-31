@@ -171,10 +171,11 @@ mdj-fixture-mark[inline] { position: static; }
 .rec--stopped { color: var(--warning); border-color: var(--warning); }
 
 /* Route chip */
-.route-chip__btn { display: flex; align-items: center; gap: 8px; min-height: 48px; width: 100%; padding: 0 8px; border: 0; background: transparent; border-radius: var(--radius-control); text-align: left; cursor: pointer; }
+.route-chip__btn { display: flex; align-items: center; gap: 8px; min-height: 48px; width: 100%; min-width: 0; padding: 0 8px; border: 0; background: transparent; border-radius: var(--radius-control); text-align: left; cursor: pointer; }
 .route-chip__text { display: grid; min-width: 0; }
+.route-chip__btn > * { min-width: 0; }
 .route-chip__name { font-weight: 700; font-size: var(--fs-sm); }
-.route-chip__summary { font-size: 10px; }
+.route-chip__summary { font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .route-chip__summary--alert { color: var(--critical); }
 .route-chip--lost .icon, .route-chip--unsupported .icon { color: var(--critical); }
 .route-chip--compact .route-chip__name { font-size: var(--fs-xs); }

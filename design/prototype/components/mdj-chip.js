@@ -18,6 +18,7 @@
 // Pending vs acknowledged: not applicable — a chip prints acknowledged state only.
 // Cancellation: n/a. Accessible: filter chip name "Key 8A, 6 results"; remove button "Remove filter Key 8A".
 // Colour never carries meaning alone: every tone is paired with an icon and the printed word.
+// Class prefix is `chip-c` (app.css already owns a generic `.chip` for the home page).
 import { MdjElement, define, h, icon } from './base.js';
 
 export const AVAILABILITY = {
@@ -37,8 +38,8 @@ export const CAPABILITY = {
   denied:  { text: 'Denied',  icon: 'x',       tone: 'critical' },
   unknown: { text: 'Unknown — treated as denied', icon: 'warning', tone: 'warning' },
 };
-// Colour tags (cues, crates, tracks). Tokens `--cue-<name>` are requested from the integration lead;
-// until they exist the deck accents and status colours stand in. Never a raw hex.
+// Colour tags (cues, crates, tracks): the `--cue-<name>` tokens, with deck accents / status colours as
+// fallbacks. Never a raw hex.
 export const COLOR_TAG = {
   cyan:   'var(--cue-cyan, var(--deck-a-accent))',
   orange: 'var(--cue-orange, var(--deck-b-accent))',
@@ -69,6 +70,12 @@ export function countText(raw) {
   return { text: String(n), aria: `${n}`, known: true };
 }
 
+// Parse a JSON attribute (arrays of actions / filters / options) safely; invalid or absent → fallback.
+export function parseJsonAttr(raw, fallback = []) {
+  if (raw === null || raw === undefined || raw === '') return fallback;
+  try { const v = JSON.parse(raw); return v ?? fallback; } catch { return fallback; }
+}
+
 export class MdjChip extends MdjElement {
   static tag = 'mdj-chip';
   static states = ['idle', 'selected', 'disabled'];
@@ -89,6 +96,7 @@ export class MdjChip extends MdjElement {
       { kind: 'availability', value: 'pending' },
       { kind: 'availability', value: 'downloaded' },
       { kind: 'availability', value: 'demo' },
+      { kind: 'availability', value: 'duplicate', size: 'sm' },
       { kind: 'filter', label: 'Key 8A', count: 6, removable: true },
       { kind: 'filter', label: 'BPM 120–128', count: '?', removable: true },
       { kind: 'count', label: 'Crates', count: 5 },
@@ -102,7 +110,7 @@ export class MdjChip extends MdjElement {
     const value = this.attr('value', '');
     const label = this.attr('label', '');
     const tone = this.attr('tone', '');
-    const size = this.attr('size', 'md');
+    const size = this.attr('size', 'md') === 'sm' ? 'sm' : 'md';
     const removable = this.bool('removable');
     const state = this.state;
     let def = null, text = label, ic = this.attr('icon', '') || null, count = null, name = label;
@@ -129,18 +137,18 @@ export class MdjChip extends MdjElement {
 
   render() {
     const m = this.model();
-    this.className = `chip chip--${m.kind} chip--${m.size} chip--${m.tone}${m.removable ? ' chip--removable' : ''}`;
+    this.className = `chip-c chip-c--${m.kind} chip-c--${m.size} chip-c--${m.tone}${m.removable ? ' chip-c--removable' : ''}${m.state === 'selected' ? ' chip-c--selected' : ''}`;
     if (m.interactive || m.removable) this.dataset.hit = '48'; else delete this.dataset.hit;
-    const pill = h('span', { class: `chip__pill tone-${m.tone}` }, [
-      m.ic ? icon(m.ic, { size: 14, cls: 'chip__icon' }) : null,
-      m.kind === 'capability' && m.label ? h('span', { class: 'chip__label', text: m.label }) : null,
-      h('span', { class: 'chip__text', text: m.text }),
-      m.count ? h('span', { class: 'chip__count numeral', text: m.count.text, 'aria-hidden': 'true' }) : null,
+    const pill = h('span', { class: `chip-c__pill tone-${m.tone}` }, [
+      m.ic ? icon(m.ic, { size: m.size === 'sm' ? 12 : 14, cls: 'chip-c__icon' }) : null,
+      m.kind === 'capability' && m.label ? h('span', { class: 'chip-c__label', text: m.label }) : null,
+      h('span', { class: 'chip-c__text', text: m.text }),
+      m.count ? h('span', { class: 'chip-c__count numeral', text: m.count.text, 'aria-hidden': 'true' }) : null,
     ]);
     const parts = [];
     if (m.interactive) {
       parts.push(h('button', {
-        type: 'button', class: 'chip__btn', 'aria-pressed': String(m.state === 'selected'), 'aria-label': m.name,
+        type: 'button', class: 'chip-c__btn', 'aria-pressed': String(m.state === 'selected'), 'aria-label': m.name,
         'aria-disabled': m.state === 'disabled' ? 'true' : undefined, dataset: { hit: '48' },
         on: { click: () => { if (m.state !== 'disabled') this.emit('mdj:chip', { kind: m.kind, label: m.label, value: m.value, selected: m.state !== 'selected' }); } },
       }, [pill]));
@@ -151,10 +159,10 @@ export class MdjChip extends MdjElement {
     }
     if (m.removable) {
       parts.push(h('button', {
-        type: 'button', class: 'chip__remove', 'aria-label': `Remove filter ${m.label || m.text}`, dataset: { hit: '48' },
+        type: 'button', class: 'chip-c__remove', 'aria-label': `Remove filter ${m.label || m.text}`, dataset: { hit: '48' },
         'aria-disabled': m.state === 'disabled' ? 'true' : undefined,
         on: { click: (e) => { e.stopPropagation(); if (m.state !== 'disabled') this.emit('mdj:chip-remove', { kind: m.kind, label: m.label, value: m.value }); } },
-      }, [h('span', { class: 'chip__remove-face', 'aria-hidden': 'true' }, [icon('x', { size: 12 })])]));
+      }, [h('span', { class: 'chip-c__remove-face', 'aria-hidden': 'true' }, [icon('x', { size: 12 })])]));
     }
     this.replaceChildren(...parts);
   }
