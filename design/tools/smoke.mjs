@@ -13,7 +13,7 @@ import { spawn } from 'node:child_process';
 // Playwright is resolved through NODE_PATH in the cloud session; ESM import does not see it.
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -23,6 +23,9 @@ const args = parseArgs(process.argv.slice(2));
 const PORT = Number(args.port || 8771);
 const OUT = resolve(ROOT, args.out || 'previews/_smoke');
 const SCALE = Number(args.scale || 2);
+
+// Prefer Playwright's pinned browser; managed workspaces may instead provide system Chromium.
+export const browserOptions = existsSync(chromium.executablePath()) ? {} : existsSync('/usr/bin/chromium') ? { executablePath: '/usr/bin/chromium' } : {};
 
 function parseArgs(list) {
   const out = {};
@@ -39,20 +42,20 @@ function parseArgs(list) {
 export async function startServer(port = PORT) {
   const proc = spawn('python3', [resolve(here, 'serve.py'), String(port)], { stdio: ['ignore', 'pipe', 'inherit'] });
   await new Promise((res, rej) => {
-    const t = setTimeout(() => rej(new Error('server did not start')), 10000);
+    const t = setTimeout(() => { proc.kill(); rej(new Error('server did not start')); }, 10000);
     proc.stdout.on('data', (d) => { if (String(d).includes('prototype at')) { clearTimeout(t); res(); } });
     proc.on('exit', (code) => { clearTimeout(t); rej(new Error(`server exited ${code}`)); });
   });
   return proc;
 }
 
-export function hashFor({ screen, state, o, theme, tier, motion, fontscale, scenario, hitbounds, viewport }) {
+export function hashFor({ screen, state, o, theme = 'daylight', tier = 'balanced', motion = 'reduced', fontscale = '100', scenario = 'set-ready', hitbounds = 'off', viewport = 'default', insets = 'on' }) {
   const q = new URLSearchParams();
   if (state) q.set('state', state);
   q.set('o', o || 'portrait');
   for (const [k, v] of Object.entries({ theme, tier, motion, fontscale, scenario, hitbounds, viewport })) if (v) q.set(k, String(v));
   q.set('frame', 'off');
-  q.set('insets', 'on');
+  q.set('insets', insets);
   return `#/s/${screen}?${q.toString()}`;
 }
 
@@ -87,9 +90,10 @@ export async function shot(page, file) {
 
 async function main() {
   const server = await startServer();
-  const browser = await chromium.launch();
+  let browser;
   let failures = 0;
   try {
+    browser = await chromium.launch(browserOptions);
     const { page, errors } = await openPrototype(browser);
     const screens = await listScreens(page);
     let jobs = [];
@@ -107,7 +111,7 @@ async function main() {
     for (const job of jobs) {
       const before = errors.length;
       await renderScreen(page, job);
-      const name = `${job.screen.replace('/', '--')}${job.state ? `--${job.state}` : ''}--${job.o}${job.theme ? `--${job.theme}` : ''}${job.fontscale ? `--fs${job.fontscale}` : ''}.png`;
+      const name = `${job.screen.replaceAll('/', '--')}${job.state ? `--${job.state}` : ''}--${job.o}--${job.theme || 'daylight'}--${job.tier || 'balanced'}--fs${job.fontscale || '100'}--hit-${job.hitbounds || 'off'}.png`;
       await shot(page, resolve(OUT, name));
       const newErrors = errors.slice(before);
       const missing = await page.$('.missing');
@@ -115,7 +119,7 @@ async function main() {
       else console.log(`ok   ${name}`);
     }
   } finally {
-    await browser.close();
+    await browser?.close();
     server.kill();
   }
   if (failures) { console.log(`${failures} failure(s)`); process.exit(1); }

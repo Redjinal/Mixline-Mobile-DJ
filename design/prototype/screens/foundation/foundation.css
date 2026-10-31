@@ -13,3 +13,6 @@
 :root[data-orientation='portrait'] .gallery__state-name { order: -1; }
 .shell-demo { padding: var(--space-4) var(--gutter); display: grid; gap: var(--space-3); }
 .shell-demo__panel { padding: var(--space-3); display: grid; gap: var(--space-2); }
+
+.gallery__nav { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.gallery__nav [aria-current='page'] { border-color: var(--ink); background: var(--raised); }

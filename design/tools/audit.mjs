@@ -15,7 +15,7 @@ import { createRequire } from 'node:module';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { startServer, openPrototype, renderScreen, listScreens } from './smoke.mjs';
+import { browserOptions, startServer, openPrototype, renderScreen, listScreens } from './smoke.mjs';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
@@ -33,7 +33,7 @@ const FR_IDS = new Set(register.requirements.map((r) => r.id));
 const REQUIRED = JSON.parse(readFileSync(resolve(here, 'required-states.json'), 'utf8'));
 
 // Runs inside the page. Returns measurements for the current render.
-function pageAudit() {
+export function pageAudit() {
   const device = document.getElementById('device');
   const dRect = device.getBoundingClientRect();
   const visible = (el) => {
@@ -141,16 +141,16 @@ function pageAudit() {
 async function main() {
   mkdirSync(resolve(ROOT, 'spec'), { recursive: true });
   const server = await startServer(PORT);
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(browserOptions);
   const results = [];
   try {
     const { page, errors } = await openPrototype(browser, PORT);
-    const screens = (await listScreens(page)).filter((s) => s.family !== 'foundation' && (!FAMILY || s.family === FAMILY));
+    const screens = (await listScreens(page)).filter((s) => (FAMILY === 'foundation' || s.family !== 'foundation') && (!FAMILY || s.family === FAMILY));
     for (const sc of screens) {
       const states = ALL_STATES ? Object.keys(sc.states) : [null];
       for (const theme of THEMES) for (const o of sc.orientations) for (const state of states) {
         const before = errors.length;
-        await renderScreen(page, { screen: sc.id, state, o, theme });
+        await renderScreen(page, { screen: sc.id, state, o, theme, fontscale: args.fontscale || '100', tier: args.tier || 'balanced', hitbounds: args.hitbounds || 'off' });
         const m = await page.evaluate(pageAudit);
         const unknownFr = [...m.frs, ...sc.fr].filter((id) => !FR_IDS.has(id));
         results.push({ screen: sc.id, family: sc.family, state: state || sc.states[Object.keys(sc.states)[0]] && Object.keys(sc.states)[0], orientation: o, theme, ...m, unknownFr, consoleErrors: errors.slice(before) });
@@ -183,10 +183,13 @@ async function main() {
       requiredStates: requiredReport,
       results,
     };
-    writeFileSync(resolve(ROOT, 'spec/audit.json'), JSON.stringify(summary, null, 1));
-    writeFileSync(resolve(ROOT, 'spec/audit.md'), markdown(summary));
+    const output = resolve(ROOT, args.out || 'spec/audit');
+    mkdirSync(dirname(output), { recursive: true });
+    writeFileSync(`${output}.json`, JSON.stringify(summary, null, 1));
+    writeFileSync(`${output}.md`, markdown(summary));
     console.log('\nTotals:', JSON.stringify(summary.totals));
-    console.log('wrote design/spec/audit.json and design/spec/audit.md');
+    console.log(`wrote ${output}.{json,md}`);
+    if (Object.values(summary.totals).some(Boolean) || Object.values(requiredReport).flat().some(r => !r.satisfied)) process.exitCode = 1;
   } finally {
     await browser.close();
     server.kill();
@@ -216,4 +219,4 @@ function markdown(s) {
   return lines.join('\n') + '\n';
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+if (import.meta.url === `file://${process.argv[1]}`) main().catch((e) => { console.error(e); process.exit(1); });

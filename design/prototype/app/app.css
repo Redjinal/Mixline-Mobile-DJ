@@ -47,7 +47,7 @@ button { font: inherit; color: inherit; }
   border-radius: 28px;
   box-shadow: 0 0 0 10px #101418, 0 0 0 12px #2a3138, 0 24px 60px rgba(0,0,0,0.35);
   display: grid;
-  grid-template-rows: var(--inset-status) 1fr var(--inset-gesture);
+  grid-template-rows: var(--inset-status) minmax(0, 1fr) var(--inset-gesture);
 }
 :root[data-frame='off'] .device { border-radius: 0; box-shadow: none; }
 :root[data-viewport='fill'] .device { width: 100%; height: 100%; border-radius: 0; box-shadow: none; }
@@ -59,7 +59,7 @@ button { font: inherit; color: inherit; }
 :root[data-theme='lowlight'] .device__status-guide, :root[data-theme='lowlight'] .device__gesture-guide { background: rgba(255,255,255,0.04); }
 .device__gesture-guide { justify-content: center; }
 .device__gesture-guide::before { content: ''; width: 120px; height: 4px; border-radius: 2px; background: var(--ink-3); }
-:root[data-insets='off'] .device { grid-template-rows: 0 1fr 0; }
+:root[data-insets='off'] .device { grid-template-rows: minmax(0, 1fr); }
 :root[data-insets='off'] .device__status-guide, :root[data-insets='off'] .device__gesture-guide { display: none; }
 .device__outlet { position: relative; overflow: hidden; min-height: 0; }
 .screen-root { height: 100%; overflow: auto; }
@@ -88,7 +88,7 @@ button { font: inherit; color: inherit; }
 .btn--danger { color: var(--critical); border-color: var(--critical); }
 .btn--icon { padding: 0; width: var(--hit-min); }
 .btn[disabled], .btn[aria-disabled='true'] { opacity: 0.5; cursor: not-allowed; }
-.btn-label { white-space: nowrap; }
+.btn-label { white-space: normal; overflow-wrap: anywhere; }
 .chip { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 10px; border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--control); font-size: var(--fs-xs); font-weight: 600; text-decoration: none; }
 .chip--exercised { border-color: var(--ok); color: var(--ok); }
 .chip--drawn { border-style: dashed; color: var(--ink-2); }
@@ -135,10 +135,15 @@ mdj-fixture-mark[inline] { position: static; }
 .missing { padding: var(--gutter); }
 
 /* ---------- Shell ---------- */
-.shell { display: grid; grid-template-rows: auto 1fr auto; grid-template-columns: minmax(0, 1fr); height: 100%; min-height: 0; }
-.shell__status { display: flex; align-items: center; gap: var(--space-2); padding: 4px var(--gutter); min-height: 48px; border-bottom: 1px solid var(--line); background: var(--control); }
-.shell__status mdj-route-chip { flex: 1 1 auto; min-width: 0; }
-.shell__flags { display: flex; gap: 4px; flex: none; }
+.shell { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; grid-template-columns: minmax(0, 1fr); height: 100%; min-height: 0; }
+.shell--nodock { grid-template-rows: auto minmax(0, 1fr); }
+.shell__status { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); padding: 4px var(--gutter); min-height: 48px; border-bottom: 1px solid var(--line); background: var(--control); }
+.shell__status mdj-route-chip { flex: 1 1 150px; min-width: min(150px, 100%); }
+.shell__flags { display: flex; flex-wrap: wrap; gap: 4px; flex: 1 1 100%; order: 4; }
+.shell__flags:empty { display: none; }
+.shell__flags .flag { white-space: normal; }
+.shell__status > .rec, .shell__status > mdj-parday-button { flex: none; }
+.shell__status .rec .btn-label { white-space: nowrap; }
 .shell__content { min-height: 0; overflow: auto; position: relative; }
 .shell__dock { display: grid; gap: var(--space-2); padding: var(--space-2) var(--gutter); border-radius: var(--radius-panel) var(--radius-panel) 0 0; border-bottom: 0; }
 .shell__decks { display: flex; gap: var(--space-2); }
@@ -210,6 +215,9 @@ mdj-fixture-mark[inline] { position: static; }
 .deck-tab--compact .deck-tab__level { display: none; }
 .deck-tab--compact .deck-tab__state { display: none; }
 .deck-tab--compact .deck-tab__letter { min-width: 24px; min-height: 24px; padding: 0 4px; }
+:root[data-fontscale='200'] .deck-tab__letter { min-width: 1.3em; min-height: 1.3em; }
+:root[data-fontscale='200'] .shell--landscape .shell__dock { grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2); }
+:root[data-fontscale='200'] .shell--landscape .shell__decks { grid-column: 1 / -1; }
 .deck-tab--empty .deck-tab__title { color: var(--ink-3); }
 
 /* Transport */

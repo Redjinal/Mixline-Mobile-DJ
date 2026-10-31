@@ -10,7 +10,7 @@ import { createRequire } from 'node:module';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { startServer, openPrototype, renderScreen, listScreens } from './smoke.mjs';
+import { browserOptions, startServer, openPrototype, renderScreen, listScreens } from './smoke.mjs';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
@@ -25,7 +25,7 @@ const FAMILY_TITLES = { launch: 'Launch, library and crates', preparation: 'Trac
 async function main() {
   mkdirSync(resolve(ROOT, 'spec'), { recursive: true });
   const server = await startServer(PORT);
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(browserOptions);
   try {
     const { page } = await openPrototype(browser, PORT);
     const screens = await listScreens(page);

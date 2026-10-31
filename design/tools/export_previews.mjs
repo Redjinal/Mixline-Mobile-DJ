@@ -7,7 +7,7 @@ import { createRequire } from 'node:module';
 import { writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { resolve, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { startServer, openPrototype, renderScreen, listScreens, shot } from './smoke.mjs';
+import { browserOptions, startServer, openPrototype, renderScreen, listScreens, shot } from './smoke.mjs';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
@@ -21,7 +21,7 @@ const ALL_STATES = args.states === 'all';
 
 async function main() {
   const server = await startServer(PORT);
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(browserOptions);
   const entries = [];
   try {
     // 1× context for the bulk

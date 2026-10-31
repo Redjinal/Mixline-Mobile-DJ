@@ -33,7 +33,7 @@ class Handler(SimpleHTTPRequestHandler):
 if __name__ == "__main__":
     Handler.extensions_map.update({".js": "text/javascript", ".mjs": "text/javascript", ".json": "application/json", ".svg": "image/svg+xml"})
     with ThreadingHTTPServer((HOST, PORT), Handler) as httpd:
-        print(f"prototype at http://{HOST}:{PORT}/  (serving {ROOT})")
+        print(f"prototype at http://{HOST}:{PORT}/  (serving {ROOT})", flush=True)
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:

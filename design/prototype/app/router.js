@@ -72,7 +72,7 @@ function queryState() {
 }
 
 function describeScreen(sc) {
-  return { id: sc.id, family: sc.family, title: sc.title, fr: sc.fr, shell: sc.shell, orientations: sc.orientations, states: Object.fromEntries(Object.entries(sc.states).map(([k, v]) => [k, { label: v.label, exercised: !!v.exercised, scenario: v.scenario || null }])) };
+  return { id: sc.id, family: sc.family, title: sc.title, fr: sc.fr, shell: sc.shell, defaultState: sc.defaultState, orientations: sc.orientations, states: Object.fromEntries(Object.entries(sc.states).map(([k, v]) => [k, { label: v.label, exercised: !!v.exercised, scenario: v.scenario || null, via: v.via || null }])) };
 }
 
 export function buildContext(screen, stateId) {
