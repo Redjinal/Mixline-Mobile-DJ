@@ -156,7 +156,8 @@ function deckColumn(ctx, deck, c, { say, solo, state }) {
     'aria-checked': String(X === L), 'aria-label': `Show pads for deck ${X}`,
   }, [h('span', { class: 'numeral', text: X })]))) : null;
   const qchip = h('span', { class: 'pads-qchip label' }, [icon('quantize', { size: 12 }), h('span', { text: `Q ${QUANTIZE}` })]);
-  const line = deckLine(deck, { extra: [qchip] });
+  const bankBadge = h('span', { class: 'pads-bankbadge label', role: 'status' });
+  const line = deckLine(deck, { extra: [qchip, bankBadge] });
 
   const bank = h('mdj-pad-bank', { deck: L, layout: '2x4' });
   const caption = h('div', { class: 'pads-caption raised', role: 'note' });
@@ -179,6 +180,8 @@ function deckColumn(ctx, deck, c, { say, solo, state }) {
     // selected pad with a data attribute instead (componentsMissing / request filed).
     // Runs after the bank is connected (its first render happens on connect).
     if (view.edit && view.selected) queueMicrotask(() => bank.querySelectorAll('mdj-pad')[view.selected - 1]?.setAttribute('data-pads-selected', ''));
+    bankBadge.textContent = view.bank !== 1 ? `Bank ${view.bank} shown` : '';
+    bankBadge.hidden = view.bank === 1;
     caption.replaceChildren(...captionFor(ctx, deck, view, pads));
     actions.replaceChildren(...actionsFor(ctx, deck, view, {
       edit: () => { if (isA && state === 'cue-bank1') return ctx.setState('edit-mode'); view.edit = true; view.selected = 0; view.pending = 0; draw(); say(''); },

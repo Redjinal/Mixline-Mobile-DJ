@@ -23,7 +23,7 @@
 .pads-nav__tab.is-current { background: var(--raised); border-color: var(--line-strong); font-weight: 700; box-shadow: inset 0 -3px 0 var(--brass); }
 
 /* Deck identity */
-.pads-deckchip { display: inline-grid; place-items: center; flex: none; width: 30px; height: 30px; border-radius: 7px; border: 2px solid var(--deck); background: var(--raised); color: var(--deck); font-weight: 700; font-size: var(--fs-md); }
+.pads-deckchip { display: inline-grid; place-items: center; flex: none; min-width: 30px; min-height: 30px; padding: 0 4px; line-height: 1.1; border-radius: 7px; border: 2px solid var(--deck); background: var(--raised); color: var(--deck); font-weight: 700; font-size: var(--fs-md); }
 .pads-deckline { display: flex; flex-wrap: wrap; align-items: center; gap: 4px var(--space-2); padding: 6px var(--space-2); border-radius: var(--radius-control); background: var(--raised); border: 1px solid var(--line); border-left: 4px solid var(--deck); min-width: 0; }
 .pads-deckline__text { display: grid; gap: 1px; flex: 1 1 140px; min-width: 0; }
 .pads-deckline__title { font-size: var(--fs-sm); line-height: 1.2; overflow-wrap: anywhere; }
@@ -71,6 +71,7 @@
 .pads-caption__title { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-weight: 700; color: var(--ink); }
 .pads-caption__title .icon { width: 16px; height: 16px; flex: none; }
 .pads-caption .body { line-height: 1.4; }
+.pads-bankbadge[hidden] { display: none; }
 .pads-bankbadge { padding: 1px 8px; border-radius: var(--radius-pill); background: var(--ink); color: var(--stage); }
 .pads-pads__pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); min-width: 0; }
 
@@ -188,11 +189,15 @@
 .pads-tails__item { display: flex; align-items: center; gap: 6px; }
 
 /* ---------- pads/stems ---------- */
-.pads-stemcol { display: grid; gap: var(--space-2); min-width: 0; align-content: start; }
+/* Flex columns (not nested grids): a pad bank inside a grid-in-grid scroll column made Chromium's
+   intrinsic sizing take seconds per layout. */
+.pads-stemcol { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.pads-stemcol > * { min-width: 0; }
 .pads-stemcol mdj-stem-strip { padding: var(--space-2); border-radius: var(--radius-panel); background: var(--raised); border: 1px solid var(--line); border-left: 4px solid var(--deck); }
-.pads-fallbackpads { background: var(--raised); }
+.pads-fallbackpads { display: flex; flex-direction: column; background: var(--raised); }
 .pads-stems__cols { display: grid; grid-template-columns: minmax(0, 0.8fr) repeat(2, minmax(0, 1fr)); gap: var(--space-3); min-height: 0; }
-.pads-stems__col { display: grid; gap: var(--space-2); align-content: start; min-width: 0; min-height: 0; overflow: auto; padding-right: 2px; }
+.pads-stems__col { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; min-height: 0; overflow: auto; padding-right: 2px; }
+.pads-stems__col > * { flex: none; }
 
 /* Landscape: tighter rhythm so the first readable block clears the dock. */
 :root[data-orientation='landscape'] .pads-screen { padding: 4px var(--space-3) var(--space-2); gap: 6px; }
@@ -204,6 +209,8 @@
 
 /* 200 % font scale: let rows wrap instead of clipping. */
 :root[data-fontscale='200'] .pads-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+:root[data-fontscale='200'] .pads-col__top { grid-template-columns: minmax(0, 1fr); }
+:root[data-fontscale='200'] .pads-decksel__btn { flex: 1 1 0; }
 :root[data-fontscale='200'] .pads-slot { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: 'n pick' 'engage engage' 'rate rate' 'info info' 'wet wet' 'why why'; }
 :root[data-fontscale='200'] .pads-loops__cols, :root[data-fontscale='200'] .pads-fx__cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 
@@ -212,3 +219,4 @@
 
 :root[data-orientation='landscape'] .pads-lead__title { font-size: var(--fs-sm); }
 :root[data-orientation='landscape'] .pads-lead .body { font-size: var(--fs-xs); line-height: 1.35; }
+:root[data-orientation='landscape'][data-fontscale='200'] .pads-nav { grid-template-columns: repeat(4, auto); }
