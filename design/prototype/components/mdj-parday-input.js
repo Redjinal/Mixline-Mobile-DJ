@@ -60,7 +60,7 @@ export class MdjPardayInput extends MdjElement {
 
     const field = h('textarea', {
       id: fieldId, class: 'pinput__field', rows: 1, placeholder, 'aria-label': 'Message ParDay', 'aria-describedby': `${fieldId}-voice`, maxlength: MAX,
-      readonly: sending ? true : null, disabled: held ? true : null, dataset: { hit: '48' },
+      readonly: sending ? true : null, disabled: held ? true : null,
       on: {
         input: (e) => { const n = e.target.value.length; const c = this.querySelector('.pinput__count'); if (c) c.textContent = `${n} / ${MAX}`; this.classList.toggle('pinput--has-text', n > 0); this.autosize(e.target); },
         keydown: (e) => { if (e.key === 'Enter' && !e.shiftKey && !held && !sending) { e.preventDefault(); this.send(); } },
@@ -85,7 +85,9 @@ export class MdjPardayInput extends MdjElement {
     }, [icon('arrow-up', { size: 18 }), h('span', { class: 'btn-label', text: 'Send' })]);
     if (sending) send.appendChild(h('span', { class: 'pinput__sent label', text: 'SENT', 'aria-hidden': 'true' }));
 
-    const row = h('div', { class: 'pinput__row' }, [voice, h('div', { class: 'pinput__fieldwrap raised' }, [field, h('span', { class: 'pinput__count numeral', 'aria-hidden': 'true', text: `${value.length} / ${MAX}` })]), send]);
+    // The wrapper is the 48 dp target (the textarea itself is one line high); a tap anywhere on it focuses the field.
+    const fieldwrap = h('div', { class: 'pinput__fieldwrap raised', dataset: { hit: '48' }, on: { click: () => { if (!held) field.focus(); } } }, [field, h('span', { class: 'pinput__count numeral', 'aria-hidden': 'true', text: `${value.length} / ${MAX}` })]);
+    const row = h('div', { class: 'pinput__row' }, [voice, fieldwrap, send]);
     if (sending) row.appendChild(h('button', {
       type: 'button', class: 'btn pinput__cancel', dataset: { hit: '48' }, 'aria-label': 'Cancel — stop this request; nothing already applied is hidden',
       on: { click: () => this.emit('mdj:parday-cancel', {}) },

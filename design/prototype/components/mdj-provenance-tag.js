@@ -38,7 +38,9 @@ export function pardayFixture(el) {
   if (!pardayPromise) {
     pardayPromise = load('parday').then((d) => {
       pardayData = d;
-      for (const w of waiting) if (w.isConnected) w.render();
+      // Re-render the components that drew a "Loading…" placeholder, and re-append the FIXTURE mark that
+      // render() wiped (the base class only does that for attribute changes, not for this data arrival).
+      for (const w of waiting) if (w.isConnected) { w.render(); if (w.constructor.fixture) w.ensureFixtureMark(); }
       waiting.clear();
       return d;
     }).catch((err) => { console.error('fixtures/parday.json failed to load', err); });
@@ -58,6 +60,11 @@ export function secText(sec) {
 export function mmss(sec) { const t = Math.max(0, Math.round(sec)); return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`; }
 export function groupDigits(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
 export function pardayIcon(name, opts) { return icon(iconId(name, FALLBACK[name] || name), opts); }
+// JSON attribute parser (same contract as the data family's helper, kept here so this family loads on its own).
+export function parseJsonAttr(raw, fallback = []) {
+  if (raw === null || raw === undefined || raw === '') return fallback;
+  try { const v = JSON.parse(raw); return v ?? fallback; } catch { return fallback; }
+}
 const FALLBACK = {
   preview: 'headphones', apply: 'save', dismiss: 'x', cancel: 'x', retry: 'refresh', thinking: 'loader', expiry: 'clock',
   'stop-automation': 'stop', 'local-only': 'cloud-off', offline: 'wifi-off', 'cost-limit': 'warning', crate: 'folder',

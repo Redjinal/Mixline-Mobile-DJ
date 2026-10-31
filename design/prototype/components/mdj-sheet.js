@@ -45,7 +45,9 @@ export class MdjSheet extends MdjElement {
     if (this._slot === null) this._slot = Array.from(this.childNodes).filter((n) => !(n.nodeType === 1 && n.dataset && n.dataset.sheetPart));
     const variantAttr = this.attr('variant', 'sheet');
     const variant = VARIANTS.includes(variantAttr) ? variantAttr : 'sheet';
-    const title = this.attr('title', 'Sheet');
+    // The host's `title` attribute is removed below (no native tooltip); cache it so a later re-render keeps it.
+    if (this.hasAttribute('title')) this._title = this.getAttribute('title');
+    const title = this._title ?? 'Sheet';
     const bodyText = this.attr('body', '');
     const ic = this.attr('icon', variant === 'confirm' ? 'warning' : '');
     const deck = this.attr('deck', '').toUpperCase();

@@ -115,7 +115,7 @@ export class MdjPardayArmPanel extends MdjElement {
     if (state === 'armed') parts.push(this.note('warning', iconId('arm', 'arm'), 'Armed by the engine:', `${st.text || 'Armed'} · the plan runs without further prompts inside these limits.`));
     if (state === 'executing') parts.push(this.progress(plan, st));
     if (state === 'cancelled') parts.push(this.remains('neutral', 'x', `Cancelled ${st.at} — ${st.cause}.`, st.text, st.remains));
-    if (state === 'expired') parts.push(this.remains('neutral', 'clock', `Expired ${st.at}.`, st.text, st.remains));
+    if (state === 'expired') parts.push(this.remains('neutral', 'clock', `Expired ${st.at} —`, st.text, st.remains));
     if (state === 'rejected') parts.push(this.remains('critical', 'unavailable', `Rejected by the engine ${st.at}.`, st.reason, st.remains));
     if (state === 'review' || state === 'armed' || state === 'executing') parts.push(takeover);
 

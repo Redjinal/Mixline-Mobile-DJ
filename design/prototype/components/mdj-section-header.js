@@ -31,7 +31,9 @@ export class MdjSectionHeader extends MdjElement {
   };
 
   render() {
-    const title = this.attr('title', 'Section');
+    // The host's `title` attribute is removed below (no native tooltip); cache it so a later re-render keeps it.
+    if (this.hasAttribute('title')) this._title = this.getAttribute('title');
+    const title = this._title ?? 'Section';
     const count = this.hasAttribute('count') ? countText(this.getAttribute('count')) : null;
     const action = this.attr('action', '');
     const actionIcon = this.attr('action-icon', '');

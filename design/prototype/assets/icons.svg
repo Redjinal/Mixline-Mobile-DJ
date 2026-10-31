@@ -1,99 +1,199 @@
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
-  <!-- Foundation icon sprite. 24-unit grid, 2-unit stroke, round caps. Original drawings
-       for this prototype (AS-04/AS-05 work orders). The icon family agent may extend or
-       replace symbols; keep ids stable. -->
-  <symbol id="play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="pause" viewBox="0 0 24 24"><rect x="6" y="4.5" width="4" height="15" rx="1" fill="currentColor" stroke="none"/><rect x="14" y="4.5" width="4" height="15" rx="1" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="cue" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none"/><path d="M12 4v3M12 17v3"/></symbol>
-  <symbol id="sync" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.5-5.8L20 8"/><path d="M20 4v4h-4"/><path d="M20 12a8 8 0 0 1-13.5 5.8L4 16"/><path d="M4 20v-4h4"/></symbol>
-  <symbol id="stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="rec" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="chevron-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
-  <symbol id="chevron-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
-  <symbol id="chevron-down" viewBox="0 0 24 24"><path d="M5 9l7 7 7-7"/></symbol>
-  <symbol id="chevron-up" viewBox="0 0 24 24"><path d="M5 15l7-7 7 7"/></symbol>
-  <symbol id="arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
-  <symbol id="arrow-down" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></symbol>
-  <symbol id="home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></symbol>
-  <symbol id="route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8 17h6a3 3 0 0 0 3-3v-1a3 3 0 0 0-3-3H10a3 3 0 0 1-3-3V7"/></symbol>
-  <symbol id="grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></symbol>
-  <symbol id="usb" viewBox="0 0 24 24"><path d="M12 3v15"/><path d="M12 18a2.5 2.5 0 1 0 0 .01"/><path d="M12 3l-2.5 3M12 3l2.5 3"/><path d="M12 12l5-2V7M12 14l-5-2V9"/><circle cx="17" cy="6" r="1.2" fill="currentColor" stroke="none"/><rect x="5.5" y="7" width="3" height="3" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="speaker" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M18.5 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
-  <symbol id="bluetooth" viewBox="0 0 24 24"><path d="M7 7l10 10-5 4V3l5 4L7 17"/></symbol>
-  <symbol id="headphones" viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="4" y="14" width="4" height="6" rx="1.5"/><rect x="16" y="14" width="4" height="6" rx="1.5"/></symbol>
-  <symbol id="parday" viewBox="0 0 24 24"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="currentColor" stroke="none"/><circle cx="19" cy="5" r="1.5" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="warning" viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17v.5"/></symbol>
-  <symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.5"/></symbol>
-  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
-  <symbol id="x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
-  <symbol id="search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
-  <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
-  <symbol id="minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
-  <symbol id="library" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></symbol>
-  <symbol id="pads" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1.5"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="1.5"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="1.5"/><rect x="13" y="13" width="7.5" height="7.5" rx="1.5"/></symbol>
-  <symbol id="fx" viewBox="0 0 24 24"><path d="M3 12h3l2.5-6 3 12 3-9 2 3h4.5"/></symbol>
-  <symbol id="stems" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17l9 5 9-5"/></symbol>
-  <symbol id="settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></symbol>
-  <symbol id="mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3M9 21h6"/></symbol>
-  <symbol id="video" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></symbol>
-  <symbol id="broadcast" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none"/><path d="M7.5 7.5a6.4 6.4 0 0 0 0 9M16.5 7.5a6.4 6.4 0 0 1 0 9"/><path d="M4.5 4.5a10.6 10.6 0 0 0 0 15M19.5 4.5a10.6 10.6 0 0 1 0 15"/></symbol>
-  <symbol id="download" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 19h16"/></symbol>
-  <symbol id="link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
-  <symbol id="queue" viewBox="0 0 24 24"><path d="M4 7h11M4 12h11M4 17h7"/><path d="M18 11l3 3-3 3"/></symbol>
-  <symbol id="lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
-  <symbol id="unlock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.5-2"/></symbol>
-  <symbol id="undo" viewBox="0 0 24 24"><path d="M8 7H4v4"/><path d="M4 11a8 8 0 1 1 2.3 7"/></symbol>
-  <symbol id="more" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.6" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="loader" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 1 9 9"/></symbol>
-  <symbol id="folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
-  <symbol id="import" viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M4 14v5a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/></symbol>
-  <symbol id="share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.6M8.2 13.2l7.6 4.6"/></symbol>
-  <symbol id="trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
-  <symbol id="edit" viewBox="0 0 24 24"><path d="M4 20h4l11-11-4-4L4 16z"/><path d="M13 7l4 4"/></symbol>
-  <symbol id="loop" viewBox="0 0 24 24"><path d="M17 4l3 3-3 3"/><path d="M4 11V9a2 2 0 0 1 2-2h14"/><path d="M7 20l-3-3 3-3"/><path d="M20 13v2a2 2 0 0 1-2 2H4"/></symbol>
-  <symbol id="beatjump" viewBox="0 0 24 24"><path d="M4 12h9M9 7l5 5-5 5"/><path d="M17 5v14M20 5v14"/></symbol>
-  <symbol id="slip" viewBox="0 0 24 24"><path d="M3 16h18"/><path d="M6 8c3-4 9-4 12 0"/><path d="M15 8h3V5"/><circle cx="12" cy="16" r="1.5" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="reverse" viewBox="0 0 24 24"><path d="M17 4.5v15l-12-7.5z" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="keylock" viewBox="0 0 24 24"><circle cx="8" cy="9" r="4"/><path d="M11 11l8 8M16 16l2-2M18 18l2-2"/></symbol>
-  <symbol id="filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 8v6l-4-2v-4z"/></symbol>
-  <symbol id="eq" viewBox="0 0 24 24"><path d="M6 20V9M12 20V4M18 20v-7"/><path d="M4 12h4M10 8h4M16 15h4"/></symbol>
-  <symbol id="gain" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 12l4-4"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="master" viewBox="0 0 24 24"><path d="M5 19V9M10 19V5M15 19v-9M20 19v-5"/></symbol>
-  <symbol id="wifi-off" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M5 9.5a12 12 0 0 1 4-2.2M8.5 13a8 8 0 0 1 2-1.3M12 16.5h.01"/><path d="M14.5 7.5a12 12 0 0 1 4.5 2M15.5 11.7a8 8 0 0 1 1.5 1.3"/></symbol>
-  <symbol id="thermal" viewBox="0 0 24 24"><path d="M10 14.5V5a2 2 0 0 1 4 0v9.5a3.5 3.5 0 1 1-4 0z"/></symbol>
-  <symbol id="storage" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><path d="M8 7h.01M8 17h.01"/></symbol>
-  <symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
-  <symbol id="star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1.1 5.8L12 16.8l-5.3 2.8 1.1-5.8-4.3-4.1 5.9-.8z"/></symbol>
-  <symbol id="drag" viewBox="0 0 24 24"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01" stroke-width="3"/></symbol>
-  <symbol id="list" viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><path d="M4 6h.01M4 12h.01M4 18h.01" stroke-width="3"/></symbol>
-  <symbol id="music" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></symbol>
-  <symbol id="cloud-off" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M7 18h10a4 4 0 0 0 1.5-7.7A6 6 0 0 0 8 9"/><path d="M4.5 12.5A4 4 0 0 0 7 18"/></symbol>
-  <symbol id="cloud" viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.2 11.5 3.5 3.5 0 0 0 7 18z"/></symbol>
-  <symbol id="plugin" viewBox="0 0 24 24"><path d="M9 3v4M15 3v4"/><path d="M6 7h12v5a6 6 0 0 1-12 0z"/><path d="M12 18v3"/></symbol>
-  <symbol id="hand" viewBox="0 0 24 24"><path d="M8 11V5.5a1.5 1.5 0 0 1 3 0V11M11 10V4.5a1.5 1.5 0 0 1 3 0V11M14 10.5V6a1.5 1.5 0 0 1 3 0v7"/><path d="M8 11v2L5.7 10.7a1.6 1.6 0 0 0-2.3 2.2L7 18.5A5 5 0 0 0 11 21h2a5 5 0 0 0 5-5v-3"/></symbol>
-  <symbol id="bars" viewBox="0 0 24 24"><path d="M4 18V9M8 18V5M12 18v-8M16 18V7M20 18v-4"/></symbol>
-  <symbol id="pin" viewBox="0 0 24 24"><path d="M12 21v-6"/><path d="M8 15h8l-1-4V5h1V3H8v2h1v6z"/></symbol>
-  <symbol id="refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></symbol>
-  <symbol id="external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></symbol>
-  <symbol id="save" viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></symbol>
-  <symbol id="close-sheet" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
-  <symbol id="marker" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M8 7l4-4 4 4"/></symbol>
-  <symbol id="phrase" viewBox="0 0 24 24"><path d="M4 18V6M20 18V6"/><path d="M4 12h16"/><path d="M8 9l-4 3 4 3M16 9l4 3-4 3"/></symbol>
-  <symbol id="quantize" viewBox="0 0 24 24"><path d="M4 20V4M10 20V4M16 20V4M22 20V4" opacity=".5"/><circle cx="10" cy="12" r="2.5" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="nudge" viewBox="0 0 24 24"><path d="M3 12h7M14 12h7"/><path d="M7 8l-4 4 4 4M17 8l4 4-4 4"/></symbol>
-  <symbol id="scratch" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/><path d="M12 4v3"/></symbol>
-  <symbol id="momentary" viewBox="0 0 24 24"><path d="M4 16h4l2-8 4 12 2-4h4"/></symbol>
-  <symbol id="latch" viewBox="0 0 24 24"><path d="M4 16h4V8h8v8h4"/></symbol>
-  <symbol id="takeover" viewBox="0 0 24 24"><path d="M12 3v8"/><path d="M6.5 7.5a7.5 7.5 0 1 0 11 0"/></symbol>
-  <symbol id="arm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></symbol>
-  <symbol id="sampler" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h2v2H7zM11 9h2v2h-2zM15 9h2v2h-2zM7 13h2v2H7zM11 13h2v2h-2zM15 13h2v2h-2z" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="sequencer" viewBox="0 0 24 24"><path d="M3 6h3v3H3zM8 6h3v3H8zM13 6h3v3h-3zM18 6h3v3h-3z" fill="currentColor" stroke="none"/><path d="M3 15h3v3H3zM13 15h3v3h-3z" fill="currentColor" stroke="none"/><path d="M8 15h3v3H8zM18 15h3v3h-3z"/></symbol>
-  <symbol id="display" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
-  <symbol id="caption" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 14h4M13 14h4M7 10h10"/></symbol>
-  <symbol id="singer" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
-  <symbol id="key" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M15 12v2"/></symbol>
-  <symbol id="bpm" viewBox="0 0 24 24"><path d="M12 20L5 8h14z"/><path d="M12 8v6"/><circle cx="12" cy="17" r="1.2" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="duplicate" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
-  <symbol id="unavailable" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></symbol>
-  <symbol id="demo" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></symbol>
+  <!-- Icon sprite for the Crystal Current design prototype (asset work orders AS-04 general icons, AS-05 DJ symbols).
+       24-unit grid, 2-unit stroke inherited from the .icon class (currentColor, round caps and joins), 2-unit padding.
+       Filled shapes declare fill="currentColor". Every <symbol> carries data-source="lucide" (copied from
+       lucide-static 1.64.0, ISC; data-src names the Lucide icon) or data-source="original" (drawn for this prototype).
+       Notices: assets/NOTICES.md. Gallery: #/s/foundation/icons. Groups are the "group:" comments below; the gallery
+       screen reads them at runtime, so keep one symbol per line and every symbol inside a group. Keep ids stable. -->
+  <!-- group: Navigation and actions · Lucide (ISC) -->
+  <symbol id="home" viewBox="0 0 24 24" data-source="lucide" data-src="house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24" data-source="lucide" data-src="search"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+  <symbol id="settings" viewBox="0 0 24 24" data-source="lucide" data-src="settings"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="folder" viewBox="0 0 24 24" data-source="lucide" data-src="folder"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+  <symbol id="library" viewBox="0 0 24 24" data-source="lucide" data-src="library"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></symbol>
+  <symbol id="queue" viewBox="0 0 24 24" data-source="lucide" data-src="list-end"><path d="M16 5H3"/><path d="M16 12H3"/><path d="M9 19H3"/><path d="m16 16-3 3 3 3"/><path d="M21 5v12a2 2 0 0 1-2 2h-6"/></symbol>
+  <symbol id="playlist" viewBox="0 0 24 24" data-source="lucide" data-src="list-music"><path d="M16 5H3"/><path d="M11 12H3"/><path d="M11 19H3"/><path d="M21 16V5"/><circle cx="18" cy="16" r="3"/></symbol>
+  <symbol id="list" viewBox="0 0 24 24" data-source="lucide" data-src="list"><path d="M3 5h.01"/><path d="M3 12h.01"/><path d="M3 19h.01"/><path d="M8 5h13"/><path d="M8 12h13"/><path d="M8 19h13"/></symbol>
+  <symbol id="grid" viewBox="0 0 24 24" data-source="lucide" data-src="layout-grid"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></symbol>
+  <symbol id="more" viewBox="0 0 24 24" data-source="lucide" data-src="ellipsis"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></symbol>
+  <symbol id="drag" viewBox="0 0 24 24" data-source="lucide" data-src="grip-vertical"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></symbol>
+  <symbol id="pin" viewBox="0 0 24 24" data-source="lucide" data-src="pin"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></symbol>
+  <symbol id="history" viewBox="0 0 24 24" data-source="lucide" data-src="history"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></symbol>
+  <symbol id="filter" viewBox="0 0 24 24" data-source="lucide" data-src="funnel"><path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z"/></symbol>
+  <symbol id="chevron-left" viewBox="0 0 24 24" data-source="lucide" data-src="chevron-left"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="chevron-right" viewBox="0 0 24 24" data-source="lucide" data-src="chevron-right"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="chevron-down" viewBox="0 0 24 24" data-source="lucide" data-src="chevron-down"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="chevron-up" viewBox="0 0 24 24" data-source="lucide" data-src="chevron-up"><path d="m18 15-6-6-6 6"/></symbol>
+  <symbol id="close-sheet" viewBox="0 0 24 24" data-source="lucide" data-src="chevron-down"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="arrow-up" viewBox="0 0 24 24" data-source="lucide" data-src="arrow-up"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></symbol>
+  <symbol id="arrow-down" viewBox="0 0 24 24" data-source="lucide" data-src="arrow-down"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></symbol>
+  <symbol id="external" viewBox="0 0 24 24" data-source="lucide" data-src="external-link"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="link" viewBox="0 0 24 24" data-source="lucide" data-src="link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="share" viewBox="0 0 24 24" data-source="lucide" data-src="share-2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></symbol>
+  <symbol id="import" viewBox="0 0 24 24" data-source="lucide" data-src="import"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M8 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/></symbol>
+  <symbol id="download" viewBox="0 0 24 24" data-source="lucide" data-src="download"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></symbol>
+  <symbol id="save" viewBox="0 0 24 24" data-source="lucide" data-src="save"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></symbol>
+  <symbol id="edit" viewBox="0 0 24 24" data-source="lucide" data-src="pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></symbol>
+  <symbol id="duplicate" viewBox="0 0 24 24" data-source="lucide" data-src="copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+  <symbol id="trash" viewBox="0 0 24 24" data-source="lucide" data-src="trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="undo" viewBox="0 0 24 24" data-source="lucide" data-src="undo-2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></symbol>
+  <symbol id="redo" viewBox="0 0 24 24" data-source="lucide" data-src="redo-2"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5A5.5 5.5 0 0 0 4 14.5A5.5 5.5 0 0 0 9.5 20H13"/></symbol>
+  <symbol id="refresh" viewBox="0 0 24 24" data-source="lucide" data-src="refresh-cw"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+  <symbol id="plus" viewBox="0 0 24 24" data-source="lucide" data-src="plus"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+  <symbol id="minus" viewBox="0 0 24 24" data-source="lucide" data-src="minus"><path d="M5 12h14"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24" data-source="lucide" data-src="check"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="x" viewBox="0 0 24 24" data-source="lucide" data-src="x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="lock" viewBox="0 0 24 24" data-source="lucide" data-src="lock"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="unlock" viewBox="0 0 24 24" data-source="lucide" data-src="lock-open"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></symbol>
+  <symbol id="key" viewBox="0 0 24 24" data-source="lucide" data-src="key-round"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+  <symbol id="hand" viewBox="0 0 24 24" data-source="lucide" data-src="hand"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></symbol>
+  <!-- group: Status and system · Lucide (ISC) -->
+  <symbol id="info" viewBox="0 0 24 24" data-source="lucide" data-src="info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+  <symbol id="warning" viewBox="0 0 24 24" data-source="lucide" data-src="triangle-alert"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="unavailable" viewBox="0 0 24 24" data-source="lucide" data-src="ban"><circle cx="12" cy="12" r="10"/><path d="M4.929 4.929 19.07 19.071"/></symbol>
+  <symbol id="loader" viewBox="0 0 24 24" data-source="lucide" data-src="loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></symbol>
+  <symbol id="clock" viewBox="0 0 24 24" data-source="lucide" data-src="clock"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="star" viewBox="0 0 24 24" data-source="lucide" data-src="star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></symbol>
+  <symbol id="battery" viewBox="0 0 24 24" data-source="lucide" data-src="battery"><path d="M 22 14 L 22 10"/><rect x="2" y="6" width="16" height="12" rx="2"/></symbol>
+  <symbol id="thermal" viewBox="0 0 24 24" data-source="lucide" data-src="thermometer"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></symbol>
+  <symbol id="storage" viewBox="0 0 24 24" data-source="lucide" data-src="hard-drive"><path d="M10 16h.01"/><path d="M2.212 11.577a2 2 0 0 0-.212.896V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5.527a2 2 0 0 0-.212-.896L18.55 5.11A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><path d="M21.946 12.013H2.054"/><path d="M6 16h.01"/></symbol>
+  <symbol id="wifi-off" viewBox="0 0 24 24" data-source="lucide" data-src="wifi-off"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><path d="m2 2 20 20"/></symbol>
+  <symbol id="cloud" viewBox="0 0 24 24" data-source="lucide" data-src="cloud"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></symbol>
+  <symbol id="cloud-off" viewBox="0 0 24 24" data-source="lucide" data-src="cloud-off"><path d="M10.94 5.274A7 7 0 0 1 15.71 10h1.79a4.5 4.5 0 0 1 4.222 6.057"/><path d="M18.796 18.81A4.5 4.5 0 0 1 17.5 19H9A7 7 0 0 1 5.79 5.78"/><path d="m2 2 20 20"/></symbol>
+  <symbol id="plugin" viewBox="0 0 24 24" data-source="lucide" data-src="plug"><path d="M12 22v-5"/><path d="M15 8V2"/><path d="M17 8a1 1 0 0 1 1 1v4a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1z"/><path d="M9 8V2"/></symbol>
+  <!-- group: Media and devices · Lucide (ISC) -->
+  <symbol id="music" viewBox="0 0 24 24" data-source="lucide" data-src="music"><path d="M21 16V3a1 1 0 0 0-1.28-.96l-10 2.917a1 1 0 0 0-.72.96V19"/><circle cx="18" cy="16" r="3"/><circle cx="6" cy="19" r="3"/></symbol>
+  <symbol id="mic" viewBox="0 0 24 24" data-source="lucide" data-src="mic"><path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/></symbol>
+  <symbol id="video" viewBox="0 0 24 24" data-source="lucide" data-src="video"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></symbol>
+  <symbol id="display" viewBox="0 0 24 24" data-source="lucide" data-src="monitor"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></symbol>
+  <symbol id="caption" viewBox="0 0 24 24" data-source="lucide" data-src="captions"><rect width="18" height="14" x="3" y="5" rx="2" ry="2"/><path d="M7 15h4M15 15h2M7 11h2M13 11h4"/></symbol>
+  <symbol id="singer" viewBox="0 0 24 24" data-source="lucide" data-src="user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="headphones" viewBox="0 0 24 24" data-source="lucide" data-src="headphones"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
+  <symbol id="speaker" viewBox="0 0 24 24" data-source="lucide" data-src="volume-2"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></symbol>
+  <symbol id="bluetooth" viewBox="0 0 24 24" data-source="lucide" data-src="bluetooth"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></symbol>
+  <symbol id="usb" viewBox="0 0 24 24" data-source="lucide" data-src="usb"><circle cx="10" cy="7" r="1"/><circle cx="4" cy="20" r="1"/><path d="M4.7 19.3 19 5"/><path d="m21 3-3 1 2 2Z"/><path d="M9.26 7.68 5 12l2 5"/><path d="m10 14 5 2 3.5-3.5"/><path d="m18 12 1-1 1 1-1 1Z"/></symbol>
+  <symbol id="broadcast" viewBox="0 0 24 24" data-source="lucide" data-src="radio"><path d="M16.247 7.761a6 6 0 0 1 0 8.478"/><path d="M19.075 4.933a10 10 0 0 1 0 14.134"/><path d="M4.925 19.067a10 10 0 0 1 0-14.134"/><path d="M7.753 16.239a6 6 0 0 1 0-8.478"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="demo" viewBox="0 0 24 24" data-source="lucide" data-src="square-play"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z"/></symbol>
+  <!-- group: Transport and deck · original -->
+  <symbol id="play" viewBox="0 0 24 24" data-source="original"><path d="M7 4.5v15l12-7.5z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="pause" viewBox="0 0 24 24" data-source="original"><rect x="6" y="4.5" width="4" height="15" rx="1" fill="currentColor" stroke="none"/><rect x="14" y="4.5" width="4" height="15" rx="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="cue" viewBox="0 0 24 24" data-source="original"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none"/><path d="M12 2.5V5M12 19v2.5"/></symbol>
+  <symbol id="sync" viewBox="0 0 24 24" data-source="original"><path d="M4 12a8 8 0 0 1 13.5-5.8L20 8"/><path d="M20 4v4h-4"/><path d="M20 12a8 8 0 0 1-13.5 5.8L4 16"/><path d="M4 20v-4h4"/></symbol>
+  <symbol id="stop" viewBox="0 0 24 24" data-source="original"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="rec" viewBox="0 0 24 24" data-source="original"><circle cx="12" cy="12" r="6" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="record-stop" viewBox="0 0 24 24" data-source="original"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="3.5" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="resume" viewBox="0 0 24 24" data-source="original"><path d="M5 5v14"/><path d="M9 5l11 7-11 7z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="reverse" viewBox="0 0 24 24" data-source="original"><path d="M17 4.5v15l-12-7.5z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="slip" viewBox="0 0 24 24" data-source="original"><path d="M3 16h18"/><path d="M6 8c3-4 9-4 12 0"/><path d="M15 8h3V5"/><circle cx="12" cy="16" r="1.5" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="scratch" viewBox="0 0 24 24" data-source="original"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/><path d="M12 4v3"/></symbol>
+  <symbol id="nudge" viewBox="0 0 24 24" data-source="original"><path d="M3 12h7M14 12h7"/><path d="M7 8l-4 4 4 4M17 8l4 4-4 4"/></symbol>
+  <symbol id="keylock" viewBox="0 0 24 24" data-source="original"><circle cx="8" cy="9" r="4"/><path d="M11 11l8 8M16 16l2-2M18 18l2-2"/></symbol>
+  <symbol id="deck-focus" viewBox="0 0 24 24" data-source="original"><rect x="8" y="8" width="8" height="8" rx="1.5"/><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/></symbol>
+  <symbol id="takeover" viewBox="0 0 24 24" data-source="original"><circle cx="9" cy="15" r="5.5"/><path d="M21 3l-7.5 7.5M13.5 5.5v5h5"/></symbol>
+  <symbol id="arm" viewBox="0 0 24 24" data-source="original"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></symbol>
+  <symbol id="stop-automation" viewBox="0 0 24 24" data-source="original"><path d="M8 3h8l5 5v8l-5 5H8l-5-5V8z"/><rect x="9.5" y="9.5" width="5" height="5" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="seek" viewBox="0 0 24 24" data-source="original"><path d="M3 18h18M7 15l-3 3 3 3M17 15l3 3-3 3"/><path d="M12 8v10"/><path d="M8.5 3h7L12 8z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="seek-lock" viewBox="0 0 24 24" data-source="original"><path d="M6 3v18"/><path d="M3 3h6L6 8z" fill="currentColor" stroke="none"/><rect x="11" y="13" width="10" height="8" rx="1.5"/><path d="M13 13v-2a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="marker" viewBox="0 0 24 24" data-source="original"><path d="M12 3v18"/><path d="M8 7l4-4 4 4"/></symbol>
+  <symbol id="cue-memory" viewBox="0 0 24 24" data-source="original"><circle cx="12" cy="10" r="7"/><circle cx="12" cy="10" r="3"/><path d="M12 17v5"/></symbol>
+  <symbol id="phrase" viewBox="0 0 24 24" data-source="original"><path d="M4 18V6M20 18V6"/><path d="M4 12h16"/><path d="M8 9l-4 3 4 3M16 9l4 3-4 3"/></symbol>
+  <!-- group: Loops, jumps and timing · original -->
+  <symbol id="loop" viewBox="0 0 24 24" data-source="original"><path d="M17 4l3 3-3 3"/><path d="M4 11V9a2 2 0 0 1 2-2h14"/><path d="M7 20l-3-3 3-3"/><path d="M20 13v2a2 2 0 0 1-2 2H4"/></symbol>
+  <symbol id="loop-in" viewBox="0 0 24 24" data-source="original"><path d="M5 4v16M5 4h3M5 20h3"/><path d="M5 12h10M12 9l3 3-3 3"/></symbol>
+  <symbol id="loop-out" viewBox="0 0 24 24" data-source="original"><path d="M19 4v16M19 4h-3M19 20h-3"/><path d="M4 12h10M11 9l3 3-3 3"/></symbol>
+  <symbol id="reloop" viewBox="0 0 24 24" data-source="original"><path d="M5 4v16M19 4v16"/><path d="M16 12H9M11.5 9L9 12l2.5 3"/></symbol>
+  <symbol id="roll" viewBox="0 0 24 24" data-source="original"><path d="M3 19h18"/><path d="M8 6h8l-2.5-2.5M16 6l-2.5 2.5"/><path d="M16 13H8l2.5-2.5M8 13l2.5 2.5"/></symbol>
+  <symbol id="slicer" viewBox="0 0 24 24" data-source="original"><rect x="3" y="7" width="18" height="10" rx="1.5"/><path d="M7.5 7v10M12 7v10M16.5 7v10"/><rect x="7.5" y="7" width="4.5" height="10" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="beatjump" viewBox="0 0 24 24" data-source="original"><path d="M4 12h9M9 7l5 5-5 5"/><path d="M17 5v14M20 5v14"/></symbol>
+  <symbol id="pitch-play" viewBox="0 0 24 24" data-source="original"><path d="M4 6v12l9-6z" fill="currentColor" stroke="none"/><path d="M19 5v14M16 8l3-3 3 3M16 16l3 3 3-3"/></symbol>
+  <symbol id="quantize" viewBox="0 0 24 24" data-source="original"><path d="M5 4v16M12 4v16M19 4v16"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="phase" viewBox="0 0 24 24" data-source="original"><path d="M3 12c2-6 4-6 6 0s4 6 6 0 4-6 6 0"/><path d="M12 4v16" stroke-dasharray="2 2"/></symbol>
+  <symbol id="tempo-bend" viewBox="0 0 24 24" data-source="original"><path d="M3 17h18"/><path d="M6 17c2-9 4-9 6-9s4 9 6 9"/></symbol>
+  <symbol id="bpm" viewBox="0 0 24 24" data-source="original"><path d="M12 20L5 8h14z"/><path d="M12 8v6"/><circle cx="12" cy="17" r="1.2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="momentary" viewBox="0 0 24 24" data-source="original"><path d="M4 16h4l2-8 4 12 2-4h4"/></symbol>
+  <symbol id="latch" viewBox="0 0 24 24" data-source="original"><path d="M4 16h4V8h8v8h4"/></symbol>
+  <symbol id="grid-uncertain" viewBox="0 0 24 24" data-source="original"><path d="M5 4v16"/><path d="M12 4v16M19 4v16" stroke-dasharray="2.5 2.5"/></symbol>
+  <symbol id="grid-locked" viewBox="0 0 24 24" data-source="original"><path d="M5 3v6M12 3v6M19 3v6"/><rect x="7" y="14" width="10" height="7" rx="1.5"/><path d="M9 14v-1.5a3 3 0 0 1 6 0V14"/></symbol>
+  <symbol id="swing" viewBox="0 0 24 24" data-source="original"><path d="M12 3v2"/><path d="M12 5v12" stroke-dasharray="2 2"/><path d="M12 5l5.5 11"/><circle cx="18" cy="17.5" r="2.5" fill="currentColor" stroke="none"/></symbol>
+  <!-- group: Mixer, routing and monitoring · original -->
+  <symbol id="eq" viewBox="0 0 24 24" data-source="original"><path d="M6 20V9M12 20V4M18 20v-7"/><path d="M4 12h4M10 8h4M16 15h4"/></symbol>
+  <symbol id="gain" viewBox="0 0 24 24" data-source="original"><circle cx="12" cy="12" r="8"/><path d="M12 12l4-4"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="master" viewBox="0 0 24 24" data-source="original"><path d="M5 19V9M10 19V5M15 19v-9M20 19v-5"/></symbol>
+  <symbol id="bars" viewBox="0 0 24 24" data-source="original"><path d="M4 18V9M8 18V5M12 18v-8M16 18V7M20 18v-4"/></symbol>
+  <symbol id="crossfader" viewBox="0 0 24 24" data-source="original"><path d="M3 12h18M3 9v6M21 9v6"/><rect x="9" y="7" width="6" height="10" rx="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="bus" viewBox="0 0 24 24" data-source="original"><path d="M3 7h6M3 12h6M3 17h6M9 5v14M9 12h12M18 9l3 3-3 3"/></symbol>
+  <symbol id="route" viewBox="0 0 24 24" data-source="original"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8 17h6a3 3 0 0 0 3-3v-1a3 3 0 0 0-3-3H10a3 3 0 0 1-3-3V7"/></symbol>
+  <symbol id="route-lost" viewBox="0 0 24 24" data-source="original"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8 17h6a3 3 0 0 0 3-3v-1a3 3 0 0 0-3-3H10a3 3 0 0 1-3-3V7"/><path d="M3 3l18 18"/></symbol>
+  <symbol id="split-mono" viewBox="0 0 24 24" data-source="original"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="multichannel" viewBox="0 0 24 24" data-source="original"><path d="M3 12h4M7 5v14M7 5h14M7 10h14M7 14h14M7 19h14"/></symbol>
+  <symbol id="cue-mix" viewBox="0 0 24 24" data-source="original"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5" fill="currentColor"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></symbol>
+  <symbol id="isolation-check" viewBox="0 0 24 24" data-source="original"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/><path d="M9.5 16l2 2 3.5-4"/></symbol>
+  <symbol id="preview" viewBox="0 0 24 24" data-source="original"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/><path d="M10 14v6l5-3z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="mono" viewBox="0 0 24 24" data-source="original"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="stereo" viewBox="0 0 24 24" data-source="original"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></symbol>
+  <symbol id="mute" viewBox="0 0 24 24" data-source="original"><path d="M3 9v6h4l5 4V5L7 9z"/><path d="M16 9l5 6M21 9l-5 6"/></symbol>
+  <symbol id="solo" viewBox="0 0 24 24" data-source="original"><circle cx="5.5" cy="12" r="2.5"/><circle cx="12" cy="12" r="3.5" fill="currentColor" stroke="none"/><circle cx="18.5" cy="12" r="2.5"/></symbol>
+  <symbol id="channel-map" viewBox="0 0 24 24" data-source="original"><path d="M3 6h5l8 12h5M3 18h5l8-12h5M3 12h18"/></symbol>
+  <!-- group: Stems, pads, sampler and sequencer · original -->
+  <symbol id="stems" viewBox="0 0 24 24" data-source="original"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17l9 5 9-5"/></symbol>
+  <symbol id="stem-vocals" viewBox="0 0 24 24" data-source="original"><path d="M3 12c3-5 6-6 9-3 3-3 6-2 9 3-3 5-6 7-9 7s-6-2-9-7z"/></symbol>
+  <symbol id="stem-drums" viewBox="0 0 24 24" data-source="original"><ellipse cx="12" cy="8" rx="8" ry="3"/><path d="M4 8v8c0 1.7 3.6 3 8 3s8-1.3 8-3V8"/></symbol>
+  <symbol id="stem-bass" viewBox="0 0 24 24" data-source="original"><path d="M3 12c3-9 6-9 9 0s6 9 9 0"/></symbol>
+  <symbol id="stem-other" viewBox="0 0 24 24" data-source="original"><rect x="3" y="6" width="18" height="12" rx="1.5"/><path d="M7.5 6v7M12 6v7M16.5 6v7"/></symbol>
+  <symbol id="pads" viewBox="0 0 24 24" data-source="original"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1.5" fill="currentColor"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="1.5"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="1.5"/><rect x="13" y="13" width="7.5" height="7.5" rx="1.5"/></symbol>
+  <symbol id="fx" viewBox="0 0 24 24" data-source="original"><path d="M3 12h3l2.5-6 3 12 3-9 2 3h4.5"/></symbol>
+  <symbol id="sampler" viewBox="0 0 24 24" data-source="original"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h2v2H7zM11 9h2v2h-2zM15 9h2v2h-2zM7 13h2v2H7zM11 13h2v2h-2zM15 13h2v2h-2z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="sequencer" viewBox="0 0 24 24" data-source="original"><path d="M3 6h3v3H3zM8 6h3v3H8zM13 6h3v3h-3zM18 6h3v3h-3z" fill="currentColor" stroke="none"/><path d="M3 15h3v3H3zM13 15h3v3h-3z" fill="currentColor" stroke="none"/><path d="M8 15h3v3H8zM18 15h3v3h-3z"/></symbol>
+  <symbol id="pattern" viewBox="0 0 24 24" data-source="original"><rect x="3" y="4" width="5" height="5" rx="1" fill="currentColor"/><rect x="9.5" y="4" width="5" height="5" rx="1"/><rect x="16" y="4" width="5" height="5" rx="1" fill="currentColor"/><rect x="3" y="15" width="5" height="5" rx="1"/><rect x="9.5" y="15" width="5" height="5" rx="1" fill="currentColor"/><rect x="16" y="15" width="5" height="5" rx="1"/></symbol>
+  <symbol id="step-mute" viewBox="0 0 24 24" data-source="original"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 16l8-8"/></symbol>
+  <symbol id="velocity" viewBox="0 0 24 24" data-source="original"><path d="M3 6l17 6-17 6"/><path d="M21 4v16"/></symbol>
+  <!-- group: Session, recording and data · original -->
+  <symbol id="segment" viewBox="0 0 24 24" data-source="original"><path d="M3 12h18"/><path d="M8 7v10M16 7v10"/><rect x="8" y="10" width="8" height="4" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="recover" viewBox="0 0 24 24" data-source="original"><path d="M12 3l8 3v6c0 4.6-3.4 8-8 9-4.6-1-8-4.4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="export" viewBox="0 0 24 24" data-source="original"><path d="M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/><path d="M12 14V4M8 8l4-4 4 4"/></symbol>
+  <symbol id="backup" viewBox="0 0 24 24" data-source="original"><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M12 3v7M9 7l3 3 3-3M7 16.5h.01"/></symbol>
+  <symbol id="restore" viewBox="0 0 24 24" data-source="original"><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M12 10V3M9 6l3-3 3 3M7 16.5h.01"/></symbol>
+  <symbol id="paste" viewBox="0 0 24 24" data-source="original"><rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1" fill="currentColor"/><path d="M12 10v7M9 14l3 3 3-3"/></symbol>
+  <symbol id="share-in" viewBox="0 0 24 24" data-source="original"><circle cx="5" cy="6" r="2.5"/><circle cx="5" cy="18" r="2.5"/><path d="M7 7.5l5 3M7 16.5l5-3"/><rect x="13" y="6" width="8" height="12" rx="1.5"/></symbol>
+  <symbol id="crate" viewBox="0 0 24 24" data-source="original"><path d="M4 20v-9h16v9M3 20h18"/><path d="M8 11V6M12 11V5M16 11V6"/></symbol>
+  <symbol id="smart-rule" viewBox="0 0 24 24" data-source="original"><path d="M3 5h12l-5 7v6l-2-1v-5z"/><path d="M18.5 3l1 2.5 2.5 1-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z"/></symbol>
+  <symbol id="color-tag" viewBox="0 0 24 24" data-source="original"><path d="M3 3h8.6a1 1 0 0 1 .7.3l8.4 8.4a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.4 0L3.3 11.4a1 1 0 0 1-.3-.7z"/><circle cx="7.5" cy="7.5" r="1.5" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="rating" viewBox="0 0 24 24" data-source="original"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9l-5.4 2.9 1.1-6.1L3.2 9.4l6.1-.8z" fill="currentColor"/></symbol>
+  <symbol id="explicit" viewBox="0 0 24 24" data-source="original"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M14.5 8h-5v8h5M9.5 12h4"/></symbol>
+  <symbol id="sort" viewBox="0 0 24 24" data-source="original"><path d="M4 6h12M4 12h8M4 18h5"/><path d="M19 5v14M16 16l3 3 3-3"/></symbol>
+  <symbol id="chip-remove" viewBox="0 0 24 24" data-source="original"><rect x="2.5" y="7" width="19" height="10" rx="5"/><path d="M14.5 10l4 4M18.5 10l-4 4"/><path d="M6.5 12h4"/></symbol>
+  <symbol id="fixture" viewBox="0 0 24 24" data-source="original"><path d="M9 3h6"/><path d="M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"/><path d="M7 15h10"/></symbol>
+  <!-- group: Jobs, states and flags · original -->
+  <symbol id="cancel" viewBox="0 0 24 24" data-source="original"><circle cx="12" cy="12" r="8"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
+  <symbol id="retry" viewBox="0 0 24 24" data-source="original"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/><path d="M10 9v6l5-3z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="validate" viewBox="0 0 24 24" data-source="original"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 14l2 2 4-5"/></symbol>
+  <symbol id="publish" viewBox="0 0 24 24" data-source="original"><path d="M4 4h16"/><path d="M12 20V8M8 12l4-4 4 4"/></symbol>
+  <symbol id="ready" viewBox="0 0 24 24" data-source="original"><circle cx="12" cy="12" r="8"/><path d="M8.5 12.5l2.5 2.5 5-5.5"/></symbol>
+  <symbol id="blocked" viewBox="0 0 24 24" data-source="original"><path d="M8 3h8l5 5v8l-5 5H8l-5-5V8z"/><path d="M8 12h8"/></symbol>
+  <symbol id="rate-limit" viewBox="0 0 24 24" data-source="original"><path d="M3 15a9 9 0 0 1 18 0"/><path d="M12 15l5-6"/><circle cx="12" cy="15" r="1.5" fill="currentColor" stroke="none"/><path d="M6 19h12"/></symbol>
+  <symbol id="login-required" viewBox="0 0 24 24" data-source="original"><path d="M13 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5"/><path d="M3 12h11M10 8l4 4-4 4"/></symbol>
+  <symbol id="expiry" viewBox="0 0 24 24" data-source="original"><path d="M7 3h10M7 21h10"/><path d="M8 3v4.5l4 4.5 4-4.5V3M8 21v-4.5l4-4.5 4 4.5V21"/></symbol>
+  <symbol id="missing" viewBox="0 0 24 24" data-source="original"><path d="M6 3h8l4 4v14H6z" stroke-dasharray="2.5 2.5"/><path d="M9.5 12.5l5 5M14.5 12.5l-5 5"/></symbol>
+  <symbol id="permission" viewBox="0 0 24 24" data-source="original"><path d="M12 3l8 3v6c0 4.6-3.4 8-8 9-4.6-1-8-4.4-8-9V6z"/><circle cx="12" cy="10.5" r="2"/><path d="M12 12.5V16"/></symbol>
+  <symbol id="analysis-pending" viewBox="0 0 24 24" data-source="original"><path d="M3 14v-4M7 17V7M11 15V9"/><circle cx="14.5" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="17.5" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="20.5" cy="12" r="1.2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="discard" viewBox="0 0 24 24" data-source="original"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
+  <symbol id="apply" viewBox="0 0 24 24" data-source="original"><path d="M5 13l4 4L19 7"/><path d="M4 20h16"/></symbol>
+  <symbol id="dismiss" viewBox="0 0 24 24" data-source="original"><rect x="3" y="6" width="11" height="12" rx="2"/><path d="M16 12h5M19 9.5l2 2.5-2 2.5"/></symbol>
+  <symbol id="local-only" viewBox="0 0 24 24" data-source="original"><rect x="7" y="2.5" width="10" height="19" rx="2"/><circle cx="12" cy="11" r="2.5" fill="currentColor" stroke="none"/><path d="M11 18h2"/></symbol>
+  <symbol id="offline" viewBox="0 0 24 24" data-source="original"><path d="M7 18h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.2 11.5 3.5 3.5 0 0 0 7 18z"/><path d="M10 11.5l4 4M14 11.5l-4 4"/></symbol>
+  <symbol id="cost-limit" viewBox="0 0 24 24" data-source="original"><path d="M3 4h18"/><ellipse cx="12" cy="11" rx="7" ry="2.5"/><path d="M5 11v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/><path d="M5 14c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></symbol>
+  <!-- group: ParDay and provenance · original -->
+  <symbol id="parday" viewBox="0 0 24 24" data-source="original"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="currentColor" stroke="none"/><circle cx="19" cy="5" r="1.5" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="thinking" viewBox="0 0 24 24" data-source="original"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H10l-5 4v-4H6a2 2 0 0 1-2-2z"/><circle cx="9" cy="10.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="10.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="10.5" r="1.2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="automix" viewBox="0 0 24 24" data-source="original"><path d="M3 17c6 0 6-10 12-10h6M3 7c6 0 6 10 12 10h6"/><path d="M19 5l2 2-2 2M19 15l2 2-2 2"/></symbol>
+  <symbol id="transition-intro" viewBox="0 0 24 24" data-source="original"><path d="M4 4v16"/><path d="M4 17c6 0 8-10 16-10"/></symbol>
+  <symbol id="transition-exit" viewBox="0 0 24 24" data-source="original"><path d="M20 4v16"/><path d="M4 7c8 0 10 10 16 10"/></symbol>
+  <symbol id="provenance-measured" viewBox="0 0 24 24" data-source="original"><path d="M3 15l12-12 6 6-12 12z"/><path d="M7 11l2 2M10 8l2 2M13 5l2 2"/></symbol>
+  <symbol id="provenance-user" viewBox="0 0 24 24" data-source="original"><path d="M3 9h13l4 3-4 3H3z"/><path d="M16 9v6"/></symbol>
+  <symbol id="provenance-retrieved" viewBox="0 0 24 24" data-source="original"><path d="M7 18h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.2 11.5 3.5 3.5 0 0 0 7 18z"/><path d="M12 9v6M9.5 12.5l2.5 2.5 2.5-2.5"/></symbol>
+  <symbol id="provenance-inferred" viewBox="0 0 24 24" data-source="original"><path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z"/></symbol>
+  <!-- group: Microphone, karaoke and video · original -->
+  <symbol id="talkover" viewBox="0 0 24 24" data-source="original"><rect x="4" y="3" width="6" height="11" rx="3"/><path d="M7 14v6M4 20h6"/><path d="M14 7h7M14 12h5M14 17h3"/></symbol>
+  <symbol id="duck" viewBox="0 0 24 24" data-source="original"><path d="M3 6h18M12 10v10M8 16l4 4 4-4"/></symbol>
+  <symbol id="karaoke" viewBox="0 0 24 24" data-source="original"><rect x="3" y="3" width="6" height="11" rx="3"/><path d="M6 14v6"/><path d="M15 17V4l5 2.5"/><circle cx="12.5" cy="17.5" r="2.5"/></symbol>
 </svg>

@@ -21,6 +21,8 @@ import { MdjElement, define, h, icon } from './base.js';
 import { countText } from './mdj-chip.js';
 import './mdj-badge.js';
 
+let uid = 0;
+
 export class MdjSearchBar extends MdjElement {
   static tag = 'mdj-search-bar';
   static states = ['idle', 'focused', 'results', 'no-results', 'offline'];
@@ -48,7 +50,9 @@ export class MdjSearchBar extends MdjElement {
     const state = this.state;
     this.className = `search-bar search-bar--${state}${compact ? ' search-bar--compact' : ''}`;
     delete this.dataset.hit; // the field, Clear and Filters are the targets
-    const inputId = `${this.constructor.tag}-${scope.replace(/\W+/g, '-').toLowerCase()}-${compact ? 'c' : 'f'}`;
+    // One id per instance: several search bars (gallery states, docked + sheet) must not share label / describedby ids.
+    this._uid ??= ++uid;
+    const inputId = `${this.constructor.tag}-${this._uid}`;
     const keepFocus = this.contains(document.activeElement);
 
     const input = h('input', {

@@ -1,0 +1,87 @@
+{
+  "_fixture": "Invented video / karaoke / broadcast / microphone / display fixtures for the design prototype (Documents 03 §7, 15 §3–§5, 19 §4 'av'). No decoder ran, no caption file was parsed, no stream was sent, no microphone was opened and no display was probed: every frame count, bitrate, delay, level, offset and timestamp below is drawn so that components can show their states. Stage names and queue notes are local-only by design (Document 15 §4); nothing here is a real person or account. Track ids reference fixtures/tracks.json; route ids reference fixtures/routes.json.",
+  "video": {
+    "modes": {
+      "follow": { "label": "Video follows audio", "detail": "Picture follows the engine's source position and tempo; a loop repeats the matching video interval. Key changes alone do not change picture speed." },
+      "independent": { "label": "Independent visual", "detail": "A separate visual plays on this deck; the audio crossfader and the visual crossfader are unlinked." },
+      "audio-only": { "label": "Audio only", "detail": "Chosen still or restrained app visual; no invented cover and no unrelated video is substituted." }
+    },
+    "fallbackPolicies": {
+      "freeze": "Freeze the last good frame",
+      "replace": "Replace with the deck's still",
+      "black": "Show black"
+    },
+    "decks": {
+      "A": { "trackId": "aurora", "mode": "follow", "state": "playing", "frameRate": 29.97, "droppedFrames": 0, "decoder": "MediaCodec · bounded (fixture)", "aspect": "16:9", "scratchPolicy": "freeze" },
+      "B": { "trackId": "copper", "mode": "follow", "state": "dropped-frames", "frameRate": 29.97, "droppedFrames": 12, "decoder": "MediaCodec · bounded (fixture)", "aspect": "16:9", "scratchPolicy": "freeze" },
+      "C": { "trackId": "tide", "mode": "audio-only", "state": "audio-only", "still": "app visual", "aspect": "16:9" },
+      "D": { "trackId": "zinc", "mode": "follow", "state": "unsupported", "reason": "HDR (PQ) stream — HDR-to-SDR conversion is not handled on this device profile; the stream is rejected rather than shown washed out.", "aspect": "16:9" }
+    },
+    "program": { "transition": "dissolve", "linked": true, "output": "none", "note": "Program output is composited separately from the preview on this device." }
+  },
+  "karaoke": {
+    "_note": "Stage names and queue notes stay on the device. Reordering or removing a waiting singer never replaces the active song (Document 15 §4).",
+    "queue": [
+      { "id": "s1", "position": 1, "stageName": "Marla V.", "local": true, "trackId": "aurora", "version": "Karaoke mix (fixture)", "keyShift": 0, "tempo": 124.0, "state": "active", "note": "Wants the bridge lower" },
+      { "id": "s2", "position": 2, "stageName": "DJ Pocket", "local": true, "trackId": "copper", "version": "Instrumental (fixture)", "keyShift": -2, "tempo": 126.0, "state": "next", "note": "" },
+      { "id": "s3", "position": 3, "stageName": "Theo & Ines", "local": true, "trackId": "tide", "version": "Karaoke mix (fixture)", "keyShift": 1, "tempo": 128.0, "state": "waiting", "note": "Duet — two mics" },
+      { "id": "s4", "position": 4, "stageName": "The Very Long Stage Name That Someone Chose On The Night", "local": true, "trackId": "longtitle", "version": "Karaoke mix (fixture)", "keyShift": 0, "tempo": 122.0, "state": "waiting", "note": "" },
+      { "id": "s5", "position": 5, "stageName": "Sunny", "local": true, "trackId": "calypso", "version": "Karaoke mix (fixture)", "keyShift": 3, "tempo": 136.0, "state": "skipped", "note": "Stepped out — return later" }
+    ],
+    "captions": {
+      "trackId": "aurora",
+      "format": "WebVTT (fixture)",
+      "language": "en",
+      "timing": "line",
+      "offsetMs": 120,
+      "visibility": { "program": true, "preview": true },
+      "lines": [
+        { "id": "l1", "startMs": 61200, "endMs": 64800, "text": "Glass on the water, light on the line", "timing": "line" },
+        { "id": "l2", "startMs": 64800, "endMs": 68400, "text": "We counted the harbour in four-four time", "timing": "line", "active": true },
+        { "id": "l3", "startMs": 68400, "endMs": 72000, "text": "Copper sky, hold the chorus", "timing": "word", "words": [["Copper", 68400], ["sky,", 68900], ["hold", 69600], ["the", 70000], ["chorus", 70300]], "wordIndex": 2 },
+        { "id": "l4", "startMs": 72000, "endMs": 75600, "text": null, "timing": "missing", "note": "No cue for this interval in the timed-text file" },
+        { "id": "l5", "startMs": 75600, "endMs": 79200, "text": "Aurora drive, we're nearly home", "timing": "line", "lateMs": 420 }
+      ]
+    }
+  },
+  "broadcast": {
+    "destinations": [
+      { "id": "fixture-rtmps", "name": "Fixture RTMPS receiver", "account": "practice-room (fixture account)", "protocol": "RTMPS", "profile": "720p30 · 2.5 Mb/s · AAC 160 kb/s", "streamKeyRedacted": "••••••••••••", "testReceiver": true },
+      { "id": "fixture-srt", "name": "Fixture SRT ingest", "account": "home-lab (fixture account)", "protocol": "SRT", "profile": "1080p30 · 4.5 Mb/s · AAC 192 kb/s", "streamKeyRedacted": "••••••••••••", "testReceiver": false }
+    ],
+    "buses": {
+      "selectable": ["master", "mic", "video"],
+      "excludedByDefault": ["cue", "assistant speech"],
+      "labels": { "master": "Master", "mic": "Microphone", "video": "Program video", "cue": "Cue", "assistant": "ParDay speech" }
+    },
+    "states": {
+      "private": { "label": "Private — not transmitting", "rateKbps": null, "delayMs": null, "dropped": null, "reconnects": 0, "acknowledged": false },
+      "connecting": { "label": "Connecting", "rateKbps": null, "delayMs": null, "dropped": 0, "reconnects": 0, "acknowledged": false },
+      "connected": { "label": "Connected — not yet acknowledged", "rateKbps": 2480, "delayMs": 640, "dropped": 0, "reconnects": 0, "acknowledged": false },
+      "acknowledged": { "label": "Connected — destination acknowledged reception", "rateKbps": 2510, "delayMs": 580, "dropped": 2, "reconnects": 0, "acknowledged": true },
+      "reconnecting": { "label": "Reconnecting (attempt 2 of 5)", "rateKbps": 0, "delayMs": 3200, "dropped": 48, "reconnects": 2, "acknowledged": false },
+      "disconnected": { "label": "Disconnected — audience lost at 21:24:10", "rateKbps": 0, "delayMs": null, "dropped": 48, "reconnects": 5, "acknowledged": false },
+      "stopped": { "label": "Stopped — transmission released at 21:31:02", "rateKbps": 0, "delayMs": null, "dropped": 2, "reconnects": 0, "acknowledged": false, "remote": "Receiver confirmed end of stream" },
+      "congested": { "label": "Congested — video bitrate reduced within the profile", "rateKbps": 1180, "delayMs": 2100, "dropped": 31, "reconnects": 0, "acknowledged": true, "policy": "Bounded: reduce video bitrate, then frames, then reconnect, then stop with an alert. Latency is never allowed to grow without limit." }
+    },
+    "localFallbackRecording": { "enabled": false, "note": "Separate, user-selected option; needs storage and recording permission; not enabled because a stream failed." }
+  },
+  "mic": {
+    "inputs": [
+      { "id": "headset", "name": "USB-C headset mic", "channel": "1", "device": "USB-C headphones / DAC", "routeId": "usbc-stereo" },
+      { "id": "builtin", "name": "Phone microphone", "channel": "1", "device": "Built-in", "routeId": "speaker" },
+      { "id": "quadra-in2", "name": "Quadra 4 — input 2", "channel": "2", "device": "USB interface — Quadra 4 (fixture)", "routeId": "usb-4ch" }
+    ],
+    "permission": { "granted": true, "note": "Microphone permission is separate in meaning from sending the mic to master, broadcast or ParDay." },
+    "gainDb": { "min": -20, "max": 20, "default": 0 },
+    "duck": { "thresholdDb": -24, "attackMs": 40, "releaseMs": 600, "depthDb": -9 },
+    "levels": { "quiet": 0.18, "speaking": 0.56, "hot": 0.86 }
+  },
+  "displays": {
+    "none": { "label": "No external display", "detail": "Program output stays on this device until a display is connected and verified." },
+    "wired-connected": { "label": "Wired display connected · 1920 × 1080 · 60 Hz (reported, fixture)", "detail": "A clean program surface is ready to verify. Controls, cue, stream keys and singer notes stay on the phone." },
+    "wired-disconnected": { "label": "Wired display disconnected", "detail": "Program output hidden. Nothing private was exposed; a reconnect needs a valid display configuration before it is live again." },
+    "wireless-unverified": { "label": "Wireless display found · latency profile not measured", "detail": "Wireless display latency has its own profile and is not advertised as equal to a verified wired route." },
+    "verifying": { "label": "Verifying display", "detail": "Checking resolution, colour range and a test pattern on the program surface." }
+  }
+}

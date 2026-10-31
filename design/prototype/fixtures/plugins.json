@@ -1,0 +1,51 @@
+{
+  "_fixture": "Invented plugin-rack fixtures for the design prototype (Documents 03 §7, 15 §6, 19 §4 'system'). No plugin was discovered, validated, loaded or measured: latency, CPU budget, ABI, versions, vendors and failure text are drawn to exercise <mdj-plugin-slot> states. Formats named here (AAP, an app-native module interface, VST3) describe what the real host would print; nothing certifies that any of them is supported. Desktop binaries are never assumed Android-compatible.",
+  "isolationModels": {
+    "process": { "label": "Process boundary", "detail": "Runs in a separate process over shared memory at a fixed declared latency; the audio callback never waits for it. A crash stops this plugin only." },
+    "in-process": { "label": "In-process · trusted", "detail": "Runs with the host's privileges and can crash it. Not sandboxed, and never labelled as such." }
+  },
+  "plugins": [
+    {
+      "id": "glassverb", "name": "Glassverb", "vendor": "Fixture Audio Works", "version": "1.4.2", "kind": "effect",
+      "format": "AAP", "abi": "arm64-v8a", "io": "2 in · 2 out", "rates": "44.1 / 48 kHz", "blockSizes": "64–512",
+      "latencyFrames": 256, "sampleRate": 48000, "cpuBudgetPct": 4.2, "tailMs": 2800, "maxMemoryMb": 24,
+      "isolation": "process", "preset": "Hall · short", "stateSchema": "v3",
+      "status": "compatible", "note": "Validated against the pinned host version (fixture)."
+    },
+    {
+      "id": "brasskeys", "name": "Brass Keys", "vendor": "Lantern Instruments (fixture)", "version": "0.9.1", "kind": "instrument",
+      "format": "AAP", "abi": "arm64-v8a", "io": "MIDI in · 2 out", "rates": "48 kHz", "blockSizes": "128–256",
+      "latencyFrames": 128, "sampleRate": 48000, "cpuBudgetPct": 7.5, "tailMs": 1200, "maxMemoryMb": 96,
+      "isolation": "process", "preset": "Rooftop organ", "stateSchema": "v1",
+      "status": "compatible", "note": "Instrument fault behaviour: short controlled mute, never a stale block repeated."
+    },
+    {
+      "id": "tidecomp", "name": "Tide Compressor", "vendor": "Okafor DSP (fixture)", "version": "2.0.0", "kind": "effect",
+      "format": "App-native module", "abi": "arm64-v8a", "io": "2 in · 2 out", "rates": "48 kHz", "blockSizes": "64–512",
+      "latencyFrames": 64, "sampleRate": 48000, "cpuBudgetPct": null, "tailMs": 0, "maxMemoryMb": 8,
+      "isolation": "in-process", "preset": "—", "stateSchema": "v2",
+      "status": "failed-validation", "failure": "Missed the processing deadline in 3 of 2000 validation blocks and declared a state schema (v2) the host cannot read. Not loadable until the vendor ships a fix."
+    },
+    {
+      "id": "desktop-chorus", "name": "DesktopChorus.vst3", "vendor": "Unknown (file metadata)", "version": "3.7.0", "kind": "effect",
+      "format": "VST3 · Windows x86_64", "abi": "x86_64 (desktop)", "io": "—", "rates": "—", "blockSizes": "—",
+      "latencyFrames": null, "sampleRate": null, "cpuBudgetPct": null, "tailMs": null, "maxMemoryMb": null,
+      "isolation": null, "preset": "—", "stateSchema": "—",
+      "status": "unsupported-format", "failure": "A desktop VST3 binary. Android is not in the VST3 SDK's supported-platform table and this file targets another CPU and operating system; it cannot be made compatible automatically."
+    },
+    {
+      "id": "old-phaser", "name": "Phaser Nine", "vendor": "Ninefold (fixture)", "version": "1.2.0", "kind": "effect",
+      "format": "AAP", "abi": "arm64-v8a", "io": "2 in · 2 out", "rates": "48 kHz", "blockSizes": "64–512",
+      "latencyFrames": 0, "sampleRate": 48000, "cpuBudgetPct": 2.1, "tailMs": 0, "maxMemoryMb": 6,
+      "isolation": "process", "preset": "Slow sweep", "stateSchema": "v1",
+      "status": "unavailable", "savedIn": "Saturday practice · rack slot 3", "failure": "Saved with this session but not installed on this device. The slot is kept as a placeholder with its saved state (preset 'Slow sweep', 412 bytes); it is not replaced by a different effect."
+    },
+    {
+      "id": "wideverb", "name": "Wideverb", "vendor": "Fixture Audio Works", "version": "2.1.0", "kind": "effect",
+      "format": "AAP", "abi": "arm64-v8a", "io": "2 in · 2 out", "rates": "44.1 / 48 kHz", "blockSizes": "64–1024",
+      "latencyFrames": 1024, "previousLatencyFrames": 256, "sampleRate": 48000, "cpuBudgetPct": 6.8, "tailMs": 5400, "maxMemoryMb": 40,
+      "isolation": "process", "preset": "Cathedral", "stateSchema": "v3",
+      "status": "latency-change", "note": "The graph is rebuilt at a qualified time — not during an active transition — and the change stays printed until the rebuild is acknowledged."
+    }
+  ]
+}

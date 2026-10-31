@@ -22,6 +22,7 @@
 import { MdjElement, define, h, icon } from './base.js';
 
 const KINDS = ['toggle', 'select', 'value', 'nav', 'action'];
+let uid = 0;
 
 export class MdjSettingsRow extends MdjElement {
   static tag = 'mdj-settings-row';
@@ -60,7 +61,9 @@ export class MdjSettingsRow extends MdjElement {
     const disabled = state === 'disabled';
     this.className = `settings-row settings-row--${kind} settings-row--${state}${dirty ? ' settings-row--dirty' : ''}`;
     delete this.dataset.hit; // the control (or the whole-row button) is the target
-    const id = `settings-${name.replace(/\W+/g, '-')}`;
+    // One id per instance: the same setting can be drawn more than once (gallery states, preview vs draft).
+    this._uid ??= ++uid;
+    const id = `settings-${name.replace(/\W+/g, '-')}-${this._uid}`;
     const on = value === 'on' || value === 'true';
     const dirtyText = dirty ? ', unsaved' : '';
     const disabledText = disabled ? `, unavailable${detail ? ': ' + detail : ''}` : '';

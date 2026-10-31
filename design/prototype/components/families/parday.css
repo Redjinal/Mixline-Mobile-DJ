@@ -35,12 +35,12 @@
 }
 .ptag__text { white-space: nowrap; }
 .ptag--sm .ptag__pill { min-height: 20px; font-size: calc(var(--fs-xs) * 0.9); padding: 0 7px 0 4px; }
-.ptag__shape { flex: none; }
 .ptag__outline { fill: var(--raised); stroke: currentColor; stroke-width: 1.4; stroke-linejoin: round; }
 .ptag__detail { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
 .ptag__detail-fill { fill: currentColor; }
-.ptag__icon { flex: none; width: 12px; height: 12px; }
-.ptag--sm .ptag__icon { width: 10px; height: 10px; }
+.ptag__icon, .ptag__shape { flex: none; width: 1em; height: 1em; }
+:root[data-fontscale='200'] .ptag__detail-text { flex-basis: 100%; }
+:root[data-fontscale='200'] .ptag__detail-text::before { content: ''; }
 .ptag__detail-text { font-weight: 500; opacity: 0.9; }
 .ptag__detail-text::before { content: '· '; }
 .ptag--inferred .ptag__text::after { content: ''; }
@@ -147,6 +147,7 @@
 .pmsg__ref { font-size: var(--fs-xs); padding: 0 5px; border: 1px solid var(--line-strong); border-radius: 4px; background: var(--raised); }
 .pmsg__text { margin: 0; line-height: 1.4; overflow-wrap: anywhere; }
 .pmsg__text .label { color: var(--ink-2); }
+.pmsg__text--retained { color: var(--ink-2); }
 .pmsg__claims { list-style: none; margin: 0; padding: 6px 0 0; display: grid; gap: 4px; border-top: 1px dashed var(--line); }
 .pmsg__claim { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 8px; }
 .pmsg__claim-text { flex: 1 1 140px; min-width: 0; font-size: var(--fs-xs); color: var(--ink); overflow-wrap: anywhere; }
@@ -206,12 +207,13 @@
 .parm--review .parm__actions .parm__btn--primary { flex: 2 1 auto; }
 .parm--cancelled .parm__inner, .parm--expired .parm__inner, .parm--rejected .parm__inner { border-style: dashed; }
 .parm--rejected .parm__inner { border-color: var(--critical); }
+:root[data-fontscale='200'] .pcard__claim-text, :root[data-fontscale='200'] .pmsg__claim-text { flex-basis: 100%; }
 :root[data-fontscale='200'] .pcard__facts dt, :root[data-fontscale='200'] .parm__facts dt { flex-basis: auto; }
 :root[data-fontscale='200'] .pcard__facts dd, :root[data-fontscale='200'] .parm__facts dd { flex: 1 1 100%; }
 :root[data-fontscale='130'] .parm__facts dt { flex-basis: 140px; }
 
 /* ---------- Stop automation ---------- */
-.stopauto { display: inline-block; position: relative; --size: 56px; vertical-align: top; }
+.stopauto { display: inline-block; position: relative; --size: 56px; vertical-align: top; flex: none; }
 .stopauto__btn {
   position: relative; display: grid; min-height: var(--size); min-width: var(--size); padding: 0; border: 0; background: transparent;
   border-radius: var(--radius-control); cursor: pointer; color: var(--ink); text-align: left;
@@ -242,7 +244,8 @@
 :root[data-theme='contrast'] .stopauto--executing .stopauto__rim::after { background: var(--critical); }
 .stopauto--compact .stopauto__face { gap: 6px; padding: 0 10px 0 6px; }
 .stopauto--compact .stopauto__glyph { width: 26px; height: 26px; }
-.stopauto--compact .stopauto__label { font-size: var(--fs-xs); }
+.stopauto--compact .stopauto__label { font-size: var(--fs-xs); white-space: nowrap; }
+.stopauto--compact .stopauto__face { grid-template-columns: auto auto; }
 .stopauto__btn:active .stopauto__face { transform: translateY(1px); }
 
 /* ---------- Quick actions ---------- */
@@ -269,7 +272,7 @@
 .pinput__row { display: grid; width: 100%; grid-template-columns: auto minmax(0, 1fr) max-content; grid-template-areas: 'voice field send' 'cancel cancel cancel'; align-items: end; gap: 8px; }
 @container (max-width: 300px) { .pinput__row { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: 'field field' 'voice send' 'cancel cancel'; } .pinput__send { justify-self: stretch; } }
 .pinput__voice { grid-area: voice; }
-.pinput__fieldwrap { grid-area: field; position: relative; min-width: 0; min-height: 48px; display: grid; grid-template-rows: 1fr auto; }
+.pinput__fieldwrap { grid-area: field; position: relative; min-width: 0; min-height: 48px; display: grid; grid-template-rows: 1fr auto; cursor: text; }
 .pinput__send { grid-area: send; }
 .pinput__cancel { grid-area: cancel; justify-self: end; }
 :root[data-fontscale='200'] .pinput__row { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: 'field field' 'voice send' 'cancel cancel'; }
@@ -301,6 +304,7 @@
 .pinput__notice .body { font-size: var(--fs-xs); }
 
 /* ---------- ParDay button additions (base styles in app/app.css) ---------- */
+.parday-btn { flex: none; } /* a status-strip control keeps its label; the route chip is what truncates */
 .parday-btn__glyph { display: inline-grid; place-items: center; }
 .parday-btn__glyph .icon { width: 18px; height: 18px; }
 .parday-btn__state { display: inline-flex; align-items: center; gap: 3px; }

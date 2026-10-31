@@ -39,7 +39,9 @@ export class MdjEmptyState extends MdjElement {
     const state = this.state;
     const preset = PRESET[state] || PRESET.idle;
     const ic = this.attr('icon', preset.icon);
-    const title = this.attr('title', preset.title);
+    // The host's `title` attribute is removed below (no native tooltip); cache it so a later re-render keeps it.
+    if (this.hasAttribute('title')) this._title = this.getAttribute('title');
+    const title = this._title ?? preset.title;
     const query = this.attr('query', '');
     const body = this.attr('body', state === 'no-results' && query ? `Nothing matches “${query}”. Check the spelling, widen the BPM range or clear the filters.` : preset.body);
     const actions = parseJsonAttr(this.getAttribute('actions'), preset.actions).filter((a) => a && a.label);

@@ -16,7 +16,9 @@
 // Arm transition / Dismiss are separate buttons that wrap at 380 px and at 200 % font scale.
 // Pending vs acknowledged: `sent="apply"` prints a dashed SENT badge on that button and holds the others
 // (aria-disabled) until the screen acknowledges by changing `state`; `applied` is a solid check with the
-// saved revision / engine time. Nothing animates to imply success.
+// saved revision / engine time. `sent` is honoured only for an action the current state offers, so a value
+// left over from a state change cannot hold a card's buttons. The gallery shows the pending look on the
+// compact proposed card (`sent="arm"`) next to the acknowledged one. Nothing animates to imply success.
 // Lifecycle visuals: proposed · needs_review (prints WHAT changed; the proposal keeps describing the
 // version you saw) · applied · rejected (reason) · expired (Refresh proposal) · stale (bound state then vs
 // now; reviewable again, never silently retargeted) · thinking (retained request + "Progress unknown" +
@@ -85,7 +87,7 @@ export class MdjPardayCard extends MdjElement {
   static observed = ['proposal', 'kind', 'sent', 'compact'];
   static samples = {
     default: { proposal: 'P42', style: 'width:min(100%, 380px)' },
-    variants: [{ proposal: 'P42' }, { proposal: 'P37' }, { proposal: 'P38' }, { proposal: 'P40' }, { proposal: 'P41' }, { proposal: 'P43' }, { proposal: 'P42', compact: true }],
+    variants: [{ proposal: 'P42' }, { proposal: 'P37' }, { proposal: 'P38' }, { proposal: 'P40' }, { proposal: 'P41' }, { proposal: 'P43' }, { proposal: 'P42', compact: true, sent: 'arm' }],
     proposed: {},
   };
 
@@ -102,7 +104,7 @@ export class MdjPardayCard extends MdjElement {
     const id = this.attr('proposal', 'P42');
     const state = CARD_STATES.includes(this.state) ? this.state : 'proposed';
     const compact = this.bool('compact');
-    const sent = this.attr('sent', '');
+    const sentAttr = this.attr('sent', '');
     delete this.dataset.hit; // the buttons are the targets
     const p = data?.proposals?.[id];
     if (!p) {
@@ -113,6 +115,9 @@ export class MdjPardayCard extends MdjElement {
     const kind = KINDS[this.attr('kind', p.kind)] ? this.attr('kind', p.kind) : (KINDS[p.kind] ? p.kind : 'route');
     const kdef = KINDS[kind], sdef = STATUS[state];
     const st = p.states?.[state] || {};
+    const acts = actionsFor(kind, state, p);
+    // `sent` names an action of THIS state; anything else (a leftover after a state change) is ignored.
+    const sent = acts.some((a) => a.id === sentAttr) ? sentAttr : '';
     this.className = `pcard pcard--${kind} pcard--${state}${compact ? ' pcard--compact' : ''}${sent ? ' pcard--sent' : ''} deck-none`;
     const titleId = `pcard-title-${++uid}`;
     const decks = (p.affected || []).filter((a) => a.deck).map((a) => a.deck);
@@ -133,7 +138,7 @@ export class MdjPardayCard extends MdjElement {
       parts.push(h('p', { class: 'pcard__body body' }, [h('span', { class: 'label', text: 'Working on · ' }), st.retained || 'Working on this proposal…']));
       parts.push(h('div', { class: 'pcard__progress', role: 'status', 'aria-label': 'Progress unknown' }, [
         h('span', { class: 'pcard__progress-track sunken', 'aria-hidden': 'true' }, [h('span', { class: 'pcard__progress-dash' })]),
-        h('span', { class: 'pcard__progress-text label' }, [icon(iconId('thinking', 'loader'), { size: 12, cls: 'pcard__spin' }), h('span', { text: `Progress unknown · started ${st.startedAt || p.requestedAt} · 20 s deadline, then Retry` })]),
+        h('span', { class: 'pcard__progress-text label' }, [icon(iconId('thinking', 'loader'), { size: 12, cls: 'pcard__spin' }), h('span', { text: `Progress unknown · started ${st.startedAt || p.requestedAt} · 20-second deadline, then Retry` })]),
       ]));
     } else if (state === 'unavailable') {
       parts.push(h('h3', { class: 'pcard__title title', id: titleId, text: p.title }));
@@ -156,7 +161,6 @@ export class MdjPardayCard extends MdjElement {
     if (note) parts.push(note);
 
     // ---- actions ----
-    const acts = actionsFor(kind, state, p);
     const row = h('div', { class: 'pcard__actions' });
     for (const a of acts) {
       const isSent = sent && sent === a.id;

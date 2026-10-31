@@ -19,8 +19,7 @@
 // Accessible: group "ParDay quick actions"; each chip "Draft cues — needs network, unavailable offline".
 import { MdjElement, define, h, icon } from './base.js';
 import { iconId } from './mdj-marker.js';
-import { parseJsonAttr } from './mdj-chip.js';
-import { pardayFixture } from './mdj-provenance-tag.js';
+import { pardayFixture, parseJsonAttr } from './mdj-provenance-tag.js';
 
 const STATES = ['idle', 'thinking', 'offline', 'disabled'];
 

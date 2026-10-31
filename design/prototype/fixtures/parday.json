@@ -43,7 +43,7 @@
         "needs_review": { "changed": "TIDE SIGNAL’s grid was corrected after this proposal (r2 → r3) — review the order before saving. The crate contents have not been changed for you." },
         "applied": { "at": "21:04:12", "text": "Saved as crate “Warm-up 30” · revision r1 · 21:04:12. Undo removes the crate; nothing audible changed." },
         "rejected": { "at": "21:05:02", "reason": "You rejected this proposal at 21:05. Nothing was saved." },
-        "expired": { "at": "21:35:00", "text": "Expired 21:35 (proposals expire after 30 minutes). Refresh to re-check the library before saving." },
+        "expired": { "at": "21:35:00", "text": "At 21:35 — proposals expire after 30 minutes. Refresh to re-check the library before saving." },
         "stale": { "text": "Bound to library revision 41; the library is now at revision 43 (two tracks imported). Reviewable again — the crate is not rebuilt until you ask." },
         "thinking": { "retained": "Scoring 16 eligible tracks for a 30-minute warm-up (120–126 BPM)…", "startedAt": "21:00:05" },
         "unavailable": { "reason": "Offline — building a crate needs the model. Local search, saved crates and this library stay available." }
@@ -78,8 +78,8 @@
       "states": {
         "needs_review": { "changed": "You locked the grid of TIDE SIGNAL at 21:08 (r3 → r4). These positions were computed on r3 — review before applying. Nothing was written." },
         "applied": { "at": "21:09:30", "text": "Applied 21:09:30 · preparation revision r4 · cues 3–5 added, cues 1–2 unchanged. Undo restores r3." },
-        "rejected": { "at": "21:09:02", "reason": "Rejected by validation: cue 4 would overwrite the locked cue “Bridge”. Nothing was written." },
-        "expired": { "at": "21:37:58", "text": "Expired 21:37. Refresh to recompute the drafts on the current grid." },
+        "rejected": { "at": "21:09:02", "reason": "By validation — cue 4 would overwrite the locked cue “Bridge”. Nothing was written." },
+        "expired": { "at": "21:37:58", "text": "At 21:37. Refresh to recompute the drafts on the current grid." },
         "stale": { "text": "Bound to grid revision r3; TIDE SIGNAL is now at r4. Reviewable again — the drafts were not moved to the new grid." },
         "thinking": { "retained": "Reading the grid and phrases of TIDE SIGNAL…", "startedAt": "21:07:30" },
         "unavailable": { "reason": "Offline — cue drafting needs the model. Your stored cues are unchanged and editable by hand." }
@@ -114,8 +114,8 @@
       "states": {
         "needs_review": { "changed": "Deck B now holds COPPER SKY at a new generation (5 → 6) after a reload — review before acting. The proposal still describes the version you saw; it has not been retargeted." },
         "applied": { "at": "21:15:08", "text": "Executed by the engine 21:15:08 · automation 7 rev 2 · heard on the master. Cannot be undone." },
-        "rejected": { "at": "21:14:30", "reason": "Rejected by the engine: master control revision changed (14 → 15) when the crossfader was touched. Zero events were scheduled." },
-        "expired": { "at": "21:26:00", "text": "Expired 21:26 before it was armed. Deck A has passed the Exit marker; a refreshed proposal will use the next marked exit." },
+        "rejected": { "at": "21:14:30", "reason": "By the engine — master control revision changed (14 → 15) when the crossfader was touched. Zero events were scheduled." },
+        "expired": { "at": "21:26:00", "text": "At 21:26, before it was armed. Deck A has passed the Exit marker; a refreshed proposal will use the next marked exit." },
         "stale": { "text": "Bound to epoch 9 · A gen 3 · B gen 5 · master rev 14. Now: epoch 9 · A gen 3 · B gen 6. Reviewable again — it does not retarget the new track on B." },
         "thinking": { "retained": "Checking markers, tempo and vocal overlap for AURORA DRIVE → COPPER SKY…", "startedAt": "21:13:40" },
         "unavailable": { "reason": "ParDay is paused under thermal pressure. Saved proposals stay readable; transport, faders and routing are unaffected." }
@@ -147,7 +147,7 @@
         "needs_review": { "changed": "The route changed to USB-C stereo while you were reading — this explanation describes the phone speaker. Re-ask for the current route." },
         "applied": { "at": "21:10:40", "text": "Kept in app help history 21:10:40. Nothing audible changed." },
         "rejected": { "at": "21:10:40", "reason": "Dismissed at 21:10. Nothing changed." },
-        "expired": { "at": "21:40:20", "text": "Expired — the route has changed since. Refresh for the current route." },
+        "expired": { "at": "21:40:20", "text": "The route has changed since. Refresh for the current route." },
         "stale": { "text": "Bound to route epoch 3; the route is now at epoch 4 (USB-C stereo connected). Reviewable again — it still describes the phone speaker." },
         "thinking": { "retained": "Reading the current route and cue assignment…", "startedAt": "21:10:05" },
         "unavailable": { "reason": "ParDay is paused under thermal pressure. Route check itself is still available from the status strip." }
@@ -185,7 +185,7 @@
         "needs_review": { "changed": "BRASS CANYON was relocated at 21:03 — re-run the check to confirm the block is cleared." },
         "applied": { "at": "21:03:40", "text": "Re-checked 21:03:40 · 0 blocks, 2 warnings." },
         "rejected": { "at": "21:01:00", "reason": "Dismissed at 21:01. The warnings remain in Diagnostics." },
-        "expired": { "at": "21:30:12", "text": "Expired — results are older than 30 minutes. Re-run before the set." },
+        "expired": { "at": "21:30:12", "text": "Results are older than 30 minutes. Re-run before the set." },
         "stale": { "text": "Bound to library revision 41 and route epoch 4; now revision 43 / epoch 4. Reviewable again — re-run to check the new tracks." },
         "thinking": { "retained": "Checking 5 tracks and the current route…", "startedAt": "21:00:10" },
         "unavailable": { "reason": "Paused under thermal pressure. The readiness check is local and resumes when the device cools." }
@@ -221,8 +221,8 @@
       "states": {
         "needs_review": { "changed": "The Radio Edit was deleted from the library at 21:19 — review before choosing a version." },
         "applied": { "at": "21:18:40", "text": "Handed to Sources 21:18:40 · job J-17 queued · progress is shown in Sources, not here." },
-        "rejected": { "at": "21:18:30", "reason": "Rejected: the extractor candidate is disabled in Settings for this source. No lookup result was kept." },
-        "expired": { "at": "21:28:05", "text": "Expired — extractor results are kept for 10 minutes. Paste the link again to refresh." },
+        "rejected": { "at": "21:18:30", "reason": "The extractor candidate is disabled in Settings for this source. No lookup result was kept." },
+        "expired": { "at": "21:28:05", "text": "Extractor results are kept for 10 minutes. Paste the link again to refresh." },
         "stale": { "text": "Bound to library revision 43; now 44. Reviewable again — the candidates are unchanged, the library is not." },
         "thinking": { "retained": "Asking the extractor candidate for playable versions of your link…", "startedAt": "21:18:03" },
         "unavailable": { "reason": "Offline — link lookup needs the network. Your pasted link is kept for when it returns." }
@@ -255,7 +255,7 @@
           "at": "21:22:14",
           "cause": "Crossfader touched (manual takeover)",
           "effectiveFrame": 580160,
-          "text": "Cancelled at bar 6 after a crossfader touch. No further event ran after engine frame 580 160.",
+          "text": "At bar 6 of 16. No further event ran after engine frame 580 160.",
           "remains": [
             "Crossfader holds at 0.38 — where your finger left it",
             "Deck B playing at 124.0 BPM from Drums",
@@ -265,7 +265,7 @@
         },
         "expired": {
           "at": "21:26:00",
-          "text": "Expired 21:26:00 before the start condition was met.",
+          "text": "the start condition was never met.",
           "remains": ["Nothing was scheduled or heard", "Deck B stays cued at Drums", "Deck A continues playing past Exit"]
         },
         "rejected": {
@@ -282,6 +282,7 @@
     "messages": [
       { "id": "m1", "role": "user", "at": "21:00:05", "text": "Build a 30-minute warm-up crate from what I have, 120 to 126 BPM." },
       { "id": "m2", "role": "assistant", "at": "21:00:41", "proposalId": "P37",
+        "retained": "Scoring 16 eligible tracks for a 30-minute warm-up (120–126 BPM)…",
         "text": "Six tracks, 31:42, rising from DRIFT HOUR to CALYPSO WIRE. TIDE SIGNAL sits third because its grid confidence is low. SODA LIGHTS (Radio Edit) is left out: its Spotify-derived fields are excluded from ranking by default.",
         "claims": [
           { "text": "Six tracks total 31:42", "provenance": "measured" },
@@ -291,6 +292,7 @@
         ] },
       { "id": "m3", "role": "user", "at": "21:07:30", "text": "Draft cues for TIDE SIGNAL." },
       { "id": "m4", "role": "assistant", "at": "21:07:58", "proposalId": "P38",
+        "retained": "Reading the grid and phrases of TIDE SIGNAL…",
         "text": "Three drafts: Bass in at 0:31.0, Drop at 2:21.0 and Exit at 4:30.0. Your cues 1 and 2 stay. After the bridge the downbeat is uncertain, so cues 4 and 5 are marked uncertain — check them on the waveform before applying.",
         "claims": [
           { "text": "Tempo drifts 120.4–123.6 BPM", "provenance": "measured" },
@@ -299,6 +301,7 @@
         ] },
       { "id": "m5", "role": "user", "at": "21:10:05", "text": "Why isn’t my cue isolated on the headphones?" },
       { "id": "m6", "role": "assistant", "at": "21:10:20", "proposalId": "P40", "localOnly": true,
+        "retained": "Reading the current route and cue assignment (local tool, no model request)…",
         "text": "Your route is the phone speaker: one stereo output, so there is no second output to isolate a cue on. Cue buttons select a deck but nothing is isolated; master playback keeps working. A USB-C interface, a 4-channel USB device or a split cable gives you a cue route.",
         "claims": [
           { "text": "Route: phone speaker, 2 channels, 48 kHz", "provenance": "measured" },

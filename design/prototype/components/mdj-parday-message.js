@@ -1,5 +1,5 @@
-// <mdj-parday-message message="m8" role="user|assistant" text="…" at="21:13:52" claims='[…]'
-//                     state="sent|thinking|local-only|error">
+// <mdj-parday-message message="m8" role="user|assistant" text="…" at="21:13:52" claims='[…]' retained="…"
+//                     error="timeout" state="sent|thinking|local-only|error">
 //
 // One conversation bubble in the ParDay panel (Document 03 §6 "Prepare may use a full-height
 // conversation"; FR-048, FR-040 cloud disclosure). The `message` attribute names a message in
@@ -12,16 +12,19 @@
 // States (role × state): sent = delivered / answered · thinking = user: SENT, waiting (dashed) /
 // assistant: retained request + "Progress unknown" + Cancel · local-only = user: kept on this phone /
 // assistant: answered from saved analysis and app help, no cloud request · error = user: not delivered,
-// Retry / assistant: failed (timeout) + Retry; Retry sends the same request once and cannot duplicate a
-// cue, crate entry or transport action.
+// Retry / assistant: the retained request ("Was working on …") + the failure notice + Retry — a failed turn
+// never prints an answer. The failure text is the message `text` only when the message IS an error (`error`
+// in the fixture or the `error` attribute, e.g. "timeout"); otherwise a generic notice is printed. Retry sends
+// the same request once and cannot duplicate a cue, crate entry or transport action.
+// Gallery samples use m5 / m6 (the route question and its locally answered reply) so every state shows a
+// coherent user + assistant pair; the fixture's real timeout is m10.
 // Pending vs acknowledged: thinking (dashed SENT) and sent (solid) never share a visual; nothing animates
 // to imply success. Cancellation: Cancel stops future work; already-applied changes are named by the
 // next assistant message, not hidden. Accessible: <article> named "ParDay, 21:13:52" / "You, 21:13:40"
 // with the state word; claims are a list with their provenance as text.
 import { MdjElement, define, h, icon } from './base.js';
 import { iconId } from './mdj-marker.js';
-import { parseJsonAttr } from './mdj-chip.js';
-import { pardayFixture } from './mdj-provenance-tag.js';
+import { pardayFixture, parseJsonAttr } from './mdj-provenance-tag.js';
 
 const STATES = ['sent', 'thinking', 'local-only', 'error'];
 let uid = 0;
@@ -32,12 +35,12 @@ export class MdjPardayMessage extends MdjElement {
   static fr = ['FR-048', 'FR-040'];
   static hit = 48;
   static fixture = true;
-  static observed = ['message', 'role', 'text', 'at', 'claims', 'proposal'];
+  static observed = ['message', 'role', 'text', 'at', 'claims', 'proposal', 'retained', 'error'];
+  // Each state renders the m5 (user) + m6 (assistant) pair; the state attribute forces the visual, so no
+  // per-state override is needed (an override would print the same message twice).
   static samples = {
-    default: { message: 'm8', style: 'width:100%' },
-    variants: [{ message: 'm7' }, { message: 'm8' }],
-    'local-only': { message: 'm6' },
-    error: { message: 'm10' },
+    default: { message: 'm6', style: 'width:100%' },
+    variants: [{ message: 'm5' }, { message: 'm6' }],
   };
 
   ensureFixtureMark() {
@@ -60,7 +63,8 @@ export class MdjPardayMessage extends MdjElement {
     const text = this.attr('text', fx?.text || '');
     const at = this.attr('at', fx?.at || '');
     const claims = parseJsonAttr(this.getAttribute('claims'), fx?.claims || []);
-    const retained = fx?.retained || text;
+    const retained = this.attr('retained', fx?.retained || '');
+    const errorKind = this.attr('error', fx?.error || '');
     const proposalId = this.attr('proposal', fx?.proposalId || '');
     delete this.dataset.hit;
     this.className = `pmsg pmsg--${role} pmsg--${state}`;
@@ -77,14 +81,17 @@ export class MdjPardayMessage extends MdjElement {
 
     const body = [];
     if (role === 'assistant' && state === 'thinking') {
-      body.push(h('p', { class: 'pmsg__text body' }, [h('span', { class: 'label', text: 'Working on · ' }), retained || 'Working…']));
+      body.push(h('p', { class: 'pmsg__text body' }, [h('span', { class: 'label', text: 'Working on · ' }), retained || text || 'Working…']));
       body.push(h('div', { class: 'pmsg__progress', role: 'status', 'aria-label': 'Progress unknown' }, [
         h('span', { class: 'pmsg__progress-track sunken', 'aria-hidden': 'true' }, [h('span', { class: 'pmsg__progress-dash' })]),
-        h('span', { class: 'pmsg__progress-text label' }, [icon(iconId('thinking', 'loader'), { size: 12, cls: 'pmsg__spin' }), h('span', { text: 'Progress unknown · 20 s deadline' })]),
+        h('span', { class: 'pmsg__progress-text label' }, [icon(iconId('thinking', 'loader'), { size: 12, cls: 'pmsg__spin' }), h('span', { text: 'Progress unknown · 20-second deadline' })]),
       ]));
+    } else if (role === 'assistant' && state === 'error') {
+      // A failed turn has no answer: keep the retained request visible, then say what failed (below).
+      body.push(h('p', { class: 'pmsg__text pmsg__text--retained body' }, [h('span', { class: 'label', text: 'Was working on · ' }), retained || 'this request']));
     } else {
       body.push(h('p', { class: 'pmsg__text body', text: text }));
-      if (role === 'assistant' && claims.length && state !== 'error') {
+      if (role === 'assistant' && claims.length) {
         const ul = h('ul', { class: 'pmsg__claims', 'aria-label': 'Claims and their provenance' });
         for (const c of claims) ul.appendChild(h('li', { class: 'pmsg__claim' }, [
           h('span', { class: 'pmsg__claim-text', text: c.text }),
@@ -97,7 +104,9 @@ export class MdjPardayMessage extends MdjElement {
     // Notices are words with an icon; the tone is secondary.
     let notice = null;
     if (state === 'local-only') notice = this.notice('info', iconId('local-only', 'cloud-off'), role === 'user' ? 'Kept on this phone — offline, nothing was sent to a provider.' : 'Local only — answered from saved analysis and app help; no cloud request was made. Crate building and lookups wait for the network.');
-    else if (state === 'error') notice = this.notice('critical', 'warning', role === 'user' ? 'Not delivered — the request did not reach ParDay. Nothing was changed.' : `Request failed${fx?.error === 'timeout' ? ' · timed out after 20 s' : ''} — nothing was changed.`);
+    else if (state === 'error') notice = this.notice('critical', 'warning', role === 'user'
+      ? 'Not delivered — the request did not reach ParDay. Nothing was changed.'
+      : (errorKind && text) ? text : 'Request failed — nothing was changed. Retry sends the same request once; it cannot duplicate a cue, a crate entry or a transport action.');
     else if (state === 'thinking' && role === 'user') notice = this.notice('info', 'arrow-up', 'Sent · waiting for ParDay');
 
     const actions = [];

@@ -65,11 +65,16 @@ export class MdjLoadTarget extends MdjElement {
       let note = 'Empty', noteIcon = 'plus', mod = 'empty';
       if (isLoaded) { note = 'Loaded'; noteIcon = 'check'; mod = 'loaded'; }
       else if (isPending) { note = 'Sent · waiting'; noteIcon = 'loader'; mod = 'pending'; }
-      else if (prot) { note = 'Playing · protected'; noteIcon = 'lock'; mod = 'protected'; }
+      else if (prot) { note = 'Playing — protected'; noteIcon = 'lock'; mod = 'protected'; }
       else if (isOcc) { note = 'Occupied'; noteIcon = 'pause'; mod = 'occupied'; }
       if (disabled) { note = reason || 'Unavailable'; noteIcon = 'unavailable'; mod = 'disabled'; }
       const why = isLoaded ? ', loaded' : isPending ? ', sent, waiting for the engine' : prot ? ', playing, protected: asks for confirmation' : isOcc ? ', occupied' : ', empty';
       const name = `Load ${title} to Deck ${d}${why}${disabled ? `, unavailable: ${reason || 'cannot load'}` : ''}`;
+      // SENT / LOADED are printed words (never colour alone). Full size: a stamp on the button's top edge;
+      // compact: printed inline after the verb so a 48 dp dock row stays 48 dp.
+      const stampCls = compact ? ' load-target__badge--inline' : '';
+      const sent = isPending ? h('span', { class: `load-target__badge load-target__badge--sent${stampCls}`, text: 'SENT', 'aria-hidden': 'true' }) : null;
+      const loadedStamp = isLoaded ? h('span', { class: `load-target__badge load-target__badge--loaded${stampCls}`, text: 'LOADED', 'aria-hidden': 'true' }) : null;
       const btn = h('button', {
         type: 'button', class: `load-target__btn deck-${d.toLowerCase()} load-target__btn--${mod}`, dataset: { hit: '48' },
         'aria-label': name, 'aria-disabled': disabled ? 'true' : undefined,
@@ -80,16 +85,21 @@ export class MdjLoadTarget extends MdjElement {
           h('span', { class: 'load-target__verb', text: 'Load' }),
           compact ? null : h('span', { class: 'load-target__note' }, [icon(noteIcon, { size: 11 }), h('span', { text: note })]),
         ]),
-        isPending ? h('span', { class: 'load-target__badge load-target__badge--sent', text: 'SENT', 'aria-hidden': 'true' }) : null,
-        isLoaded ? h('span', { class: 'load-target__badge load-target__badge--loaded', text: 'LOADED', 'aria-hidden': 'true' }) : null,
-        prot && !disabled ? h('span', { class: 'load-target__badge load-target__badge--protected', 'aria-hidden': 'true' }, [icon('lock', { size: 9 })]) : null,
+        compact ? sent : null,
+        compact ? loadedStamp : null,
+        compact ? null : sent,
+        compact ? null : loadedStamp,
+        prot && !disabled ? h('span', { class: `load-target__badge load-target__badge--protected${stampCls}`, 'aria-hidden': 'true' }, [icon('lock', { size: 9 })]) : null,
         focus === d ? h('span', { class: 'load-target__focus index-mark', 'aria-hidden': 'true' }) : null,
       ]);
       group.appendChild(btn);
     }
     const label = h('span', { class: 'load-target__label label', text: compact ? 'Load' : 'Load to' });
+    // The foot line explains the state in full; the compact dock row has no room for it, so there the printed
+    // SENT / LOADED stamps and the buttons' accessible names carry the same words.
     let foot = null;
-    if (disabled) foot = h('span', { class: 'load-target__foot tone-critical' }, [icon('unavailable', { size: 12 }), h('span', { text: `Cannot load: ${reason || 'file unavailable'}` })]);
+    if (compact) foot = null;
+    else if (disabled) foot = h('span', { class: 'load-target__foot tone-critical' }, [icon('unavailable', { size: 12 }), h('span', { text: `Cannot load: ${reason || 'file unavailable'}` })]);
     else if (state === 'pending') foot = h('span', { class: 'load-target__foot tone-info' }, [icon('loader', { size: 12 }), h('span', { text: `Load sent to Deck ${pending || '?'} — waiting for the engine to acknowledge` })]);
     else if (state === 'acknowledged') foot = h('span', { class: 'load-target__foot tone-ok' }, [icon('check', { size: 12 }), h('span', { text: `Deck ${loaded || '?'} acknowledged the load` })]);
     else if (audible.size && !compact) foot = h('span', { class: 'load-target__foot muted' }, [icon('lock', { size: 12 }), h('span', { text: 'A playing deck asks for confirmation before it is replaced.' })]);
